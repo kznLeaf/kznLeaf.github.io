@@ -19,22 +19,23 @@
   <meta name="author" content="Banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="今天晚上跟一个朋友边散步边聊了一会儿。嗯…越想越乱。虽然聊的时候是用尽量轻松的，开玩笑似的语气，但是事后回想起来越发觉得厌恶，甚至是愤怒。 每个人所能获取的信息很大程度上取决于这个人所关心的是什么。在信息茧房已经客观存在的情况下，每个人所掌握的信息差只会无限地越差越多。人对一个事物的观点是从这些信息中分析得来的，因此不同兴趣点的人之间事实上已经没有任何交流的必要了。我的观点是基于我所掌握的事实得出">
+    <meta name="description" content="最近在上一门叫电子设计基础的课。课上要设计一个简易温度传感器，然而老师给出的方案真心不怎么样，所以自己重新设计了一个  用二极管做温度传感器，STM32F103C8T6采集电压数据换算成温度，最后用数码管显示出来。供电采用3.7V锂电池，还配备有Type-C插口用来充电。 原理图如下：  这里最复杂的应该是供电部分。供电部分的方案用的是了TT在射频功率计的设计里使用的方案，锂电池输入经过TPS63">
 <meta property="og:type" content="article">
-<meta property="og:title" content="闲谈">
-<meta property="og:url" content="http://example.com/2024/09/15/%E9%97%B2%E8%B0%88/index.html">
+<meta property="og:title" content="简易温度传感器设计">
+<meta property="og:url" content="http://example.com/2024/09/19/%E6%B8%A9%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8/index.html">
 <meta property="og:site_name" content="Banyee&#39;s Blog">
-<meta property="og:description" content="今天晚上跟一个朋友边散步边聊了一会儿。嗯…越想越乱。虽然聊的时候是用尽量轻松的，开玩笑似的语气，但是事后回想起来越发觉得厌恶，甚至是愤怒。 每个人所能获取的信息很大程度上取决于这个人所关心的是什么。在信息茧房已经客观存在的情况下，每个人所掌握的信息差只会无限地越差越多。人对一个事物的观点是从这些信息中分析得来的，因此不同兴趣点的人之间事实上已经没有任何交流的必要了。我的观点是基于我所掌握的事实得出">
+<meta property="og:description" content="最近在上一门叫电子设计基础的课。课上要设计一个简易温度传感器，然而老师给出的方案真心不怎么样，所以自己重新设计了一个  用二极管做温度传感器，STM32F103C8T6采集电压数据换算成温度，最后用数码管显示出来。供电采用3.7V锂电池，还配备有Type-C插口用来充电。 原理图如下：  这里最复杂的应该是供电部分。供电部分的方案用的是了TT在射频功率计的设计里使用的方案，锂电池输入经过TPS63">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-09-15T14:27:09.000Z">
-<meta property="article:modified_time" content="2024-09-16T00:38:53.257Z">
+<meta property="og:image" content="https://github.com/banyee19/blog_images/blob/main/%E6%B8%A9%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8%E5%AE%9E%E7%89%A9.jpg?raw=true">
+<meta property="article:published_time" content="2024-09-19T01:15:43.000Z">
+<meta property="article:modified_time" content="2024-09-19T01:29:55.618Z">
 <meta property="article:author" content="Banyee">
-<meta property="article:tag" content="杂谈">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://github.com/banyee19/blog_images/blob/main/%E6%B8%A9%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8%E5%AE%9E%E7%89%A9.jpg?raw=true">
   
   
   
-  <title>闲谈 - Banyee&#39;s Blog</title>
+  <title>简易温度传感器设计 - Banyee&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="闲谈"></span>
+            <span id="subtitle" data-typed-text="简易温度传感器设计"></span>
           
         </div>
 
@@ -215,8 +216,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-09-15 22:27" pubdate>
-          2024年9月15日 晚上
+        <time datetime="2024-09-19 09:15" pubdate>
+          2024年9月19日 上午
         </time>
       </span>
     
@@ -227,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          980 字
+          400 字
         
       </span>
     
@@ -238,7 +239,7 @@
         
         
         
-          9 分钟
+          4 分钟
         
       </span>
     
@@ -275,23 +276,18 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">闲谈</h1>
+            <h1 id="seo-header">简易温度传感器设计</h1>
             
             
               <div class="markdown-body">
                 
-                <p>今天晚上跟一个朋友边散步边聊了一会儿。嗯…越想越乱。虽然聊的时候是用尽量轻松的，开玩笑似的语气，但是事后回想起来越发觉得厌恶，甚至是愤怒。</p>
-<p>每个人所能获取的信息很大程度上取决于这个人所关心的是什么。在信息茧房已经客观存在的情况下，每个人所掌握的信息差只会无限地越差越多。人对一个事物的观点是从这些信息中分析得来的，因此不同兴趣点的人之间事实上已经没有任何交流的必要了。我的观点是基于我所掌握的事实得出的，因此我坚信它是正确的；但是对方在大多数情况下并不知道那些信息。结果就是，双方谁也不让谁。每个人都觉得自己是有理的，对方的观点与自己不同，简直不可理解。</p>
-<p>我一直很排斥和别人谈论一切敏感话题，因为在现实中当我尝试和对方沟通时所遇到的只有两种回应：1.摆出一副理所当然的恶臭嘴脸，说“不是本来就是这样的吗？难道你还有什么别的想法？”2.世界上每个国家都是一样的，讨论这些没有意义。</p>
-<p>中国“防火长城”这种恶心的存在更进一步加剧了上面这种现象。在墙内的人仅满足于被呈现出来的图景自以为是，自诩为世界第一，就算是看到了不合理的现象也不为所动，一张嘴就是“这不是很正常吗”；掌握了被墙内封杀的信息的人则无法理解墙内原住民的想法。墙内的原住民始终以一种高傲的姿态审视一切墙外的新闻，从来不会考虑这些新闻是否是被有目的地挑选出来呈现在他眼前的。<strong>防火长城就是他妈该死</strong>。在成功地缔造了局部的天朝上国的同时，让新一代也几乎丧失了通过翻墙真正地体验互联网的机会（记得初中政治书上有说过“万物互联”的概念吧？到头来只是在自己的局域网里面自嗨而已），尽管翻墙本身并不困难，他它还是成功地阻挡了大多数人，让大多数人沉浸在自己的幻想乡里面，固步自封，永远都是等待宰割的井底之蛙。</p>
-<p>啊，还有，今天我甚至被当成是右派，民族主义了，可笑。<strong>最该痛恨的就是民族主义</strong>。为了达成自己的手段，用“民族”这一空虚的概念作为掩护，企图借此转移社会矛盾，不卑鄙无耻吗。</p>
-<p>我一直都是这样，跟别人面对面时其乐融融，一旦分开，对方立刻就成了我批判的对象。我真是卑鄙。</p>
-<p>以后我会尽可能避免和任何人讨论类似的话题，没有意义。评判一个地区好与不好需要综合看它的文化、经济等等各个方面，但是一个人的纸上谈兵式的理解注定是片面的，他能掌握什么信息完全取决于于个人的偏好，不可能获得任何具有参考价值的客观认识。唯一的解决方法是自己亲自去一趟，合适就留，不合适就走。纸上谈兵式的夸夸其谈只是在这个局域网内发泄自己心中的民族主义优越感，助长偏见，求得认同而已。</p>
-<blockquote>
-<p>正直なところ、私も政治的部分では仕方がありませんが、<br>
-悪いのは政府であり、国民ではありません<br>
-国同士は無理やけど、ワイとお前でなら出来る…か？</p>
-</blockquote>
+                <p>最近在上一门叫电子设计基础的课。课上要设计一个简易温度传感器，然而老师给出的方案真心不怎么样，所以自己重新设计了一个</p>
+<p><img src="https://github.com/banyee19/blog_images/blob/main/%E6%B8%A9%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8%E5%AE%9E%E7%89%A9.jpg?raw=true" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>用二极管做温度传感器，STM32F103C8T6采集电压数据换算成温度，最后用数码管显示出来。供电采用3.7V锂电池，还配备有Type-C插口用来充电。</p>
+<p>原理图如下：</p>
+<p><img src="https://github.com/banyee19/blog_images/blob/main/%E6%B8%A9%E5%BA%A6%E8%AE%A1%E5%8E%9F%E7%90%86%E5%9B%BE.jpg?raw=true" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>这里最复杂的应该是供电部分。供电部分的方案用的是了TT在射频功率计的设计里使用的方案，锂电池输入经过TPS63070升压到6.3V，再经SPX3819和RT9013分别降压到5V和3.3V。锂电池充电管理使用IP2312。数码管驱动用的是74HC595，用单片机的三个IO口就能同时控制数码管的8个脚，余下两个LED的阴极则与三极管开关相连，没有直接接单片机IO口主要是考虑到单片机吸收电流的能力有限，因此间接使用IO口控制三极管的通断。在同一时刻，数码管只能显示一个数字，为了达到同时显示的效果需要利用视觉暂留，我设定两个数字的闪烁频率为100Hz。</p>
+<p>二极管的导通压降与温度的关系大约是-2mV/摄氏度，此处运放反向放大30倍，这样能覆盖大约55摄氏度的范围。单片机同时读取运放的输出电压和电池电量，电量过低时指示灯亮起。</p>
 
                 
               </div>
@@ -300,13 +296,27 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
   
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/%E6%9D%82%E8%B0%88/" class="print-no-link">#杂谈</a>
-      
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%94%B5%E5%AD%90%E8%AE%BE%E8%AE%A1/" class="category-chain-item">电子设计</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
     </div>
+  
   
 </div>
 
@@ -316,8 +326,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>闲谈</div>
-      <div>http://example.com/2024/09/15/闲谈/</div>
+      <div>简易温度传感器设计</div>
+      <div>http://example.com/2024/09/19/温度传感器/</div>
     </div>
     <div class="license-meta">
       
@@ -329,7 +339,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年9月15日</div>
+          <div>2024年9月19日</div>
         </div>
       
       
@@ -361,18 +371,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/09/19/%E6%B8%A9%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8/" title="简易温度传感器设计">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">简易温度传感器设计</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/09/15/Hexo%20Fluid%E4%B8%BB%E9%A2%98%E6%B8%B2%E6%9F%93LaTeX%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" title="Hexo Fluid主题渲染LaTeX数学公式的问题总结">
-                        <span class="hidden-mobile">Hexo Fluid主题渲染LaTeX数学公式的问题总结</span>
+                      <a href="/2024/09/15/%E9%97%B2%E8%B0%88/" title="闲谈">
+                        <span class="hidden-mobile">闲谈</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
