@@ -77,7 +77,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -282,10 +282,10 @@
               <div class="markdown-body">
                 
                 <p>最近在上一门叫电子设计基础的课。课上要设计一个简易温度传感器，然而老师给出的方案真心不怎么样，所以自己重新设计了一个</p>
-<p><img src="https://github.com/banyee19/blog_images/blob/main/%E6%B8%A9%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8%E5%AE%9E%E7%89%A9.jpg?raw=true" srcset="/img/loading.gif" lazyload alt=""></p>
+<p><img src="https://github.com/banyee19/blog_images/blob/main/%E6%B8%A9%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8%E5%AE%9E%E7%89%A9.jpg?raw=true" alt=""></p>
 <p>用二极管做温度传感器，STM32F103C8T6采集电压数据换算成温度，最后用数码管显示出来。供电采用3.7V锂电池，还配备有Type-C插口用来充电。</p>
 <p>原理图如下：</p>
-<p><img src="https://github.com/banyee19/blog_images/blob/main/%E6%B8%A9%E5%BA%A6%E8%AE%A1%E5%8E%9F%E7%90%86%E5%9B%BE.jpg?raw=true" srcset="/img/loading.gif" lazyload alt=""></p>
+<p><img src="https://github.com/banyee19/blog_images/blob/main/%E6%B8%A9%E5%BA%A6%E8%AE%A1%E5%8E%9F%E7%90%86%E5%9B%BE.jpg?raw=true" alt=""></p>
 <p>这里最复杂的应该是供电部分。供电部分的方案用的是了TT在射频功率计的设计里使用的方案，锂电池输入经过TPS63070升压到6.3V，再经SPX3819和RT9013分别降压到5V和3.3V。锂电池充电管理使用IP2312。数码管驱动用的是74HC595，用单片机的三个IO口就能同时控制数码管的8个脚，余下两个LED的阴极则与三极管开关相连，没有直接接单片机IO口主要是考虑到单片机吸收电流的能力有限，因此间接使用IO口控制三极管的通断。在同一时刻，数码管只能显示一个数字，为了达到同时显示的效果需要利用视觉暂留，我设定两个数字的闪烁频率为100Hz。</p>
 <p>二极管的导通压降与温度的关系大约是-2mV/摄氏度，此处运放反向放大30倍，这样能覆盖大约55摄氏度的范围。单片机同时读取运放的输出电压和电池电量，电量过低时指示灯亮起。</p>
 
@@ -531,10 +531,6 @@
 
 
 
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
 
 
 
