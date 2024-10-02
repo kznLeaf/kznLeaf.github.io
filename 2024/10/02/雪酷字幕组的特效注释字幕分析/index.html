@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://media.giphy.com/media/EuIDh9scyssnZXBT39/giphy.gif">
 <meta property="article:published_time" content="2024-10-02T12:09:04.000Z">
-<meta property="article:modified_time" content="2024-10-02T13:59:51.434Z">
+<meta property="article:modified_time" content="2024-10-02T14:12:56.741Z">
 <meta property="article:author" content="Banyee">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://media.giphy.com/media/EuIDh9scyssnZXBT39/giphy.gif">
@@ -305,7 +305,7 @@
 <p>实现的效果如图<br>
 <img src="https://media.giphy.com/media/EuIDh9scyssnZXBT39/giphy.gif" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>下面对这三段代码进行逐行分析。</p>
-<h1>\move,\pos,\fad实现平滑的文本展示效果</h1>
+<h1>实现平滑的文本展示效果</h1>
 <p><code>\move</code>用于设置文本的<strong>移动轨迹</strong>，其基本语法是<code>\move(x1,y1,x2,y2,start_time,end_time)</code>，其中 <code>(x1,y1)</code>是起始位置，<code>(x2,y2)</code>是结束位置，<code>start_time</code>和<code>end_time</code>定义动画的开始和结束时间（单位：毫秒）。</p>
 <p><code>\pos</code>用于设置文本的<strong>绝对位置</strong>，其语法是 \pos(x,y)，其中 x 和 y 是屏幕坐标。这个命令将文本固定在指定的位置，不随时间变化。</p>
 <p><code>\fad</code>用于设置文本的<strong>淡入淡出</strong>效果，其基本语法是<code>\fad(fade_in_time, fade_out_time)</code>，其中<code>fade_in_time</code>是淡入持续的时间（毫秒），<code>fade_out_time</code>是淡出持续的时间（毫秒）。</p>
@@ -315,7 +315,7 @@
 <li>文本运动到<code>(15,10)</code>后会被固定到这个位置。</li>
 <li>在文本开始移动的同时，会附加一个300毫秒的淡入效果，在文本消失时则有300毫秒的淡出效果。</li>
 </ul>
-<h1>\fscx和\t的综合使用</h1>
+<h1>创造平滑的分界线</h1>
 <p><code>\fscx</code>用于设置文本的<strong>水平缩放</strong>(<strong>f</strong>ront <strong>sc</strong>ale <strong>x</strong>)，其基本语法是<code>\fscx&lt;value&gt;</code>，其中<code>&lt;value&gt;</code>是缩放的百分比值。例如：</p>
 <ul>
 <li><code>\fscx100</code>表示正常大小</li>
