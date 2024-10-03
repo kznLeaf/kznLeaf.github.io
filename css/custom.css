@@ -16,4 +16,9 @@
      color: #BA0000 !important;
     }
    
- 
+    #subtitle {
+        font-family: 'Yu Mincho', sans-serif; /* 替换为你想要的字体 */
+        font-size: 32px; /* 调整字体大小 */
+        color: #ffffff; /* 设置字体颜色 */
+    }
+    
