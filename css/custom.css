@@ -16,8 +16,14 @@
      color: #BA0000 !important;
     }
    
+    @font-face {
+        font-family: "Si Yuan";
+        src: url("../fonts/Si Yuan.otf") format("truetype");
+        font-weight: 400;
+      }
+
     #subtitle {
-        font-family: 'Yu Mincho', sans-serif; /* 替换为你想要的字体 */
+        font-family: 'Si Yuan', sans-serif; /* 替换为你想要的字体 */
         font-size: 32px; /* 调整字体大小 */
         color: #ffffff; /* 设置字体颜色 */
     }
