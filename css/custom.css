@@ -15,15 +15,15 @@
     .heimu:active .new, .heimu .new:active, .new:active .heimu {
      color: #BA0000 !important;
     }
-   
+   /*
     @font-face {
         font-family: "Si Yuan";
         src: url("../fonts/Si Yuan.otf") format("truetype");
         font-weight: 400;
       }
-
+   */
     .h2 #subtitle {
-        font-family: 'Si Yuan', sans-serif; /* 替换为你想要的字体 */
+        font-family: sans-serif; /* 替换为你想要的字体 */
         font-size: 32px; /* 调整字体大小 */
         color: #ffffff; /* 设置字体颜色 */
         opacity: 0; /* 初始透明度为0，隐藏 */
