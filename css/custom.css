@@ -35,6 +35,6 @@
     }
     /*毛玻璃*/
     #board {
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
     }
