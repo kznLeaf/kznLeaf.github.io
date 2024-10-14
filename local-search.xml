@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>LTspice中SW元件的使用</title>
+    <link href="/2024/10/14/LTspice%E4%B8%ADSW%E5%85%83%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <url>/2024/10/14/LTspice%E4%B8%ADSW%E5%85%83%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    
+    <content type="html"><![CDATA[<p>LTspice不像Multisim那样有现成的手动开关。开关功能可以用<strong>S.Voltage Controlled Switch</strong>（压控开关）实现。</p><p><img src="https://i.imgur.com/1EAGN5i.png" /></p><ol type="1"><li>按P键打开元件库，搜索"SW"，放置在图纸中</li><li>插入指令定义SW元件的行为，例如：<code>.model MYSW SW(Ron=1 Roff=1Meg Vt=.5 Vh=-.4)</code>，其中<code>Ron</code>是导通电阻（<strong>导通电阻不能为0！</strong>），<code>Roff</code>为断开电阻，Vt和Vh决定了开关的阈值电压，在本例中为0.9V和0.1V</li><li>将开关模型的名称改成MYSW</li><li>放置一个电压源用来控制开关，这里用的是Pulse，开关在闭合1s后保持关断状态。</li></ol><p>SW相关的所有参数如下表格：</p><table><thead><tr><th style="text-align: center;">Name</th><th style="text-align: center;">Description</th><th style="text-align: center;">Units</th><th style="text-align: center;">default</th></tr></thead><tbody><tr><td style="text-align: center;">Vt</td><td style="text-align: center;">阈值电压</td><td style="text-align: center;">V</td><td style="text-align: center;">0.0</td></tr><tr><td style="text-align: center;">Vh</td><td style="text-align: center;">滞后电压</td><td style="text-align: center;">V</td><td style="text-align: center;">0.0</td></tr><tr><td style="text-align: center;">Ron</td><td style="text-align: center;">导通电阻</td><td style="text-align: center;">Ω</td><td style="text-align: center;">1.0</td></tr><tr><td style="text-align: center;">Roff</td><td style="text-align: center;">关断电阻</td><td style="text-align: center;">Ω</td><td style="text-align: center;">1/Gmin</td></tr><tr><td style="text-align: center;">Lser</td><td style="text-align: center;">串联电感</td><td style="text-align: center;">H</td><td style="text-align: center;">0.0</td></tr><tr><td style="text-align: center;">Vser</td><td style="text-align: center;">串联电压</td><td style="text-align: center;">V</td><td style="text-align: center;">0.0</td></tr><tr><td style="text-align: center;">Ilimit</td><td style="text-align: center;">限制电流</td><td style="text-align: center;">A</td><td style="text-align: center;">Infin.</td></tr></tbody></table><p><strong>该开关根据滞回电压 Vh的值，具有三种不同的电压控制模式:</strong></p><ul><li>如果 Vh为零，开关将始终完全导通或关断，具体取决于输入电压是否超过阈值电压。</li><li>如果 Vh为正值，开关将表现出滞回现象，就像通过施密特触发器控制一样，触发点为 Vt- Vh 和 Vt + Vh。需要注意的是，Vh是触发点之间电压的一半，这与常见的实验室术语有所不同。</li><li>如果 Vh为负值，开关将在导通和关断阻抗之间平滑过渡。过渡发生在控制电压 Vt - Vh和 Vt + Vh 之间，且平滑过渡遵循开关导通行为的对数的低阶多项式拟合。</li></ul><p>平时设Vh为负值就好。</p><p>参考链接：<br /><ahref="https://www.analog.com/cn/resources/technical-articles/ltspiceiv-voltage-controlled-switches.html#:~:text=To%20insert%20and%20configure%20a%20switch%20in%20LTspice%E2%80%A6,this%20example%3A.model%20MYSW%20SW%20%28Ron%3D1%20Roff%3D1Meg%20Vt%3D.5%20Vh%3D-.4%29">LTspice:Voltage Controlled Switches</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>EE</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>黃昏乙女×失憶幽靈 插曲 - 安魂曲(Requiem) (中日歌詞)</title>
     <link href="/2024/10/12/%E9%BB%83%E6%98%8F%E5%B0%91%E5%A5%B3/"/>
     <url>/2024/10/12/%E9%BB%83%E6%98%8F%E5%B0%91%E5%A5%B3/</url>
