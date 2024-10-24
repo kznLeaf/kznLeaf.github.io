@@ -106,6 +106,12 @@
     <content type="html"><![CDATA[<p>在Fluid的<ahref="https://hexo.fluid-dev.com/docs/guide/#latex-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F">官方指南文档</a>中已经做了详尽的说明，一步一步跟着做就没问题。值得注意的是，在主题配置的代码</p><pre><code class="hljs">post:math:enable: truespecific: falseengine: mathjax</code></pre><p>中，要想使用数学公式，<code>enable</code>一项必须是<code>true</code>才行，否则会出现渲染错误，比如像下面这样：</p><p><imgsrc="https://github.com/banyee19/blog_images/blob/main/%E4%B8%8D%E5%90%AF%E7%94%A8.jpg?raw=true" /></p><p>同样的公式渲染了一次之后又重复了一次。</p><p>另外，Hexo中无法使用换行符<code>\\</code>，原因是<code>\</code>在Markdown属于特殊字符，用于字符转义，所以两个<code>\</code>经过Markdown引擎处理为html后，只剩下一个，等到LaTex渲染引擎处理时，实际上只看到一个<code>\</code>，渲染引擎把它当作LaTeX 中的空格。</p><p>在不改动现有代码的情况下，我的解决方法是直接改变公式的写法。比如下边这个公式</p><pre><code class="hljs">$$a_11=b_11 \\a_22=b_22+c_22$$</code></pre><p>改为</p><pre><code class="hljs">$$\begin&#123;aligned&#125;a_&#123;11&#125;&amp; =b_&#123;11&#125;\\a_&#123;22&#125;&amp; =b_&#123;22&#125;+c_&#123;22&#125;\end&#123;aligned&#125;$$</code></pre><p>渲染效果如下： <span class="math display">\[\begin{aligned}a_{11}&amp; =b_{11}\\a_{22}&amp; =b_{22}+c_{22}\end{aligned}\]</span> 更复杂的公式同理： <span class="math display">\[\begin{aligned}    F_x&#39;&amp;=\gamma\{q[\frac{-i\gamma}{c}(u_t&#39;+i\betau_x&#39;)E_x+u_y&#39;B_z-u_z&#39;B_y]    +i\beta\frac{iq}{c}[\gamma(u_x&#39;-i\betau_t&#39;)E_x+u_y&#39;E_y+u_z&#39;E_z] \}\\    &amp;=\frac{-iq\gamma^2}{c}(1-\beta^2)E_xu_t&#39;-q\gamma(B_y+\frac{\beta}{c}E_z)u_z&#39;+q\gamma(B_z-\frac{\beta}{c}E_y)u_y&#39;\end{aligned}\]</span></p>]]></content>
     
     
+    <categories>
+      
+      <category>数学</category>
+      
+    </categories>
+    
     
   </entry>
   
