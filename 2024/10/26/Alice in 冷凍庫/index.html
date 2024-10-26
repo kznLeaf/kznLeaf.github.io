@@ -19,23 +19,21 @@
   <meta name="author" content="kizuna">
   <meta name="keywords" content="">
   
-    <meta name="description" content="LTspice不像Multisim那样有现成的手动开关。开关功能可以用S. Voltage Controlled Switch（压控开关）实现。   按P键打开元件库，搜索&quot;SW&quot;，放置在图纸中 插入指令定义SW元件的行为，例如：.model MYSW SW(Ron&#x3D;1 Roff&#x3D;1Meg Vt&#x3D;.5 Vh&#x3D;-.4)，其中Ron是导通电阻（导通电阻不能为0！），Roff为断开电阻，Vt和">
+    <meta name="description" content="p { font: 12pt Yu Mincho !important; }  作詞：Orangestar 作曲：Orangestar 凍えナンセンス劇場。  それは時の果てる 劇場世界のプロローグ A lie？　君は誰？ どことなく物憂げに 裸足のままで 張りつく夜に遊ぶように 彷徨う僕は何故か 君を探しているのだ だぁ　だぁ あの日のいつかまでの 星座のソラ">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LTspice中SW元件的使用">
-<meta property="og:url" content="http://example.com/2024/10/14/LTspice%E4%B8%ADSW%E5%85%83%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:title" content="Orangestar - Alice in 冷凍庫 (feat. IA)歌詞">
+<meta property="og:url" content="http://example.com/2024/10/26/Alice%20in%20%E5%86%B7%E5%87%8D%E5%BA%AB/index.html">
 <meta property="og:site_name" content="kizuna&#39;s Blog">
-<meta property="og:description" content="LTspice不像Multisim那样有现成的手动开关。开关功能可以用S. Voltage Controlled Switch（压控开关）实现。   按P键打开元件库，搜索&quot;SW&quot;，放置在图纸中 插入指令定义SW元件的行为，例如：.model MYSW SW(Ron&#x3D;1 Roff&#x3D;1Meg Vt&#x3D;.5 Vh&#x3D;-.4)，其中Ron是导通电阻（导通电阻不能为0！），Roff为断开电阻，Vt和">
+<meta property="og:description" content="p { font: 12pt Yu Mincho !important; }  作詞：Orangestar 作曲：Orangestar 凍えナンセンス劇場。  それは時の果てる 劇場世界のプロローグ A lie？　君は誰？ どことなく物憂げに 裸足のままで 張りつく夜に遊ぶように 彷徨う僕は何故か 君を探しているのだ だぁ　だぁ あの日のいつかまでの 星座のソラ">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.imgur.com/1EAGN5i.png">
-<meta property="article:published_time" content="2024-10-14T13:21:36.000Z">
-<meta property="article:modified_time" content="2024-10-14T14:09:31.791Z">
+<meta property="article:published_time" content="2024-10-26T13:37:42.000Z">
+<meta property="article:modified_time" content="2024-10-26T14:27:09.000Z">
 <meta property="article:author" content="kizuna">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://i.imgur.com/1EAGN5i.png">
   
   
   
-  <title>LTspice中SW元件的使用 - kizuna&#39;s Blog</title>
+  <title>Orangestar - Alice in 冷凍庫 (feat. IA)歌詞 - kizuna&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">LTspice中SW元件的使用</span>
+            <span id="subtitle">Orangestar - Alice in 冷凍庫 (feat. IA)歌詞</span>
           
         </div>
 
@@ -216,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-10-14 21:21" pubdate>
-          2024年10月14日 晚上
+        <time datetime="2024-10-26 21:37" pubdate>
+          2024年10月26日 晚上
         </time>
       </span>
     
@@ -228,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          403 字
+          185 字
         
       </span>
     
@@ -239,7 +237,7 @@
         
         
         
-          4 分钟
+          2 分钟
         
       </span>
     
@@ -276,93 +274,72 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">LTspice中SW元件的使用</h1>
+            <h1 id="seo-header">Orangestar - Alice in 冷凍庫 (feat. IA)歌詞</h1>
             
             
               <div class="markdown-body">
                 
-                <p>LTspice不像Multisim那样有现成的手动开关。开关功能可以用<strong>S.
-Voltage Controlled Switch</strong>（压控开关）实现。</p>
-<p><img src="https://i.imgur.com/1EAGN5i.png" /></p>
-<ol type="1">
-<li>按P键打开元件库，搜索"SW"，放置在图纸中</li>
-<li>插入指令定义SW元件的行为，例如：<code>.model MYSW SW(Ron=1 Roff=1Meg Vt=.5 Vh=-.4)</code>，其中<code>Ron</code>是导通电阻（<strong>导通电阻不能为0！</strong>），<code>Roff</code>为断开电阻，Vt和Vh决定了开关的阈值电压，在本例中为0.9V和0.1V</li>
-<li>将开关模型的名称改成MYSW</li>
-<li>放置一个电压源用来控制开关，这里用的是Pulse，开关在闭合1s后保持关断状态。</li>
-</ol>
-<p>SW相关的所有参数如下表格：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Name</th>
-<th style="text-align: center;">Description</th>
-<th style="text-align: center;">Units</th>
-<th style="text-align: center;">default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">Vt</td>
-<td style="text-align: center;">阈值电压</td>
-<td style="text-align: center;">V</td>
-<td style="text-align: center;">0.0</td>
-</tr>
-<tr>
-<td style="text-align: center;">Vh</td>
-<td style="text-align: center;">滞后电压</td>
-<td style="text-align: center;">V</td>
-<td style="text-align: center;">0.0</td>
-</tr>
-<tr>
-<td style="text-align: center;">Ron</td>
-<td style="text-align: center;">导通电阻</td>
-<td style="text-align: center;">Ω</td>
-<td style="text-align: center;">1.0</td>
-</tr>
-<tr>
-<td style="text-align: center;">Roff</td>
-<td style="text-align: center;">关断电阻</td>
-<td style="text-align: center;">Ω</td>
-<td style="text-align: center;">1/Gmin</td>
-</tr>
-<tr>
-<td style="text-align: center;">Lser</td>
-<td style="text-align: center;">串联电感</td>
-<td style="text-align: center;">H</td>
-<td style="text-align: center;">0.0</td>
-</tr>
-<tr>
-<td style="text-align: center;">Vser</td>
-<td style="text-align: center;">串联电压</td>
-<td style="text-align: center;">V</td>
-<td style="text-align: center;">0.0</td>
-</tr>
-<tr>
-<td style="text-align: center;">Ilimit</td>
-<td style="text-align: center;">限制电流</td>
-<td style="text-align: center;">A</td>
-<td style="text-align: center;">Infin.</td>
-</tr>
-</tbody>
-</table>
-<p><strong>该开关根据滞回电压 Vh
-的值，具有三种不同的电压控制模式:</strong></p>
-<ul>
-<li>如果 Vh
-为零，开关将始终完全导通或关断，具体取决于输入电压是否超过阈值电压。</li>
-<li>如果 Vh
-为正值，开关将表现出滞回现象，就像通过施密特触发器控制一样，触发点为 Vt
-- Vh 和 Vt + Vh。需要注意的是，Vh
-是触发点之间电压的一半，这与常见的实验室术语有所不同。</li>
-<li>如果 Vh
-为负值，开关将在导通和关断阻抗之间平滑过渡。过渡发生在控制电压 Vt - Vh
-和 Vt + Vh 之间，且平滑过渡遵循开关导通行为的对数的低阶多项式拟合。</li>
-</ul>
-<p>平时设Vh为负值就好。</p>
-<p>参考链接：<br />
-<a
-target="_blank" rel="noopener" href="https://www.analog.com/cn/resources/technical-articles/ltspiceiv-voltage-controlled-switches.html#:~:text=To%20insert%20and%20configure%20a%20switch%20in%20LTspice%E2%80%A6,this%20example%3A.model%20MYSW%20SW%20%28Ron%3D1%20Roff%3D1Meg%20Vt%3D.5%20Vh%3D-.4%29">LTspice:
-Voltage Controlled Switches</a></p>
+                <style>
+p { font: 12pt Yu Mincho !important; }
+</style>
+<p>作詞：Orangestar<br />
+作曲：Orangestar</p>
+<p>凍えナンセンス劇場。</p>
+<hr />
+<p>それは時の果てる</p>
+<p>劇場世界のプロローグ</p>
+<p>A lie？　君は誰？</p>
+<p>どことなく物憂げに</p>
+<p>裸足のままで</p>
+<p>張りつく夜に遊ぶように</p>
+<p>彷徨う僕は何故か</p>
+<p>君を探しているのだ</p>
+<p>だぁ　だぁ</p>
+<p>あの日のいつかまでの</p>
+<p>星座のソラは闇のように</p>
+<p>閉ざされた小景に</p>
+<p>意味もなく吐き捨てる</p>
+<p>あぁ僕は何故</p>
+<p>僕をどこまで連れてくの</p>
+<p>開けたその先に</p>
+<p>いつか見た扉</p>
+<p>合図で　るらったったった</p>
+<p>繰り返して　回ったったった</p>
+<p>君が居そうな氷漬けの夢</p>
+<p>迷走　昏いステップ</p>
+<p>るらったったった</p>
+<p>寂しくて　笑ったったった</p>
+<p>踏み出すままに汚せ</p>
+<p>今は凍えぬように</p>
+<p>言葉よりも意味を成せ</p>
+<p>冷めやらな世界　病みの曜日</p>
+<p>消え行くあてもなく</p>
+<p>独り舞台に泣き崩れる</p>
+<p>あぁもう嫌だ</p>
+<p>全て０からやり直して</p>
+<p>回り切ったその先に</p>
+<p>いつか見た扉</p>
+<p>荒んだ夜　眠れないレイニー</p>
+<p>自称冷静な世界とside alley-C00</p>
+<p>見据えたナンセンス</p>
+<p>必然の解離僕らまた出逢えるように</p>
+<p>あぁ</p>
+<p>朝靄を空に裂いた</p>
+<p>君のその柔い手が</p>
+<p>白銀製の張を</p>
+<p>たやすく浚ってゆく</p>
+<p>知らぬまま大人になるほど</p>
+<p>懐かしさは残るけど</p>
+<p>それも全部かき混ぜて</p>
+<p>廻り出す今日は綺麗だ</p>
+<p>時間が音をたてながら</p>
+<p>崩れてゆく最後を</p>
+<p>君は何故か悲しそうに</p>
+<p>笑いながら踊るWonderland</p>
+<p>またあの日と同じようなさ</p>
+<p>星空に吞まれては</p>
+<p>紡ぎ出した言葉通りの</p>
+<p>想い　熱を放て</p>
 
                 
               </div>
@@ -381,7 +358,7 @@ Voltage Controlled Switches</a></p>
     
       <span class="category-chain">
         
-  <a href="/categories/EE/" class="category-chain-item">EE</a>
+  <a href="/categories/%E6%97%A5%E8%AF%AD/" class="category-chain-item">日语</a>
   
   
 
@@ -401,8 +378,8 @@ Voltage Controlled Switches</a></p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LTspice中SW元件的使用</div>
-      <div>http://example.com/2024/10/14/LTspice中SW元件的使用/</div>
+      <div>Orangestar - Alice in 冷凍庫 (feat. IA)歌詞</div>
+      <div>http://example.com/2024/10/26/Alice in 冷凍庫/</div>
     </div>
     <div class="license-meta">
       
@@ -414,7 +391,7 @@ Voltage Controlled Switches</a></p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年10月14日</div>
+          <div>2024年10月26日</div>
         </div>
       
       
@@ -446,9 +423,9 @@ Voltage Controlled Switches</a></p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/10/26/Alice%20in%20%E5%86%B7%E5%87%8D%E5%BA%AB/" title="Orangestar - Alice in 冷凍庫 (feat. IA)歌詞">
+                      <a href="/2024/10/26/ganxiang/" title="Look Back">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Orangestar - Alice in 冷凍庫 (feat. IA)歌詞</span>
+                        <span class="hidden-mobile">Look Back</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -456,8 +433,8 @@ Voltage Controlled Switches</a></p>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/10/12/%E9%BB%83%E6%98%8F%E5%B0%91%E5%A5%B3/" title="黃昏乙女×失憶幽靈 插曲 - 安魂曲(Requiem) (中日歌詞)">
-                        <span class="hidden-mobile">黃昏乙女×失憶幽靈 插曲 - 安魂曲(Requiem) (中日歌詞)</span>
+                      <a href="/2024/10/14/LTspice%E4%B8%ADSW%E5%85%83%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/" title="LTspice中SW元件的使用">
+                        <span class="hidden-mobile">LTspice中SW元件的使用</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
