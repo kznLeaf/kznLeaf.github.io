@@ -41,18 +41,18 @@
     }
 
     /*毛玻璃*/
-   /* #board {
-      -webkit-backdrop-filter: blur(30px);
-      backdrop-filter: blur(30px);
-    }*/
+    #board {
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
    /*侧边目录毛玻璃效果 */
-  /*  #toc {
+    #toc {
     padding: 10px;
     top: 4rem;
    background-color: var(--board-bg-color);
    border-radius: 10px;
    -webkit-backdrop-filter: blur(var(--background-blur));
    backdrop-filter: blur(var(--background-blur));
-}*/
+}
 
 
