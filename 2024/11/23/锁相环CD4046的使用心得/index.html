@@ -19,21 +19,24 @@
   <meta name="author" content="kizuna">
   <meta name="keywords" content="">
   
-    <meta name="description" content="11.16 期中考试物理+概率论 11.18 数物测试 11.24 nt校队招新测评。用CD4026实现1kHz~6.4MHz锁相？ 12.01 考日语N2 12.09 一科期末考试 之后还有数电课设 以及：天天对着短视频奸笑笑出声还丝毫不知道自己已经恶心到别人的人怎么这么多啊tmd  11.16晚11点补充 脑瘫MT又在寝室开麦打游戏🤮早点下地狱去🤮自己被吵到的时候就重拳出">
+    <meta name="description" content="前言 最近在忙着做校队招新的题目，要求是用锁相环CD4046B做一个倍频器，倍频系数为1，2，4，8，16，32，64。这个题最烦人的地方在于覆盖的频率范围很大，输入信号范围是1kHz~100kHz，这样来算输出最大要达到6.4MHz，然而以CD4046B来说这根本不可能，因为这款锁相环上集成的VCO的输出频率最大也就1MHz左右：  如你所见，输出最大频率的典型值为1.4MHz，这也基本符">
 <meta property="og:type" content="article">
-<meta property="og:title" content="杂谈">
-<meta property="og:url" content="http://example.com/2024/11/14/%E6%9D%82%E8%B0%88/index.html">
+<meta property="og:title" content="锁相环CD4046使用心得">
+<meta property="og:url" content="http://example.com/2024/11/23/%E9%94%81%E7%9B%B8%E7%8E%AFCD4046%E7%9A%84%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/index.html">
 <meta property="og:site_name" content="kizuna&#39;s Blog">
-<meta property="og:description" content="11.16 期中考试物理+概率论 11.18 数物测试 11.24 nt校队招新测评。用CD4026实现1kHz~6.4MHz锁相？ 12.01 考日语N2 12.09 一科期末考试 之后还有数电课设 以及：天天对着短视频奸笑笑出声还丝毫不知道自己已经恶心到别人的人怎么这么多啊tmd  11.16晚11点补充 脑瘫MT又在寝室开麦打游戏🤮早点下地狱去🤮自己被吵到的时候就重拳出">
+<meta property="og:description" content="前言 最近在忙着做校队招新的题目，要求是用锁相环CD4046B做一个倍频器，倍频系数为1，2，4，8，16，32，64。这个题最烦人的地方在于覆盖的频率范围很大，输入信号范围是1kHz~100kHz，这样来算输出最大要达到6.4MHz，然而以CD4046B来说这根本不可能，因为这款锁相环上集成的VCO的输出频率最大也就1MHz左右：  如你所见，输出最大频率的典型值为1.4MHz，这也基本符">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-11-14T13:55:28.000Z">
-<meta property="article:modified_time" content="2024-11-22T15:42:08.545Z">
+<meta property="og:image" content="https://i.imgur.com/51pBwa3.png">
+<meta property="og:image" content="https://i.imgur.com/Z91APjn.png">
+<meta property="article:published_time" content="2024-11-23T14:10:42.000Z">
+<meta property="article:modified_time" content="2024-11-23T15:36:31.793Z">
 <meta property="article:author" content="kizuna">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.imgur.com/51pBwa3.png">
   
   
   
-  <title>杂谈 - kizuna&#39;s Blog</title>
+  <title>锁相环CD4046使用心得 - kizuna&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +206,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">杂谈</span>
+            <span id="subtitle">锁相环CD4046使用心得</span>
           
         </div>
 
@@ -214,8 +217,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-11-14 21:55" pubdate>
-          2024年11月14日 晚上
+        <time datetime="2024-11-23 22:10" pubdate>
+          2024年11月23日 晚上
         </time>
       </span>
     
@@ -226,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          191 字
+          639 字
         
       </span>
     
@@ -237,7 +240,7 @@
         
         
         
-          2 分钟
+          6 分钟
         
       </span>
     
@@ -274,22 +277,34 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">杂谈</h1>
+            <h1 id="seo-header">锁相环CD4046使用心得</h1>
             
             
               <div class="markdown-body">
                 
-                <p>11.16 期中考试物理+概率论</p>
-<p>11.18 数物测试</p>
-<p>11.24 nt校队招新测评。用CD4026实现1kHz~6.4MHz锁相？</p>
-<p>12.01 考日语N2</p>
-<p>12.09 一科期末考试</p>
-<p>之后还有数电课设</p>
-<p>以及：天天对着短视频奸笑笑出声还丝毫不知道自己已经恶心到别人的人怎么这么多啊tmd</p>
-<hr />
-<p>11.16晚11点补充<br />
-脑瘫MT又在寝室开麦打游戏🤮早点下地狱去🤮自己被吵到的时候就重拳出击把其他所有人都臭骂一顿。自己恶心到别人的时候又一副理所应当的样子🤮利己主义原来就是这样的吗</p>
-<p>这种明明给别人带来困扰却丝毫不知情的人死掉好了</p>
+                <h1 id="前言">前言</h1>
+<p>最近在忙着做校队招新的题目，要求是用锁相环CD4046B做一个倍频器，倍频系数为1，2，4，8，16，32，64。这个题最烦人的地方在于覆盖的频率范围很大，输入信号范围是1kHz~100kHz，这样来算输出最大要达到6.4MHz，然而以CD4046B来说这根本不可能，因为这款锁相环上集成的VCO的输出频率最大也就1MHz左右：</p>
+<p><img src="https://i.imgur.com/51pBwa3.png" /></p>
+<p>如你所见，输出最大频率的典型值为1.4MHz，这也基本符合我实测的结果。总之这题做满100kHz的64倍频基本是没戏了，但是听说有个组做到了7MHz？搞不懂是什么情况。（再吐槽一句，TI的CD4046B的数据手册真的太古老了啊，赶紧更新一下吧）</p>
+<h1 id="引脚说明">引脚说明</h1>
+<p><img src="https://i.imgur.com/Z91APjn.png" /></p>
+<p>见上图。</p>
+<ul>
+<li>3；鉴相器输入</li>
+<li>4：VCO输出</li>
+<li>6、7之间的<span
+class="math inline">\(C_1\)</span>是VCO的起振电容</li>
+<li>12脚<span
+class="math inline">\(R_2\)</span>决定了输出频率是否叠加一个偏置。如果不接，那么输出无偏置，频率就可以达到比较低的范围；如果接上电阻，频率范围整体会往上移动。</li>
+<li>11脚<span
+class="math inline">\(R_1\)</span>也影响了输出频率·范围，R1越小输出频率越大，我这里取的是10k欧。</li>
+<li>5脚禁止端，低电平使能器件。</li>
+<li>13，鉴相器2的输出，它接入环路滤波器的输入端。</li>
+<li>9，VCO的输入，这个输入电压应当尽可能平稳，这样VCO才会有稳定的输出。</li>
+</ul>
+<p>我这次在调试电路过程中动的最多的就是C1和引脚，4。通过调整C1的值来获得不同的频率输出范围；将3、4直接连接来测试锁相环的功能；确定锁相环能正常工作后再把3、4断开，接入分频器。</p>
+<h1 id="关于频率范围">关于频率范围</h1>
+<p>CD4046B的输出频率与供电电压有关，供电电压越大，能够输出的频率也越大，但是不能超过15V。根据我的测试，在5V供电，R2不接，R1=10k欧，C1=100pF的情况下，VCO的输出频率最多只有大约700kHZ。想达到1MHz以上的频率必须增大电压到10V，但是这又会产生一问题：锁相环是10V电平输入输出，而分频器是5V电平，两种电平并不互容，必须进行电平转换。这是我们组在昨天得到的结论，然后今天我自己花了半个上午的时间才总算是调好了。</p>
 
                 
               </div>
@@ -297,27 +312,6 @@
             <hr/>
             <div>
               <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%9D%82%E8%B0%88/" class="category-chain-item">杂谈</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
   
   
 </div>
@@ -328,8 +322,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>杂谈</div>
-      <div>http://example.com/2024/11/14/杂谈/</div>
+      <div>锁相环CD4046使用心得</div>
+      <div>http://example.com/2024/11/23/锁相环CD4046的使用心得/</div>
     </div>
     <div class="license-meta">
       
@@ -341,7 +335,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年11月14日</div>
+          <div>2024年11月23日</div>
         </div>
       
       
@@ -373,18 +367,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/11/23/%E9%94%81%E7%9B%B8%E7%8E%AFCD4046%E7%9A%84%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/" title="锁相环CD4046使用心得">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">锁相环CD4046使用心得</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/10/30/%E6%97%A5%E8%AA%9E%E4%B8%AD%E7%9A%84%E3%80%8C%E3%81%8F%E3%81%AE%E5%AD%97%E7%82%B9%E3%80%8D/" title="日語中的「くの字点」">
-                        <span class="hidden-mobile">日語中的「くの字点」</span>
+                      <a href="/2024/11/14/%E6%9D%82%E8%B0%88/" title="杂谈">
+                        <span class="hidden-mobile">杂谈</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
