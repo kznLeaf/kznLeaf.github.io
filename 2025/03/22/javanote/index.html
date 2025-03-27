@@ -27,7 +27,7 @@
 <meta property="og:description" content="学习顺序：javase、mysql、jdbc、javaweb、mybatis、springmvc、spring，这几样基本上就是学习java的骨架了。 变量与运算符 标识符的命名规范  包名：多单词组成时所有字母都小写 xxxyyyzzz 类名、接口名：多单词组成时，所有单词的首字母大写 XxxYyyZzz 变量名、方法名：多单词组成时，第一个单词首字母小写，第二个单词开始每个单词首字">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-03-22T08:18:54.000Z">
-<meta property="article:modified_time" content="2025-03-26T14:52:48.113Z">
+<meta property="article:modified_time" content="2025-03-27T14:09:12.147Z">
 <meta property="article:author" content="Ep19">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3k 字
+          3.9k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          25 分钟
+          33 分钟
         
       </span>
     
@@ -643,8 +643,49 @@ do{<br />
 <h3 id="查找">查找</h3>
 <ol type="1">
 <li>线性查找：遍历数组返回索引 复杂度：O(N)</li>
-<li>二分法查找（适用于有序数组）复杂度：O(log₂N)</li>
+<li>二分法查找（适用于<strong>有序</strong>数组）复杂度：O(log₂N)</li>
 </ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs JAVA"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">dichotomy</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">int</span>[] arr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[]&#123;<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>,<span class="hljs-number">22</span>&#125;;<br><br>        <span class="hljs-type">int</span> <span class="hljs-variable">target</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<br><br>        <span class="hljs-type">boolean</span> <span class="hljs-variable">flag</span> <span class="hljs-operator">=</span> <span class="hljs-literal">false</span>;<span class="hljs-comment">//是否找到了</span><br><br>        <span class="hljs-type">int</span> <span class="hljs-variable">head</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<span class="hljs-comment">//默认的首索引</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">end</span> <span class="hljs-operator">=</span> arr.length - <span class="hljs-number">1</span>;<span class="hljs-comment">//默认的尾索引</span><br><br>        <span class="hljs-keyword">while</span> (head &lt;= end) &#123;<br><br>            <span class="hljs-type">int</span> <span class="hljs-variable">mid</span> <span class="hljs-operator">=</span> head + (end - head) / <span class="hljs-number">2</span>;<br><br>            <span class="hljs-keyword">if</span>(target == arr[mid]) &#123;<br>                System.out.println(<span class="hljs-string">&quot;found it, the index is &quot;</span> + mid);<br>                flag = <span class="hljs-literal">true</span>;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br><br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (target &gt; arr[mid]) &#123;<br>                head = mid + <span class="hljs-number">1</span>;<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                end = mid - <span class="hljs-number">1</span>;<br>            &#125;<br><br>        &#125;<br><br>        <span class="hljs-keyword">if</span> (!flag) &#123;<br>            System.out.println(<span class="hljs-string">&quot;not found&quot;</span>);<br>        &#125;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="排序算法">排序算法</h3>
+<ol type="1">
+<li>时间复杂度：分析关键字的比较次数和记录移动的次数，记为<span
+class="math inline">\(O(n)\)</span></li>
+<li>空间复杂度：分析排序算法中需要多少辅助内存，记为<span
+class="math inline">\(S(n)\)</span></li>
+<li>稳定性：若两个值相等的A和B在排序后的前后顺序不变，则这种排序算法是稳定的</li>
+</ol>
+<p><strong>冒泡排序</strong>：</p>
+<p>时间复杂度：<span class="math inline">\(O(n^2)\)</span></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs JAVA"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">bubbling</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">int</span>[] arr = &#123;<span class="hljs-number">5</span>,<span class="hljs-number">7</span>,<span class="hljs-number">2</span>,<span class="hljs-number">33</span>,<span class="hljs-number">55</span>,<span class="hljs-number">43</span>,<span class="hljs-number">22</span>,<span class="hljs-number">4</span>,<span class="hljs-number">9</span>,<span class="hljs-number">1</span>&#125;;<br><br>        <span class="hljs-comment">//打印初始数组</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k : arr) &#123;<br>            System.out.print(k + <span class="hljs-string">&quot;\t&quot;</span>);<br>        &#125;<br><br>        System.out.println();<br><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; arr.length; i++) &#123;<br><br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; j &lt; arr.length - <span class="hljs-number">1</span> - i; j++) &#123;<br>                <span class="hljs-keyword">if</span>(arr[j] &gt; arr[j+<span class="hljs-number">1</span>])&#123;<br>                    <span class="hljs-type">int</span> <span class="hljs-variable">temp</span> <span class="hljs-operator">=</span> arr[j];<br>                    arr[j] = arr[j+<span class="hljs-number">1</span>];<br>                    arr[j+<span class="hljs-number">1</span>] = temp;<br>                &#125;<br>            &#125;<br>            <br>        &#125;<br>        <span class="hljs-comment">//打印排序后的结果</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k : arr) &#123;<br>            System.out.print(k + <span class="hljs-string">&quot;\t&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>快速排序</strong></p>
+<p>时间复杂度： <span class="math inline">\(O(n\log(n))\)</span></p>
+<h2 id="arrays工具类">Arrays工具类</h2>
+<p><strong>判断两个数组是否相等</strong></p>
+<p>位置：java.util</p>
+<p>boolean equals(int[] a,int[] b)
+:比较两个数组的元素是否<strong>依次相等</strong>。相等时返回true。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs JAVA"><span class="hljs-keyword">import</span> java.util.Arrays;<br><br><span class="hljs-type">boolean</span> <span class="hljs-variable">isEquals</span> <span class="hljs-operator">=</span> Arrays.equals(arr1,arr2);<br></code></pre></td></tr></table></figure>
+<p><strong>输出数组信息</strong></p>
+<p><code>System.out.println(Arrays.toString(arr1));</code></p>
+<p><strong>填充</strong></p>
+<p>将数组中的所有元素填充为指定的数值，例如：<code>Arrays.fill(arr1,22);</code></p>
+<p><strong>排序</strong></p>
+<p><code>Arrays.sort(arr3);</code>，使用快速排序算法</p>
+<p>数组的索引，表示数组元素距离首地址的偏移量，第一个元素地址与首地址相同，偏移量为0，索引是0</p>
+<p>案例：</p>
+<blockquote>
+<p>输入一个整型数组，数组里既有正数也有负数，数组中连续的一个或多个整数成一个子数组，每个子数组都有一个和，求所有子数组的和的最大值。要求时间复杂度为O(n)。</p>
+</blockquote>
+<p><strong>卡丹算法</strong>(Kadane's Algorithm)，用
+<code>currentSum</code>记录以当前位置为结尾的子数组的最大和，<code>maxSum</code>记录所有子数组中的最大和。遍历数组，对于数组中的每个元素，最大子数组和只有两种可能：</p>
+<ol type="1">
+<li><code>nums[i]</code>自己构成一个子数组，最大子数组和就是它自己</li>
+<li><code>nums[i]</code>与前面的最大子数组和相加之后，得到的结果才是最大子数组和</li>
+</ol>
+<p>所以，<code>currentSum</code>每次都取以上两种情况中最大的一个。之后，更新<code>maxSum</code>，记录下这个最大值即可。实现的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs JAVA"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Description:</span><br><span class="hljs-comment"> * 输入一个整型数组，数组里既有正数也有负数，数组中连续的一个或多个整数成一个子数组，每个子数组都有一个和，</span><br><span class="hljs-comment"> * 求所有子数组的和的最大值。要求时间复杂度为O(n)。</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> ep19</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@version</span> 1.0</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@since</span> 2025/3/27 21:31</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">sum</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-comment">//创建数组</span><br>        <span class="hljs-type">int</span>[] nums = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[]&#123;<span class="hljs-number">1</span>,-<span class="hljs-number">3</span>,-<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>&#125;;<br><br>        <span class="hljs-type">int</span> <span class="hljs-variable">maxSum</span> <span class="hljs-operator">=</span> nums[<span class="hljs-number">0</span>];<span class="hljs-comment">//子数组和的最大值</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">currentSum</span> <span class="hljs-operator">=</span> nums[<span class="hljs-number">0</span>];<span class="hljs-comment">//当前的子数组的和</span><br><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>; i &lt; nums.length; i++) &#123;<span class="hljs-comment">//注意i从1开始计数，而不是0</span><br>            currentSum  = Math.max(currentSum + nums[i], nums[i]);<br>            maxSum = Math.max(maxSum, currentSum);<br>        &#125;<br><br>        System.out.println(<span class="hljs-string">&quot;maxSum is &quot;</span> + maxSum);<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>卡丹算法只需要对数组进行一次遍历，因此时间复杂度是<span
+class="math inline">\(O(n)\)</span>。</p>
 
                 
               </div>
@@ -790,6 +831,12 @@ do{<br />
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -962,6 +1009,49 @@ do{<br />
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
