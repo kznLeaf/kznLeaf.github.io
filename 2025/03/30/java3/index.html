@@ -26,10 +26,12 @@
 <meta property="og:site_name" content="Ep19&#39;s Blog">
 <meta property="og:description" content="this关键词 用this关键词可用来避免形参名和属性名重名的问题。简单来说，哪个对象调用，this就指向这个对象。 this还可以用来调用构造器（即构造方法重载）：  必须是构造方法的第一行 在一个构造器中最多声明一个this(形参列表)  12345678910111213141516171819202122232425public class This &#123;    pr">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.imgur.com/aJ69aSq.png">
 <meta property="article:published_time" content="2025-03-30T10:29:02.000Z">
-<meta property="article:modified_time" content="2025-03-30T13:59:13.639Z">
+<meta property="article:modified_time" content="2025-03-31T14:33:52.331Z">
 <meta property="article:author" content="Ep19">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.imgur.com/aJ69aSq.png">
   
   
   
@@ -226,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          278 字
+          1k 字
         
       </span>
     
@@ -237,7 +239,7 @@
         
         
         
-          3 分钟
+          9 分钟
         
       </span>
     
@@ -300,6 +302,95 @@
 </ol>
 <h2 id="语法">语法</h2>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs JAVA"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span>&#123;<br> <br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">B</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">A</span> &#123;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>Java中声明的类，如果没有显式的声明其父类，则默认继承于<code>java.lang.object</code></li>
+<li>Java只支持单继承，不支持多继承，一个子类只能有一个父类</li>
+</ul>
+<h2 id="protected-权限修饰符">protected 权限修饰符</h2>
+<p>声明为 protected 的成员可以被以下范围访问：</p>
+<ol type="1">
+<li>同一个类 ✅（当然可以访问）</li>
+<li>同一个包中的其他类 ✅（包内可以访问）</li>
+<li>子类（无论是否在同一个包） ✅（继承后可以访问）</li>
+<li>不同包中的非子类 ❌（不能访问）</li>
+</ol>
+<p>应用场景：</p>
+<ul>
+<li>用于子类的继承，子类可以访问<code>protected</code>的方法和变量。</li>
+</ul>
+<h1 id="方法的重写">方法的重写</h1>
+<p>方法重写(override)指的是子类对从父类继承的方法进行重新实现，提供不同的功能。</p>
+<ul>
+<li>必须发生在父类和子类之间</li>
+<li>方法名和参数列表必须相同</li>
+<li>子类的访问权限不能比父类更严格，不能重写<code>private</code>方法</li>
+<li>只能重写非static方法，static方法不能被重写</li>
+<li>可使用<code>@Override</code>注解</li>
+<li>关于返回值类型：<br />
+父类void，则重写必须void;<br />
+父类基本数据类型，则子类重写必须相同数据类型；<br />
+父类引用数据类型，则子类的返回值数据类型可以相同或是其子类</li>
+</ul>
+<p>区分方法的重载与重写：</p>
+<table>
+
+<thead>
+<tr>
+<th>特性</th>
+<th>方法重写（Override）</th>
+<th>方法重载（Overload）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>发生范围</strong></td>
+<td>子类和父类</td>
+<td>同一个类</td>
+</tr>
+<tr>
+<td><strong>方法名</strong></td>
+<td>必须相同</td>
+<td>必须相同</td>
+</tr>
+<tr>
+<td><strong>参数列表</strong></td>
+<td>必须相同</td>
+<td>必须不同（参数个数或类型不同）</td>
+</tr>
+<tr>
+<td><strong>返回值类型</strong></td>
+<td>必须兼容（可以是协变返回类型）</td>
+<td>可以不同</td>
+</tr>
+<tr>
+<td><strong>访问修饰符</strong></td>
+<td>不能比父类更严格</td>
+<td>没有限制</td>
+</tr>
+<tr>
+<td><strong>关键字</strong></td>
+<td>可以使用 <code>@Override</code></td>
+<td>不需要 <code>@Override</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>关键词<code>super</code>可以在存在重写的情况下调用父类中的方法，或是用来区分子类和父类中同名的属性。</li>
+<li>子类不会继承父类的构造器，<code>super(形参列表)</code>可以调用父类的构造器，放在构造器的<strong>首行</strong>。</li>
+<li>子类构造器默认隐式调用父类的无参构造器，<code>super()</code>，</li>
+<li>若父类为有参构造器，则子类必须也显式调用父类的有参构造器</li>
+<li>子类中使用<code>this</code>调用同一类中的其他构造器，用<code>super</code>调用父类的构造器，<strong>二者不能共存</strong></li>
+</ul>
+<h1 id="面向对象的多态性">面向对象的多态性</h1>
+<p>多态性(Polymorphism)的使用前提： 1. 要有类的继承关系 2.
+要有方法的<strong>重写</strong></p>
+<p>多态性适用于方法，不适用于属性。</p>
+<p>缺陷：父类引用的子类无法调用子类特有的方法。</p>
+<p>如果要判断某个对象是否属于某个类的实例，可以用<code>instanceof</code>关键字：<code>A instanceof B</code>，直接用于条件判断。</p>
+<p>多态可以通过向下转型提取出子类，从而可以调用子类的方法。在向下转型之前，可以使用<code>instanceof</code>进行判断，避免出现异常。</p>
+<h1 id="object类">Object类</h1>
+<p><code>java.lang.Object</code>是类层次结构的根类，是所有其他类的父类。</p>
+<p><img src="https://i.imgur.com/aJ69aSq.png" /></p>
 
                 
               </div>
