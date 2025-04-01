@@ -19,21 +19,21 @@
   <meta name="author" content="Ep19">
   <meta name="keywords" content="">
   
-    <meta name="description" content="🔹 行操作     操作 Windows &#x2F; Linux Mac     交换当前行和上一行 Alt + ↑ Option + ↑   交换当前行和下一行 Alt + ↓ Option + ↓   复制当前行 Shift + Alt + ↓ Shift + Option + ↓   删除当前行 Ctrl + Shift + K Cmd +">
+    <meta name="description" content="关键字static 作用：使得类的某一个成员变量被这个类的所有实例所共享（类变量、静态变量），使得我们不需要创建对象就可以调用某个方法（类方法）。 静态变量：  在内存空间中只有一份，被类的多个变量共享。 在JDK8之前，静态变量存储在方法区(Method Area)；JDK8及以后，由于永久代(PermGen)被移除，静态变量存储在元空间(Metaspace)。 在类加载时就被初始">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vscode实用快捷键总结">
-<meta property="og:url" content="http://example.com/2025/03/29/vscode/index.html">
+<meta property="og:title" content="Java基础知识（四）">
+<meta property="og:url" content="http://example.com/2025/04/01/java4/index.html">
 <meta property="og:site_name" content="Ep19&#39;s Blog">
-<meta property="og:description" content="🔹 行操作     操作 Windows &#x2F; Linux Mac     交换当前行和上一行 Alt + ↑ Option + ↑   交换当前行和下一行 Alt + ↓ Option + ↓   复制当前行 Shift + Alt + ↓ Shift + Option + ↓   删除当前行 Ctrl + Shift + K Cmd +">
+<meta property="og:description" content="关键字static 作用：使得类的某一个成员变量被这个类的所有实例所共享（类变量、静态变量），使得我们不需要创建对象就可以调用某个方法（类方法）。 静态变量：  在内存空间中只有一份，被类的多个变量共享。 在JDK8之前，静态变量存储在方法区(Method Area)；JDK8及以后，由于永久代(PermGen)被移除，静态变量存储在元空间(Metaspace)。 在类加载时就被初始">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-03-29T13:42:35.000Z">
-<meta property="article:modified_time" content="2025-04-01T07:18:39.951Z">
+<meta property="article:published_time" content="2025-04-01T07:16:48.000Z">
+<meta property="article:modified_time" content="2025-04-01T10:30:27.449Z">
 <meta property="article:author" content="Ep19">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>vscode实用快捷键总结 - Ep19&#39;s Blog</title>
+  <title>Java基础知识（四） - Ep19&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">vscode实用快捷键总结</span>
+            <span id="subtitle">Java基础知识（四）</span>
           
         </div>
 
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-03-29 21:42" pubdate>
-          2025年3月29日 晚上
+        <time datetime="2025-04-01 15:16" pubdate>
+          2025年4月1日 下午
         </time>
       </span>
     
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          252 字
+          471 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          3 分钟
+          4 分钟
         
       </span>
     
@@ -274,170 +274,67 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">vscode实用快捷键总结</h1>
+            <h1 id="seo-header">Java基础知识（四）</h1>
             
             
               <div class="markdown-body">
                 
-                <h3 id="行操作"><strong>🔹 行操作</strong></h3>
+                <h1 id="关键字static">关键字static</h1>
+<p><strong>作用</strong>：使得类的某一个成员变量被这个类的所有实例所共享（类变量、静态变量），使得我们不需要创建对象就可以调用某个方法（类方法）。</p>
+<p>静态变量：</p>
+<ul>
+<li>在内存空间中只有一份，被类的多个变量共享。</li>
+<li>在JDK8之前，静态变量存储在方法区(Method
+Area)；JDK8及以后，由于永久代(PermGen)被移除，静态变量存储在元空间(Metaspace)。</li>
+<li>在类加载时就被初始化，分配内存，只加载一次，整个程序运行期间一直存在，直到类被卸载。</li>
+</ul>
 <table>
 
 <thead>
 <tr>
-<th><strong>操作</strong></th>
-<th><strong>Windows / Linux</strong></th>
-<th><strong>Mac</strong></th>
+<th>类别</th>
+<th>存储位置</th>
+<th>生命周期</th>
+<th>归属</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>交换当前行和上一行</strong></td>
-<td><code>Alt + ↑</code></td>
-<td><code>Option + ↑</code></td>
+<td>静态变量（static 变量）</td>
+<td>方法区（JDK 8+ 为元空间）</td>
+<td>类加载时分配，类卸载时释放</td>
+<td>属于类，所有对象共享</td>
 </tr>
 <tr>
-<td><strong>交换当前行和下一行</strong></td>
-<td><code>Alt + ↓</code></td>
-<td><code>Option + ↓</code></td>
+<td>实例变量</td>
+<td>堆（Heap）</td>
+<td>对象创建时分配，垃圾回收时释放</td>
+<td>属于对象，每个对象都有独立副本</td>
 </tr>
 <tr>
-<td><strong>复制当前行</strong></td>
-<td><code>Shift + Alt + ↓</code></td>
-<td><code>Shift + Option + ↓</code></td>
-</tr>
-<tr>
-<td><strong>删除当前行</strong></td>
-<td><code>Ctrl + Shift + K</code></td>
-<td><code>Cmd + Shift + K</code></td>
-</tr>
-<tr>
-<td><strong>在下一行插入一行</strong></td>
-<td><code>Ctrl + Enter</code></td>
-<td><code>Cmd + Enter</code></td>
-</tr>
-<tr>
-<td><strong>在上一行插入一行</strong></td>
-<td><code>Ctrl + Shift + Enter</code></td>
-<td><code>Cmd + Shift + Enter</code></td>
+<td>局部变量</td>
+<td>栈（Stack）</td>
+<td>方法执行时分配，方法结束后释放</td>
+<td>属于方法，只能在当前方法中访问</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h3 id="选中-编辑"><strong>🔹 选中 &amp; 编辑</strong></h3>
-<table>
-
-<thead>
-<tr>
-<th><strong>操作</strong></th>
-<th><strong>Windows / Linux</strong></th>
-<th><strong>Mac</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>选中整行</strong></td>
-<td><code>Ctrl + L</code></td>
-<td><code>Cmd + L</code></td>
-</tr>
-<tr>
-<td><strong>选中多个相同单词</strong></td>
-<td><code>Ctrl + D</code></td>
-<td><code>Cmd + D</code></td>
-</tr>
-<tr>
-<td><strong>跳过当前选中，选中下一个匹配项</strong></td>
-<td><code>Ctrl + K, Ctrl + D</code></td>
-<td><code>Cmd + K, Cmd + D</code></td>
-</tr>
-<tr>
-<td><strong>选中所有匹配项</strong></td>
-<td><code>Ctrl + Shift + L</code></td>
-<td><code>Cmd + Shift + L</code></td>
-</tr>
-<tr>
-<td><strong>展开选中区域</strong></td>
-<td><code>Shift + Alt + →</code></td>
-<td><code>Shift + Option + →</code></td>
-</tr>
-<tr>
-<td><strong>缩小选中区域</strong></td>
-<td><code>Shift + Alt + ←</code></td>
-<td><code>Shift + Option + ←</code></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h3 id="多光标编辑"><strong>🔹 多光标编辑</strong></h3>
-<table>
-
-<thead>
-<tr>
-<th><strong>操作</strong></th>
-<th><strong>Windows / Linux</strong></th>
-<th><strong>Mac</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>添加多个光标</strong></td>
-<td><code>Alt + 点击</code></td>
-<td><code>Option + 点击</code></td>
-</tr>
-<tr>
-<td><strong>在选中区域的每一行添加光标</strong></td>
-<td><code>Shift + Alt + I</code></td>
-<td><code>Shift + Option + I</code></td>
-</tr>
-<tr>
-<td><strong>光标向上添加一个光标</strong></td>
-<td><code>Ctrl + Alt + ↑</code></td>
-<td><code>Cmd + Option + ↑</code></td>
-</tr>
-<tr>
-<td><strong>光标向下添加一个光标</strong></td>
-<td><code>Ctrl + Alt + ↓</code></td>
-<td><code>Cmd + Option + ↓</code></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h3 id="代码格式-其他"><strong>🔹 代码格式 &amp; 其他</strong></h3>
-<table>
-<thead>
-<tr>
-<th><strong>操作</strong></th>
-<th><strong>Windows / Linux</strong></th>
-<th><strong>Mac</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>格式化代码</strong></td>
-<td><code>Shift + Alt + F</code></td>
-<td><code>Shift + Option + F</code></td>
-</tr>
-<tr>
-<td><strong>快速打开文件</strong></td>
-<td><code>Ctrl + P</code></td>
-<td><code>Cmd + P</code></td>
-</tr>
-<tr>
-<td><strong>打开终端</strong></td>
-<td><code>Ctrl + ~</code></td>
-<td><code>Cmd + ~</code></td>
-</tr>
-<tr>
-<td><strong>查找</strong></td>
-<td><code>Ctrl + F</code></td>
-<td><code>Cmd + F</code></td>
-</tr>
-<tr>
-<td><strong>替换</strong></td>
-<td><code>Ctrl + H</code></td>
-<td><code>Cmd + H</code></td>
-</tr>
-</tbody>
-</table>
+<p>类方法：</p>
+<ul>
+<li>随着类的加载而加载</li>
+<li>静态方法内可以调用静态的属性或静态的方法，不可以调用非静态的结构。</li>
+<li><code>static</code>修饰的方法内不能使用<code>this</code>和<code>super</code>，因为<code>static</code>是属于<strong>类</strong>的，而<code>this</code>和<code>super</code>代表的是当前对象和当前对象的父类部分，他们都需要依赖于<strong>对象</strong>。同理，就算对象是一个空指针，也能正常调用静态的属性和方法，因为<code>static</code>不依赖于对象。</li>
+</ul>
+<p>什么时候需要<code>static</code>？</p>
+<ul>
+<li>当前的多个实例需要共享此成员变量</li>
+<li>一些常量，比如PI</li>
+</ul>
+<p>什么时候要用静态方法？</p>
+<ul>
+<li>方法内要操作的变量都是静态变量时</li>
+<li>工具类中的方法，比如<code>Arrays</code>，<code>Math</code>类</li>
+</ul>
 
                 
               </div>
@@ -445,6 +342,27 @@
             <hr/>
             <div>
               <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java-SE/" class="category-chain-item">Java SE</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
   
   
 </div>
@@ -455,8 +373,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>vscode实用快捷键总结</div>
-      <div>http://example.com/2025/03/29/vscode/</div>
+      <div>Java基础知识（四）</div>
+      <div>http://example.com/2025/04/01/java4/</div>
     </div>
     <div class="license-meta">
       
@@ -468,7 +386,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年3月29日</div>
+          <div>2025年4月1日</div>
         </div>
       
       
@@ -500,18 +418,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/03/30/java3/" title="Java基础知识（三）">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Java基础知识（三）</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/03/28/java2/" title="Java基础知识（二）">
-                        <span class="hidden-mobile">Java基础知识（二）</span>
+                      <a href="/2025/03/30/java3/" title="Java基础知识（三）">
+                        <span class="hidden-mobile">Java基础知识（三）</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
