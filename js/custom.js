@@ -46,3 +46,4 @@ document.addEventListener('DOMContentLoaded', function() {
   document
   .querySelector("#banner .mask")
   .setAttribute('style', 'background-color:rgba(0,0,0,0)')
+

@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.imgur.com/0g6owHM.png">
 <meta property="article:published_time" content="2025-04-01T07:16:48.000Z">
-<meta property="article:modified_time" content="2025-04-02T12:52:59.894Z">
+<meta property="article:modified_time" content="2025-04-03T12:40:04.198Z">
 <meta property="article:author" content="Ep19">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://i.imgur.com/0g6owHM.png">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          2.1k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          12 分钟
+          18 分钟
         
       </span>
     
@@ -426,6 +426,79 @@ Area)；JDK8及以后，由于永久代(PermGen)被移除，静态变量存储�
 <ul>
 <li>定义统一的接口，让不同的子类提供具体的实现。抽象类中只提供通用的逻辑，至于扩展特定的功能则交给子类的重写(Implement)。</li>
 </ul>
+<h1 id="接口">接口</h1>
+<h2 id="概述">概述</h2>
+<p>接口(interface)的本质是一组方法的规范。关键字：<code>interface</code>，</p>
+<p>接口内部的说明：</p>
+<ul>
+<li>属性：不能包含实例变量，但可以有用<code>public static final</code>修饰（默认自带）。例如：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Animal</span>&#123;<br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">eat</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">sleep</span><span class="hljs-params">()</span>;<br>    <span class="hljs-type">int</span> <span class="hljs-variable">MAX_AGE</span> <span class="hljs-operator">=</span> <span class="hljs-number">100</span>;  <span class="hljs-comment">// 等价于 public static final int MAX_AGE = 100;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>方法：声明抽象方法，修饰为<code>public abstract</code>（可以省略，默认自带）。</li>
+<li><strong>不能有构造器</strong>（接口<strong>不能被实例化</strong>）。</li>
+</ul>
+<p><strong>接口与类的关系</strong>：使用<code>implements</code>关键字让一个类实现接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Animal</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">eat</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Dog is eating...&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sleep</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Dog is sleeping...&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>规则</strong>：</p>
+<ol type="1">
+<li>类必须实现接口中的<strong>所有</strong>方法，否则必须将类定义为<code>abstract</code>。</li>
+<li>一个类可以实现<strong>多个接口</strong>（不像继承，Java只能单继承）。</li>
+<li>类可以同时继承和实现：<code>class A extends SuperA implements B,C&#123;&#125;</code></li>
+</ol>
+<p>接口与接口可以多继承，类只能单继承。</p>
+<h2 id="接口的多态性">接口的多态性</h2>
+<p><code>接口名 变量名 = new 实现类</code> 非常常用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">test</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">Animal</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Dog</span>();<span class="hljs-comment">//多态</span><br>        a.eat();<br>        a.sleep();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>区分抽象类和接口</strong>：</p>
+<ul>
+<li>共性：都可以声明抽象方法，都不能实例化</li>
+<li>不同：抽象类一定有构造器，接口没有构造器；</li>
+</ul>
+<p>接口中声明的静态方法（java8引入）只能被接口调用，不能被其实现类调用。</p>
+<p>从java8开始，接口可以有<code>default</code>方法，允许提供默认实现。默认方法可以被实现类继承，可以被实现类重写，不过在多实现时要注意重名问题（接口冲突），接口冲突时必须重写该方法。</p>
+<p>java9允许接口定义<strong>私有方法</strong>，只在内部使用。</p>
+<h1 id="类的成员内部类">类的成员：内部类</h1>
+<h2 id="概述-1">概述</h2>
+<p><strong>内部类(inner
+Class)</strong>：某个类A的内部还有一个部分需要一个完整的结构B来描述，B只为A服务，不在其他地方使用。A称为外部类，B称为内部类。</p>
+<p>举例：<code>Thread</code>类内部的<code>State</code>类，表示线程的生命周期。</p>
+<h2 id="分类">分类</h2>
+<h3 id="成员内部类member-inner-class">1.成员内部类(Member Inner
+Class)</h3>
+<ul>
+<li>直接声明在外部类的里面，和成员变量一个位置。
+<ul>
+<li>使用static修饰的：静态成员内部类</li>
+<li>不使用static修饰的：非静态的成员内部类</li>
+</ul></li>
+<li>从类的角度看：
+<ul>
+<li>内部可以声明类应有的结构</li>
+<li>此内部类可以声明父类，实现接口</li>
+<li>可以使用final修饰</li>
+<li>也可以使用abstract</li>
+</ul></li>
+<li>从外部类的成员的角度：
+<ul>
+<li>内部可以调用外部的结构</li>
+<li>可以使用4种权限修饰符</li>
+<li>可以使用static</li>
+</ul></li>
+</ul>
+<h3 id="局部内部类local-inner-class">2.局部内部类(Local Inner
+Class)</h3>
+<ul>
+<li>声明在方法内部内、构造器内或代码块内的内部类
+<ul>
+<li>匿名的成员内部类</li>
+<li>非匿名的成员内部类</li>
+</ul></li>
+</ul>
+<p><mark>匿名内部类的创建</mark></p>
+<p>例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ObjectTest</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br><br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>()&#123;<span class="hljs-comment">//创建一个继承于Object的匿名子类</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test</span><span class="hljs-params">()</span> &#123;<br>                System.out.println(<span class="hljs-string">&quot;test&quot;</span>);<br>            &#125;<br>        &#125;.test();<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>以上代码可以无错误无警告地运行。</p>
 
                 
               </div>
