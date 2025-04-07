@@ -26,10 +26,12 @@
 <meta property="og:site_name" content="Ep19&#39;s Blog">
 <meta property="og:description" content="异常 指的是程序在执行过程中，出现的非正常情况，如果不处理最终会导致JVM的非正常停止。 一旦发生某种异常Java就创建该异常类型的对象，并且抛出(throw)。 Error:java虚拟机无法处理的严重问题，一般不编写针对性的代码。例如：栈内存溢出，堆内存溢出。 Exception:异常处理的情况，需要针对性的代码进行处理。  编译时异常 运行时异常  常见的运行时异常：角标越">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.imgur.com/eTf0YbI.png">
 <meta property="article:published_time" content="2025-04-06T01:21:59.000Z">
-<meta property="article:modified_time" content="2025-04-06T12:00:38.123Z">
+<meta property="article:modified_time" content="2025-04-07T12:09:57.545Z">
 <meta property="article:author" content="Ep19">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.imgur.com/eTf0YbI.png">
   
   
   
@@ -226,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          2.7k 字
         
       </span>
     
@@ -237,7 +239,7 @@
         
         
         
-          12 分钟
+          23 分钟
         
       </span>
     
@@ -393,6 +395,113 @@
 <p>形参为接口<code>Runnable</code>类型。<code>Runnable</code>是<code>Thread</code>类可以接受的类型，而<code>numberPrint</code>实现了<code>Runnable</code>接口，因此<code>Thread</code>类可以接受<code>numberPrint</code>类型的对象。</p>
 <p><code>Thread</code>类并不关心具体传入的是哪一个实现<code>Runnable</code>接口的类，<code>numberPrint</code>只是其中的一个实现。</p>
 <p><strong>多态性</strong>体现在，<code>Thread</code>类能够接受任何实现了<code>Runnable</code>接口的对象，实际执行的是实现类中的<code>run()</code>方法。</p>
+<h2 id="thread的常用方法">Thread的常用方法</h2>
+<ul>
+<li><code>start()</code>:启动线程，调用线程的run()</li>
+<li><code>run()</code>:将线程要执行的操作声明在run()中</li>
+<li><code>currentThread()</code>:获取当前执行代码对应的线程</li>
+<li><code>getName()</code>:获取线程名</li>
+<li><code>setName()</code>:设置线程名</li>
+<li><code>sleep(long millis)</code>:Thread类的<strong>静态</strong>方法，使当前线程睡眠指定的毫秒数</li>
+<li><code>yield()</code>:一旦执行此方法，则提示当前线程让出CPU资源，让其他同优先级的线程有机会先执行（它只是一个<strong>提示</strong>，<strong>不能保证</strong>当前线程就一定会被挂起或其他线程就一定会立即执行）。调用该方法的线程会：
+<ul>
+<li>实际开发中，yield()
+<strong>很少用</strong>来做线程调度控制，因为它行为不确定。</li>
+</ul></li>
+<li><code>join()</code>:<strong>非静态</strong>方法，等指定线程执行完毕，再继续执行当前线程。一般用于main等子线程执行完，而不会用于main，因为main的结束通常就意味着整个程序的结束。</li>
+<li><code>isAlive()</code>:判断当前线程是否存活。</li>
+</ul>
+<h2 id="线程的优先级">线程的优先级</h2>
+<p>线程优先级（Thread Priority）是 Java
+中用于提示操作系统调度器：哪个线程应该“更重要”，<strong>更可能获得 CPU
+时间片先运行的</strong>一种机制。</p>
+<p><strong>线程优先级是建议，不是命令！</strong>操作系统可以参考，也可以无视它。</p>
+<ul>
+<li>getPriority():获取线程的优先级</li>
+<li>setPriority():1~10</li>
+<li>优先级的三个常量：
+<ul>
+<li>MIN_PRIORITY = 1;最低优先级</li>
+<li>NORM_PRIORITY = 5;默认优先级</li>
+<li>MAX_PRIORITY = 10;最高优先级</li>
+</ul></li>
+<li>实际项目中很少用，一般由操作系统决定线程调度。</li>
+</ul>
+<h2 id="线程的生命周期">线程的生命周期</h2>
+<p>现成的不同状态被定义在<code>Thread.java</code>的枚举类中。这些状态是Java虚拟机层面定义的状态，不一定等同于操作系统的线程状态。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> <span class="hljs-title class_">State</span> &#123;<br><br>    NEW,<br><br>    RUNNABLE,<span class="hljs-comment">//就绪+运行,Ready+Running=Runnable</span><br><br>    BLOCKED,<span class="hljs-comment">//阻塞，A thread that is blocked waiting for a monitor lock is in this state.</span><br><br>    WAITING,<span class="hljs-comment">//无限期等待</span><br><br>    TIMED_WAITING,<span class="hljs-comment">//限时等待</span><br><br>    TERMINATED;<span class="hljs-comment">//终止</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure>
+<img src="https://i.imgur.com/eTf0YbI.png" alt="线程状态图解" />
+<figcaption aria-hidden="true">线程状态图解</figcaption>
+</figure>
+<h2 id="线程的安全问题">线程的安全问题</h2>
+<p>多个线程访问同一资源时，如果都对资源有读和写的操作，可能会出现线程安全问题。</p>
+<h3 id="解决方法">解决方法</h3>
+<ol type="1">
+<li><strong>同步代码块</strong></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">synchronized</span>(同步监视器)&#123;<br>    <span class="hljs-comment">//需要被同步的代码，即操作共享数据的代码</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>作用：需要被同步的代码，当一个线程在操作这些代码的过程中其他线程必须等待。</li>
+<li>同步监视器，俗称锁(Lock)。哪个线程获取了锁，哪个线程就能执行需要被同步的代码。</li>
+<li>同步监视器可以使用任何一个类的实例充当。多个线程必须共用<strong>同一个</strong>同步监视器，是唯一的。</li>
+</ul>
+<ol start="2" type="1">
+<li><strong>同步方法</strong></li>
+</ol>
+<p>直接把方法声明为同步方法。相当于同步代码块的简化写法。</p>
+<ul>
+<li><code>synchronized</code>（实例方法）的同步监视器是this当前对象</li>
+<li><code>static synchronized</code>（静态方法）的同步监视器是当前类的class对象</li>
+</ul>
+<p>synchronized弊端：串行执行，性能会低一些。</p>
+<h3 id="线程安全的懒汉式">线程安全的懒汉式</h3>
+<p>方式一：声明为同步方法即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Bank</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-title function_">Bank</span><span class="hljs-params">()</span>&#123;&#125;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">Bank</span> <span class="hljs-variable">bank</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">synchronized</span> Bank <span class="hljs-title function_">getBank</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">/*相当于</span><br><span class="hljs-comment">        synchronized (Bank.class) &#123;</span><br><span class="hljs-comment">            if(bank == null) &#123;</span><br><span class="hljs-comment">                bank = new Bank();</span><br><span class="hljs-comment">            &#125;</span><br><span class="hljs-comment">        &#125;</span><br><span class="hljs-comment">        */</span><br>        <span class="hljs-keyword">if</span>(bank == <span class="hljs-literal">null</span>) &#123;<br>            bank = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Bank</span>();<br>        &#125;<br>        <span class="hljs-keyword">return</span> bank;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>方式二：同步代码块，与方式一等价。</p>
+<p>方式三：避免指令重排的方式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Bank</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">volatile</span> <span class="hljs-type">Bank</span> <span class="hljs-variable">bank</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>; <span class="hljs-comment">// 加 volatile 防止指令重排</span><br><br>    <span class="hljs-keyword">private</span> <span class="hljs-title function_">Bank</span><span class="hljs-params">()</span> &#123;&#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Bank <span class="hljs-title function_">getBank</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">if</span> (bank == <span class="hljs-literal">null</span>) &#123; <span class="hljs-comment">// 第一次检查</span><br>            <span class="hljs-keyword">synchronized</span> (Bank.class) &#123;<br>                <span class="hljs-keyword">if</span> (bank == <span class="hljs-literal">null</span>) &#123; <span class="hljs-comment">// 第二次检查</span><br>                    bank = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Bank</span>();<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> bank;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="死锁">死锁</h2>
+<p>两个或多个线程在执行过程中，互相等待对方释放资源，结果谁也不释放，谁也无法继续执行，程序就“卡住”了。
+## Lock</p>
+<p><code>import java.util.concurrent.locks.ReentrantLock;</code></p>
+<ol type="1">
+<li>创建Lock的实例，确保多个线程共用一个lock实例:<code>private final Lock mylock = new ReentrantLock();</code></li>
+<li>执行lock方法：<code>mylock.lock</code></li>
+<li>调用unlock()，释放对共享数据的锁定。</li>
+</ol>
+<p>Lock更加灵活，推荐。</p>
+<h2 id="线程间的通信机制">线程间的通信机制</h2>
+<p>常用方法：</p>
+<ul>
+<li>wait():执行此方法的线程进入等待状态，<strong>同时会释放对同步监视器的调用</strong>，这一点与sleep()不同。“不干了，等通知”</li>
+<li>notify():用来<strong>唤醒一个正在等待这个对象锁的线程</strong>。这个线程必须是因为<code>wait()</code>暂停的，别的不会受影响（在多个线程存在的情况下，唤醒优先级最高的那一个）。“<em>你可以起来干了</em>”。被唤醒的线程从当初被wait的位置继续执行。</li>
+<li><strong>注意</strong>:wait()和notify()在调用时都应当让同步监视器(synchronized(obj)的obj)调用，否则报<code>IllegalMonitorStateException</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">synchronized</span>(obj) &#123;<br>    obj.wait();<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>notifyAll():唤醒所有被wait的线程</li>
+</ul>
+<p>以上三个方法<strong>必须</strong>用于<strong>同步代码块或同步方法</strong>中。</p>
+<p>不同点： - 声明的位置: - wait():声明在Object类中 -
+sleep()：声明在Thread类中，静态的</p>
+<ul>
+<li>使用的场景不同：
+<ul>
+<li>wait()：只能使用在同步代码块或同步方法中</li>
+<li>sleep():可以在任何需要使用的场景</li>
+</ul></li>
+<li>使用在同步代码块或同步方法中：
+<ul>
+<li>wait()：一旦执行，会释放同步监视器</li>
+<li>sleep()：一旦执行，不会释放同步监视器</li>
+</ul></li>
+<li>结束阻塞的方式：
+<ul>
+<li>wait()：到达指定时间自动结束阻塞 或 通过被notify唤醒，结束阻塞</li>
+<li>sleep():到达指定时间自动结束阻塞</li>
+</ul></li>
+</ul>
 
                 
               </div>
@@ -475,6 +584,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2025/04/07/sss/" title="sasakure.UK x DECO*27 - 39 feat. 初音ミク">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">sasakure.UK x DECO*27 - 39 feat. 初音ミク</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
