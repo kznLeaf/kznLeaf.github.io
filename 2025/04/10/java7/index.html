@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.imgur.com/uRaHFI0.png">
 <meta property="article:published_time" content="2025-04-10T06:59:38.000Z">
-<meta property="article:modified_time" content="2025-04-11T13:33:37.102Z">
+<meta property="article:modified_time" content="2025-04-12T06:45:41.934Z">
 <meta property="article:author" content="Ep19">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://i.imgur.com/uRaHFI0.png">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          1.9k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          15 分钟
+          16 分钟
         
       </span>
     
@@ -290,11 +290,11 @@
 <ul>
 <li><code>java.util.Collection</code>:存储一个一个的数据
 <ul>
-<li>子接口：List，存储<strong>有序</strong>的、<strong>可重复</strong>的数据（动态数组）
+<li>子接口：<strong>List</strong>，存储<strong>有序</strong>的、<strong>可重复</strong>的数据（动态数组）
 <ul>
 <li><code>ArrayList</code>,<code>LinkedList</code>,<code>Vector</code></li>
 </ul></li>
-<li>子接口：Set，存储<strong>无序</strong>的、<strong>不可重复</strong>的数据（类似集合）
+<li>子接口：<strong>Set</strong>，存储<strong>无序</strong>的、<strong>不可重复</strong>的数据（类似集合）
 <ul>
 <li><code>HashSet</code>,<code>LinkedHashSet</code>,<code>TreeSet</code></li>
 </ul></li>
@@ -461,7 +461,7 @@
 <h2 id="treeset">TreeSet</h2>
 <p>底层：红黑树。可以按照指定的大小顺序自动排序。</p>
 <ul>
-<li>要求TreeSet中的元素必须是同一个类型，否则类型转换错误。</li>
+<li>要求TreeSet中的元素必须是<strong>同一个类型</strong>，否则类型转换错误。</li>
 <li>处理对象比较方法，排序的标准就是自然排序或定制排序对应方法的返回值。如果是零则认为是相等，不添加新元素。</li>
 <li>不需要重写<code>hashCode()</code>和<code>equals()</code>方法。</li>
 </ul>
@@ -585,8 +585,8 @@
 <code>map.put(element, PRESENT);</code></p>
 <hr />
 <ul>
-<li>HashMap中的key用Set来存放，无序而且不允许重复，所以同一个Map对象所对应的类需要重写hashCode和equals。</li>
-<li>HashMap中的Value可重复、无序。不强制重写任何方法。</li>
+<li>HashMap中的key用Set来存放，无序而且不允许重复，所以同一个Map对象所对应的类<strong>需要重写hashCode和equals</strong>。</li>
+<li>HashMap中的Value可重复、无序。<strong>不强制重写任何方法</strong>。</li>
 </ul>
 <blockquote>
 <p>hashCode()：如果两个键的哈希值不同，那么肯定不是相同的键。如果相同，不一定相等，还要靠equals()再判断一次。<br />
@@ -604,6 +604,20 @@ equals():二次判断</p>
 <li>长度：size()</li>
 <li>遍历：Set keySet(),Collection values(),Set entrySet()</li>
 </ul>
+<h2 id="treemap">TreeMap</h2>
+<ul>
+<li>底层使用红黑树，按照<strong>key</strong>指定的大小顺序排序。</li>
+<li>需要考虑使用对象排序</li>
+<li>必须是<strong>同一个类型</strong>的对象</li>
+</ul>
+<h2 id="properties">Properties</h2>
+<ul>
+<li>Hashtable的子类</li>
+<li>键和值都是String类型，用来处理属性文件</li>
+</ul>
+<h1 id="collections工具类">Collections工具类</h1>
+<p><code>Collection</code>是集合框架中的存储一个一个元素的接口，又分为List和Set等子接口。</p>
+<p><code>Collections</code>是一个操作Set,List,Map等集合的工具类。</p>
 
                 
               </div>
@@ -686,6 +700,12 @@ equals():二次判断</p>
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2025/04/12/java8/" title="Java SE(8)-泛型">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java SE(8)-泛型</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
