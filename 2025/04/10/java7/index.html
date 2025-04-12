@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.imgur.com/uRaHFI0.png">
 <meta property="article:published_time" content="2025-04-10T06:59:38.000Z">
-<meta property="article:modified_time" content="2025-04-10T14:45:02.499Z">
+<meta property="article:modified_time" content="2025-04-11T13:33:37.102Z">
 <meta property="article:author" content="Ep19">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://i.imgur.com/uRaHFI0.png">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          850 字
+          1.8k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          8 分钟
+          15 分钟
         
       </span>
     
@@ -444,9 +444,165 @@
 <h1 id="set">Set</h1>
 <p>存储无序的不可重复的数据。</p>
 <ul>
-<li>HashSet:<strong>主要实现类</strong></li>
-<li>LinkedHashSet:</li>
-<li>TreeSet:</li>
+<li><code>HashSet</code>:<strong>主要实现类</strong>，底层使用<code>HashMap</code>，即数组+单向链表+红黑树
+<ul>
+<li><code>LinkedHashSet</code>:<code>HashSet</code>的子类；在现有的结构的基础上又添加了一组双向链表，用于记录添加元素的先后顺序，便于频繁的查询操作。</li>
+</ul></li>
+<li><code>TreeSet</code>:底层使用红黑树存储。可以按照添加元素的指定的属性大小顺序进行遍历。</li>
+</ul>
+<p>常用方法即<code>Collection</code>中常用的方法，无新增方法。</p>
+<ul>
+<li>使用频率：相较于List和Map来说Set使用的频率较小。</li>
+<li>用来过滤重复数据。</li>
+</ul>
+<p><strong>无序性</strong>：添加的元素的<strong>存储顺序</strong>并非依次紧密排列，使用哈希算法。如果想保留添加元素的顺序，就用<code>LinkedHashSet</code>；如果希望自动排序，就用<code>TreeSet</code>。</p>
+<p>添加到HashSet/LinkedHashSet中的元素的要求：元素所在的类要重写两个方法：<code>equal()</code>和<code>hashCode()</code>。比较的标准：哈希值和equals得到的布尔型变量的值。</p>
+<p><code>HashSet</code>用于去重</p>
+<h2 id="treeset">TreeSet</h2>
+<p>底层：红黑树。可以按照指定的大小顺序自动排序。</p>
+<ul>
+<li>要求TreeSet中的元素必须是同一个类型，否则类型转换错误。</li>
+<li>处理对象比较方法，排序的标准就是自然排序或定制排序对应方法的返回值。如果是零则认为是相等，不添加新元素。</li>
+<li>不需要重写<code>hashCode()</code>和<code>equals()</code>方法。</li>
+</ul>
+<h1 id="map">Map</h1>
+<h2 id="map及其实现类对比">Map及其实现类对比</h2>
+<p><code>java.util.Map</code>:存储一对一对的<strong>键值对</strong>.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs text">               ┌──────────────┐<br>               │   Map接口    │<br>               └─────┬────────┘<br>                     │<br>        ┌────────────┴─────────────┐<br>        │                          │<br>  ┌─────▼─────┐              ┌─────▼─────┐<br>  │ HashMap   │              │ SortedMap │（接口）<br>  └─────┬─────┘              └─────┬─────┘<br>        │                          │<br>┌───────▼────────┐           ┌─────▼─────┐<br>│ LinkedHashMap  │           │ TreeMap   │<br>└────────────────┘           └───────────┘<br><br>┌──────────────┐<br>│ Hashtable    │（古老的线程安全实现）<br>└─────┬────────┘<br>      │<br>┌─────▼─────┐<br>│Properties │（子类，专用于配置文件）<br>└───────────┘<br></code></pre></td></tr></table></figure>
+<table>
+
+<thead>
+<tr>
+<th>特性</th>
+<th>HashMap</th>
+<th>LinkedHashMap</th>
+<th>TreeMap</th>
+<th>Hashtable</th>
+<th>Properties</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>所属接口</td>
+<td>Map</td>
+<td>Map</td>
+<td>Map, SortedMap, NavigableMap</td>
+<td>Map</td>
+<td>Hashtable</td>
+</tr>
+<tr>
+<td>是否线程安全</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>是否允许 null 键</td>
+<td>是（最多一个）</td>
+<td>是（最多一个）</td>
+<td>否（键不能为 null）</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>是否有序</td>
+<td>否</td>
+<td>有插入顺序</td>
+<td>有自然顺序或指定 Comparator</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>底层结构</td>
+<td>哈希表</td>
+<td>哈希表 + 双向链表</td>
+<td>红黑树</td>
+<td>哈希表</td>
+<td>哈希表</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>查询快，一般推荐</td>
+<td>查询快，顺序操作性能略低</td>
+<td>查询较慢，适合排序需求</td>
+<td>查询快，但并发性能不佳</td>
+<td>主要用于配置文件加载</td>
+</tr>
+<tr>
+<td>用途</td>
+<td>通用 Map 容器</td>
+<td>保留插入顺序的 Map</td>
+<td>需要排序的 Map</td>
+<td>早期线程安全 Map，已过时</td>
+<td>存储配置信息（key/value 字符串）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hashmap">HashMap</h2>
+<p><code>HashSet</code>就是基于<code>HashMap</code>实现的。两者的对比如下：</p>
+<table>
+
+<thead>
+<tr>
+<th>特性</th>
+<th><code>HashSet</code></th>
+<th><code>HashMap</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>存储结构</td>
+<td>只存储元素（作为键）</td>
+<td>存储键值对（key-value）</td>
+</tr>
+<tr>
+<td>是否允许重复</td>
+<td>❌ 不允许重复元素</td>
+<td>✅ 键不允许重复，值可以重复</td>
+</tr>
+<tr>
+<td>内部实现</td>
+<td>基于 <code>HashMap</code> 实现</td>
+<td>使用数组+链表（或红黑树）实现</td>
+</tr>
+<tr>
+<td>查找效率</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>底层结构</td>
+<td>实际是 <code>HashMap&lt;E, Object&gt;</code></td>
+<td>实际是 <code>HashMap&lt;K, V&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>HashSet</code>中只存储元素（值），而不是键值对。</p>
+<p>为了实现这一点，它把元素作为<code>HashMap</code>的键，用一个统一的对象（比如<code>PRESENT</code>）作为值。</p>
+<p>所以其实每次你往<code>HashSet</code>添加一个元素时，它是在底层的<code>HashMap</code>中添加了一条键值对：
+<code>map.put(element, PRESENT);</code></p>
+<hr />
+<ul>
+<li>HashMap中的key用Set来存放，无序而且不允许重复，所以同一个Map对象所对应的类需要重写hashCode和equals。</li>
+<li>HashMap中的Value可重复、无序。不强制重写任何方法。</li>
+</ul>
+<blockquote>
+<p>hashCode()：如果两个键的哈希值不同，那么肯定不是相同的键。如果相同，不一定相等，还要靠equals()再判断一次。<br />
+equals():二次判断</p>
+</blockquote>
+<ul>
+<li>每一个键值对构成一个<strong>entry</strong>，所有的entry构成了一个Set集合</li>
+</ul>
+<p><strong>基本操作</strong>：</p>
+<ul>
+<li>增：put(Object key,Object value) putAll(Map m)</li>
+<li>删：Object remove(Object key)</li>
+<li>改：put(Object key,Object value)返回值为旧数据，覆盖。putAll</li>
+<li>查：Object get(Object key)</li>
+<li>长度：size()</li>
+<li>遍历：Set keySet(),Collection values(),Set entrySet()</li>
 </ul>
 
                 
