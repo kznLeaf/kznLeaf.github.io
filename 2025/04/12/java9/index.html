@@ -19,21 +19,21 @@
   <meta name="author" content="Ep19">
   <meta name="keywords" content="">
   
-    <meta name="description" content="概述 泛型（Generics）是Java提供的一种机制，让类、接口、方法在定义时可以指定类型参数，从而实现类型安全和代码复用。 123456789101112131415161718192021public class exer1 &#123;    public static void main(String[] args) &#123;        HashMap&lt;String,I">
+    <meta name="description" content="ArrayList ArrayList是 Java 中基于数组实现的一个可变长度的动态数组，它实现了List接口。位置：java.util.ArrayList Java 8及之后的版本： 底层数据结构： 创建一个Object数组，默认为空数组（懒汉式） 12transient Object[] elementData; &#x2F;&#x2F; 实际存储元素的数组private int size;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java SE(8)-泛型">
-<meta property="og:url" content="http://example.com/2025/04/12/java8/index.html">
+<meta property="og:title" content="Java集合源码剖析">
+<meta property="og:url" content="http://example.com/2025/04/12/java9/index.html">
 <meta property="og:site_name" content="Ep19&#39;s Blog">
-<meta property="og:description" content="概述 泛型（Generics）是Java提供的一种机制，让类、接口、方法在定义时可以指定类型参数，从而实现类型安全和代码复用。 123456789101112131415161718192021public class exer1 &#123;    public static void main(String[] args) &#123;        HashMap&lt;String,I">
+<meta property="og:description" content="ArrayList ArrayList是 Java 中基于数组实现的一个可变长度的动态数组，它实现了List接口。位置：java.util.ArrayList Java 8及之后的版本： 底层数据结构： 创建一个Object数组，默认为空数组（懒汉式） 12transient Object[] elementData; &#x2F;&#x2F; 实际存储元素的数组private int size;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-04-12T06:29:26.000Z">
-<meta property="article:modified_time" content="2025-04-12T11:52:38.829Z">
+<meta property="article:published_time" content="2025-04-12T11:59:07.000Z">
+<meta property="article:modified_time" content="2025-04-13T02:35:33.300Z">
 <meta property="article:author" content="Ep19">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Java SE(8)-泛型 - Ep19&#39;s Blog</title>
+  <title>Java集合源码剖析 - Ep19&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Java SE(8)-泛型</span>
+            <span id="subtitle">Java集合源码剖析</span>
           
         </div>
 
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-04-12 14:29" pubdate>
-          2025年4月12日 下午
+        <time datetime="2025-04-12 19:59" pubdate>
+          2025年4月12日 晚上
         </time>
       </span>
     
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          365 字
+          605 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          4 分钟
+          6 分钟
         
       </span>
     
@@ -274,25 +274,38 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Java SE(8)-泛型</h1>
+            <h1 id="seo-header">Java集合源码剖析</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="概述">概述</h1>
-<p><strong>泛型</strong>（Generics）是Java提供的一种机制，<strong>让类、接口、方法在定义时可以指定类型参数</strong>，从而实现类型安全和代码复用。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">exer1</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        HashMap&lt;String,Integer&gt; map = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br><br>        map.put(<span class="hljs-string">&quot;A&quot;</span>,<span class="hljs-number">1</span>);<br>        map.put(<span class="hljs-string">&quot;B&quot;</span>,<span class="hljs-number">2</span>);<br>        map.put(<span class="hljs-string">&quot;C&quot;</span>,<span class="hljs-number">3</span>);<br>        <span class="hljs-comment">//Entry是Map接口的子接口</span><br>        <span class="hljs-keyword">for</span>(Map.Entry&lt;String,Integer&gt; entry : map.entrySet()) &#123;<br>            System.out.println(entry);<br>        &#125;<br><br>        System.out.println();<br><br>        <span class="hljs-comment">//for增强的简便写法</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> entry : map.entrySet()) &#123;<br>            System.out.println(entry.getKey());<br>        &#125;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h1 id="泛型的继承">泛型的继承</h1>
-<p><strong>Java
-泛型的类型是严格的类型检查</strong>，并不允许不同类型的泛型直接相互赋值。例如，<code>ArrayList&lt;Object&gt;</code>和<code>ArrayList&lt;String&gt;</code>是两种不同的泛型类型，即使String是Object的子类。</p>
-<p>解决方法：</p>
-<ol type="1">
-<li>使用通配符(Wildcard):</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;?&gt; list = <span class="hljs-literal">null</span>;<span class="hljs-comment">//使用通配符?</span><br>List&lt;String&gt; list1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br><br>list1.add(<span class="hljs-string">&quot;AA&quot;</span>);<br>list = list1;<br><br><span class="hljs-type">Object</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> list.get(<span class="hljs-number">0</span>);<span class="hljs-comment">//读取使用Object</span><br>System.out.println(obj);<br><br><span class="hljs-comment">//不能写入数据，除了null</span><br>list.add(<span class="hljs-literal">null</span>);<br></code></pre></td></tr></table></figure>
-<p><strong>上界通配符</strong>：<code>List&lt;? extends T&gt; list</code>，list是某种<code>T</code>的子类的列表。<strong>可以读，不能写</strong>，因为编译器不知道list是哪个子类。<strong>读取安全但是写入不安全</strong></p>
-<p><strong>下界通配符</strong>：<code>List&lt;? super T&gt; list</code>，list是<code>T</code>的某个父类的列表。读出只能被视为为Object（因为不知道具体是哪个父类），可以写入T或其子类。写入安全但是读取受限</p>
-<p>符合向上转型原则。</p>
+                <h1 id="arraylist">ArrayList</h1>
+<p><code>ArrayList</code>是 Java
+中基于数组实现的一个可变长度的动态数组，它实现了<code>List</code>接口。位置：<code>java.util.ArrayList</code></p>
+<p>Java 8及之后的版本：</p>
+<p><strong>底层数据结构</strong>：</p>
+<p>创建一个Object数组，默认为空数组（懒汉式）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">transient</span> Object[] elementData; <span class="hljs-comment">// 实际存储元素的数组</span><br><span class="hljs-keyword">private</span> <span class="hljs-type">int</span> size;               <span class="hljs-comment">// 当前元素个数（不是数组长度）</span><br></code></pre></td></tr></table></figure>
+<p><strong>构造方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 默认构造函数</span><br><span class="hljs-keyword">public</span> <span class="hljs-title function_">ArrayList</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-built_in">this</span>.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;<br>&#125;<br><br><span class="hljs-comment">// 指定初始容量</span><br><span class="hljs-keyword">public</span> <span class="hljs-title function_">ArrayList</span><span class="hljs-params">(<span class="hljs-type">int</span> initialCapacity)</span> &#123;<br>    <span class="hljs-keyword">if</span> (initialCapacity &gt; <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-built_in">this</span>.elementData = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[initialCapacity];<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (initialCapacity == <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-built_in">this</span>.elementData = EMPTY_ELEMENTDATA;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalArgumentException</span>(<span class="hljs-string">&quot;Illegal Capacity: &quot;</span>+<br>                                           initialCapacity);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>默认构造函数用于扩容为默认大小10，<strong>只有第一次添加元素时才扩容</strong>。</li>
+<li>带参的构造函数用于自己指定初始大小。</li>
+</ul>
+<p><strong>添加元素</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">add</span><span class="hljs-params">(E e)</span> &#123;<br>    ensureCapacityInternal(size + <span class="hljs-number">1</span>); <span class="hljs-comment">// 确保容量足够</span><br>    elementData[size++] = e;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>size</code>表示添加元素之前已有的元素数量，<code>size+1</code>即添加之后所需要的最小容量</li>
+<li><code>ensureCapacityInternal</code>用于判断是否需要扩容，如果需要扩容，那么<code>elementData</code>扩容为<code>elementData = Arrays.copyOf(elementData, newCapacity);</code>，是原来的1.5倍，旧数组拷贝到新数组。</li>
+</ul>
+<p>扩容操作的源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">ensureCapacityInternal</span><span class="hljs-params">(<span class="hljs-type">int</span> minCapacity)</span> &#123;<br>    <span class="hljs-comment">//如果第一次添加的元素数量和默认长度10做对比，取较大的数</span><br>    <span class="hljs-keyword">if</span> (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;<br>        minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);<br>    &#125;<br>    <span class="hljs-comment">//后续添加元素的时候使用下面这个判断</span><br>    ensureExplicitCapacity(minCapacity);<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">ensureExplicitCapacity</span><span class="hljs-params">(<span class="hljs-type">int</span> minCapacity)</span> &#123;<br>    modCount++;<br>    <span class="hljs-comment">//如果所需最小容量大于现有容量，则扩容</span><br>    <span class="hljs-keyword">if</span> (minCapacity - elementData.length &gt; <span class="hljs-number">0</span>)<br>        grow(minCapacity);<br>&#125;<br><br><span class="hljs-comment">// 扩容逻辑</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">grow</span><span class="hljs-params">(<span class="hljs-type">int</span> minCapacity)</span> &#123;<br>    <span class="hljs-type">int</span> <span class="hljs-variable">oldCapacity</span> <span class="hljs-operator">=</span> elementData.length;<br>    <span class="hljs-type">int</span> <span class="hljs-variable">newCapacity</span> <span class="hljs-operator">=</span> oldCapacity + (oldCapacity &gt;&gt; <span class="hljs-number">1</span>); <span class="hljs-comment">// 扩容1.5倍</span><br>    <span class="hljs-keyword">if</span> (newCapacity - minCapacity &lt; <span class="hljs-number">0</span>)<span class="hljs-comment">//1.5倍仍然不够用的话就直接取元素的长度</span><br>        newCapacity = minCapacity;<br>    <span class="hljs-keyword">if</span> (newCapacity - MAX_ARRAY_SIZE &gt; <span class="hljs-number">0</span>)<span class="hljs-comment">//极端情况特殊处理</span><br>        newCapacity = hugeCapacity(minCapacity);<br>        <span class="hljs-comment">//拷贝旧数组到原数组</span><br>    elementData = Arrays.copyOf(elementData, newCapacity);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>删除元素</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> E <span class="hljs-title function_">remove</span><span class="hljs-params">(<span class="hljs-type">int</span> index)</span> &#123;<br>    Objects.checkIndex(index, size);<span class="hljs-comment">//检查index是否越界，抛出异常</span><br>    <span class="hljs-keyword">final</span> Object[] es = elementData;<span class="hljs-comment">//为了写法更短、性能稍微好一点</span><br><br>    <span class="hljs-comment">//忽略编译器的泛型转换警告，将es强转为泛型类型E</span><br>    <span class="hljs-meta">@SuppressWarnings(&quot;unchecked&quot;)</span> <span class="hljs-type">E</span> <span class="hljs-variable">oldValue</span> <span class="hljs-operator">=</span> (E) es[index];<br>    fastRemove(es, index);<span class="hljs-comment">//将index+1及其后面的元素全部向前挪动一位，覆盖要删除的元素，最后一位记为null</span><br><br>    <span class="hljs-keyword">return</span> oldValue;<span class="hljs-comment">//返回oldvalue</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>E是泛型类型参数，用来表示<code>ArrayList</code>中存储的元素的类型。</li>
+</ul>
+<p><strong>ArrayList的查找和（尾部）添加元素效率高，删除和插入操作效率低</strong>。</p>
 
                 
               </div>
@@ -331,8 +344,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Java SE(8)-泛型</div>
-      <div>http://example.com/2025/04/12/java8/</div>
+      <div>Java集合源码剖析</div>
+      <div>http://example.com/2025/04/12/java9/</div>
     </div>
     <div class="license-meta">
       
@@ -376,9 +389,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/04/12/java9/" title="Java集合源码剖析">
+                      <a href="/2025/04/13/java10/" title="Java SE-FILE类与IO流">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Java集合源码剖析</span>
+                        <span class="hidden-mobile">Java SE-FILE类与IO流</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -386,8 +399,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/04/10/java7/" title="Java SE(7)-集合框架">
-                        <span class="hidden-mobile">Java SE(7)-集合框架</span>
+                      <a href="/2025/04/12/java8/" title="Java SE(8)-泛型">
+                        <span class="hidden-mobile">Java SE(8)-泛型</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
