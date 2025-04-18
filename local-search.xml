@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>Java SE-反射</title>
+    <link href="/2025/04/17/java11/"/>
+    <url>/2025/04/17/java11/</url>
+    
+    <content type="html"><![CDATA[<h1 id="概述">概述</h1><p>Java的反射（Reflection）是一种强大的机制，允许程序在运行时<strong>动态</strong>地访问、检查和修改类、接口、方法、字段等的属性和行为，设计框架中会大量使用。</p><p>反射可以不用考虑封装性，可以调用类中私有的结构。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//1. 获取class对象</span><br>Class&lt;?&gt; clazz = Class.forName(<span class="hljs-string">&quot;com.reflection.demo1.person&quot;</span>);<br><br><span class="hljs-comment">//2. 获取构造器并创建对象</span><br>Constructor&lt;?&gt; constructor = clazz.getConstructor(String.class);<br><span class="hljs-type">Object</span> <span class="hljs-variable">person</span> <span class="hljs-operator">=</span> constructor.newInstance(<span class="hljs-string">&quot;Hung&quot;</span>);<br><br><span class="hljs-comment">//3.获取方法并调用</span><br><span class="hljs-type">Method</span> <span class="hljs-variable">method</span> <span class="hljs-operator">=</span> clazz.getMethod(<span class="hljs-string">&quot;sayHello&quot;</span>);<br>method.invoke(person);<span class="hljs-comment">//输出Hung</span><br><br><span class="hljs-comment">//获取私有字段并修改</span><br><span class="hljs-type">Field</span> <span class="hljs-variable">field</span> <span class="hljs-operator">=</span> clazz.getDeclaredField(<span class="hljs-string">&quot;name&quot;</span>);<br>field.setAccessible(<span class="hljs-literal">true</span>);<span class="hljs-comment">//允许访问</span><br>field.set(person, <span class="hljs-string">&quot;Tom&quot;</span>);<br><br>method.invoke(person);<span class="hljs-comment">//调用method方法</span><br></code></pre></td></tr></table></figure><h2 id="获取class实例的几种方式">获取Class实例的几种方式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><br><span class="hljs-comment">//1.</span><br>Class&lt;?&gt; clazz1 = person.class;<br><br><span class="hljs-comment">//2.</span><br><span class="hljs-type">person</span> <span class="hljs-variable">p1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">person</span>();<br>Class&lt;?&gt; clazz2 = p1.getClass();<br><br><span class="hljs-comment">//3.调用Class的静态方法forName(String classname)常用</span><br>Class&lt;?&gt; clazz = Class.forName(<span class="hljs-string">&quot;com.reflection.demo1.person&quot;</span>);<span class="hljs-comment">//全类名</span><br><br></code></pre></td></tr></table></figure><p>以上三种等价。</p><p><code>getFields()</code>:返回的是：当前类及其所有父类中所有被<code>public</code>修饰的字段。</p><p><code>getDeclaredFields()</code>返回的是：当前类自己定义的所有字段，无论是private、protected、public。不会包括父类的字段。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java SE</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Java SE-FILE类与IO流</title>
     <link href="/2025/04/13/java10/"/>
     <url>/2025/04/13/java10/</url>
