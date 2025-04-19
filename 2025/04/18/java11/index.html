@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://i.imgur.com/mg7OIu4.png">
 <meta property="og:image" content="https://i.imgur.com/MMyKgBt.png">
 <meta property="article:published_time" content="2025-04-18T10:08:36.000Z">
-<meta property="article:modified_time" content="2025-04-19T11:37:13.744Z">
+<meta property="article:modified_time" content="2025-04-19T13:10:58.702Z">
 <meta property="article:author" content="Ep19">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://i.imgur.com/Pxty23E.png">
@@ -381,7 +381,7 @@ myperson 的参数，判断这个人年龄是否大于 18，返回一个 true/fa
 <hr />
 <p>Stream类中定义的<code>Stream&lt;T&gt; limit(long maxSize);</code>方法返回由此流的元素组成的截断长度不超过maxSize的流。</p>
 <p>同样，<code>Stream&lt;T&gt; skip(long n);</code>跳过前n个元素。</p>
-<p>limit和skip在有序的并行流中使用时可能会型泵变差，此时可以用
+<p>limit和skip在有序的并行流中使用时可能会使性能变差，此时可以用
 <code>.unordered()</code> 提高效率；如果顺序必须保留，那最好使用顺序流
 <code>.sequential()</code>。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test4</span><span class="hljs-params">()</span> &#123;<br>    Stream&lt;Integer&gt; s1 = Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>);<br>    s1.limit(<span class="hljs-number">5</span>).forEach(System.out::print);<br><br>    Stream&lt;Integer&gt; s2 = Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>);<br>    s2.skip(<span class="hljs-number">5</span>).forEach(System.out::print);<br>    <span class="hljs-comment">//打印结果：12345678910</span><br>&#125;<br></code></pre></td></tr></table></figure>
