@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>Java中的Optional</title>
+    <link href="/2025/04/19/Optionals-in-Java/"/>
+    <url>/2025/04/19/Optionals-in-Java/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>Java SE</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Java SE-Stream API详解 by AlbertShen</title>
     <link href="/2025/04/18/java11/"/>
     <url>/2025/04/18/java11/</url>
@@ -42,7 +61,7 @@
   
   
   <entry>
-    <title>Java集合源码剖析</title>
+    <title>Java集合底层源码</title>
     <link href="/2025/04/12/java9/"/>
     <url>/2025/04/12/java9/</url>
     
