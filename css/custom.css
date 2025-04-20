@@ -57,7 +57,7 @@
 
 /*博客预加载功能*/
 #Loadanimation{
-  background-color:#dfdfdf;
+  background-color:#2B2B2B;
   height:100%;
   width:100%;
   position:fixed;
@@ -86,8 +86,8 @@
   -webkit-border-radius:50% 50% 50% 50%;
   border-radius:50% 50% 50% 50%;
   position:absolute;
-  border-left:5px solid #87CEFA;
-  border-right:5px solid #FFC0CB;
+  border-left:5px solid #137DB7;
+  border-right:5px solid #ffffff;
   border-top:5px solid transparent;
   border-bottom:5px solid transparent;
   -webkit-animation:animate 2.5s infinite;

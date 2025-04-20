@@ -19,16 +19,16 @@
   <meta name="author" content="Ep19">
   <meta name="keywords" content="">
   
-    <meta name="description" content="今天对面工位上有一对司🐴脑残情侣聊了一下午家常 添加博客加载页面 Fluid主题本身是不支持固定背景图的，强行固定会导致加载页面时明显观察到背景图“瞬移”，而且不适配移动端。 现在移动端我先不管了，这里通过添加加载页面的方式规避背景图瞬移的问题。 代码源自该实例 关于第一步，“在bodyBegin注入元素代码”，即把下面这段代码加到博客目录下的\Blogs\node_modules\h">
+    <meta name="description" content="简单的博客美化记录">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo + Fluid博客美化记录">
 <meta property="og:url" content="http://example.com/2025/04/20/Fluid%E4%B8%BB%E9%A2%98%E7%BE%8E%E5%8C%962/index.html">
 <meta property="og:site_name" content="Ep19&#39;s Blog">
-<meta property="og:description" content="今天对面工位上有一对司🐴脑残情侣聊了一下午家常 添加博客加载页面 Fluid主题本身是不支持固定背景图的，强行固定会导致加载页面时明显观察到背景图“瞬移”，而且不适配移动端。 现在移动端我先不管了，这里通过添加加载页面的方式规避背景图瞬移的问题。 代码源自该实例 关于第一步，“在bodyBegin注入元素代码”，即把下面这段代码加到博客目录下的\Blogs\node_modules\h">
+<meta property="og:description" content="简单的博客美化记录">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.imgur.com/SGhKbvj.png">
 <meta property="article:published_time" content="2025-04-20T05:04:51.000Z">
-<meta property="article:modified_time" content="2025-04-20T08:29:07.690Z">
+<meta property="article:modified_time" content="2025-04-20T08:56:22.678Z">
 <meta property="article:author" content="Ep19">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://i.imgur.com/SGhKbvj.png">
@@ -242,7 +242,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          460 字
+          463 字
         
       </span>
     
@@ -295,8 +295,17 @@
             
               <div class="markdown-body">
                 
-                <p>今天对面工位上有一对<span class="heimu"
-title="你知道的太多了">司🐴脑残</span>情侣聊了一下午家常</p>
+                <p>简单的博客美化记录 <span id="more"></span> 今天听对面工位上一对<span
+class="heimu" title="你知道的太多了">司马</span>情侣聊了一下午家常</p>
+<p><span class="heimu"
+title="你知道的太多了">sb情侣的废话怎么这么多🤮</span></p>
+<h1 id="美化清单">美化清单</h1>
+<ol type="1">
+<li><a href="#添加博客加载页面">添加博客加载页面</a></li>
+<li><a href="#github状态--活跃曲线">Github状态 &amp; 活跃曲线</a></li>
+<li><a href="#mac风格代码块">mac风格代码块</a></li>
+<li><a href="#艺术字签名">艺术字签名</a></li>
+</ol>
 <h1 id="添加博客加载页面">添加博客加载页面</h1>
 <p>Fluid主题本身是不支持固定背景图的，强行固定会导致加载页面时明显观察到背景图“瞬移”，而且不适配移动端。</p>
 <p>现在移动端我先不管了，这里通过添加加载页面的方式规避背景图瞬移的问题。</p>
@@ -308,12 +317,15 @@ target="_blank" rel="noopener" href="https://www.zywvvd.com/notes/hexo/theme/flu
 <h1 id="github状态-活跃曲线">Github状态 &amp; 活跃曲线</h1>
 <p>项目地址：</p>
 <ul>
-<li>https://github.com/anuraghazra/github-readme-stats?tab=readme-ov-file</li>
-<li>https://github.com/Ashutosh00710/github-readme-activity-graph</li>
+<li><a
+target="_blank" rel="noopener" href="https://github.com/anuraghazra/github-readme-stats?tab=readme-ov-file">github-readme-stats</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://github.com/Ashutosh00710/github-readme-activity-graph">github-readme-activity-graph</a></li>
 </ul>
-<p>复制粘贴即可</p>
+<p>复制粘贴到关于页即可</p>
 <h1 id="mac风格代码块">mac风格代码块</h1>
-<p>参考：https://qingshaner.com/HexoFluid%E4%B8%BB%E9%A2%98%E4%BB%A3%E7%A0%81%E5%9D%97%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9/</p>
+<p>参考：<a
+target="_blank" rel="noopener" href="https://qingshaner.com/HexoFluid%E4%B8%BB%E9%A2%98%E4%BB%A3%E7%A0%81%E5%9D%97%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9/">HexoFluid主题代码块样式修改_</a></p>
 <h1 id="艺术字签名">艺术字签名</h1>
 <p>参考链接</p>
 <ul>
@@ -326,10 +338,6 @@ target="_blank" rel="noopener" href="https://www.zywvvd.com/notes/hexo/theme/flu
 <p><code>width``height</code>两个属性可以改为<code>100%</code>和<code>auto</code>，我经过尝试发现影响签名大小的主要还是<a
 target="_blank" rel="noopener" href="https://danmarshall.github.io/google-font-to-svg-path/">Google
 Font to Svg Path</a>的Size数值，这里取的是35。</p>
-<h1 id="参考资料">参考资料</h1>
-<ul>
-<li>https://www.zywvvd.com/notes/hexo/theme/fluid/fluid-loading/fluid-loading/</li>
-</ul>
 
                 
               </div>
