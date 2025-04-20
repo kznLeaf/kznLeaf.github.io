@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>Hexo + Fluid博客美化记录</title>
+    <link href="/2025/04/20/Fluid%E4%B8%BB%E9%A2%98%E7%BE%8E%E5%8C%962/"/>
+    <url>/2025/04/20/Fluid%E4%B8%BB%E9%A2%98%E7%BE%8E%E5%8C%962/</url>
+    
+    <content type="html"><![CDATA[<p>今天对面工位上有一对<span class="heimu"title="你知道的太多了">司🐴脑残</span>情侣聊了一下午家常</p><h1 id="添加博客加载页面">添加博客加载页面</h1><p>Fluid主题本身是不支持固定背景图的，强行固定会导致加载页面时明显观察到背景图“瞬移”，而且不适配移动端。</p><p>现在移动端我先不管了，这里通过添加加载页面的方式规避背景图瞬移的问题。</p><p>代码源自该<ahref="https://www.zywvvd.com/notes/hexo/theme/fluid/fluid-loading/fluid-loading/">实例</a></p><p>关于第一步，“在bodyBegin注入元素代码”，即把下面这段代码加到博客目录下的<code>\Blogs\node_modules\hexo-theme-fluid\layout\layout.ejs</code>的<code>&lt;body&gt;</code>开头的部分：</p><p><img src="https://i.imgur.com/SGhKbvj.png" /></p><p>剩下的CSS和js代码分别添加到自定义CSS和js文件中即可。</p><h1 id="github状态-活跃曲线">Github状态 &amp; 活跃曲线</h1><p>项目地址：</p><ul><li>https://github.com/anuraghazra/github-readme-stats?tab=readme-ov-file</li><li>https://github.com/Ashutosh00710/github-readme-activity-graph</li></ul><p>复制粘贴即可</p><h1 id="mac风格代码块">mac风格代码块</h1><p>参考：https://qingshaner.com/HexoFluid%E4%B8%BB%E9%A2%98%E4%BB%A3%E7%A0%81%E5%9D%97%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9/</p><h1 id="艺术字签名">艺术字签名</h1><p>参考链接</p><ul><li>https://mrna16.github.io/2024/11/14/%E3%80%90Hexo%E3%80%91Fluid%E4%B8%BB%E9%A2%98%E7%BE%8E%E5%8C%96/#%E6%A0%87%E7%AD%BE%E5%8F%98%E5%8C%96</li><li>https://4rozen.github.io/archives/Hexo/38001.html（这里的讲解更详细）</li></ul><p>签名动画似乎与加载页面不兼容，我没有看到动画效果，所以把动画部分的代码去除了。</p><p>对<code>sign.css</code>部分:</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.svg</span> &#123;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;<br>    <span class="hljs-attribute">height</span>: auto;<br>  &#125;<br>  <br>  <span class="hljs-selector-class">.svg</span> <span class="hljs-selector-tag">path</span> &#123;<br>    <span class="hljs-attribute">stroke</span>: white;<br>    <span class="hljs-attribute">stroke-width</span>: <span class="hljs-number">3pt</span>;<br>    <span class="hljs-attribute">stroke-linecap</span>: round;<br>    <span class="hljs-attribute">stroke-dasharray</span>: <span class="hljs-built_in">var</span>(--l);<br>    <span class="hljs-attribute">stroke-dashoffset</span>: <span class="hljs-built_in">var</span>(--l);<br>    <span class="hljs-attribute">fill</span>: none;<br>    <span class="hljs-attribute">fill-rule</span>: nonzero;<br>    <span class="hljs-attribute">animation</span>: stroke <span class="hljs-number">25s</span> forwards;<br>    -webkit-<span class="hljs-attribute">animation</span>: stroke <span class="hljs-number">25s</span> forwards;<br>  &#125;<br>  <br>  <span class="hljs-keyword">@keyframes</span> stroke &#123;<br>    <span class="hljs-selector-tag">to</span> &#123;<br>      <span class="hljs-attribute">stroke-dashoffset</span>: <span class="hljs-number">0</span>;<br>    &#125;<br>  &#125;<br></code></pre></td></tr></table></figure><p><code>width``height</code>两个属性可以改为<code>100%</code>和<code>auto</code>，我经过尝试发现影响签名大小的主要还是<ahref="https://danmarshall.github.io/google-font-to-svg-path/">GoogleFont to Svg Path</a>的Size数值，这里取的是35。</p><h1 id="参考资料">参考资料</h1><ul><li>https://www.zywvvd.com/notes/hexo/theme/fluid/fluid-loading/fluid-loading/</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Theme</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Java中的Optional</title>
     <link href="/2025/04/19/Optionals-in-Java/"/>
     <url>/2025/04/19/Optionals-in-Java/</url>
@@ -476,7 +495,7 @@
     
     <categories>
       
-      <category>code</category>
+      <category>Theme</category>
       
     </categories>
     
