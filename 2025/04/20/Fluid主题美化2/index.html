@@ -27,8 +27,14 @@
 <meta property="og:description" content="简单的博客美化记录">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.imgur.com/SGhKbvj.png">
+<meta property="og:image" content="https://i.imgur.com/5nHrB3T.png">
+<meta property="og:image" content="https://i.imgur.com/4RJjAug.png">
+<meta property="og:image" content="https://i.imgur.com/BOutTZH.png">
+<meta property="og:image" content="https://i.imgur.com/BOutTZH.png">
+<meta property="og:image" content="https://i.imgur.com/bfFspUp.png">
+<meta property="og:image" content="https://i.imgur.com/fmmmG7o.jpg">
 <meta property="article:published_time" content="2025-04-20T05:04:51.000Z">
-<meta property="article:modified_time" content="2025-04-20T08:56:22.678Z">
+<meta property="article:modified_time" content="2025-04-20T13:34:05.419Z">
 <meta property="article:author" content="Ep19">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://i.imgur.com/SGhKbvj.png">
@@ -117,7 +123,7 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>Ep19&#39;s Blog</strong>
+      <strong>banyee&#39;s Blog</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -242,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          463 字
+          1.2k 字
         
       </span>
     
@@ -253,7 +259,7 @@
         
         
         
-          4 分钟
+          11 分钟
         
       </span>
     
@@ -295,16 +301,19 @@
             
               <div class="markdown-body">
                 
-                <p>简单的博客美化记录 <span id="more"></span> 今天听对面工位上一对<span
-class="heimu" title="你知道的太多了">司马</span>情侣聊了一下午家常</p>
+                <p>简单的博客美化记录 <span id="more"></span>
+今天折腾了一整天博客的美化，以及听对面工位上一对<span class="heimu"
+title="你知道的太多了">司马</span>情侣聊了一下午家常</p>
 <p><span class="heimu"
-title="你知道的太多了">sb情侣的废话怎么这么多🤮</span></p>
+title="你知道的太多了">情侣的废话怎么这么多</span></p>
 <h1 id="美化清单">美化清单</h1>
 <ol type="1">
 <li><a href="#添加博客加载页面">添加博客加载页面</a></li>
-<li><a href="#github状态--活跃曲线">Github状态 &amp; 活跃曲线</a></li>
+<li><a href="#github状态和活跃曲线">Github状态和活跃曲线</a></li>
 <li><a href="#mac风格代码块">mac风格代码块</a></li>
 <li><a href="#艺术字签名">艺术字签名</a></li>
+<li><a href="#更换图床">更换图床</a></li>
+<li><a href="#遗留问题">遗留问题</a></li>
 </ol>
 <h1 id="添加博客加载页面">添加博客加载页面</h1>
 <p>Fluid主题本身是不支持固定背景图的，强行固定会导致加载页面时明显观察到背景图“瞬移”，而且不适配移动端。</p>
@@ -314,7 +323,7 @@ target="_blank" rel="noopener" href="https://www.zywvvd.com/notes/hexo/theme/flu
 <p>关于第一步，“在bodyBegin注入元素代码”，即把下面这段代码加到博客目录下的<code>\Blogs\node_modules\hexo-theme-fluid\layout\layout.ejs</code>的<code>&lt;body&gt;</code>开头的部分：</p>
 <p><img src="https://i.imgur.com/SGhKbvj.png" /></p>
 <p>剩下的CSS和js代码分别添加到自定义CSS和js文件中即可。</p>
-<h1 id="github状态-活跃曲线">Github状态 &amp; 活跃曲线</h1>
+<h1 id="github状态和活跃曲线">Github状态和活跃曲线</h1>
 <p>项目地址：</p>
 <ul>
 <li><a
@@ -322,22 +331,73 @@ target="_blank" rel="noopener" href="https://github.com/anuraghazra/github-readm
 <li><a
 target="_blank" rel="noopener" href="https://github.com/Ashutosh00710/github-readme-activity-graph">github-readme-activity-graph</a></li>
 </ul>
-<p>复制粘贴到关于页即可</p>
+<p>复制粘贴到关于页即可。</p>
 <h1 id="mac风格代码块">mac风格代码块</h1>
 <p>参考：<a
-target="_blank" rel="noopener" href="https://qingshaner.com/HexoFluid%E4%B8%BB%E9%A2%98%E4%BB%A3%E7%A0%81%E5%9D%97%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9/">HexoFluid主题代码块样式修改_</a></p>
+target="_blank" rel="noopener" href="https://qingshaner.com/HexoFluid%E4%B8%BB%E9%A2%98%E4%BB%A3%E7%A0%81%E5%9D%97%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9/">HexoFluid主题代码块样式修改</a></p>
 <h1 id="艺术字签名">艺术字签名</h1>
 <p>参考链接</p>
 <ul>
-<li>https://mrna16.github.io/2024/11/14/%E3%80%90Hexo%E3%80%91Fluid%E4%B8%BB%E9%A2%98%E7%BE%8E%E5%8C%96/#%E6%A0%87%E7%AD%BE%E5%8F%98%E5%8C%96</li>
-<li>https://4rozen.github.io/archives/Hexo/38001.html（这里的讲解更详细）</li>
+<li><a
+target="_blank" rel="noopener" href="https://mrna16.github.io/2024/11/14/%E3%80%90Hexo%E3%80%91Fluid%E4%B8%BB%E9%A2%98%E7%BE%8E%E5%8C%96/#%E6%A0%87%E7%AD%BE%E5%8F%98%E5%8C%96">【Hexo】Fluid主题美化</a></li>
+<li><a target="_blank" rel="noopener" href="https://4rozen.github.io/archives/Hexo/38001.html">使用 CSS
+和 JS 实现博客导航栏线条动画效果</a>（这个的讲解更详细）</li>
 </ul>
-<p>签名动画似乎与加载页面不兼容，我没有看到动画效果，所以把动画部分的代码去除了。</p>
+<p>签名动画似乎与加载页面不兼容，我没有看到动画效果，所以把动画部分的代码去掉了。</p>
 <p>对<code>sign.css</code>部分:</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.svg</span> &#123;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;<br>    <span class="hljs-attribute">height</span>: auto;<br>  &#125;<br>  <br>  <span class="hljs-selector-class">.svg</span> <span class="hljs-selector-tag">path</span> &#123;<br>    <span class="hljs-attribute">stroke</span>: white;<br>    <span class="hljs-attribute">stroke-width</span>: <span class="hljs-number">3pt</span>;<br>    <span class="hljs-attribute">stroke-linecap</span>: round;<br>    <span class="hljs-attribute">stroke-dasharray</span>: <span class="hljs-built_in">var</span>(--l);<br>    <span class="hljs-attribute">stroke-dashoffset</span>: <span class="hljs-built_in">var</span>(--l);<br>    <span class="hljs-attribute">fill</span>: none;<br>    <span class="hljs-attribute">fill-rule</span>: nonzero;<br>    <span class="hljs-attribute">animation</span>: stroke <span class="hljs-number">25s</span> forwards;<br>    -webkit-<span class="hljs-attribute">animation</span>: stroke <span class="hljs-number">25s</span> forwards;<br>  &#125;<br>  <br>  <span class="hljs-keyword">@keyframes</span> stroke &#123;<br>    <span class="hljs-selector-tag">to</span> &#123;<br>      <span class="hljs-attribute">stroke-dashoffset</span>: <span class="hljs-number">0</span>;<br>    &#125;<br>  &#125;<br></code></pre></td></tr></table></figure>
-<p><code>width``height</code>两个属性可以改为<code>100%</code>和<code>auto</code>，我经过尝试发现影响签名大小的主要还是<a
+<p><code>width</code>和<code>height</code>两个属性可以改为<code>100%</code>和<code>auto</code>，我经过尝试发现影响签名大小的主要还是<a
 target="_blank" rel="noopener" href="https://danmarshall.github.io/google-font-to-svg-path/">Google
-Font to Svg Path</a>的Size数值，这里取的是35。</p>
+Font to Svg
+Path</a>的Size数值，所以不用纠结宽和高到底应该填多少了，直接自适应。这里Size取的是35。</p>
+<p><code>sign.js</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span>  navbarBrand  =  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.container a&#x27;</span>);<br><br>navbarBrand.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">`</span><br><span class="hljs-string">  &lt;object type=&quot;image/svg+xml&quot; data=&quot;/img/banyee&#x27;s Blog.svg&quot;&gt;&lt;/object&gt;</span><br><span class="hljs-string">`</span>;<br><br><span class="hljs-comment">// const  paths  =  document.querySelector(&#x27;.container .navbar-brand .svg .g path&#x27;)</span><br><br><span class="hljs-comment">// const  len  =  paths.getTotalLength()</span><br><br><span class="hljs-comment">// paths.style.setProperty(&#x27;--l&#x27;, len)</span><br></code></pre></td></tr></table></figure>
+<p>动画部分的代码已经被注释。另外，引入<code>.svg</code>文件时可以用上面的这种方法，先把svg文件下载到source目录下的一个img文件夹中，再引用，这样可以让代码看起来简洁一些。</p>
+<h1 id="更换图床">更换图床</h1>
+<p>之前用的一直是imgur，国外的老牌免费图床网站，稳定安全可靠。但是被墙了，至于为什么被墙啊俺也不知道</p>
+<p>鉴于国内用户无法访问托管在imgur上的图片，所以我打算换个图床</p>
+<p>一开始打算打算使用腾讯COS存储，主要是冲着访问速度快+长期稳定去的<span
+class="heimu"
+title="你知道的太多了">虽然但是腾讯你什么时候死</span>，跟着<a
+target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1834573">教程</a>走了几步，到了要绑定域名的时候</p>
+<p><img src="https://i.imgur.com/5nHrB3T.png" /></p>
+<p>本来想着来都来了，那就备案啊，然后备案强制实名认证😂</p>
+<p>这时候我才意识到貌似国内的域名都要备案之后才能使用</p>
+<p>然后我又尝试了SM.MS图床，这个图床的来历：</p>
+<figure>
+<img src="https://i.imgur.com/4RJjAug.png"
+alt="SM.MS诞生于互联网精神" />
+<figcaption aria-hidden="true">SM.MS诞生于互联网精神</figcaption>
+</figure>
+<p>然后我试着访问了主站</p>
+<p><img src="https://i.imgur.com/BOutTZH.png" /></p>
+<blockquote>
+<p>"Due to network issues, users from China Mainland are unable to
+access SM.MS, we have added an alternate domain name smms.app"</p>
+</blockquote>
+<p>又被大陆墙了😂而且这个图床已经关闭了注册功能</p>
+<p><img src="https://i.imgur.com/BOutTZH.png" /></p>
+<p>最后我转向了<a
+target="_blank" rel="noopener" href="https://imgse.com/page/about">路过图床</a>。这个图床也是蛮幽默的，注册时如果挂着VPN，会马上触发安全机制：</p>
+<figure>
+<img src="https://i.imgur.com/bfFspUp.png" alt="😂" />
+<figcaption aria-hidden="true">😂</figcaption>
+</figure>
+<p>不过这个图床已经稳定运行了14年，最大支持10M的图片，同时具有全球 CDN
+加速以确保高速、稳定。暂时就先用着这个好了。</p>
+<p>老文章的图片就不迁移了，因为懒</p>
+<h1 id="遗留问题">遗留问题</h1>
+<p>我的文章页背景图为亮色，并且启用了毛玻璃效果，这样一来在黑夜模式下会显得很突兀。最理想的解决方法是设置文章页的背景可以随日夜模式动态切换，黑夜模式就切换为：</p>
+<figure>
+<img src="https://i.imgur.com/fmmmG7o.jpg" alt="玉足🥰" />
+<figcaption aria-hidden="true">玉足🥰</figcaption>
+</figure>
+<p>今天对着这篇博客折腾了很长时间</p>
+<p><a target="_blank" rel="noopener" href="https://4rozen.github.io/archives/Hexo/60191.html">fluid
+全屏背景图随日夜模式切换和正文底页毛玻璃效果</a></p>
+<p>结果失败了。具体体现为：只有在进入博客的一瞬间可以看到白天模式下的背景图，之后马上被黑夜模式的背景图覆盖；模式切换按钮不起作用；而且主页的背景图也被覆盖掉了。这和这个文章的博客的表现完全相同，推测最早这些代码是起作用的，但是现在失效了。</p>
+<p>比较好的例子是<a
+target="_blank" rel="noopener" href="https://qingshaner.com/">这个博客</a>，具体实现方式不明。这个问题留到以后再解决好了。</p>
 
                 
               </div>
