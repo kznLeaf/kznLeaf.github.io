@@ -27,7 +27,7 @@
 <meta property="og:description" content="String 特性：不可变，创建后不能改变内容，任何修改其实是创建了新对象 12String s1 &#x3D; &quot;hello&quot;;String s2 &#x3D; new String(&quot;hello&quot;); String s1 &#x3D; &quot;hello&quot;;使用字面量，在常量池里创建一个对象。如果有同样的字面量，会复用，效率更高 String s2 &#x3D; new String(&quot;he">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-04-08T04:34:28.000Z">
-<meta property="article:modified_time" content="2025-04-10T05:56:27.047Z">
+<meta property="article:modified_time" content="2025-04-21T08:19:35.493Z">
 <meta property="article:author" content="Ep19">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -240,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          822 字
+          939 字
         
       </span>
     
@@ -251,7 +251,7 @@
         
         
         
-          7 分钟
+          8 分钟
         
       </span>
     
@@ -381,11 +381,14 @@ c)</p>
 </tr>
 </tbody>
 </table>
-<h1 id="对象的排序">对象的排序</h1>
+<h1 id="自定义类的对象的排序">自定义类的对象的排序</h1>
 <h2 id="自然排序实现comparable接口">1.自然排序：实现Comparable接口</h2>
 <ol type="1">
-<li>定义一个类实现该接口</li>
-<li><strong>实现</strong><code>public int compareTo(T o);</code>方法，指明比较的标准</li>
+<li>定义一个类实现<code>Comparable</code>接口这个泛型接口</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Comparable</span>&lt;T&gt; &#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 返回负数: 当前实例比参数o小</span><br><span class="hljs-comment">     * 返回0: 当前实例与参数o相等</span><br><span class="hljs-comment">     * 返回正数: 当前实例比参数o大</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-type">int</span> <span class="hljs-title function_">compareTo</span><span class="hljs-params">(T o)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>实现<code>public int compareTo(T o);</code>方法，指明比较的标准</li>
 <li>创建实例，调用<code>Arrays.sort</code>或<code>compareTo</code>比较大小。</li>
 </ol>
 <p>实现compareTo方法之后，<code>Arrays.sort(arr)</code>的比较标准也会改变。</p>
@@ -394,6 +397,8 @@ c)</p>
 <code>compareTo()</code>
 方法，所以当你重写了这个方法，排序逻辑自然也随之改变了。</p>
 </blockquote>
+<p>实例：让Person对象按照名字排序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// sort</span><br><span class="hljs-keyword">import</span> java.util.Arrays;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        Person[] ps = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>[] &#123;<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">61</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-number">88</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Lily&quot;</span>, <span class="hljs-number">75</span>),<br>        &#125;;<br>        Arrays.sort(ps);<br>        System.out.println(Arrays.toString(ps));<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Comparable</span>&lt;Person&gt; &#123;<br>    String name;<br>    <span class="hljs-type">int</span> score;<br>    Person(String name, <span class="hljs-type">int</span> score) &#123;<br>        <span class="hljs-built_in">this</span>.name = name;<br>        <span class="hljs-built_in">this</span>.score = score;<br>    &#125;<br>    <span class="hljs-comment">//实现 compareTo 方法</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">compareTo</span><span class="hljs-params">(Person other)</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.name.compareTo(other.name);<br>    &#125;<br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.name + <span class="hljs-string">&quot;,&quot;</span> + <span class="hljs-built_in">this</span>.score;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h2 id="定制排序">2.定制排序</h2>
 <p>适用情况：</p>
 <ul>
@@ -405,10 +410,6 @@ c)</p>
 <li>类A要重写compare方法</li>
 <li>创建实现类A的实例，并传入<code>Arrays.sort(arr,类A的实例)</code></li>
 </ol>
-<ul>
-<li>自然排序：单一，一劳永逸，对应的接口是<code>Comparable(Object obj)</code></li>
-<li>定制排序：多样，临时，对应的接口是<code>Comparator</code></li>
-</ul>
 
                 
               </div>
