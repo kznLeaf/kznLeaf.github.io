@@ -19,29 +19,21 @@
   <meta name="author" content="Ep19">
   <meta name="keywords" content="">
   
-    <meta name="description" content="简单的博客美化记录">
+    <meta name="description" content="JS基础知识，先速通一遍，以后再慢慢补充细节">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo + Fluid博客美化记录">
-<meta property="og:url" content="http://example.com/2025/04/20/Fluid%E4%B8%BB%E9%A2%98%E7%BE%8E%E5%8C%962/index.html">
+<meta property="og:title" content="JS基础">
+<meta property="og:url" content="http://example.com/2025/04/23/JS%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="Ep19&#39;s Blog">
-<meta property="og:description" content="简单的博客美化记录">
+<meta property="og:description" content="JS基础知识，先速通一遍，以后再慢慢补充细节">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.imgur.com/SGhKbvj.png">
-<meta property="og:image" content="https://i.imgur.com/5nHrB3T.png">
-<meta property="og:image" content="https://i.imgur.com/4RJjAug.png">
-<meta property="og:image" content="https://i.imgur.com/BOutTZH.png">
-<meta property="og:image" content="https://i.imgur.com/bfFspUp.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/04/21/pE5lxs0.png">
-<meta property="og:image" content="https://i.imgur.com/fmmmG7o.jpg">
-<meta property="article:published_time" content="2025-04-20T05:04:51.000Z">
-<meta property="article:modified_time" content="2025-04-21T11:20:00.734Z">
+<meta property="article:published_time" content="2025-04-23T11:25:48.000Z">
+<meta property="article:modified_time" content="2025-04-23T13:49:46.555Z">
 <meta property="article:author" content="Ep19">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://i.imgur.com/SGhKbvj.png">
   
   
   
-  <title>Hexo + Fluid博客美化记录 - Ep19&#39;s Blog</title>
+  <title>JS基础 - Ep19&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -225,7 +217,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Hexo + Fluid博客美化记录</span>
+            <span id="subtitle">JS基础</span>
           
         </div>
 
@@ -236,8 +228,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-04-20 13:04" pubdate>
-          2025年4月20日 下午
+        <time datetime="2025-04-23 19:25" pubdate>
+          2025年4月23日 晚上
         </time>
       </span>
     
@@ -248,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.3k 字
         
       </span>
     
@@ -259,7 +251,7 @@
         
         
         
-          12 分钟
+          11 分钟
         
       </span>
     
@@ -296,120 +288,212 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Hexo + Fluid博客美化记录</h1>
+            <h1 id="seo-header">JS基础</h1>
             
             
               <div class="markdown-body">
                 
-                <p>简单的博客美化记录 <span id="more"></span>
-今天折腾了一整天博客的美化，以及听对面工位上一对<span class="heimu"
-title="你知道的太多了">司马</span>情侣聊了一下午家常</p>
-<p><span class="heimu"
-title="你知道的太多了">情侣的废话怎么这么多</span></p>
-<h1 id="美化清单">美化清单</h1>
+                <p>JS基础知识，先速通一遍，以后再慢慢补充细节</p>
+<span id="more"></span>
+<h1 id="引入方式">引入方式</h1>
+<h2 id="内部脚本">内部脚本</h2>
+<p>将JS代码定义在HTML中。可以在任意地方放置任意数量的js，但是一般会把脚本位于<code>&lt;body&gt;</code>元素的底部，可以改善显示速度。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;Hello JavaScript&quot;</span>)</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h2 id="外部脚本">外部脚本</h2>
+<p>定义在外部js文件中，HTML文档通过以下格式引用，不能自闭合。外部js文件不需要<code>&lt;script&gt;</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;js/demo.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h1 id="基本语法">基本语法</h1>
+<ul>
+<li>每行结尾的分号可有可无（但是建议加上）</li>
+<li>输出语句
+<ul>
+<li><code>window.alert()</code>弹出窗口（/əˈlɜːrt/ 意思是警示）</li>
+<li><code>document.write()</code>写入HTML文档（开发很少用）</li>
+<li><code>console.log()</code>输出到控制台</li>
+</ul></li>
+</ul>
+<h1 id="变量">变量</h1>
+<p>在 JavaScript 中定义变量的方法有三种，分别是</p>
 <ol type="1">
-<li><a href="#添加博客加载页面">添加博客加载页面</a></li>
-<li><a href="#github状态和活跃曲线">Github状态和活跃曲线</a></li>
-<li><a href="#mac风格代码块">mac风格代码块</a></li>
-<li><a href="#艺术字签名">艺术字签名</a></li>
-<li><a href="#更换图床">更换图床</a></li>
-<li><a href="#遗留问题">遗留问题</a></li>
+<li><code>let</code>（推荐）</li>
 </ol>
-<h1 id="添加博客加载页面">添加博客加载页面</h1>
-<p>Fluid主题本身是不支持固定背景图的，强行固定会导致加载页面时明显观察到背景图“瞬移”，而且不适配移动端。</p>
-<p>现在移动端我先不管了，这里通过添加加载页面的方式规避背景图瞬移的问题。</p>
-<p>代码源自该<a
-target="_blank" rel="noopener" href="https://www.zywvvd.com/notes/hexo/theme/fluid/fluid-loading/fluid-loading/">实例</a></p>
-<p>关于第一步，“在bodyBegin注入元素代码”，即把下面这段代码加到博客目录下的<code>\Blogs\node_modules\hexo-theme-fluid\layout\layout.ejs</code>的<code>&lt;body&gt;</code>开头的部分：</p>
-<p><img src="https://i.imgur.com/SGhKbvj.png" /></p>
-<p>剩下的CSS和js代码分别添加到自定义CSS和js文件中即可。</p>
-<h1 id="github状态和活跃曲线">Github状态和活跃曲线</h1>
-<p>项目地址：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> name = <span class="hljs-string">&quot;初音ミク&quot;</span>;<br></code></pre></td></tr></table></figure>
 <ul>
-<li><a
-target="_blank" rel="noopener" href="https://github.com/anuraghazra/github-readme-stats?tab=readme-ov-file">github-readme-stats</a></li>
-<li><a
-target="_blank" rel="noopener" href="https://github.com/Ashutosh00710/github-readme-activity-graph">github-readme-activity-graph</a></li>
+<li><code>let</code>定义的是可以<strong>更改值</strong>的变量</li>
+<li>代码块内有效</li>
 </ul>
-<p>复制粘贴到关于页即可。</p>
-<h1 id="mac风格代码块">mac风格代码块</h1>
-<p>参考：<a
-target="_blank" rel="noopener" href="https://qingshaner.com/HexoFluid%E4%B8%BB%E9%A2%98%E4%BB%A3%E7%A0%81%E5%9D%97%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9/">HexoFluid主题代码块样式修改</a></p>
-<h1 id="艺术字签名">艺术字签名</h1>
-<p>参考链接</p>
+<ol start="2" type="1">
+<li><code>const</code>（推荐）</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">PI</span> = <span class="hljs-number">3.14159</span>;<br></code></pre></td></tr></table></figure>
 <ul>
-<li><a
-target="_blank" rel="noopener" href="https://mrna16.github.io/2024/11/14/%E3%80%90Hexo%E3%80%91Fluid%E4%B8%BB%E9%A2%98%E7%BE%8E%E5%8C%96/#%E6%A0%87%E7%AD%BE%E5%8F%98%E5%8C%96">【Hexo】Fluid主题美化</a></li>
-<li><a target="_blank" rel="noopener" href="https://4rozen.github.io/archives/Hexo/38001.html">使用 CSS
-和 JS 实现博客导航栏线条动画效果</a>（这个的讲解更详细）</li>
+<li><code>const</code>定义的是<strong>常量</strong>，<strong>不能重新赋值</strong></li>
+<li>一旦赋值就不能改变</li>
+<li>代码块内有效</li>
 </ul>
-<p>签名动画似乎与加载页面不兼容，我没有看到动画效果，所以把动画部分的代码去掉了。</p>
-<p>对<code>sign.css</code>部分:</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.svg</span> &#123;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;<br>    <span class="hljs-attribute">height</span>: auto;<br>  &#125;<br>  <br>  <span class="hljs-selector-class">.svg</span> <span class="hljs-selector-tag">path</span> &#123;<br>    <span class="hljs-attribute">stroke</span>: white;<br>    <span class="hljs-attribute">stroke-width</span>: <span class="hljs-number">3pt</span>;<br>    <span class="hljs-attribute">stroke-linecap</span>: round;<br>    <span class="hljs-attribute">stroke-dasharray</span>: <span class="hljs-built_in">var</span>(--l);<br>    <span class="hljs-attribute">stroke-dashoffset</span>: <span class="hljs-built_in">var</span>(--l);<br>    <span class="hljs-attribute">fill</span>: none;<br>    <span class="hljs-attribute">fill-rule</span>: nonzero;<br>    <span class="hljs-attribute">animation</span>: stroke <span class="hljs-number">25s</span> forwards;<br>    -webkit-<span class="hljs-attribute">animation</span>: stroke <span class="hljs-number">25s</span> forwards;<br>  &#125;<br>  <br>  <span class="hljs-keyword">@keyframes</span> stroke &#123;<br>    <span class="hljs-selector-tag">to</span> &#123;<br>      <span class="hljs-attribute">stroke-dashoffset</span>: <span class="hljs-number">0</span>;<br>    &#125;<br>  &#125;<br></code></pre></td></tr></table></figure>
-<p><code>width</code>和<code>height</code>两个属性可以改为<code>100%</code>和<code>auto</code>，我经过尝试发现影响签名大小的主要还是<a
-target="_blank" rel="noopener" href="https://danmarshall.github.io/google-font-to-svg-path/">Google
-Font to Svg
-Path</a>的Size数值，所以不用纠结宽和高到底应该填多少了，直接自适应。这里Size取的是35。</p>
-<p><code>sign.js</code>:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span>  navbarBrand  =  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.container a&#x27;</span>);<br><br>navbarBrand.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">`</span><br><span class="hljs-string">  &lt;object type=&quot;image/svg+xml&quot; data=&quot;/img/banyee&#x27;s Blog.svg&quot;&gt;&lt;/object&gt;</span><br><span class="hljs-string">`</span>;<br><br><span class="hljs-comment">// const  paths  =  document.querySelector(&#x27;.container .navbar-brand .svg .g path&#x27;)</span><br><br><span class="hljs-comment">// const  len  =  paths.getTotalLength()</span><br><br><span class="hljs-comment">// paths.style.setProperty(&#x27;--l&#x27;, len)</span><br></code></pre></td></tr></table></figure>
-<p>动画部分的代码已经被注释。另外，引入<code>.svg</code>文件时可以用上面的这种方法，先把svg文件下载到source目录下的一个img文件夹中，再引用，这样可以让代码看起来简洁一些。</p>
-<h1 id="更换图床">更换图床</h1>
-<p>之前用的一直是imgur，国外的老牌免费图床网站，稳定安全可靠。但是被墙了，至于为什么被墙啊俺也不知道</p>
-<p>鉴于国内用户无法访问托管在imgur上的图片，所以我打算换个图床</p>
-<p>一开始打算打算使用腾讯COS存储，主要是冲着访问速度快+长期稳定去的<span
-class="heimu"
-title="你知道的太多了">虽然但是腾讯你什么时候死</span>，跟着<a
-target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1834573">教程</a>走了几步，到了要绑定域名的时候</p>
-<p><img src="https://i.imgur.com/5nHrB3T.png" /></p>
-<p>本来想着来都来了，那就备案啊，然后备案强制实名认证😂</p>
-<p>这时候我才意识到貌似国内的域名都要备案之后才能使用</p>
-<p>然后我又尝试了SM.MS图床，这个图床的来历：</p>
-<figure>
-<img src="https://i.imgur.com/4RJjAug.png"
-alt="SM.MS诞生于互联网精神" />
-<figcaption aria-hidden="true">SM.MS诞生于互联网精神</figcaption>
-</figure>
-<p>然后我试着访问了主站</p>
-<p><img src="https://i.imgur.com/BOutTZH.png" /></p>
-<blockquote>
-<p>"Due to network issues, users from China Mainland are unable to
-access SM.MS, we have added an alternate domain name smms.app"</p>
-</blockquote>
-<p>又被大陆墙了😂而且这个图床已经关闭了注册功能</p>
-<p>最后我转向了<a
-target="_blank" rel="noopener" href="https://imgse.com/page/about">路过图床</a>。这个图床也是蛮幽默的，注册时如果挂着VPN，会马上触发安全机制：</p>
-<figure>
-<img src="https://i.imgur.com/bfFspUp.png" alt="😭" />
-<figcaption aria-hidden="true">😭</figcaption>
-</figure>
-<p>不过这个图床已经稳定运行了14年，最大支持10M的图片，同时具有全球 CDN
-加速以确保高速、稳定。暂时就先用着这个好了。</p>
-<p>向路过图床上传图片的时候也要求关闭VPN代理，所以最好的办法就是直接在clash新建规则，检测到imgse关键词就走直连</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/04/21/pE5lxs0.png"
-alt="顺便一提我之前把adobe直接禁了，因为联网有盗版检测" />
-<figcaption
-aria-hidden="true">顺便一提我之前把adobe直接禁了，因为联网有盗版检测</figcaption>
-</figure>
-<p>老文章的图片就不迁移了，因为懒</p>
-<h1 id="遗留问题">遗留问题</h1>
-<p>我的文章页背景图为亮色，并且启用了毛玻璃效果，这样一来在黑夜模式下会显得很突兀。最理想的解决方法是设置文章页的背景可以随日夜模式动态切换，黑夜模式就切换为：</p>
-<figure>
-<img src="https://i.imgur.com/fmmmG7o.jpg" alt="玉足🥰" />
-<figcaption aria-hidden="true">玉足🥰</figcaption>
-</figure>
-<p>今天对着这篇博客折腾了很长时间</p>
-<p><a target="_blank" rel="noopener" href="https://4rozen.github.io/archives/Hexo/60191.html">fluid
-全屏背景图随日夜模式切换和正文底页毛玻璃效果</a></p>
-<p>结果失败了。具体体现为：只有在进入博客的一瞬间可以看到白天模式下的背景图，之后马上被黑夜模式的背景图覆盖；模式切换按钮不起作用；而且主页的背景图也被覆盖掉了。这和这个文章的博客的表现完全相同，推测最早这些代码是起作用的，但是现在失效了。</p>
-<p>比较好的例子是<a
-target="_blank" rel="noopener" href="https://qingshaner.com/">这个博客</a>，具体实现方式不明。这个问题留到以后再解决好了。</p>
-<hr />
-<p>2025/4/21补充</p>
-<p>今天收到了漫自由发来的邮件： <img
-src="https://s21.ax1x.com/2025/04/21/pE5ec1f.png" /></p>
-<p>漫自由是我在找漫画资源时发现的网站，也是我见过的为数不多的专门对大陆用户表示欢迎的网站，喜提被墙名单+1</p>
-<p>他现在新开辟了一个域名，大陆可访问，内容和原网址是完全相同的，不知道能坚持多久</p>
+<ol start="3" type="1">
+<li><code>var</code>⚠️（不推荐）</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> age = <span class="hljs-number">16</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>旧语法（ES5之前），写老代码、或者兼容旧浏览器才用</li>
+<li>允许修改</li>
+<li>变量会提升（hoisting），且是函数作用域，容易出 bug</li>
+<li>出代码块还可以访问，属于全局变量</li>
+<li>可以重复定义，前两个都不行。例如</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js">&#123;<br>    <span class="hljs-keyword">var</span> x = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">var</span> x = <span class="hljs-string">&#x27;A&#x27;</span>;<br>&#125;<br><span class="hljs-title function_">alert</span>(x);<br></code></pre></td></tr></table></figure>
+<p>不报错。</p>
+<h1 id="数据类型运算符流程控制语句">数据类型、运算符、流程控制语句</h1>
+<h2 id="数据类型">数据类型</h2>
+<ul>
+<li><strong>原始类型（Primitive Types）</strong></li>
+</ul>
+<p>对应Java中的基本数据类型，但是分得没那么细</p>
+<table>
+
+<thead>
+<tr>
+<th>数据类型</th>
+<th>示例值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>number</code></td>
+<td><code>42</code>, <code>3.14</code>, <code>NaN</code>,
+<code>Infinity</code></td>
+<td>数字类型，包含整数和浮点数</td>
+</tr>
+<tr>
+<td><code>string</code></td>
+<td><code>"Hello"</code>, <code>'世界'</code></td>
+<td>字符串，单双引号都可</td>
+</tr>
+<tr>
+<td><code>boolean</code></td>
+<td><code>true</code>, <code>false</code></td>
+<td>布尔值</td>
+</tr>
+<tr>
+<td><code>undefined</code></td>
+<td><code>let x;</code> → <code>x === undefined</code></td>
+<td>声明未赋值时的默认值</td>
+</tr>
+<tr>
+<td><code>null</code></td>
+<td><code>let x = null</code></td>
+<td>表示“无”或“空值”</td>
+</tr>
+<tr>
+<td><code>bigint</code></td>
+<td><code>12345678901234567890n</code></td>
+<td>大整数类型（ES2020+）</td>
+</tr>
+<tr>
+<td><code>symbol</code></td>
+<td><code>Symbol("id")</code></td>
+<td>独一无二的标识符</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>引用类型（Reference Types）</strong></li>
+</ul>
+<p>对应Java中的引用数据类型，但是少得多</p>
+<table>
+
+<thead>
+<tr>
+<th>数据类型</th>
+<th>示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>object</code></td>
+<td><code>&#123; name: "Miku", age: 16 &#125;</code></td>
+<td>普通对象，键值对结构</td>
+</tr>
+<tr>
+<td><code>array</code></td>
+<td><code>[1, 2, 3, "初音"]</code></td>
+<td>数组，JS 中是一种对象类型</td>
+</tr>
+<tr>
+<td><code>function</code></td>
+<td><code>function greet() &#123;&#125;</code></td>
+<td>函数也是对象</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td><code>new Date()</code></td>
+<td>日期对象</td>
+</tr>
+<tr>
+<td><code>regexp</code></td>
+<td><code>/abc/</code>, <code>new RegExp("abc")</code></td>
+<td>正则表达式对象</td>
+</tr>
+</tbody>
+</table>
+<p>使用<code>typeof</code>运算符可以得到数据类型</p>
+<h2 id="运算符">运算符</h2>
+<p>算术运算符，逻辑运算符同Java。</p>
+<p>比较运算符：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js">==    <span class="hljs-comment">// 相等，会进行类型转换</span><br>===   <span class="hljs-comment">// 全等（值和类型都相等），不进行类型转换✅推荐</span><br>!=    <span class="hljs-comment">// 不等</span><br>!==   <span class="hljs-comment">// 全不等（值和类型都不相等）</span><br>&lt; &gt; &lt;= &gt;=<br></code></pre></td></tr></table></figure>
+<p>赋值运算符： <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js">= **<br>+=   -=   *=   /=   %=   **=<br></code></pre></td></tr></table></figure></p>
+<ul>
+<li><code>**</code>：<strong>指数运算符Exponentiation
+Operator）</strong>，例如<code>2**3</code>表示2的三次方。它是<strong>左结合</strong>运算符，比如<code>2 ** 3 ** 2</code>的计算顺序是<code>2 ** (3 ** 2)</code>。</li>
+<li><code>**=</code>是<strong>指数赋值运算符（Exponentiation assignment
+operator）</strong>，ES7加入。举个例子：<code>x **= y</code>，意思就是<code>x = x ** y;</code>，意思就是把x的y次方赋给x本身。例如：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> a = <span class="hljs-number">2</span>;<br>a **= <span class="hljs-number">3</span>;<br></code></pre></td></tr></table></figure>
+<p>就是把<code>a</code>的3次方赋值给<code>a</code>，结果为8。</p>
+<h3 id="类型转换">类型转换</h3>
+<h4 id="转换成字符串">转换成字符串</h4>
+<p><code>.toString()</code></p>
+<p>Boolean值、数字(number)和字符串(string)都是<strong>伪对象</strong>，它们实际上具有属性和方法，<code>.toString()</code>就是其中一种可供调用的方法。</p>
+<p>另外number类型的<code>toString()</code>方法比较特殊，如果不传入任何参数，那么采用的是<strong>默认模式</strong>，返回的是数字的十进制表示。如果传入参数，即为<strong>基模式</strong>，可以用不同的基(radix)输出数字。</p>
+<p>例如，以下代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> x = <span class="hljs-number">9</span>;<br><span class="hljs-title function_">alert</span>(x.<span class="hljs-title function_">toString</span>(<span class="hljs-number">2</span>));<br></code></pre></td></tr></table></figure>
+<p>得到的结果为<code>1001</code>，也就是十进制数字9的二进制表示。</p>
+<h4 id="转换成数字">转换成数字</h4>
+<p>转换为整数：<code>parseInt</code>
+转换为小数：<code>parseFloat()</code></p>
+<p>从开头开始从左到右读取是数字的部分。如果开头就不是数字，则转换失败，返回<code>NaN</code>(Not
+a Number)。</p>
+<p>字符串中包含的数字字面量会被正确转换为数字，例如"0xA"会被转换成数字10。但是"22.5"会被转换成22，因为小数点被当成无效字符处理了。<code>parseFloat()</code>会把遇到的第一个小数点当成小数点处理。</p>
+<p><code>parseInt()</code>方法也有基模式，定义为<code>parseInt(string: string, radix?: number): number</code>，但是<code>parseFloat()</code>没有。</p>
+<p>相比之下，Java使用<code>Integer.parseInt()</code>
+<code>Float.parseFloat</code> <code>Double.parseDouble()</code>
+<code>Long.parseLong</code>等方法进行转换，如果转换失败会抛出<code>NumberFormatException</code>异常。</p>
+<h3 id="强制类型转换">强制类型转换</h3>
+<p><strong>type casting</strong></p>
+<p class="note note-info">
+cast有“铸造”之意，很贴合“强制转换”的意思
+</p>
+<p><strong>ECMAScript 中可用的3种强制类型转换</strong>：</p>
+<ul>
+<li>Boolean(value) - 把给定的值转换成 Boolean 型；空字符串、数字
+0、undefined 或 null，返回 false。</li>
+<li>Number(value) -
+把给定的值转换成数字（可以是整数或浮点数）；处理<strong>整个值</strong>。</li>
+<li>String(value) - 把给定的值转换成字符串；</li>
+</ul>
+<h2 id="流程控制语句">流程控制语句</h2>
+<p>跟Java差不多，不说了</p>
+<h1 id="函数">函数</h1>
+<p>使用<strong>function</strong>进行定义，语法为</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">functionName</span>(<span class="hljs-params">para1, para2,...</span>) &#123;<br>    <span class="hljs-comment">//函数体</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>形参不需要类型，因为js弱类型</li>
+<li>返回值也不需要定义类型，有return就说明有返回值</li>
+<li>调用的时候可以传递任意个数的参数</li>
+</ul>
 
                 
               </div>
@@ -428,7 +512,7 @@ src="https://s21.ax1x.com/2025/04/21/pE5ec1f.png" /></p>
     
       <span class="category-chain">
         
-  <a href="/categories/Theme/" class="category-chain-item">Theme</a>
+  <a href="/categories/JavaScript/" class="category-chain-item">JavaScript</a>
   
   
 
@@ -448,8 +532,8 @@ src="https://s21.ax1x.com/2025/04/21/pE5ec1f.png" /></p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hexo + Fluid博客美化记录</div>
-      <div>http://example.com/2025/04/20/Fluid主题美化2/</div>
+      <div>JS基础</div>
+      <div>http://example.com/2025/04/23/JS基础/</div>
     </div>
     <div class="license-meta">
       
@@ -461,7 +545,7 @@ src="https://s21.ax1x.com/2025/04/21/pE5ec1f.png" /></p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年4月20日</div>
+          <div>2025年4月23日</div>
         </div>
       
       
@@ -493,18 +577,12 @@ src="https://s21.ax1x.com/2025/04/21/pE5ec1f.png" /></p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/04/23/JS%E5%9F%BA%E7%A1%80/" title="JS基础">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">JS基础</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/04/18/java11/" title="Java SE-Stream API详解 by AlbertShen">
-                        <span class="hidden-mobile">Java SE-Stream API详解 by AlbertShen</span>
+                      <a href="/2025/04/20/Fluid%E4%B8%BB%E9%A2%98%E7%BE%8E%E5%8C%962/" title="Hexo + Fluid博客美化记录">
+                        <span class="hidden-mobile">Hexo + Fluid博客美化记录</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
