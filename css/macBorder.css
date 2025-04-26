@@ -1,5 +1,5 @@
 .hljs-comment, .hljs-quote {
-    color: #008000;
+    color: #6A9955;
     font-family: auto;
     font-style: normal;
   }
@@ -9,11 +9,12 @@
     background: #838383;
     border-radius: 5px;
     padding-top: 30px;
-    box-shadow: 0 5px 10px #a1a1a1;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   }
   
+  /* 控制代码块的上面的条条的背景色 */
   [data-user-color-scheme='dark'] figure.highlight {
-    background: #000;
+    background: #21252B;
   }
   
   /* 该伪元素用于展示代码语言,若不需要可删除 */
@@ -50,6 +51,7 @@
     background-color: #f9fffa;
   }
   
+  /* 不是这个 */
   [data-user-color-scheme='dark'] .markdown-body table tr {
     background-color: #25272d;
   }
@@ -62,6 +64,7 @@
     background-color: #f9fffa;
   }
   
+  /* 不是这个 */
   [data-user-color-scheme='dark'] .gutter {
     background-color: #25272d;
   }

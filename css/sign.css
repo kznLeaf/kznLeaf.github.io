@@ -11,8 +11,8 @@
     stroke-dashoffset: var(--l);
     fill: none;
     fill-rule: nonzero;
-    animation: stroke 25s forwards;
     -webkit-animation: stroke 25s forwards;
+    animation: stroke 25s forwards;
   }
   
   @keyframes stroke {
