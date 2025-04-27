@@ -50,8 +50,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   /*博客预加载 */
-  $(function(){
+/*   $(function(){
     $("#Loadanimation").fadeOut(500);
- });
+ }); */
 
 
+ $(window).on('load', function() {
+  $("#Loadanimation").fadeOut(500);
+});
