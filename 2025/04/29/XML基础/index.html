@@ -1,0 +1,776 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
+  <link rel="icon" href="/img/tree.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="banyee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="XML XML 还没有被淘汰，应用的地方还有不少，比如说 Maven 的 pom.xml 文件里就还在用。但是作为一种数据传输格式，它正在被 JSON 替代。所以以下简单列举一些XML的基础知识，更深层次的目前没必要去学。 什么是XML XML(eXtensible Markup Language，可扩展标记语言)，其设计目的就是存储和传输数据。XML也是一种标记语言，类似于HTML，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XML基础">
+<meta property="og:url" content="https://kznep19.blog/2025/04/29/XML%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="banyee&#39;s Blog">
+<meta property="og:description" content="XML XML 还没有被淘汰，应用的地方还有不少，比如说 Maven 的 pom.xml 文件里就还在用。但是作为一种数据传输格式，它正在被 JSON 替代。所以以下简单列举一些XML的基础知识，更深层次的目前没必要去学。 什么是XML XML(eXtensible Markup Language，可扩展标记语言)，其设计目的就是存储和传输数据。XML也是一种标记语言，类似于HTML，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.w3school.com.cn/i/xml/nodetree.png">
+<meta property="article:published_time" content="2025-04-29T06:00:54.000Z">
+<meta property="article:modified_time" content="2025-05-03T13:36:41.898Z">
+<meta property="article:author" content="banyee">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.w3school.com.cn/i/xml/nodetree.png">
+  
+  
+  
+  <title>XML基础 - banyee&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/macBorder.css">
+<link rel="stylesheet" href="/css/sign.css">
+<link rel="stylesheet" href="/css/backgroundize.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"kznep19.blog","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+
+  <div id="Loadanimation" style="z-index:999999;">
+    <div id="Loadanimation-center">
+       <div id="Loadanimation-center-absolute">
+           <div class="xccx_object" id="xccx_four"></div>
+           <div class="xccx_object" id="xccx_three"></div>
+           <div class="xccx_object" id="xccx_two"></div>
+           <div class="xccx_object" id="xccx_one"></div>
+       </div>
+    </div>
+    </div>
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>banyee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">XML基础</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-04-29 14:00" pubdate>
+          2025年4月29日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">XML基础</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="xml">XML</h1>
+<p>XML 还没有被淘汰，应用的地方还有不少，比如说 Maven 的 pom.xml
+文件里就还在用。但是作为一种数据传输格式，它正在被 JSON
+替代。所以以下简单列举一些XML的基础知识，更深层次的目前没必要去学。</p>
+<h2 id="什么是xml">什么是XML</h2>
+<p>XML(eXtensible Markup
+Language，可扩展标记语言)，其设计目的就是存储和传输数据。XML也是一种标记语言，类似于HTML，但是HTML只负责显示数据，而且XML的标签不像HTML一样预先被定义。在许多
+HTML 应用程序中，XML 用于存储或传输数据，而 HTML
+用于格式化和显示这些数据。</p>
+<p><strong>可扩展性</strong>就体现在，允许用户自定义任何需要的标签，而且即使添加了（或删除了）新数据，大多数
+XML 应用程序也会按预期工作，输出不受影响。<strong>XML
+的优势之一，就是可以经常在不中断应用程序的情况进行扩展</strong>。</p>
+<p>和JSON一样，XML以纯文本格式存储数据，这样就避免了在不同的计算机系统上交换数据时的不兼容问题。</p>
+<p>这是博客的站点地图文件<code>sitemap.xml</code>的一部分：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">urlset</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;</span>&gt;</span><br>  <br>  <span class="hljs-tag">&lt;<span class="hljs-name">url</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">loc</span>&gt;</span>https://kznep19.blog/2025/04/27/Maven%E7%9A%84%E4%BD%BF%E7%94%A8/<span class="hljs-tag">&lt;/<span class="hljs-name">loc</span>&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">lastmod</span>&gt;</span>2025-04-28<span class="hljs-tag">&lt;/<span class="hljs-name">lastmod</span>&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">changefreq</span>&gt;</span>monthly<span class="hljs-tag">&lt;/<span class="hljs-name">changefreq</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">priority</span>&gt;</span>0.6<span class="hljs-tag">&lt;/<span class="hljs-name">priority</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span>  <br><br><span class="hljs-tag">&lt;/<span class="hljs-name">urlset</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>第一行是XML声明</li>
+<li><code>urlset</code>是指定该文档遵循 sitemaps.org 的 Sitemap 0.9
+标准。，表示这是一个网址列表。<code>xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"</code>指定该文档遵循
+sitemaps.org 的 Sitemap 0.9 标准。</li>
+<li><code>&lt;loc&gt;</code>:页面URL</li>
+<li><code>&lt;lastmod&gt;</code>:页面的最后修改时间</li>
+<li><code>&lt;changefreq&gt;</code>:建议搜索引擎多久抓取一次</li>
+<li><code>&lt;priority&gt;</code>:页面在站点中的相对重要性(0.0–1.0)</li>
+</ul>
+<h2 id="xml树结构">XML树结构</h2>
+<p>XML 中的元素形成了一种树状结构：</p>
+<p><img src="https://www.w3school.com.cn/i/xml/nodetree.png" /></p>
+<p>从最上面的根元素开始，扩展到枝叶。</p>
+<h2 id="语法">语法</h2>
+<ol type="1">
+<li>XML 文档必须包含一个根元素，作为其他所有元素的父元素</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">root</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">child</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">subchild</span>&gt;</span>.....<span class="hljs-tag">&lt;/<span class="hljs-name">subchild</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">child</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">root</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>XML 标签区分大小写</li>
+<li>一些符号不能直接写在元素中，使用<strong>实体引用</strong></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>替代写法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;</code></td>
+<td><code>&amp;lt;</code>（less than）</td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td><code>&amp;gt;</code>（greater than）</td>
+</tr>
+<tr>
+<td><code>&amp;</code></td>
+<td><code>&amp;amp;</code>（ampersand）</td>
+</tr>
+<tr>
+<td><code>"</code></td>
+<td><code>&amp;quot;</code>（双引号）</td>
+</tr>
+<tr>
+<td><code>'</code></td>
+<td><code>&amp;apos;</code>（单引号）</td>
+</tr>
+</tbody>
+</table>
+<ol start="4" type="1">
+<li>多个连续的空格不会被裁剪</li>
+</ol>
+<h2 id="元素">元素</h2>
+<p>类似<code>&lt;lastmod&gt;2025-04-28&lt;/lastmod&gt;</code>被称为一个<strong>元素</strong>。元素的内容可以是文本内容，也可以是其他的子元素。</p>
+<p><strong>空元素</strong>：形如<code>&lt;element&gt;&lt;/element&gt;</code>，可以使用自关闭标签记为<code>&lt;element /&gt;</code>。</p>
+<p>元素的命名约定：</p>
+<table>
+
+<thead>
+<tr>
+<th>样式</th>
+<th>例子</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>小写</td>
+<td><code>&lt;firstname&gt;</code></td>
+<td>所有字母小写</td>
+</tr>
+<tr>
+<td>大写</td>
+<td><code>&lt;FIRSTNAME&gt;</code></td>
+<td>所有字母大写</td>
+</tr>
+<tr>
+<td>蛇形</td>
+<td><code>&lt;first_name&gt;</code></td>
+<td>下划线分隔单词（常用于 SQL 数据库）</td>
+</tr>
+<tr>
+<td>帕斯卡</td>
+<td><code>&lt;FirstName&gt;</code></td>
+<td>每个单词的第一个字母大写（C 程序员常用）</td>
+</tr>
+<tr>
+<td>驼峰</td>
+<td><code>&lt;firstName&gt;</code></td>
+<td>除第一个之外的每个单词首字母大写（常用于 JavaScript）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="属性">属性</h2>
+<p><strong>Attribute</strong></p>
+<p>XML
+属性必须加引号：<code>&lt;person gender="female"&gt;</code>，单双都可。属性的扩展性很差。</p>
+<p>数据本身应当存储为元素，元数据（用于描述数据的信息）应当存储为属性。</p>
+<h2 id="命名空间">命名空间</h2>
+<p><strong>Namespace</strong></p>
+<p>当两个不同的文档使用相同的元素名称时，就会发生<strong>命名冲突</strong>。例如，table
+既可以作为桌子的名称，也可以作为表格的名称。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">table</span>&gt;</span>木头餐桌<span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">table</span>&gt;</span>员工工资表<span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>这样就很难区分了。解决方法：<strong>名称前缀</strong></p>
+<p>在xml中使用前缀，必须定义命名空间。命名空间可以通过元素开始标记中的<code>xmlns</code>属性来定义，也就是
+XML Namespace。</p>
+<p><strong>语法</strong>：<code>xmlns:前缀="命名空间的唯一标识符（一般是 URL）"</code></p>
+<p>其中“命名空间的唯一标识符”即为 URI ，最常见的URI是URL(Uniform
+Resource Locator)，也就是网址。加上名称前缀之后上面的例子变成:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">a:table</span> <span class="hljs-attr">xmlns:a</span>=<span class="hljs-string">&quot;http://example.com/furniture&quot;</span>&gt;</span>木头餐桌<span class="hljs-tag">&lt;/<span class="hljs-name">a:table</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">b:table</span> <span class="hljs-attr">xmlns:b</span>=<span class="hljs-string">&quot;http://example.com/database&quot;</span>&gt;</span>员工工资表<span class="hljs-tag">&lt;/<span class="hljs-name">b:table</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>这样就能区分开来了。</p>
+<p>然后回到开头的例子：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">urlset</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>这似乎不符合命名空间的语法，其实这里用的是<strong>默认命名空间</strong>，意思是：文档中<strong>所有没有前缀的元素</strong>（如<code>&lt;url&gt;</code>、<code>&lt;loc&gt;</code>）<strong>都属于这个命名空间</strong>。</p>
+<h2 id="xmlhttprequest">XMLHttpRequest</h2>
+<div class="note note-secondary">
+            <p><code>XMLHttpRequest</code>是浏览器中的一个 JavaScript对象，用于在网页与服务器之间交换数据，而无需刷新整个页面。</p>
+          </div>
+<p><code>XMLHttpRequest</code>是 2000 年代早期的
+API，不过现在有使用起来更简洁方便的<code>fetch</code>。使用xhr发送GET请求的实例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//创建请求对象</span><br><span class="hljs-keyword">var</span> xhttp = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br><br><span class="hljs-comment">//事件处理函数，每当xhr的对象的状态发生变化时调用</span><br>xhttp.<span class="hljs-property">onreadystatechange</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">//请求已完成，且返回的状态码为200</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">readyState</span> == <span class="hljs-number">4</span> &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-property">status</span> == <span class="hljs-number">200</span>) &#123;<br>       <span class="hljs-comment">// 更新网页</span><br>       <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;demo&quot;</span>).<span class="hljs-property">innerHTML</span> = xhttp.<span class="hljs-property">responseText</span>;<br>    &#125;<br>&#125;;<br><span class="hljs-comment">//设置请求方式和请求地址以及是否异步</span><br>xhttp.<span class="hljs-title function_">open</span>(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;filename&quot;</span>, <span class="hljs-literal">true</span>);<br><span class="hljs-comment">//发送请求</span><br>xhttp.<span class="hljs-title function_">send</span>();<br></code></pre></td></tr></table></figure>
+<p><strong>执行顺序</strong>：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs lua">请求已发送<br>（稍后）onreadystatechange 被触发，当状态变为 <span class="hljs-number">4</span> 且 <span class="hljs-built_in">status</span> 为 <span class="hljs-number">200</span> 时执行回调<br></code></pre></td></tr></table></figure>
+<p>由于是异步方式，<code>xhttp.send();</code>一开始就会被执行，浏览器异步地等待响应，期间可以去做别的事情，当xhr状态发生变化的时候才会更新网页。</p>
+<h2 id="xml-解析">XML 解析</h2>
+<h3 id="dom">DOM</h3>
+<p>将 XML 文档转换为XML DOM 对象 - 可通过 JavaScript 操作的对象。</p>
+<p>JS使用<code>DOMParser</code>解析xml字符串实例如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> xmlString = <span class="hljs-string">&quot;&lt;note&gt;&lt;to&gt;Alice&lt;/to&gt;&lt;from&gt;Bob&lt;/from&gt;&lt;/note&gt;&quot;</span>;<br><span class="hljs-keyword">const</span> parser = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DOMParser</span>();<br><span class="hljs-keyword">const</span> xmlDoc = parser.<span class="hljs-title function_">parseFromString</span>(xmlString, <span class="hljs-string">&quot;application/xml&quot;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(xmlDoc.<span class="hljs-title function_">getElementsByTagName</span>(<span class="hljs-string">&quot;to&quot;</span>)[<span class="hljs-number">0</span>].<span class="hljs-property">textContent</span>); <span class="hljs-comment">// 输出 &quot;Alice&quot;</span><br></code></pre></td></tr></table></figure>
+<p>以上代码必须放到浏览器中才能运行。</p>
+<p>上面使用解析器将XML文件转换为XML DOM对象，对于XML
+DOM对象也有可用的访问方法。例如<code>getElementsByTagName</code>，<code>getElementById</code>等。因为XML
+DOM呈现树状结构，我们从根元素出发一定可以遍历所有子节点，获取这个XML文件的所有信息。</p>
+<h3 id="sax">SAX</h3>
+<p>DOM方式固然省事，但是内存开销太大，因为整个XML文件必须加载到内存中之后才能使用。SAX是另一种解析XML的方式，即<code>Simple API for XML</code>，它是一种基于<strong>事件流</strong>的间隙方式，解析时逐个读取XML文件的元素并触发相应事件。但是使用起来依然很麻烦。</p>
+<h3 id="jackson">Jackson</h3>
+<p>Jackson是一个第三方库，它主要用于Java对象和JSON之间的转化，也可以实现XML到JavaBean的转换。<a
+target="_blank" rel="noopener" href="https://github.com/FasterXML/jackson">仓库地址</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>XML基础</div>
+      <div>https://kznep19.blog/2025/04/29/XML基础/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>banyee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年4月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/04/27/Maven%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" title="Maven的基本操作">
+                        <span class="hidden-mobile">Maven的基本操作</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/vvd_js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+<script src="/js/sign.js"></script>
+<script src="/js/backgroundize.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>
