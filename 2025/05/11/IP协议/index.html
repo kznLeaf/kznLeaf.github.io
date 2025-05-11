@@ -19,23 +19,23 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="缓慢持续更新ing 主要参考：wiki 和 小林coding，以及这篇博客 TCP 报文头部格式 一个 TCP 报文（TCP segment） 是 TCP 协议在网络中传输的基本单位。它有一个固定格式的头部（Header）和一个可变长度的数据部分（Payload）。   TCP头部格式  源端口号和目标端口号  Source Port: 16位，源端口号，标识发送端口。 D">
+    <meta name="description" content="参考：IP协议看这篇就够了、小林coding、wiki 概况 TCP模块将网络包委托给 IP 模块才能发送给通信对象。 IP 协议的特点：IP 协议提供无连接的、不可靠的、尽力的数据报投递服务：  无连接的：通信双方无需像TCP那样建立连接便可直接通信，发送端可以在任何时刻发送数据，接收方永远也不知道自己什么时候会收到数据。 不可靠的：IP协议既不保证数据包能成功传输给对方，也不会对">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TCP协议">
-<meta property="og:url" content="https://kznep19.blog/2025/05/10/TCP%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:title" content="IP协议">
+<meta property="og:url" content="https://kznep19.blog/2025/05/11/IP%E5%8D%8F%E8%AE%AE/index.html">
 <meta property="og:site_name" content="banyee&#39;s Blog">
-<meta property="og:description" content="缓慢持续更新ing 主要参考：wiki 和 小林coding，以及这篇博客 TCP 报文头部格式 一个 TCP 报文（TCP segment） 是 TCP 协议在网络中传输的基本单位。它有一个固定格式的头部（Header）和一个可变长度的数据部分（Payload）。   TCP头部格式  源端口号和目标端口号  Source Port: 16位，源端口号，标识发送端口。 D">
+<meta property="og:description" content="参考：IP协议看这篇就够了、小林coding、wiki 概况 TCP模块将网络包委托给 IP 模块才能发送给通信对象。 IP 协议的特点：IP 协议提供无连接的、不可靠的、尽力的数据报投递服务：  无连接的：通信双方无需像TCP那样建立连接便可直接通信，发送端可以在任何时刻发送数据，接收方永远也不知道自己什么时候会收到数据。 不可靠的：IP协议既不保证数据包能成功传输给对方，也不会对">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/10/pEODgrd.png">
-<meta property="article:published_time" content="2025-05-10T15:06:28.000Z">
-<meta property="article:modified_time" content="2025-05-11T14:53:21.801Z">
+<meta property="og:image" content="https://s21.ax1x.com/2025/05/11/pEX9idg.png">
+<meta property="article:published_time" content="2025-05-11T14:57:54.000Z">
+<meta property="article:modified_time" content="2025-05-11T14:59:23.216Z">
 <meta property="article:author" content="banyee">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/05/10/pEODgrd.png">
+<meta name="twitter:image" content="https://s21.ax1x.com/2025/05/11/pEX9idg.png">
   
   
   
-  <title>TCP协议 - banyee&#39;s Blog</title>
+  <title>IP协议 - banyee&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -220,7 +220,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">TCP协议</span>
+            <span id="subtitle">IP协议</span>
           
         </div>
 
@@ -231,8 +231,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-05-10 23:06" pubdate>
-          2025年5月10日 晚上
+        <time datetime="2025-05-11 22:57" pubdate>
+          2025年5月11日 晚上
         </time>
       </span>
     
@@ -243,7 +243,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k 字
+          1.3k 字
         
       </span>
     
@@ -254,7 +254,7 @@
         
         
         
-          20 分钟
+          11 分钟
         
       </span>
     
@@ -291,169 +291,121 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">TCP协议</h1>
+            <h1 id="seo-header">IP协议</h1>
             
             
               <div class="markdown-body">
                 
-                <p>缓慢持续更新ing</p>
-<p>主要参考：wiki 和 小林coding，以及<a
-target="_blank" rel="noopener" href="https://www.cnblogs.com/jojop/p/14111160.html">这篇博客</a></p>
-<h1 id="tcp-报文头部格式">TCP 报文头部格式</h1>
-<p>一个 TCP 报文（TCP segment） 是 TCP
-协议在网络中传输的基本单位。它有一个<strong>固定格式的头部</strong>（Header）和一个<strong>可变长度的数据部分</strong>（Payload）。</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/05/10/pEODgrd.png"
-alt="TCP头部格式" />
-<figcaption aria-hidden="true">TCP头部格式</figcaption>
-</figure>
-<h2 id="源端口号和目标端口号">源端口号和目标端口号</h2>
+                <p>参考：<a
+target="_blank" rel="noopener" href="https://www.cnblogs.com/kuangtf/articles/16354512.html">IP协议看这篇就够了</a>、小林coding、<a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/IP%E5%9C%B0%E5%9D%80">wiki</a></p>
+<h1 id="概况">概况</h1>
+<p>TCP模块将网络包委托给 IP 模块才能发送给通信对象。</p>
+<p>IP 协议的特点：IP
+协议提供<strong>无连接的</strong>、<strong>不可靠的</strong>、<strong>尽力的</strong>数据报投递服务：</p>
 <ul>
-<li><code>Source Port</code>: 16位，源端口号，标识发送端口。</li>
-<li><code>Destination Port</code>: 16位，标识接收端口</li>
+<li>无连接的：通信双方无需像TCP那样建立连接便可直接通信，发送端可以在任何时刻发送数据，接收方永远也不知道自己什么时候会收到数据。</li>
+<li>不可靠的：IP协议既不保证数据包能成功传输给对方，也不会对传输失败做任何检测，更不会通知对方本次传输是否成功。</li>
+<li>尽力的：最大传输单元（MTU）规定了一个网络包的最大长度，以太网中一般为1500字节。对于较长的数据，IP协议会把原始数据分割成一个一个的数据包进行发送。</li>
 </ul>
-<h2 id="序列号">序列号</h2>
+<h1 id="多网卡">多网卡</h1>
+<p>当客户端设备有<strong>多个网卡</strong>（每个网卡各自有一个 IP
+地址），系统在发送 IP
+包时会根据<strong>路由表</strong>选择合适的网卡和源 IP
+地址。至于到底选择那个网卡？系统会查找路由表中哪个网络前缀和当前IP的<strong>匹配程度最高</strong>，将这个网卡的
+IP 作为 IP 包的源地址写入头部。</p>
+<p>什么叫匹配度最高？谁和目标IP的重合度最高，谁最优先。举个例子，假设当前的路由表中有以下路由表</p>
+<table>
+<thead>
+<tr>
+<th>网络地址</th>
+<th>子网掩码</th>
+<th>前缀长度</th>
+<th>接口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>192.168.1.0</td>
+<td>255.255.255.0</td>
+<td><code>/24</code></td>
+<td>eth0</td>
+</tr>
+<tr>
+<td>192.168.1.128</td>
+<td>255.255.255.128</td>
+<td><code>/25</code></td>
+<td>eth1</td>
+</tr>
+<tr>
+<td>0.0.0.0</td>
+<td>0.0.0.0</td>
+<td><code>default</code></td>
+<td>eth2</td>
+</tr>
+</tbody>
+</table>
+<p>现在我们要访问IP：<code>192.168.1.130</code></p>
 <ul>
-<li><code>Sequence Number</code>：
-32位，序号（或者序列号），有双重作用：
-<ul>
-<li>如果 SYN
-标志位为1，那么这就是初始序列号。实际的第一个数据字节的序列号以及相应
-ACK 中的确认号（acknowledged number，也叫ACK号）都等于此序列号加
-1。</li>
-<li>如果 SYN 标志位为 0，那么这个序列号就是当前会话中的这个 segment
-中第一个数据的累计字节序号。这主要是因为在 TCP 连接已经建立之后，SYN
-就不再使用了（为 0）。</li>
-</ul></li>
+<li><code>192.168.1.0</code>:
+根据子网掩码，可以计算该网络号可覆盖的的范围是<code>192.168.1.0 - 192.168.1.255</code></li>
+<li><code>192.168.1.128</code>:
+同样计算网络的范围是<code>192.168.1.128 - 192.168.1.255</code></li>
+<li><code>default</code>: 匹配度为0，当本地IP都不匹配时才使用</li>
 </ul>
-<h2 id="数据偏移量">数据偏移量</h2>
+<p>可见路由1和路由2都覆盖了目标IP地址。但是路由2的网络范围比路由1更小，匹配度更高，所以优先选择路由2.</p>
+<p>这就是操作系统和路由器采用的<strong>最长前缀匹配</strong>的机制。</p>
+<p>再举个例子：假设你电脑的IP地址是：<code>192.168.1.100</code>，子网掩码是：<code>255.255.255.0</code>。也就是说你的本地网络号是：<code>192.168.1.0/24</code>。也就是说只能直接访问<code>192.168.1.x</code>
+的设备。除此之外所有的IP地址都属于外部网络，需要交给默认路由的网关转发给外部网络。</p>
+<p>事实上，两台计算机要通讯，首先要判断的就是是否处于同一个广播域内，即网络地址（网络号）是否相同：</p>
 <ul>
-<li><code>Data Offset</code>(DOffset): 4位，数据偏移量，用指定 TCP
-头的size，以word（32-bit，即4字节）为单位。TCP 头的最小长度是 5
-words（因为固定部分的 TCP 报文头正好是 5 个 word），最大是 15
-words，因此最小是 20 字节，最大是 60 字节，报头最多可以容纳 40
-字节的选项（options）字段。这个字段之所以叫“offset”，是因为它也表示从
-TCP 段起始处 到 实际数据开始位置(Data) 的偏移量。</li>
+<li>如果网络地址相同，表明接受方在本网络上（<strong>本地网络主机</strong>），那么可以把数据包直接发送到目标主机，无需转发给其他的网络。</li>
+<li>网络号不相同的主机称之为<strong>远程网络主机</strong>，远程网络中的主机要相互通信必须通过<strong>本地网关</strong>(GateWay)来传递转发数据。</li>
 </ul>
-<h2 id="保留位">保留位</h2>
-<ul>
-<li><code>Reserved</code>(Rsrvd): 4 bits, 保留位，供未来使用，应当设置为
-0
-.在没有进一步的规范的情况下，发送方不应该设置这些位，接收方也应当忽略他们（就算被不慎设置了）。</li>
-</ul>
-<h2 id="状态位">状态位</h2>
-<ul>
-<li><code>Flags</code>: 8 bits, 8位状态位，包含以下 8 个标志位：
-<ul>
-<li><code>CWR</code>(Congestion window reduced):
-<strong>拥塞窗口已减少</strong>标志，由<strong>发送方</strong>设置，以表明它收到了设置了
-ECE 标志的 TCP
-段，并且已经根据拥塞控制机制作出了响应。它的作用是：发送方告诉接收方“我知道网络拥塞了，我已经减小了发送窗口”。<strong>有的图解会把<code>CWR</code>归入保留位</strong>。</li>
-<li><code>ECE</code>(ECN-Echo): 1 bit, ECN
-回显标志具有双重作用，其含义取决于 SYN 标志位：
-<ul>
-<li>如果 SYN 标志位为1，表示该 TCP peer 支持 ECN 功能</li>
-<li>如果 SYN 标志位为0，则在正常传输期间接收到了 IP
-标头中设置了拥塞经历标志（<code>ECN=11</code>）的数据包。这告诉 TCP
-发送方网络已经发生或即将发生拥塞。<strong>有的图解会把<code>ECE</code>归入保留位</strong>。</li>
-</ul></li>
-<li><code>URG</code>, 1 bit, 表示 “紧急指针（Urgent
-Pointer）”字段是有效的。当 URG 标志位置为 1 时，说明当前这个 TCP
-报文中有“紧急数据”；此时，紧急指针字段告诉接收方：紧急数据在数据段中结束的位置。通常用于
-telnet 等老旧协议，<strong>现在很少用</strong>。</li>
-<li><code>ACK</code>: 1 bit, 指示确认字段有效。<strong>客户端发送初始
-SYN
-数据包之后的所有数据包都应设置此标志</strong>。即，只有客户端请求连接的第一次握手时不用设置ACK标志位，毕竟在此之前客户端还没有收到过信息。</li>
-<li><code>PSH</code>: 1 bit, 表示“推送功能（Push
-Function）”，请求将缓冲数据立即推送到接收应用程序。</li>
-<li><code>RST</code>: 1 bit, 重新连接。</li>
-<li><code>SYN</code>: 1 bit,
-同步序列号。<strong>只有在前两次握手的过程应设置此标志</strong>。一些其他的标志位和字段根据
-SYN 改变含义，有的只有在SYN为1时有效，有的只有在SYN清空有效。</li>
-<li><code>FIN</code>: 1 bit, 表示发送方的最后一个数据包，<strong>用于
-TCP 连接的正常关闭</strong>。当一个主机发送带有 FIN=1 的 TCP
-报文时，它表示主机请求断开连接，然后回进入终止连接的四次挥手进程。</li>
-</ul></li>
-</ul>
-<h2 id="窗口">窗口</h2>
-<ul>
-<li>16位，接收窗口的大小，表示本报文段的<strong>发送方</strong>目前愿意接收的窗口大小单位数。（详见“流量控制”和“窗口缩放”部分）。</li>
-</ul>
-<h2 id="校验和">校验和</h2>
-<p><code>Checksum</code>: 16 bits， 16 位校验和字段用于对 TCP
-报头、有效载荷(payload)和 IP
-伪报头(pseudo-header)进行错误校验。伪报头由源 IP 地址、目标 IP 地址、TCP
-协议号 (6) 以及 TCP
-报头和有效载荷的长度（以字节为单位）组成。具体见<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="https://en.wikipedia.org/wiki/Internet_checksum">[1]</span></a></sup></p>
-<p>payload data:
-有效载荷数据，在计算机网络中，指传输的数据中除去协议头和校验码等控制信息之外的实际数据部分。</p>
-<h2 id="紧急指针">紧急指针</h2>
-<p><code>Urgent Pointer</code>: 16 bits, 如果设置了 URG 标志，则此 16
-位字段是相对于指示最后一个紧急数据字节的序列号的偏移量。<strong>现代协议几乎不使用URG和紧急指针</strong>。</p>
-<h2 id="选项">选项</h2>
-<p>选项（<code>TCP Option</code>）：长度可变，0–320 位（即 0–40
-字节），单位是 32 位（4 字节）； 其大小由 TCP 报文头的 Data Offset
-字段决定，计算公式是： <figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mathematica"><span class="hljs-built_in">Options</span> 字段大小 <span class="hljs-operator">=</span> <span class="hljs-punctuation">(</span><span class="hljs-variable">Data</span> <span class="hljs-built_in">Offset</span> <span class="hljs-operator">-</span> <span class="hljs-number">5</span><span class="hljs-punctuation">)</span> × <span class="hljs-number">32</span> 位<br></code></pre></td></tr></table></figure></p>
-<p>如果这个字段存在，数据偏移量将大于 5 words。因为 Data Offset
-表示的是以 word（32 位）为单位的 TCP
-头部长度，所以必须通过在末尾添加填充 0，将 TCP 头部长度填充为 4
-字节的整数倍。</p>
-<h1 id="三次握手">三次握手</h1>
-<p>在 HTTP 传输数据之前，首先需要 TCP 建立连接，TCP
-连接的建立，通常称为<strong>三次握手</strong>。</p>
-<p>先弄清楚几个概念：</p>
-<ul>
-<li><strong>序列号</strong>（Sequence
-Number）：是<strong>发送方</strong>为数据流中的字节指定的“标记”，表示它正在发送哪些字节。它告诉接收方“<strong>我准备从这个序列号开始给你发数据</strong>”。</li>
-<li><strong>确认号</strong>（Acknowledgment
-Number）：是<strong>接收方</strong>告诉发送方它已经成功接收到的字节的<strong>下一个序列号</strong>，表示接收方已经收到了所有小于该确认号的字节。它告诉发送方“<strong>接下来我准备接收从这个序列号开始的数据</strong>”。</li>
-</ul>
-<div class="note note-secondary">
-            <p>在客户端尝试连接服务器之前，服务器必须先绑定并监听某个端口，以便开放连接：这称为<strong>被动开启</strong>(passiveopen)。被动打开建立后，客户端可以通过三次握手(three-way/3-stephandshake)发起<strong>主动开启</strong>(active open)来建立连接。</p>
-          </div>
-<p>三次握手的步骤如下：</p>
-<ol type="1">
-<li><strong>SYN</strong>：客户端向服务器发送 SYN 报文（SYN
-标志位设置为1）主动开启连接。客户端把TCP段的序列号设置为一个随机数
-A。因为客户端还没有受到过消息，所以这里不用设置确认号，也不包含任何应用层的数据。</li>
-<li><strong>SYN-ACK</strong>：作为回复，服务器响应了一个SYN-ACK报文。该TCP段的确认号被设置为
-A+1，而序列号被服务器设置为另一个随机数
-B。到这里客户端已经完成了一发一收，所以处于<code>ESTABLISHED</code>状态。</li>
-<li><strong>ACK</strong>：最后，客户端把 ACK
-发送给服务器，这时的序列号设置为接收到的确认号，即A+1，而确认号被设置成接收到的序列号加一，即B+1。<strong>这次报文可以携带客户端到服务器的数据</strong>。至此服务器也完成了一发一收，也处于<code>ESTABLISHED</code>状态。</li>
-</ol>
-<p>步骤1和2从客户端到服务器的方向建立和确认序列号，步骤2和步骤3从服务器到客户端的方向建立和确认序列号。这些步骤完成之后，客户端和服务器都完成了确认，全双工通信正式建立。</p>
-<p>可见，三次握手目的是保证双方都有发送和接收的能力。</p>
-<h1 id="分割数据">分割数据</h1>
-<p>TCP
-传输的数据归根结底还是来源于应用程序产生的HTTP请求消息。但是，TCP每个段能传输的数据长度是有最大限制的：</p>
-<ul>
-<li>MTU：一个网络包（IP头+TCP头+数据）的最大长度，以太网中一般为1500字节。</li>
-<li>MSS：除去IP头和TCP头之后，一个网络包所能容纳的TCP数据的最大长度。</li>
-</ul>
-<p>如果数据的长度超过了<code>MSS</code>，则会将数据以<code>MSS</code>的长度为单位进行切分，每一块都会被放进单独的网络包中，加上TCP头部后交给IP模块发送出去。</p>
-<hr />
-<p>在浏览器中输入网址并回车后，浏览器会向服务器发起 HTTP
-请求，这是一段纯文本数据，浏览器将这段数据交给操作系统的协议栈，操作系统通过上文讲述的
-TCP
-协议建立连接、发送。如果数据的长度超过了<code>MSS</code>，则会将数据以<code>MSS</code>的长度为单位进行切分，每一块都会被放进单独的网络包中，加上TCP头部后交给IP模块发送出去。远程服务器接收到
-TCP
-报文后，TCP协议层按照序列号重新组装数据，然后把完整的HTTP请求交给HTTP服务器程序，最后由服务器解析并做出响应，例如返回请求的网页内容。这就是在浏览器输入网址后发生的事情。</p>
-<h1 id="参考链接">参考链接</h1>
-<section class="footnotes">
-<div class="footnote-list">
-<ol>
-<li>
-<span id="fn:1"
-class="footnote-text"><span>https://en.wikipedia.org/wiki/Internet_checksum
-<a href="#fnref:1" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
-</li>
-</ol>
-</div>
-</section>
+<p>大多数情况下，当设备需要与本地子网之外的网络（比如互联网）通信时，会使用默认路由。默认路由是路由表中唯一不指定具体目标网络的路由条目，其网络目标是
+0.0.0.0。任何无法通过更精确匹配找到目标地址的流量都会被引导到默认路由。</p>
+<h1 id="ip-地址">IP 地址</h1>
+<p>常见的IP地址分为IPv4与IPv6两大类，IP地址由一串数字组成。IPv4为<code>32</code>位长，通常书写时以四组十进制数字组成，并以点分隔，如：<code>172.16.254.1</code>；IPv6为<code>128</code>位长，通常书写时以八组十六进制数字组成，以冒号分割，如：<code>2001:db8:0:1234:0:567:8:1</code>。</p>
+<h2 id="ipv4">IPv4</h2>
+<p>1981年，IETF定义了32位IP地址的IPv4。随着互联网的快速成长，IPv4的42亿个地址最终于2011年2月3日用尽。</p>
+<p>IPv4地址可分为A、B、C、D、E五大类，其中E类属于特殊保留地址。</p>
+<table>
+<thead>
+<tr>
+<th>IP 第一段范围</th>
+<th>属于哪一类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 ~ 126</td>
+<td>A 类</td>
+</tr>
+<tr>
+<td>128 ~ 191</td>
+<td>B 类</td>
+</tr>
+<tr>
+<td>192 ~ 223</td>
+<td>C 类</td>
+</tr>
+<tr>
+<td>224 ~ 239</td>
+<td>D 类（组播）</td>
+</tr>
+<tr>
+<td>240 ~ 255</td>
+<td>E 类（实验）</td>
+</tr>
+</tbody>
+</table>
+<p>至于这样划分的原因，看看下面这张图就明白了：</p>
+<p><img src="https://s21.ax1x.com/2025/05/11/pEX9idg.png" /></p>
+<p>其中可以分配给主机使用的是A、B、C类地址。D类用于组播（Multicast），无子网掩码；E类用于实验，也没有子网掩码。</p>
+<p>在A类、B类、C类IP地址中，如果主机号是全1，那么这个地址为<strong>直接广播地址</strong>，代表所有主机，它是用来使路由器将一个分组以广播形式发送给特定网络上的所有主机。</p>
+<p>如果主机号全为0，那么它代表的是某一个网络，不是可分类给主机的网络号。</p>
+<p><strong>受限广播地址</strong>（limited broadcast address）是指 IPv4
+地址<code>255.255.255.255</code>。它仅用于向当前本地网络中的所有主机发送消息，路由器不会该地址的广播。</p>
 
                 
               </div>
@@ -492,8 +444,8 @@ class="footnote-text"><span>https://en.wikipedia.org/wiki/Internet_checksum
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>TCP协议</div>
-      <div>https://kznep19.blog/2025/05/10/TCP协议/</div>
+      <div>IP协议</div>
+      <div>https://kznep19.blog/2025/05/11/IP协议/</div>
     </div>
     <div class="license-meta">
       
@@ -505,7 +457,7 @@ class="footnote-text"><span>https://en.wikipedia.org/wiki/Internet_checksum
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年5月10日</div>
+          <div>2025年5月11日</div>
         </div>
       
       
@@ -537,9 +489,9 @@ class="footnote-text"><span>https://en.wikipedia.org/wiki/Internet_checksum
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/05/11/IP%E5%8D%8F%E8%AE%AE/" title="IP协议">
+                      <a href="/2025/05/11/JavaWeb1/" title="JavaWeb开发（一）">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">IP协议</span>
+                        <span class="hidden-mobile">JavaWeb开发（一）</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -547,8 +499,8 @@ class="footnote-text"><span>https://en.wikipedia.org/wiki/Internet_checksum
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/05/08/Java%E5%90%8E%E7%BB%AD%E9%97%AE%E9%A2%98%E8%A1%A5%E5%85%85/" title="Java 查缺补漏">
-                        <span class="hidden-mobile">Java 查缺补漏</span>
+                      <a href="/2025/05/10/TCP%E5%8D%8F%E8%AE%AE/" title="TCP协议">
+                        <span class="hidden-mobile">TCP协议</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

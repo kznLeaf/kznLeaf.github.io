@@ -19,17 +19,19 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="标签：Database 数据库常识 数据库的关系模型 什么是关系数据库？  关系数据库是一种用于存储相互关联的数据点并提供数据点访问的数据库。它采用关系模型，直接、直观地在表中展示数据。 在关系数据库中，表中的每一行都代表一条记录，每条记录都具有一个唯一的 ID（又被称为键），而表中的列则用于存储数据的属性——每条记录的每一个属性通常都有一个值。籍此，用户可以轻松在数据点之间建立关联">
+    <meta name="description" content="数据库常识 数据库的关系模型 什么是关系数据库？  关系数据库是一种用于存储相互关联的数据点并提供数据点访问的数据库。它采用关系模型，直接、直观地在表中展示数据。 在关系数据库中，表中的每一行都代表一条记录，每条记录都具有一个唯一的 ID（又被称为键），而表中的列则用于存储数据的属性——每条记录的每一个属性通常都有一个值。籍此，用户可以轻松在数据点之间建立关联。 数据库的关系模型（R">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL基本使用">
 <meta property="og:url" content="https://kznep19.blog/2025/05/06/MySQL%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="banyee&#39;s Blog">
-<meta property="og:description" content="标签：Database 数据库常识 数据库的关系模型 什么是关系数据库？  关系数据库是一种用于存储相互关联的数据点并提供数据点访问的数据库。它采用关系模型，直接、直观地在表中展示数据。 在关系数据库中，表中的每一行都代表一条记录，每条记录都具有一个唯一的 ID（又被称为键），而表中的列则用于存储数据的属性——每条记录的每一个属性通常都有一个值。籍此，用户可以轻松在数据点之间建立关联">
+<meta property="og:description" content="数据库常识 数据库的关系模型 什么是关系数据库？  关系数据库是一种用于存储相互关联的数据点并提供数据点访问的数据库。它采用关系模型，直接、直观地在表中展示数据。 在关系数据库中，表中的每一行都代表一条记录，每条记录都具有一个唯一的 ID（又被称为键），而表中的列则用于存储数据的属性——每条记录的每一个属性通常都有一个值。籍此，用户可以轻松在数据点之间建立关联。 数据库的关系模型（R">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s21.ax1x.com/2025/05/03/pEbWCOe.png">
 <meta property="og:image" content="https://s21.ax1x.com/2025/05/04/pEbjEAP.png">
+<meta property="og:image" content="https://s21.ax1x.com/2025/05/11/pEXCWg1.png">
+<meta property="og:image" content="https://s21.ax1x.com/2025/05/11/pEXCIHO.png">
 <meta property="article:published_time" content="2025-05-06T02:32:23.000Z">
-<meta property="article:modified_time" content="2025-05-10T15:24:52.774Z">
+<meta property="article:modified_time" content="2025-05-11T14:51:29.251Z">
 <meta property="article:author" content="banyee">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://s21.ax1x.com/2025/05/03/pEbWCOe.png">
@@ -244,7 +246,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k 字
+          3.8k 字
         
       </span>
     
@@ -255,7 +257,7 @@
         
         
         
-          23 分钟
+          32 分钟
         
       </span>
     
@@ -297,8 +299,7 @@
             
               <div class="markdown-body">
                 
-                <p>标签：Database</p>
-<h1 id="数据库常识">数据库常识</h1>
+                <h1 id="数据库常识">数据库常识</h1>
 <h2 id="数据库的关系模型">数据库的关系模型</h2>
 <p>什么是关系数据库？</p>
 <blockquote>
@@ -477,7 +478,25 @@ Language），即结构化查询语言，是一种用于<strong>管理关系型�
 <li><code>&lt;条件1&gt; AND &lt;条件2&gt;</code>表达满足条件1并且满足条件2</li>
 <li><code>&lt;条件1&gt; OR &lt;条件2&gt;</code>表示满足条件1或者满足条件2。</li>
 </ul>
-<p>除此之外还有<code>BETWEENT AND</code>等。</p>
+<p>应当注意，<code>AND</code>比<code>OR</code>有更高的运算优先级，某些情况下需要使用圆括号<code>()</code>指明运算先后顺序。</p>
+<p><code>BETWEENT AND</code>：查询位于两个值之间的数据，两边都是闭区间。</p>
+<p><code>IN</code>操作符用来指定条件范围，范围中的每个条件都可以进行匹配。例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> cust_id, cust_name<br><span class="hljs-keyword">FROM</span> customers<br><span class="hljs-keyword">WHERE</span> cust_id <span class="hljs-keyword">IN</span> (<span class="hljs-number">10001</span>, <span class="hljs-number">10003</span>)<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> cust_name;<br></code></pre></td></tr></table></figure>
+<p>把 customers 表中的<code>cust_id</code>为 10001 <strong>或</strong>
+10003
+的数据查询出来。<code>IN</code>的作用实际上和<code>OR</code>没有差别，它的优点体现在：</p>
+<ul>
+<li>IN操作符的语法更清楚且更直观；</li>
+<li>在使用IN时，计算的次序更容易管理（因为使用的操作符更少）；</li>
+<li>IN操作符一般比OR操作符清单执行更快；</li>
+<li>IN的最大优点是可以包含其他SELECT语句，使得能够更动态地建立WHERE子句。</li>
+</ul>
+<p>还有一个关键字是<code>NOT</code>。WHERE子句中的NOT操作符有且只有一个功能，那就是否定它之后所跟的任何条件。例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">WHERE</span> vend_id <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">IN</span> (<span class="hljs-number">1002</span>, <span class="hljs-number">1003</span>)<br></code></pre></td></tr></table></figure>
+<p>筛选所有 vend_id 不是1002或1003的数据。NOT实际上是MySQL的特性：</p>
+<div class="note note-primary">
+            <p>MySQL支持使用NOT对IN、BETWEEN和EXISTS<strong>子句</strong>取反，这与多数其他DBMS允许使用NOT对各条件取反有很大的差别。</p>
+          </div>
 <h2 id="投影查询">投影查询</h2>
 <p><code>SELECT 列1, 列2, 列3 FROM ...</code></p>
 <p>这样只会返回选中的列。</p>
@@ -706,6 +725,67 @@ aria-label="https://zhuanlan.zhihu.com/p/68136613">[2]</span></a></sup></p>
 <p><strong>MySQL 没有内建的 FULL
 JOIN（全连接）语法关键词</strong>。想实现全连接，要用<code>LEFT JOIN + RIGHT JOIN + UNION</code>：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 模拟 FULL OUTER JOIN</span><br><span class="hljs-keyword">SELECT</span> A.id, B.id<br><span class="hljs-keyword">FROM</span> A<br><span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> B <span class="hljs-keyword">ON</span> A.id <span class="hljs-operator">=</span> B.id<br><br><span class="hljs-keyword">UNION</span><br><br><span class="hljs-keyword">SELECT</span> A.id, B.id<br><span class="hljs-keyword">FROM</span> A<br><span class="hljs-keyword">RIGHT</span> <span class="hljs-keyword">JOIN</span> B <span class="hljs-keyword">ON</span> A.id <span class="hljs-operator">=</span> B.id;<br><br></code></pre></td></tr></table></figure>
+<h1 id="通配符">通配符</h1>
+<p>查询操作中的所有操作符都是针对已知值进行过滤的，有时候并不好用，例如，怎样搜索产品名中包含文本anvil的所有产品？用简单的比较操作符肯定不行，必须使用通配符。</p>
+<div class="note note-info">
+            <p><strong>通配符</strong>（wildcard）用来匹配值的一部分的特殊字符。</p><p><strong>搜索模式</strong>（search pattern）由字面值、通配符或两者组合构成的搜索条件。</p>
+          </div>
+<h2 id="like操作符">LIKE操作符</h2>
+<p>LIKE 用于告诉 MySQL 接下来将会使用通配符进行匹配。LIKE
+一定要搭配通配符使用， 否则 MySQL
+会认为使用的是完全匹配而非模糊匹配。</p>
+<h3 id="百分号通配符">百分号(%)通配符</h3>
+<p>百分号（%）通配符 ：<strong>用于匹配多个字符</strong>，例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> prod_id, prod_name<br><span class="hljs-keyword">FROM</span> products<br><span class="hljs-keyword">WHERE</span> prod_name <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;jet%&#x27;</span>;<br></code></pre></td></tr></table></figure>
+<p>这样就找出了找出所有以词<code>jet</code>起头的产品:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">+---------+--------------+<br>| prod_id | prod_name    |<br>+---------+--------------+<br>| JP1000  | JetPack 1000 |<br>| JP2000  | JetPack 2000 |<br>+---------+--------------+<br>2 rows in set (0.017 sec)<br></code></pre></td></tr></table></figure>
+<p><code>'jet%'</code>可以这样理解：<code>%</code>代表的其实是一个字符串剩余的其他字符，整个字符串必须以<code>jet</code>开头。类似地，<code>%jet%</code>代表的是包含<code>jet</code>的字符串，因为<code>jet</code>的前后都有字符。注意<code>%</code>匹配的也可以是空字符和空格，但是不能匹配<code>NULL</code>。</p>
+<h3 id="下划线_通配符">下划线(_)通配符</h3>
+<p>下划线的用途与%一样，但下划线只匹配<strong>单个字符</strong>而不是多个字符。</p>
+<hr />
+<p>通配符虽然使用方便，但是通配符搜索的速度比一般的操作符要慢，所以不可以滥用通配符。在能达到相同目的睇情况下，应该优先使用其他操作符。</p>
+<h1 id="正则表达式">正则表达式</h1>
+<p>正则表达式是用来匹配文本的特殊的串（字符集合），功能非常强大。。MySQL用WHERE子句对正则表达式提供了初步的支持，只是正则表达式的一个很小的子集。</p>
+<p><strong>关键字</strong>：<code>REGEXP</code></p>
+<h2 id="字符匹配">字符匹配</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> prod_name<br><span class="hljs-keyword">FROM</span> products<br><span class="hljs-keyword">WHERE</span> prod_name REGEXP <span class="hljs-string">&#x27;.000&#x27;</span><br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> prod_name;<br></code></pre></td></tr></table></figure>
+<p>这里使用了正则表达式<code>.000</code>，小数点表示<em>匹配任意一个字符</em>，因此
+1000 和 2000 都会被匹配。</p>
+<p>正则表达式匹配默认是不区分大小写【1的，如果需要区分，在正则表达式之前加上<code>BINARY</code>，例如<code>REGEXP BINARY 'JetPack .000'</code>。</p>
+<h2 id="or-匹配">OR 匹配</h2>
+<p>搜索两个字符串之一，使用<code>|</code>。例如：<code>REGEXP '1000|2000'</code>匹配所有包含
+1000 或 2000 的字符串。可以连续使用多个<code>|</code>。</p>
+<h2 id="匹配多个字符之一">匹配多个字符之一</h2>
+<p><code>[]</code>可以匹配中括号中出现的字符之一：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> prod_name<br><span class="hljs-keyword">FROM</span> products<br><span class="hljs-keyword">WHERE</span> prod_name REGEXP <span class="hljs-string">&#x27;[123] Ton&#x27;</span><br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> prod_name;<br></code></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">+-------------+<br>| prod_name   |<br>+-------------+<br>| 1 ton anvil |<br>| 2 ton anvil |<br>+-------------+<br></code></pre></td></tr></table></figure>
+<p>成功匹配 1 或 2 或 3。这是另一种形式的 OR
+语句。<code>[^123]</code>可以匹配除了这三个字符以外的任何东西。</p>
+<h2 id="匹配范围">匹配范围</h2>
+<p>属于上一个例子的加强版：<code>[0-9]</code>匹配数字 0 到
+9，不必把数字一个一个列举出来了。</p>
+<p><code>[a-z]</code>匹配任意英文字母。</p>
+<h2 id="特殊字符">特殊字符</h2>
+<p>匹配任意字符可以用小数点<code>.</code>，那匹配小数点呢？</p>
+<p>对于这种特殊字符，需要在前面加上<code>\\</code>转义(escaping)来匹配它本身，和Java中的处理方法相同。</p>
+<h2 id="字符类">字符类</h2>
+<p>有预先定义待的字符集可供使用：</p>
+<p><img src="https://s21.ax1x.com/2025/05/11/pEXCWg1.png" /></p>
+<h2 id="匹配多个实例">匹配多个实例</h2>
+<p>对匹配的次数加以指定。例如：</p>
+<ul>
+<li><code>'[[:digit:]]&#123;4&#125;'</code> 匹配连在一起的任意4位数字。</li>
+</ul>
+<p><img src="https://s21.ax1x.com/2025/05/11/pEXCIHO.png" /></p>
+<h2 id="定位符">定位符</h2>
+<p>用于匹配特定位置的文本。</p>
+<ul>
+<li>^ 文本的开始</li>
+<li>$ 文本的结尾</li>
+<li>[[:&lt;:]] 词的开始</li>
+<li>[[:&gt;:]] 词的结尾</li>
+</ul>
 <h1 id="修改数据">修改数据</h1>
 <p>CRUD：Create、Retrieve、Update、Delete</p>
 <p>增、删、改、查</p>
@@ -728,7 +808,6 @@ JOIN（全连接）语法关键词</strong>。想实现全连接，要用<code>L
 <p>如果不写<code>WHERE</code>条件，整张表的记录都会被删除。</p>
 <h1 id="mysql">MySQL</h1>
 <h2 id="基本语句">基本语句</h2>
-<p>命令行进入MySQL: <code>mysql -u root -p</code></p>
 <p>新建数据库：<code>CREATE DATABASE test</code></p>
 <p>删除数据库<code>DROP DATABASE test;</code></p>
 <p>切换到当前的数据库<code>USE test;</code></p>
