@@ -376,13 +376,6 @@
   </url>
   
   <url>
-    <loc>https://kznep19.blog/categories/Web-Development/</loc>
-    <lastmod>2025-05-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kznep19.blog/categories/Theme/</loc>
     <lastmod>2025-05-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -391,6 +384,13 @@
   
   <url>
     <loc>https://kznep19.blog/categories/Computer-Networking/</loc>
+    <lastmod>2025-05-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kznep19.blog/categories/Web-Development/</loc>
     <lastmod>2025-05-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
