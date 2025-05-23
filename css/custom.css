@@ -27,7 +27,7 @@
         font-size: 32px; /* 调整字体大小 */
         color: #ffffff; /* 设置字体颜色 */
         opacity: 0; /* 初始透明度为0，隐藏 */
-        transition: opacity 1.5s linear; /* 设置过渡效果 */
+        transition: opacity 1s linear; /* 设置过渡效果 */
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 添加阴影 */
     }
 
