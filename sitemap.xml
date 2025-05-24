@@ -394,13 +394,6 @@
   </url>
   
   <url>
-    <loc>https://kznep19.blog/categories/Theme/</loc>
-    <lastmod>2025-05-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kznep19.blog/categories/Hexo/</loc>
     <lastmod>2025-05-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -408,14 +401,21 @@
   </url>
   
   <url>
-    <loc>https://kznep19.blog/categories/EE/</loc>
+    <loc>https://kznep19.blog/categories/Web-Development/</loc>
     <lastmod>2025-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://kznep19.blog/categories/Web-Development/</loc>
+    <loc>https://kznep19.blog/categories/Theme/</loc>
+    <lastmod>2025-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kznep19.blog/categories/EE/</loc>
     <lastmod>2025-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
