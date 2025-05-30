@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
   .setAttribute('style', 'background-color:rgba(0,0,0,0)')
 
 
+
   /*博客预加载 */
 /*   $(function(){
     $("#Loadanimation").fadeOut(500);
