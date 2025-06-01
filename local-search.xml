@@ -4,11 +4,30 @@
   
   
   <entry>
+    <title>JVM-Java虚拟机中的对象</title>
+    <link href="/2025/06/01/JVM-2-3-%E5%AF%B9%E8%B1%A1%E6%8F%AD%E7%A7%98/"/>
+    <url>/2025/06/01/JVM-2-3-%E5%AF%B9%E8%B1%A1%E6%8F%AD%E7%A7%98/</url>
+    
+    <content type="html"><![CDATA[<p>《深入理解Java虚拟机》读书笔记(2)</p><span id="more"></span><h1 id="hotspot对象">HotSpot对象</h1><h2 id="创建新对象">创建新对象</h2><blockquote><p>当Java虚拟机遇到一条字节码 new指令时，首先将去检查这个指令的参数是否能在常量池中定位到一个类的符号引用，并且检查这个符号引用代表的类是否已被加载、解析和初始化过。如果没有，那必须先执行相应的类加载过程，</p></blockquote><p>类加载完毕后，虚拟机会为该新对象分配内存。因为每个对象所需要的内存大小在类加载完成后就就可以确定，所以现在的问题是怎么从Java堆这一大块内存中划分一块确定大小的内存。</p><p><strong>两种划分堆内存的方式</strong>：</p><ol type="1"><li><strong>指针碰撞</strong>（Bump ThePointer）：适用于堆内存非常规整、已使用内存和空闲内存界限分明的情况，这样只需要把用作分界点的指针向空闲内存的方向挪动一小段距离就行了。</li><li><strong>空闲列表</strong>（FreeList），适用于堆内存不规整，空闲内存和已用内存混杂不清的情况，这时虚拟机需要维护一个列表，列表中记录了空闲内存的位置，因此被称作空闲列表。每次更新内存都要同步更新空闲列表中的内容。</li></ol><p>堆内存的规整与否由垃圾收集器是否带有<strong>空间压缩整理</strong>（Compact）功能决定。</p><hr /><p>划分空间使用的是一个指针，在高并发的情况下，会出现线程安全的问题：正在给对象A分配内存，指针还没来得及修改，对象B又同时使用了原来的指针来分配内存。两种解决方案：</p><ul><li>对分配内存空间的动作进行同步处理，但是实际上虚拟机采用的是<strong>CAS+失败重试</strong>保证操作的原子性</li><li><strong>本地线程分配缓冲</strong>（Thread Local AllocationBuffer，TLAB），每个线程在Java堆中提前分配了一块缓冲区，本地缓冲区用完了，分配新的缓冲区的时候才会考虑同步锁定</li></ul><div class="note note-secondary">            <p>CAS(Compare AndSet)+失败重试是一种<strong>乐观锁</strong>策略，它假设并发不会太激烈，如果失败就不断重试，直到原子更新成功。</p>          </div><p>内存分配完成后，虚拟机会把分配好的内存空间初始化为零值（所以Java中的字段不赋初值就可以使用），最后设置对象头。这样一个新的对象就创建好了，可以继续执行构造方法。</p><h2 id="对象的内存布局">对象的内存布局</h2><p>Java对象保存在堆中时，由以下三部分组成：</p><figure><img src="https://s21.ax1x.com/2025/05/31/pV9uJ1A.png"alt="对象的内存布局" /><figcaption aria-hidden="true">对象的内存布局</figcaption></figure><h3 id="对象头object-header">对象头（Object Header）</h3><ol type="1"><li><strong>MarkWord</strong>，在64位虚拟机中占据64个比特，用于存储对象自身的运行时数据，包括堆对象布局、类型、GC状态、同步状态和身份哈希码的基本信息</li><li><strong>KlassPointer</strong>，类型指针，指向它的类型元数据，用于确定该对象是哪个类的实例。</li><li><strong>对于数组对象，还有一块用于存储数组长度的区域</strong>。因为以后的JVM需要进行边界检查、GC需要知道对象占多大空间等等，数组长度的值是要被多次使用的，所以数组对象自身必须也保存一个长度。</li></ol><p>64位JVM的对象头结构：</p><figure><img src="https://s21.ax1x.com/2025/05/31/pV9Koa8.png" alt="对象头" /><figcaption aria-hidden="true">对象头</figcaption></figure><h3 id="实例数据instance-data">实例数据（Instance Data）</h3><p>实例数据是对象真正存储的有效信息，包括：</p><ul><li>从父类继承的各种类型的字段</li><li>在子类中定义的各种类型的字段</li></ul><p>如果对象没有属性字段，那么这里不会有信息。</p><h3 id="对齐填充padding">对齐填充（Padding）</h3><p>并非必要信息，起到占位符的作用，原因是Java的自动内存管理系统要求对象的起始地址必须是8 字节的整数倍，而对象的实例数据可能不满足，所以需要对齐填充一下。</p><p>至于为什么起始地址会有这个要求:<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><spanclass="hint--top hint--rounded"aria-label="https://www.cnblogs.com/jajian/p/13681781.html">[1]</span></a></sup></p><div class="note note-success">            <p>字段内存对齐的其中一个原因，是让字段只出现在同一CPU的缓存行中。如果字段不是对齐的，那么就有可能出现跨缓存行的字段。也就是说，该字段的读取可能需要替换两个缓存行，而该字段的存储也会同时污染两个缓存行。这两种情况对程序的执行效率而言都是不利的。其实对其填充的最终目的是为了计算机高效寻址。</p>          </div><h2 id="对象的访问定位">对象的访问定位</h2><p>Java程序会通过栈上的<code>reference</code>数据来操作堆上的具体对象，主流的虚拟机的对象访问方式主要有两种：</p><ol type="1"><li><strong>句柄</strong></li></ol><figure><img src="https://s21.ax1x.com/2025/05/31/pV9MHw6.png" alt="句柄" /><figcaption aria-hidden="true">句柄</figcaption></figure><p>Java堆中会划分出来一块区域用户存放句柄，句柄中包含了对象的实例和类型数据的地址信息。此时，<code>reference</code>中存放的是对象的句柄地址，访问过程是：<code>reference</code>-&gt;句柄-&gt;对象的实例数据和类型数据</p><ol start="2" type="1"><li><strong>直接指针访问</strong></li></ol><p><code>reference</code>直接存储对象实例数据的地址，对象实例数据中保存了指向类型数据的指针。</p><figure><img src="https://s21.ax1x.com/2025/05/31/pV9MbTK.png" alt="直接访问" /><figcaption aria-hidden="true">直接访问</figcaption></figure><p><code>reference</code>-&gt;对象实例数据-&gt;对象类型数据，这种方式的访问速度更快。这也是HotSpot主要采用的方式。</p><p>最后看看 Oracle是如何描述对象的定位的<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><spanclass="hint--top hint--rounded"aria-label="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.7">[2]</span></a></sup></p><div class="note note-success">            <p>Java 虚拟机并不强制规定对象的内部结构必须是什么样的。</p><p>在 Oracle 的一些 Java虚拟机实现中，对类实例的引用实际上是指向一个“句柄”（handle）的指针。而这个句柄本身是由一对指针组成的：-一个指针指向一个表，该表包含了该对象的方法，以及一个指向表示该对象类型的Class 对象的指针； - 另一个指针指向堆中为该对象数据分配的内存。</p>          </div><p>奇怪的是这里没有提到HotSpot采用的方式。</p><h2 id="参考链接">参考链接</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1"class="footnote-text"><span>https://www.cnblogs.com/jajian/p/13681781.html<a href="#fnref:1" rev="footnote" class="footnote-backref">↩︎</a></span></span></li><li><span id="fn:2"class="footnote-text"><span>https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.7<a href="#fnref:2" rev="footnote" class="footnote-backref">↩︎</a></span></span></li></ol></div></section>]]></content>
+    
+    
+    <categories>
+      
+      <category>JVM</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>剑指offer力扣链接（更新中）</title>
     <link href="/2025/05/31/%E5%89%91%E6%8C%87offer%E5%8A%9B%E6%89%A3%E9%93%BE%E6%8E%A5%E5%90%88%E9%9B%86/"/>
     <url>/2025/05/31/%E5%89%91%E6%8C%87offer%E5%8A%9B%E6%89%A3%E9%93%BE%E6%8E%A5%E5%90%88%E9%9B%86/</url>
     
-    <content type="html"><![CDATA[<p>按自己刷题的进度慢慢更新吧(*￣ω￣)</p><p><a href="/2025/05/23/剑指offer-树/">树&amp;堆</a></p><p><a href="/2025/05/31/剑指offer-栈/">栈</a></p>]]></content>
+    <content type="html"><![CDATA[<p>按自己刷题的进度慢慢更新吧(*￣ω￣)</p><p><a href="/2025/05/23/剑指offer-树/">树&amp;堆</a></p><p><a href="/2025/05/31/剑指offer-栈/">栈</a></p><p><a href="/2025/06/01/剑指offer-队列">队列</a></p>]]></content>
     
     
     <categories>
