@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
   <link rel="icon" href="/img/tree.png">
   
-    <link rel="canonical" href="https://kznleaf.top/2025/06/01/JVM-2-3-对象揭秘/"/>
+    <link rel="canonical" href="https://kznleaf.top/2025/06/02/JVM-3-2-垃圾回收算法/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -23,26 +23,23 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="《深入理解Java虚拟机》读书笔记(2)">
+    <meta name="description" content="《深入理解Java虚拟机》读书笔记(3)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM-Java虚拟机中的对象">
-<meta property="og:url" content="https://kznleaf.top/2025/06/01/JVM-2-3-%E5%AF%B9%E8%B1%A1%E6%8F%AD%E7%A7%98/index.html">
+<meta property="og:title" content="JVM-3.2-垃圾回收算法">
+<meta property="og:url" content="https://kznleaf.top/2025/06/02/JVM-3-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
-<meta property="og:description" content="《深入理解Java虚拟机》读书笔记(2)">
+<meta property="og:description" content="《深入理解Java虚拟机》读书笔记(3)">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/31/pV9uJ1A.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/31/pV9Koa8.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/31/pV9MHw6.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/31/pV9MbTK.png">
-<meta property="article:published_time" content="2025-06-01T15:27:55.000Z">
-<meta property="article:modified_time" content="2025-06-01T15:29:52.756Z">
+<meta property="og:image" content="https://s21.ax1x.com/2025/06/02/pVCVeWn.jpg">
+<meta property="article:published_time" content="2025-06-02T15:50:14.000Z">
+<meta property="article:modified_time" content="2025-06-02T15:51:48.188Z">
 <meta property="article:author" content="banyee">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/05/31/pV9uJ1A.png">
+<meta name="twitter:image" content="https://s21.ax1x.com/2025/06/02/pVCVeWn.jpg">
   
   
   
-  <title>JVM-Java虚拟机中的对象 - 絆叶の片隅</title>
+  <title>JVM-3.2-垃圾回收算法 - 絆叶の片隅</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +224,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">JVM-Java虚拟机中的对象</span>
+            <span id="subtitle">JVM-3.2-垃圾回收算法</span>
           
         </div>
 
@@ -238,8 +235,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-06-01 23:27" pubdate>
-          2025年6月1日 晚上
+        <time datetime="2025-06-02 23:50" pubdate>
+          2025年6月2日 晚上
         </time>
       </span>
     
@@ -250,7 +247,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          2.7k 字
         
       </span>
     
@@ -261,7 +258,7 @@
         
         
         
-          13 分钟
+          23 分钟
         
       </span>
     
@@ -298,124 +295,155 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">JVM-Java虚拟机中的对象</h1>
+            <h1 id="seo-header">JVM-3.2-垃圾回收算法</h1>
             
             
               <div class="markdown-body">
                 
-                <p>《深入理解Java虚拟机》读书笔记(2)</p>
+                <p>《深入理解Java虚拟机》读书笔记(3)</p>
 <span id="more"></span>
-<h1 id="hotspot对象">HotSpot对象</h1>
-<h2 id="创建新对象">创建新对象</h2>
-<blockquote>
-<p>当Java虚拟机遇到一条字节码 new
-指令时，首先将去检查这个指令的参数是否能在常量池中定位到一个类的符号引用，并且检查这个符号引用代表的类是否已被加载、解析和初始化过。如果没有，那必须先执行相应的类加载过程，</p>
-</blockquote>
-<p>类加载完毕后，虚拟机会为该新对象分配内存。因为每个对象所需要的内存大小在类加载完成后就就可以确定，所以现在的问题是怎么从Java堆这一大块内存中划分一块确定大小的内存。</p>
-<p><strong>两种划分堆内存的方式</strong>：</p>
-<ol type="1">
-<li><strong>指针碰撞</strong>（Bump The
-Pointer）：适用于堆内存非常规整、已使用内存和空闲内存界限分明的情况，这样只需要把用作分界点的指针向空闲内存的方向挪动一小段距离就行了。</li>
-<li><strong>空闲列表</strong>（Free
-List），适用于堆内存不规整，空闲内存和已用内存混杂不清的情况，这时虚拟机需要维护一个列表，列表中记录了空闲内存的位置，因此被称作空闲列表。每次更新内存都要同步更新空闲列表中的内容。</li>
-</ol>
-<p>堆内存的规整与否由垃圾收集器是否带有<strong>空间压缩整理</strong>（Compact）功能决定。</p>
-<hr />
-<p>划分空间使用的是一个指针，在高并发的情况下，会出现线程安全的问题：正在给对象A分配内存，指针还没来得及修改，对象B又同时使用了原来的指针来分配内存。两种解决方案：</p>
+<h2 id="对象存活判定算法">对象存活判定算法</h2>
+<h3 id="什么区域需要垃圾回收">什么区域需要垃圾回收？</h3>
+<p>虚拟机栈、本地方法栈、程序计数器属于线程私有，随线程而生，随线程而灭，而且它们占据的内存大小在编译的时候就已经确定下来了，线程结束的时候自然会被回收，不用担心垃圾回收的问题。</p>
+<p>方法区、堆由线程共享，其中方法区存储类的信息和运行时常量池，堆内存存放对象的实例。方法区存储的信息相对固定，垃圾收集行为比较少见，堆内存是垃圾回收的重灾区。</p>
+<h3 id="引用计数算法">引用计数算法?</h3>
+<p>引用计数算法的含义如下：</p>
+<div class="note note-info">
+            <p>在对象中添加一个引用计数器，每当有一个地方引用它时，计数器值就加一；当引用失效时，计数器值就减一；任何时刻计数器为零的对象就是不可能再被使用的。</p>
+          </div>
+<p>引用计数法有个很明显的缺陷：<strong>如果两个对象互相引用，那么他们的引用计数都不为零，虽然属于垃圾但是永远不会被回收</strong>。主流Java虚拟机没有采用这种算法。</p>
+<h3 id="可达性分析算法">可达性分析算法</h3>
+<p>首先，可达性分析和可达鸭没有任何关系（雾）</p>
+<p>简单来说，从被称为GC
+Roots的根对象出发，根据对象的引用关系查找其他节点，如果没有一条路径能够到达某个对象，那么这个对象就被视为垃圾。</p>
+<figure>
+<img src="https://s21.ax1x.com/2025/06/02/pV9L4Xt.png"
+alt="可达性分析算法图解" />
+<figcaption aria-hidden="true">可达性分析算法图解</figcaption>
+</figure>
+<p>固定可以作为 GC Roots 的对象有：</p>
 <ul>
-<li>对分配内存空间的动作进行同步处理，但是实际上虚拟机采用的是<strong>CAS+失败重试</strong>保证操作的原子性</li>
-<li><strong>本地线程分配缓冲</strong>（Thread Local Allocation
-Buffer，TLAB），每个线程在Java堆中提前分配了一块缓冲区，本地缓冲区用完了，分配新的缓冲区的时候才会考虑同步锁定</li>
+<li>虚拟机栈栈帧中的局部变量表引用的对象</li>
+<li>方法区中类的静态属性引用的对象</li>
+<li>方法区中的常量引用的对象</li>
+<li>本地方法栈中的Native方法引用的对象</li>
+<li>Java虚拟机内部的引用，如基本数据类型对应的Class对象，一些常驻的异常对象（比如NullPointExcepiton、OutOfMemoryError）等，还有系统类加载器。</li>
+<li>所有被同步锁（synchronized关键字）持有的对象</li>
+<li>反映Java虚拟机内部情况的JMXBean、JVMTI中注册的回调、本地代码缓存等</li>
 </ul>
+<p>除了这些固定的对象意以外，还可以有其他的对象临时加入。</p>
+<h3 id="引用的四种类型">引用的四种类型</h3>
+<ul>
+<li>强引用：比如<code>Object obj=new Object()</code>，只要强引用还存在，该对象就永远也不会被回收</li>
+<li>软引用：描述一些有用，但是并非必须的对象。被软引用的对象，在系统的内存快要溢出的时候会被回收，如果回收之后内存还是不够才会抛异常</li>
+<li>弱引用：只要垃圾收集器开始工作，弱引用的对象就会被回收。</li>
+<li>虚引用：虚引用完全不会对一个对象是否被回收造成影响，它是为了让系统知道这个对象被回收了</li>
+</ul>
+<h3 id="方法区的回收">方法区的回收</h3>
+<p>方法区主要回收两部分内容：</p>
+<ul>
+<li>不再使用的常量</li>
+<li>不再使用的类型</li>
+</ul>
+<p>回收废弃常量：很简单，如果当前系统中没有任何一个对象引用该常量池中的常量，那么这个常量已经废弃了，需要被回收。</p>
+<p>不再使用的类型的判断条件比较苛刻：</p>
+<ol type="1">
+<li>该类的所有实例都已经被回收</li>
+<li>加载该类的类加载器已经被回收</li>
+<li>该类对象的 Class
+对象没有被任何地方引用，并且无法在任何地方通过反射访问该方法。</li>
+</ol>
+<p>满足以上条件的类<strong>允许</strong>被回收，但是不一定真的会被回收。</p>
+<h2 id="垃圾收集算法-追踪式垃圾收集">垃圾收集算法-追踪式垃圾收集</h2>
+<p>追踪式垃圾收集是主流Java虚拟机采用的算法，以下所有算法均属于跟踪式垃圾收集的范畴。</p>
+<h3 id="分代收集理论">分代收集理论</h3>
+<p><code>Generational Collection</code></p>
+<p>分代收集理论的假说基础：</p>
+<ol type="1">
+<li><strong>弱分代假说</strong>（Weak Generational
+Hypothesis）：绝大多数的对象都是朝生夕灭的</li>
+<li><strong>强分代假说</strong>（Strong Generational
+Hypothesis）：熬过越多次垃圾收集过程的对象就越难以消亡</li>
+</ol>
+<p>根据 1 和 2
+可以推论：存在引用关系的对象大多数都属于同一代的对象，比如如果一个老年代的对象引用了一个新生代的对象，那么这个新生代对象就不太可能被回收，迟早会变成老年代。由此可以得到第三条假说：</p>
+<ol start="3" type="1">
+<li><strong>跨代引用假说</strong>（Intergenerational Reference
+Hypothesis）：跨代引用相对于同代引用来说仅占极少数</li>
+</ol>
+<p>对象的年龄：对象熬过垃圾回收过程的次数。</p>
+<p><strong>垃圾收集器的设计原则：收集器应该把java堆划分出不同的区域，将对象根据年龄存放在不同的区域</strong>。这样的好处是：把难以熬过垃圾收集的对象集中在一起，对它们进行回收的时候只需要关注少量没有被回收的对象，并且提高回收的频率；把难以消亡的对象集中在一起，回收他们的时候只需要关注少量被回收的对象，并且降低回收的频率。</p>
+<p>因为对不同的区域采取针对性的回收策略，所以提高了垃圾收集的效率，尽可能把内存空间用到有意义的对象身上，提高了堆内存空间的利用率。</p>
 <div class="note note-secondary">
-            <p>CAS(Compare AndSet)+失败重试是一种<strong>乐观锁</strong>策略，它假设并发不会太激烈，如果失败就不断重试，直到原子更新成功。</p>
+            <p>垃圾收集相关名词：</p><ul><li>部分收集（Partial GC）：指收集整个Java堆的一部分的垃圾收集，包括：<ul><li>新生代收集（Minor GC/Young GC）：只针对新生代的收集</li><li>老年代收集（Major GC/OldGC）：只针对老年代的收集（只有CMS收集器存在）</li><li>混合收集（MixedGC）：指目标是收集整个新生代以及部分老年代的垃圾收集。目前只有G1收集器会有这种行为。</li></ul></li><li>整堆收集（Full GC）：收集整个Java堆和方法区的垃圾收集。</li></ul>
           </div>
-<p>内存分配完成后，虚拟机会把分配好的内存空间初始化为零值（所以Java中的字段不赋初值就可以使用），最后设置对象头。这样一个新的对象就创建好了，可以继续执行构造方法。</p>
-<h2 id="对象的内存布局">对象的内存布局</h2>
-<p>Java对象保存在堆中时，由以下三部分组成：</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/05/31/pV9uJ1A.png"
-alt="对象的内存布局" />
-<figcaption aria-hidden="true">对象的内存布局</figcaption>
-</figure>
-<h3 id="对象头object-header">对象头（Object Header）</h3>
+<h3 id="标记清除算法">标记清除算法</h3>
+<blockquote>
+<p>算法分为“标记”和“清除”两个阶段：首先标记出所有需要回收的对象，在标记完成后，统一回收掉所有被标记的对象，也可以反过来，标记存活的对象，统一回收所有未被标记的对象。</p>
+</blockquote>
+<p>标记清除算法是最基础的算法，后续的很多算法以它为基础。它有两个缺点：</p>
 <ol type="1">
-<li><strong>Mark
-Word</strong>，在64位虚拟机中占据64个比特，用于存储对象自身的运行时数据，包括堆对象布局、类型、GC
-状态、同步状态和身份哈希码的基本信息</li>
-<li><strong>Klass
-Pointer</strong>，类型指针，指向它的类型元数据，用于确定该对象是哪个类的实例。</li>
-<li><strong>对于数组对象，还有一块用于存储数组长度的区域</strong>。因为以后的JVM
-需要进行边界检查、GC
-需要知道对象占多大空间等等，数组长度的值是要被多次使用的，所以数组对象自身必须也保存一个长度。</li>
+<li>效率不稳定，需要标记的对象数量越多效率越低</li>
+<li>内存空间的碎片化，标记清除之后会产大量的不连续的内存空间，后续如果需要为大对象分配空间，需要再临时调用一次垃圾收集操作腾出空间。</li>
 </ol>
-<p>64位JVM的对象头结构：</p>
+<h3 id="标记复制算法">标记复制算法</h3>
+<p>为了解决内存空间的碎片化问题，Fenichel 提出了标记复制算法：</p>
+<blockquote>
+<p>复制算法将内存分为两个区间,这两个区间是动态的，在任意一个时间点，所有分配的对象内存只能在其中一个区间（活动区间），另外一个区间就是空闲区间。</p>
+<p>当有效内存空间耗尽时，JVM将暂停程序运行，开启复制算法GC线程。GC线程会将活动区间内的存活对象，全部复制到空闲区间，且严格按照内存地址一次排列，与此同时，GC线程将更新存活对象的内存引用地址指向新的内存地址。这个时候空闲内存已经变成了活动区间，垃圾对象全部在原来的活动区间，清理掉垃圾对象，原活动区间就变成了空闲区间。</p>
+</blockquote>
 <figure>
-<img src="https://s21.ax1x.com/2025/05/31/pV9Koa8.png" alt="对象头" />
-<figcaption aria-hidden="true">对象头</figcaption>
+<img src="https://s21.ax1x.com/2025/06/02/pV9XVPg.png"
+alt="标记复制算法" />
+<figcaption aria-hidden="true">标记复制算法</figcaption>
 </figure>
-<h3 id="实例数据instance-data">实例数据（Instance Data）</h3>
-<p>实例数据是对象真正存储的有效信息，包括：</p>
+<p>这种算法有两个明显缺点：</p>
+<ol type="1">
+<li>空间利用率过低，可用内存缩小为原来的一半</li>
+<li>执行效率取决于存活对象数量，存活数量越多，需要复制的对象就越多，执行效率越慢</li>
+</ol>
+<p>第 2
+点决定了这种算法<strong>只适用于新生代对象</strong>；对于第一点，Andrew
+Appel 提出了优化后的算法，即Appel回收：</p>
+<blockquote>
+<p>将新生代的空间分为一块较大的 Eden 空间和两块较小的 Survivor
+空间，每次分配内存时，只使用 Eden 和其中一块 Survivor ，另一块 Survivor
+为空闲。每次发生垃圾收集时，把 Eden 和 Survivor
+中仍然存活的对象一次性复制到空闲 Survivor 中，然后清理Eden 和
+Survivor。</p>
+</blockquote>
+<p>HotSpot 默认 Eden 和 一块 Survivor 的比例是
+8:1，所以每次可用的内存空间为整个新生代内存空间的90%。</p>
+<p>在大部分的情况下，存活对象不会超过内存的10%，如果真的超过了，多出来的对象会依赖老年代的内存区域进行<strong>分配担保</strong>（Handle
+Promotion）。</p>
+<p>HotSpot虚拟机的Serial、ParNew等新生代收集器均采用了 Appel
+回收策略来设计新生代的内存布局。</p>
+<h3 id="标记整理算法">标记整理算法</h3>
+<p>老年代对象在每次垃圾收集时的存活数量要大于消亡数，Edward Lueders
+针对这种存亡特征设计了标记-整理（Mark-Compact）算法。</p>
+<p>标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。</p>
+<figure>
+<img src="https://s21.ax1x.com/2025/06/02/pV9j4XR.png"
+alt="回收前的状态" />
+<figcaption aria-hidden="true">回收前的状态</figcaption>
+</figure>
+<figure>
+<img src="https://s21.ax1x.com/2025/06/02/pV9jIn1.png"
+alt="回收后的状态" />
+<figcaption aria-hidden="true">回收后的状态</figcaption>
+</figure>
+<p>标记整理算法相比于标记清除算法多了一个移动内存的过程。这个过程优缺点并存：</p>
 <ul>
-<li>从父类继承的各种类型的字段</li>
-<li>在子类中定义的各种类型的字段</li>
+<li>缺点：老年代对象区域每次垃圾收集后会有大量的对象存活，移动这些对象在内存中的位置并更新其他地方对这些对象的引用非常耗时，需要将用户程序停顿较长的时间专门执行操作。</li>
+<li>优点：解决了空间的碎片化问题，内存分配和访问的负担都会被减轻，而内存的访问就是用户执行最频繁的操作</li>
 </ul>
-<p>如果对象没有属性字段，那么这里不会有信息。</p>
-<h3 id="对齐填充padding">对齐填充（Padding）</h3>
-<p>并非必要信息，起到占位符的作用，原因是Java的自动内存管理系统要求对象的起始地址必须是
-8 字节的整数倍，而对象的实例数据可能不满足，所以需要对齐填充一下。</p>
-<p>至于为什么起始地址会有这个要求:<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="https://www.cnblogs.com/jajian/p/13681781.html">[1]</span></a></sup></p>
-<div class="note note-success">
-            <p>字段内存对齐的其中一个原因，是让字段只出现在同一CPU的缓存行中。如果字段不是对齐的，那么就有可能出现跨缓存行的字段。也就是说，该字段的读取可能需要替换两个缓存行，而该字段的存储也会同时污染两个缓存行。这两种情况对程序的执行效率而言都是不利的。其实对其填充的最终目的是为了计算机高效寻址。</p>
-          </div>
-<h2 id="对象的访问定位">对象的访问定位</h2>
-<p>Java程序会通过栈上的<code>reference</code>数据来操作堆上的具体对象，主流的虚拟机的对象访问方式主要有两种：</p>
-<ol type="1">
-<li><strong>句柄</strong></li>
-</ol>
-<figure>
-<img src="https://s21.ax1x.com/2025/05/31/pV9MHw6.png" alt="句柄" />
-<figcaption aria-hidden="true">句柄</figcaption>
-</figure>
-<p>Java堆中会划分出来一块区域用户存放句柄，句柄中包含了对象的实例和类型数据的地址信息。此时，<code>reference</code>中存放的是对象的句柄地址，访问过程是：<code>reference</code>-&gt;句柄-&gt;对象的实例数据和类型数据</p>
-<ol start="2" type="1">
-<li><strong>直接指针访问</strong></li>
-</ol>
-<p><code>reference</code>直接存储对象实例数据的地址，对象实例数据中保存了指向类型数据的指针。</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/05/31/pV9MbTK.png" alt="直接访问" />
-<figcaption aria-hidden="true">直接访问</figcaption>
-</figure>
-<p><code>reference</code>-&gt;对象实例数据-&gt;对象类型数据，这种方式的访问速度更快。这也是HotSpot主要采用的方式。</p>
-<p>最后看看 Oracle
-是如何描述对象的定位的<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.7">[2]</span></a></sup></p>
-<div class="note note-success">
-            <p>Java 虚拟机并不强制规定对象的内部结构必须是什么样的。</p><p>在 Oracle 的一些 Java虚拟机实现中，对类实例的引用实际上是指向一个“句柄”（handle）的指针。而这个句柄本身是由一对指针组成的：-一个指针指向一个表，该表包含了该对象的方法，以及一个指向表示该对象类型的Class 对象的指针； - 另一个指针指向堆中为该对象数据分配的内存。</p>
-          </div>
-<p>奇怪的是这里没有提到HotSpot采用的方式。</p>
+<p>“程序吞吐量” = 用户程序执行效率 + 垃圾收集器效率 的总和——</p>
+<p><strong>虽然移动对象的垃圾回收成本较高，但由于它能显著提升对象分配和访问效率，所以整体来看，对程序吞吐量更有利；而不移动对象虽然减少了GC停顿，延迟更低，但降低了内存分配效率，不适合高吞吐量需求场景</strong>。不同的垃圾回收器选择了不同的策略来适应不同的需求。</p>
+<p>正因如此，HotSpot虚拟机里面关注吞吐量的 Parallel Scavenge
+收集器是基于标记-整理算法的，而关注延迟的 CMS
+收集器则是基于标记-清除算法的。</p>
 <h2 id="参考链接">参考链接</h2>
-<section class="footnotes">
-<div class="footnote-list">
-<ol>
-<li>
-<span id="fn:1"
-class="footnote-text"><span>https://www.cnblogs.com/jajian/p/13681781.html
-<a href="#fnref:1" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
-</li>
-<li>
-<span id="fn:2"
-class="footnote-text"><span>https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.7
-<a href="#fnref:2" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
-</li>
-</ol>
-</div>
-</section>
+<p>https://www.cnblogs.com/gengaixue/p/13602322.html</p>
 
                 
               </div>
@@ -454,8 +482,8 @@ class="footnote-text"><span>https://docs.oracle.com/javase/specs/jvms/se8/html/j
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>JVM-Java虚拟机中的对象</div>
-      <div>https://kznleaf.top/2025/06/01/JVM-2-3-对象揭秘/</div>
+      <div>JVM-3.2-垃圾回收算法</div>
+      <div>https://kznleaf.top/2025/06/02/JVM-3-2-垃圾回收算法/</div>
     </div>
     <div class="license-meta">
       
@@ -467,7 +495,7 @@ class="footnote-text"><span>https://docs.oracle.com/javase/specs/jvms/se8/html/j
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年6月1日</div>
+          <div>2025年6月2日</div>
         </div>
       
       
@@ -499,18 +527,12 @@ class="footnote-text"><span>https://docs.oracle.com/javase/specs/jvms/se8/html/j
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/06/02/JVM-3-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/" title="JVM-3.2-垃圾回收算法">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">JVM-3.2-垃圾回收算法</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/05/31/%E5%89%91%E6%8C%87offer%E5%8A%9B%E6%89%A3%E9%93%BE%E6%8E%A5%E5%90%88%E9%9B%86/" title="剑指offer力扣链接（更新中）">
-                        <span class="hidden-mobile">剑指offer力扣链接（更新中）</span>
+                      <a href="/2025/06/01/JVM-2-3-%E5%AF%B9%E8%B1%A1%E6%8F%AD%E7%A7%98/" title="JVM-Java虚拟机中的对象">
+                        <span class="hidden-mobile">JVM-Java虚拟机中的对象</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
