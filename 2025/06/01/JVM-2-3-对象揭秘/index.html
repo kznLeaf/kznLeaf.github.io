@@ -87,7 +87,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -194,6 +194,18 @@
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
               </a>
             </li>
           
@@ -334,7 +346,7 @@ Buffer，TLAB），每个线程在Java堆中提前分配了一块缓冲区，本
 <h2 id="对象的内存布局">对象的内存布局</h2>
 <p>Java对象保存在堆中时，由以下三部分组成：</p>
 <figure>
-<img src="https://s21.ax1x.com/2025/05/31/pV9uJ1A.png"
+<img src="https://s21.ax1x.com/2025/05/31/pV9uJ1A.png" srcset="/img/loading.gif" lazyload
 alt="对象的内存布局" />
 <figcaption aria-hidden="true">对象的内存布局</figcaption>
 </figure>
@@ -351,7 +363,7 @@ Pointer</strong>，类型指针，指向它的类型元数据，用于确定该�
 </ol>
 <p>64位JVM的对象头结构：</p>
 <figure>
-<img src="https://s21.ax1x.com/2025/05/31/pV9Koa8.png" alt="对象头" />
+<img src="https://s21.ax1x.com/2025/05/31/pV9Koa8.png" srcset="/img/loading.gif" lazyload alt="对象头" />
 <figcaption aria-hidden="true">对象头</figcaption>
 </figure>
 <h3 id="实例数据instance-data">实例数据（Instance Data）</h3>
@@ -376,7 +388,7 @@ aria-label="https://www.cnblogs.com/jajian/p/13681781.html">[1]</span></a></sup>
 <li><strong>句柄</strong></li>
 </ol>
 <figure>
-<img src="https://s21.ax1x.com/2025/05/31/pV9MHw6.png" alt="句柄" />
+<img src="https://s21.ax1x.com/2025/05/31/pV9MHw6.png" srcset="/img/loading.gif" lazyload alt="句柄" />
 <figcaption aria-hidden="true">句柄</figcaption>
 </figure>
 <p>Java堆中会划分出来一块区域用户存放句柄，句柄中包含了对象的实例和类型数据的地址信息。此时，<code>reference</code>中存放的是对象的句柄地址，访问过程是：<code>reference</code>-&gt;句柄-&gt;对象的实例数据和类型数据</p>
@@ -385,7 +397,7 @@ aria-label="https://www.cnblogs.com/jajian/p/13681781.html">[1]</span></a></sup>
 </ol>
 <p><code>reference</code>直接存储对象实例数据的地址，对象实例数据中保存了指向类型数据的指针。</p>
 <figure>
-<img src="https://s21.ax1x.com/2025/05/31/pV9MbTK.png" alt="直接访问" />
+<img src="https://s21.ax1x.com/2025/05/31/pV9MbTK.png" srcset="/img/loading.gif" lazyload alt="直接访问" />
 <figcaption aria-hidden="true">直接访问</figcaption>
 </figure>
 <p><code>reference</code>-&gt;对象实例数据-&gt;对象类型数据，这种方式的访问速度更快。这也是HotSpot主要采用的方式。</p>
@@ -649,17 +661,6 @@ class="footnote-text"><span>https://docs.oracle.com/javase/specs/jvms/se8/html/j
 
   <!-- Scripts -->
   
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
@@ -669,6 +670,10 @@ class="footnote-text"><span>https://docs.oracle.com/javase/specs/jvms/se8/html/j
 
 
 
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 

@@ -84,7 +84,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -195,6 +195,18 @@
             </li>
           
         
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
@@ -301,15 +313,15 @@
               <div class="markdown-body">
                 
                 <figure>
-<img src="https://i.imgur.com/ZpUo6qu.jpg" alt="成品" />
+<img src="https://i.imgur.com/ZpUo6qu.jpg" srcset="/img/loading.gif" lazyload alt="成品" />
 <figcaption aria-hidden="true">成品</figcaption>
 </figure>
 <h1 id="前言">前言</h1>
 <p>最近在忙着做校队招新的题目，要求是用锁相环CD4046B做一个倍频器，倍频系数为1，2，4，8，16，32，64。这个题最烦人的地方在于覆盖的频率范围很大，输入信号范围是1kHz~100kHz，这样来算输出最大要达到6.4MHz，然而以CD4046B来说这根本不可能，因为这款锁相环上集成的VCO的输出频率最大也就1MHz左右：</p>
-<p><img src="https://i.imgur.com/51pBwa3.png" /></p>
+<p><img src="https://i.imgur.com/51pBwa3.png" srcset="/img/loading.gif" lazyload /></p>
 <p>如你所见，输出最大频率的典型值为<strong>1.4MHz</strong>，这也基本符合我实测的结果。总之这题做满100kHz的64倍频基本是没戏了，但是听说有个组做到了7MHz？搞不懂是什么情况。（再吐槽一句，TI的CD4046B的数据手册真的太古老了啊，赶紧更新一下吧）</p>
 <h1 id="引脚说明">引脚说明</h1>
-<p><img src="https://i.imgur.com/Z91APjn.png" /></p>
+<p><img src="https://i.imgur.com/Z91APjn.png" srcset="/img/loading.gif" lazyload /></p>
 <p>见上图。</p>
 <ul>
 <li>3；鉴相器输入</li>
@@ -351,24 +363,24 @@ class="math inline">\(R_1\)</span>也影响了输出频率·范围，R1越小输
 <li>分频器输出的5V方波要被转换为10V方波</li>
 </ul>
 <p>LTspice仿真结果如下：</p>
-<p><img src="https://i.imgur.com/3vQpjKX.png" /></p>
+<p><img src="https://i.imgur.com/3vQpjKX.png" srcset="/img/loading.gif" lazyload /></p>
 <p>高电平转低电平用的是左边那个电路，其实就是一个反相器。需要注意的是上拉电阻R1不要取得太大，不然上升沿过于缓慢，适应不了1MHz。而且这个电路实际测试的时候输出在下降沿的振铃非常大，大概是杂散电容和寄生电感的影响（毕竟是焊接到洞洞板上的）。</p>
 <p>低电平转高电平用的是右边的电路，因为左边的电路这时候就不能用了。</p>
 <h1 id="环路滤波器">环路滤波器</h1>
 <p>这是锁相环相当重要的一环。环路滤波器的职责就是将鉴相器输出的高频分量尽可能地滤干净。网上关于环路滤波器的设计方法资料并不是很多，可以参见该博客：<a
 target="_blank" rel="noopener" href="https://www.cnblogs.com/qm1412/p/18222379">锁相环学习---CD4046</a></p>
 <p>环路滤波器有专用的设计软件，但是非常古老，必须再下载一个XP系统的虚拟机，非常麻烦，所以我就直接使用博客里设计好的电路了：</p>
-<p><img src="https://i.imgur.com/yCQpeqy.jpg" /></p>
+<p><img src="https://i.imgur.com/yCQpeqy.jpg" srcset="/img/loading.gif" lazyload /></p>
 <p>LTspice仿真得到其幅频响应和相频响应如下：</p>
-<p><img src="https://i.imgur.com/LWBPZIo.png" /></p>
+<p><img src="https://i.imgur.com/LWBPZIo.png" srcset="/img/loading.gif" lazyload /></p>
 <p>实测这个滤波器可以用于1kHz~1MHz的范围。</p>
 <h1 id="对vco输出进行整形">对VCO输出进行整形</h1>
 <p>这一步其实并不是必要的，但是我还是使用告诉比较器把输出波形整成好看一点的方波，这主要是因为我所用的10V转5V的电平转换电路上升沿非常慢，以至于方波几乎已经变成锯齿波了，非常难受。</p>
-<p><img src="https://i.imgur.com/NrkVsnV.png" /></p>
+<p><img src="https://i.imgur.com/NrkVsnV.png" srcset="/img/loading.gif" lazyload /></p>
 <p>注意我最终电路中VIN是经过电容之后才送入比较器，这样隔离直流分量，比较器容易产生正确的结果。另外R1可以稍微取得大一些，比如500欧，对噪声的抑制能力也会强一些。这个比较器的输出为3.3V、0V，可以直接送入单片机的外部时钟输入引脚用来测量频率。</p>
 <h1 id="总结">总结</h1>
 <p>最后实现的效果如图（输入信号与输出信号稳定同频显示不漂移）只拍了N=1的情况，N=64也能非常稳</p>
-<p><img src="https://i.imgur.com/PvEWWA3.jpg" /></p>
+<p><img src="https://i.imgur.com/PvEWWA3.jpg" srcset="/img/loading.gif" lazyload /></p>
 <p>这次与锁相环有关的电路基本都是我负责的，焊接在一大块洞洞板上，焊锡丝的助焊剂快熏死我了。。。不过好在最后的成品表现非常不错，最大能锁定到1.2MHz的频率，已经接近CD4046B的极限了。另外队友也买了一大堆CD4046B，过几天我想用这些多余的芯片测试一下锁相环的FM解调功能。</p>
 
                 
@@ -609,17 +621,6 @@ target="_blank" rel="noopener" href="https://www.cnblogs.com/qm1412/p/18222379">
 
   <!-- Scripts -->
   
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
@@ -629,6 +630,10 @@ target="_blank" rel="noopener" href="https://www.cnblogs.com/qm1412/p/18222379">
 
 
 
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
@@ -734,7 +739,7 @@ target="_blank" rel="noopener" href="https://www.cnblogs.com/qm1412/p/18222379">
               inlineMath: { '[+]': [['$', '$']] }
             },
             loader : {
-              
+              load: ['ui/lazy']
             },
             options: {
               renderActions: {

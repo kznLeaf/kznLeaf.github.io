@@ -84,7 +84,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -191,6 +191,18 @@
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
               </a>
             </li>
           
@@ -502,12 +514,12 @@ https://www.sonatype.com/nexus-repository-oss
 <p>按照网上的方法进入bin目录输入<code>nexus.exe /run</code>，报错：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus">E:\nexus-<span class="hljs-number">3.79</span>.<span class="hljs-number">1</span>-<span class="hljs-number">04</span>-win-x86_64\nexus-<span class="hljs-number">3.79</span>.<span class="hljs-number">1</span>-<span class="hljs-number">04</span>\bin&gt;nexus<span class="hljs-selector-class">.exe</span> /run<br><span class="hljs-selector-attr">[2025-04-28 15:40:49]</span> <span class="hljs-selector-attr">[error]</span> <span class="hljs-selector-attr">[ 1048]</span> Unrecognized cmd <span class="hljs-selector-tag">option</span> /run<br><span class="hljs-selector-attr">[2025-04-28 15:40:49]</span> <span class="hljs-selector-attr">[error]</span> <span class="hljs-selector-attr">[ 1048]</span> Invalid command <span class="hljs-selector-tag">line</span> arguments.<br><span class="hljs-selector-attr">[2025-04-28 15:40:49]</span> <span class="hljs-selector-attr">[error]</span> <span class="hljs-selector-attr">[ 1048]</span> Apache Commons Daemon procrun failed with exit value: <span class="hljs-number">1</span> (failed to parse command <span class="hljs-selector-tag">line</span> arguments).<br></code></pre></td></tr></table></figure>
 <p>说明网上的方法失效了。再看一眼解压后的目录</p>
-<p><img src="https://s21.ax1x.com/2025/04/28/pE7iUJ0.png" /></p>
+<p><img src="https://s21.ax1x.com/2025/04/28/pE7iUJ0.png" srcset="/img/loading.gif" lazyload /></p>
 <p>看看第一个文件。</p>
 <p>嗯？有点怪，这不是安装脚本嘛。再翻翻官方文档<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span
 class="hint--top hint--rounded"
 aria-label="https://help.sonatype.com/en/sonatype-nexus-repository.html">[3]</span></a></sup></p>
-<p><img src="https://s21.ax1x.com/2025/04/28/pE7AuJ1.png" /></p>
+<p><img src="https://s21.ax1x.com/2025/04/28/pE7AuJ1.png" srcset="/img/loading.gif" lazyload /></p>
 <div class="note note-primary">
             <p>Nexus Repository 在 3.78.0 版本进行了大量构建方式的更改。 3.78.0及以后版本使用了上面列出的 //ES//、//SS//、//DS// 这种新格式。</p>
           </div>
@@ -779,17 +791,6 @@ class="footnote-text"><span>https://help.sonatype.com/en/sonatype-nexus-reposito
 
   <!-- Scripts -->
   
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
@@ -799,6 +800,10 @@ class="footnote-text"><span>https://help.sonatype.com/en/sonatype-nexus-reposito
 
 
 
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 

@@ -84,7 +84,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -191,6 +191,18 @@
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
               </a>
             </li>
           
@@ -320,12 +332,12 @@ target="_blank" rel="noopener" href="https://appscross.com/blog/issues-resolved-
 <h3 id="配置重定向规则">配置重定向规则</h3>
 <p>先打开主页左侧的“规则”，然后点击右侧的创建规则——<strong>重定向规则</strong>。（注意不是最左边的页面规则，这两个不是一个东西，后面会说）</p>
 <figure>
-<img src="https://s21.ax1x.com/2025/05/30/pV9F3fP.png"
+<img src="https://s21.ax1x.com/2025/05/30/pV9F3fP.png" srcset="/img/loading.gif" lazyload
 alt="重定向规则" />
 <figcaption aria-hidden="true">重定向规则</figcaption>
 </figure>
 <p>这里为我们提供了三个选项：</p>
-<p><img src="https://s21.ax1x.com/2025/05/30/pV9FGSf.png" /></p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9FGSf.png" srcset="/img/loading.gif" lazyload /></p>
 <p>应当选择<strong>重定向到其他域</strong>。<a
 target="_blank" rel="noopener" href="https://developers.cloudflare.com/rules/url-forwarding/examples/redirect-all-different-hostname/">官方文档</a>对它的描述为：</p>
 <div class="note note-secondary">
@@ -343,12 +355,12 @@ HTTP 或 HTTPS
 <p>目标URL即该请求将会被重定向到的URL，其中的<code>$&#123;2&#125;</code>是对通配符捕获的内容的引用，这里代表的是请求URL中的第二个<code>*</code>，所以用户最终访问的是新域名<code>globalstore.example.net</code>下的对应资源。</p>
 <p>从上面的描述可以看出这就是我们想要的东西。那接下来的配置就很简单了，按照刚才提到的三点：目标URL、状态码、启用保留查询字符串
 配置即可。</p>
-<p><img src="https://s21.ax1x.com/2025/05/30/pV9FO7d.png" /></p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9FO7d.png" srcset="/img/loading.gif" lazyload /></p>
 <h3 id="使规则生效">使规则生效</h3>
 <p>光是配置规则是不够的，还要给这个域名添加DNS记录以使规则生效。创建一条A记录即可，IP地址可以随便写，我这里用的是保留IP地址<code>192.0.2.1</code>，写了两条</p>
-<p><img src="https://s21.ax1x.com/2025/05/30/pV9kn3V.png" /></p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9kn3V.png" srcset="/img/loading.gif" lazyload /></p>
 <p>关于这一部分，Cloudflare文档在Page Rules一节中是这样说的：</p>
-<p><img src="https://s21.ax1x.com/2025/05/30/pV9kajO.png" /></p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9kajO.png" srcset="/img/loading.gif" lazyload /></p>
 <p><a
 target="_blank" rel="noopener" href="https://developers.cloudflare.com/rules/page-rules/">原文链接</a></p>
 <p>也就是说如果IP地址作为占位符的话，最好使用保留IP地址<code>192.0.2.*</code>，避免把流量发到什么奇怪的地方。</p>
@@ -357,7 +369,7 @@ target="_blank" rel="noopener" href="https://developers.cloudflare.com/rules/pag
 Rules的，但这其实不太合适。其实关键就是<strong>转发</strong>和<strong>重定向</strong>的区别。Page
 Rules中可以配置一个叫做<code>URL Forwarding(转发URL)</code>的东西：</p>
 <figure>
-<img src="https://s21.ax1x.com/2025/05/30/pV9Alxf.png"
+<img src="https://s21.ax1x.com/2025/05/30/pV9Alxf.png" srcset="/img/loading.gif" lazyload
 alt="页面规则中的转发URL" />
 <figcaption aria-hidden="true">页面规则中的转发URL</figcaption>
 </figure>
@@ -370,7 +382,7 @@ alt="页面规则中的转发URL" />
 target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/HTTP%E7%8A%B6%E6%80%81%E7%A0%81">wiki</a>
 对这两种状态码的表述：</p>
 <figure>
-<img src="https://s21.ax1x.com/2025/05/30/pV9Amad.png"
+<img src="https://s21.ax1x.com/2025/05/30/pV9Amad.png" srcset="/img/loading.gif" lazyload
 alt="状态码301和302的区别" />
 <figcaption aria-hidden="true">状态码301和302的区别</figcaption>
 </figure>
@@ -612,17 +624,6 @@ alt="状态码301和302的区别" />
 
   <!-- Scripts -->
   
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
@@ -632,6 +633,10 @@ alt="状态码301和302的区别" />
 
 
 
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
