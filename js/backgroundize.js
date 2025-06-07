@@ -35,7 +35,7 @@ function setBackgroundImage() {
 
             if (getCurrentMode() === 'light') bgDiv.style.backgroundImage = 'url("/img/night.webp")';
 
-            else bgDiv.style.backgroundImage = 'url("/img/girl.webp")';
+            else bgDiv.style.backgroundImage = 'url("/img/about.webp")';
 
             //console.log("成功替换");
         }
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (getCurrentMode() === 'light') bgDiv.style.backgroundImage = 'url("/img/night.webp")';
 
-            else bgDiv.style.backgroundImage = 'url("/img/girl.webp")';
+            else bgDiv.style.backgroundImage = 'url("/img/about.webp")';
 
             //console.log("成功替换");
         }
