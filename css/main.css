@@ -794,7 +794,7 @@ body a:hover {
   transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 code {
-  color: inherit;
+  color: #ff7e00;
 }
 table {
   font-size: inherit;
@@ -836,7 +836,7 @@ i.iconfont {
 :root {
   --color-mode: "light";
   --body-bg-color: #eee;
-  --board-bg-color: #ffffffD9;
+  --board-bg-color: #ffffffD7;
   --text-color: #3c4858;
   --sec-text-color: #626161;
   --post-text-color: #2c3e50;
@@ -863,7 +863,7 @@ i.iconfont {
   }
   :root:not([data-user-color-scheme]) {
     --body-bg-color: #181c27;
-    --board-bg-color: #000000D9;
+    --board-bg-color: #000000D7;
     --text-color: #c4c6c9;
     --sec-text-color: #a7a9ad;
     --post-text-color: #c4c6c9;
@@ -901,7 +901,7 @@ i.iconfont {
 @media not print {
   [data-user-color-scheme="dark"] {
     --body-bg-color: #181c27;
-    --board-bg-color: #000000D9;
+    --board-bg-color: #000000D7;
     --text-color: #c4c6c9;
     --sec-text-color: #a7a9ad;
     --post-text-color: #c4c6c9;
