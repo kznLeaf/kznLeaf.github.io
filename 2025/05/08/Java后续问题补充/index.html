@@ -25,21 +25,21 @@
   
     <meta name="description" content="Java Scanner java.util.Scanner 是 Java5 的新特征，我们可以通过 Scanner 类来获取用户的输入。ACM 模式必备。 注意：JUnit 的测试方法（如@Test）默认不会连接控制台（System.in），一定要在main()方法中运行。 Scanner 类的UML 图如下：  它实现了AutoCloseable接口，可以使用try-with-r">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java 算法常用技巧合集">
+<meta property="og:title" content="算法-Java常用API">
 <meta property="og:url" content="https://kznleaf.top/2025/05/08/Java%E5%90%8E%E7%BB%AD%E9%97%AE%E9%A2%98%E8%A1%A5%E5%85%85/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="Java Scanner java.util.Scanner 是 Java5 的新特征，我们可以通过 Scanner 类来获取用户的输入。ACM 模式必备。 注意：JUnit 的测试方法（如@Test）默认不会连接控制台（System.in），一定要在main()方法中运行。 Scanner 类的UML 图如下：  它实现了AutoCloseable接口，可以使用try-with-r">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s21.ax1x.com/2025/05/07/pELmNqI.png">
 <meta property="article:published_time" content="2025-05-08T12:12:15.000Z">
-<meta property="article:modified_time" content="2025-06-02T15:59:23.016Z">
+<meta property="article:modified_time" content="2025-06-11T12:44:05.020Z">
 <meta property="article:author" content="banyee">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://s21.ax1x.com/2025/05/07/pELmNqI.png">
   
   
   
-  <title>Java 算法常用技巧合集 - 絆叶の片隅</title>
+  <title>算法-Java常用API - 絆叶の片隅</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -236,7 +236,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Java 算法常用技巧合集</span>
+            <span id="subtitle">算法-Java常用API</span>
           
         </div>
 
@@ -259,7 +259,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k 字
+          3.7k 字
         
       </span>
     
@@ -270,7 +270,7 @@
         
         
         
-          23 分钟
+          32 分钟
         
       </span>
     
@@ -307,7 +307,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Java 算法常用技巧合集</h1>
+            <h1 id="seo-header">算法-Java常用API</h1>
             
             
               <div class="markdown-body">
@@ -627,6 +627,48 @@ from。如果<code>to</code>大于数组的长度，多出来的部分用默认�
 <p>出现位置：<a
 target="_blank" rel="noopener" href="https://leetcode.cn/problems/insert-delete-getrandom-o1/description/">O(1)
 时间插入、删除和获取随机元素</a></p>
+<h2
+id="如何将列表转换成特定类型的数组">如何将列表转换成特定类型的数组</h2>
+<h3 id="引入">引入</h3>
+<p>先看一个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;ListNode&gt; TempList = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>...<br>ListNode[] lists = TempList.toArray(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ListNode</span>[<span class="hljs-number">0</span>]);<br></code></pre></td></tr></table></figure>
+<p><code>lists</code>是一个用于存放<code>ListNode</code>数据的数组，<code>Templist</code>是一个存放<code>ListNode</code>元素的列表。最后一行代码实现了从<code>TempList</code>列表向数组的转化。这里的关键是<code>toArray</code>方法，实际上<code>List</code>接口中定义了两个<code>toArray</code>抽象方法，一个空参一个有参，定义分别如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">Object[] toArray();<br>&lt;T&gt; T[] toArray(T[] a);<br></code></pre></td></tr></table></figure>
+<p>为了搞清楚这两个方法如何使用，需要先介绍一下<code>runtime type</code>（运行时类型）和<code>compile type</code>（编译时类型）。</p>
+<h3 id="编译时类型和运行时类型">编译时类型和运行时类型</h3>
+<p>运行时类型，指的是对象在程序运行的过程中真实的类型。之所以强调“真实”，是因为Java中的多态使得编译器认为的类型和程序运行时的类型可能不一样，例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Animal</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Dog</span>();<br></code></pre></td></tr></table></figure>
+<p>所谓<em>编译看左边，运行看右边</em>，<code>a</code>的编译时类型是<code>Animal</code>，运行时类型是<code>Dog</code>。</p>
+<h3 id="java标准库提供的注释">Java标准库提供的注释</h3>
+<p>先看空参方法<code>Object[] toArray();</code>：</p>
+<blockquote>
+<p>按照正确的顺序（从第一个到最后一个）返回一个包含原列表中所有元素的数组。</p>
+<p>返回的数组是“安全的”，意思就是说它不包含任何对原列表的引用，是完全独立于原列表的。你可以放心地修改它，不用担心会对原列表产生任何影响。</p>
+<p>这个方法是基于数组的 API 和基于集合的 API 之间的桥梁。</p>
+</blockquote>
+<p><code>返回值</code>:
+一个以正确的顺序包含列表中的所有元素的<code>Object</code>数组</p>
+<p>这个方法的返回值类型固定为<code>Object[]</code>，在实际应用中需要手动强转成我们需要的类型，很不方便。于是就有了后面这个带参数的方法</p>
+<hr />
+<p><code>&lt;T&gt; T[] toArray(T[] a);</code></p>
+<blockquote>
+<p>照正确的顺序（从第一个到最后一个）返回一个包含原列表中所有元素的数组。返回数组的运行时类型与指定数组相同。如果该列表可以装入指定的数组中，则直接把它放进数组并返回；否则，会分配一个具有与指定数组相同运行时类型的新数组，其大小等于列表的大小。</p>
+<p>如果指定的数组比原列表需要的空间还大，那么空缺位置会被赋值为<code>null</code>。（<em>仅当</em>调用者确认原列表中不包含任何<code>null</code>元素时，这个特性才有助于判断列表的长度）</p>
+<p>就像<code>toArray()</code>方法一样，该方法是基于数组的 API
+和基于集合的 API
+之间的桥梁。此外，该方法允许对输出数组的运行时类型进行精确的控制，在某些情况下或许可以节省内存开销。</p>
+<p>假设<code>x</code>是一个已知只包含字符串的列表。以下代码可以用于将列表转存到新分配的String数组中：</p>
+<p><code>String[] y = x.toArray(new String[0]);</code></p>
+<p>注意<code>toArray(new Object[0])</code>与上面的<code>toArray()</code>完全相同。</p>
+</blockquote>
+<p><code>参数</code>: <code>a</code>-
+指定数组，如果足够大，原列表的元素将被直接存入该数组；否则，会分配一个与之相同运行类型的新数组。</p>
+<p><code>返回值</code>: 一个包含列表元素的数组</p>
+<p><code>抛出</code>: <code>ArrayStoreException</code> -
+如果指定数组的运行时类型不是每一个列表元素的父类型<br />
+<code>NullPointerException</code> - 如果指定数组是<code>null</code></p>
+<hr />
+<p>Java标准库中给出的解释已经非常详细了。对于开头处的语句<code>ListNode[] lists = TempList.toArray(new ListNode[0]);</code>，形参<code>new ListNode[0]</code>的主要作用是<strong>确定返回数组的运行时类型</strong>，它作为我们给出的指定数组，其容量为0，显然是不够用的，所以会分配一个运行时类型为<code>ListNode[]</code>的新数组，其容量等于列表的大小。然后，把返回的数组赋给相同类型的数组<code>lists</code>就没有任何问题了。</p>
 
                 
               </div>
@@ -645,7 +687,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/insert-delete-
     
       <span class="category-chain">
         
-  <a href="/categories/Java-SE/" class="category-chain-item">Java SE</a>
+  <a href="/categories/Algorithm/" class="category-chain-item">Algorithm</a>
   
   
 
@@ -665,7 +707,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/insert-delete-
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Java 算法常用技巧合集</div>
+      <div>算法-Java常用API</div>
       <div>https://kznleaf.top/2025/05/08/Java后续问题补充/</div>
     </div>
     <div class="license-meta">
