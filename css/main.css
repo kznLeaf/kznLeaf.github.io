@@ -794,7 +794,7 @@ body a:hover {
   transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 code {
-  color: #ff7e00;
+  color: inherit;
 }
 table {
   font-size: inherit;
