@@ -502,20 +502,6 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.top/categories/%E6%97%A5%E8%AF%AD/</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kznleaf.top/categories/Hexo/</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kznleaf.top/categories/Theme/</loc>
     <lastmod>2025-06-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -523,7 +509,7 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.top/categories/Web-Development/</loc>
+    <loc>https://kznleaf.top/categories/%E6%97%A5%E8%AF%AD/</loc>
     <lastmod>2025-06-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -537,7 +523,21 @@
   </url>
   
   <url>
+    <loc>https://kznleaf.top/categories/Hexo/</loc>
+    <lastmod>2025-06-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://kznleaf.top/categories/Algorithm/</loc>
+    <lastmod>2025-06-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kznleaf.top/categories/Web-Development/</loc>
     <lastmod>2025-06-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
