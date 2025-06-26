@@ -488,13 +488,6 @@
 
   
   <url>
-    <loc>https://kznleaf.top/categories/Theme/</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kznleaf.top/categories/Cloudflare/</loc>
     <lastmod>2025-06-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -509,7 +502,14 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.top/categories/Hexo/</loc>
+    <loc>https://kznleaf.top/categories/Theme/</loc>
+    <lastmod>2025-06-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kznleaf.top/categories/JVM/</loc>
     <lastmod>2025-06-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -523,7 +523,7 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.top/categories/JVM/</loc>
+    <loc>https://kznleaf.top/categories/Hexo/</loc>
     <lastmod>2025-06-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -558,6 +558,13 @@
   </url>
   
   <url>
+    <loc>https://kznleaf.top/categories/Computer-Networking/</loc>
+    <lastmod>2025-06-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://kznleaf.top/categories/Database/</loc>
     <lastmod>2025-06-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -572,13 +579,6 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.top/categories/Computer-Networking/</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kznleaf.top/categories/Java-SE/</loc>
     <lastmod>2025-06-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -586,14 +586,14 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.top/categories/%E7%94%B5%E5%AD%90%E8%AE%BE%E8%AE%A1/</loc>
+    <loc>https://kznleaf.top/categories/%E5%AD%97%E5%B9%95/</loc>
     <lastmod>2025-06-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://kznleaf.top/categories/%E5%AD%97%E5%B9%95/</loc>
+    <loc>https://kznleaf.top/categories/%E7%94%B5%E5%AD%90%E8%AE%BE%E8%AE%A1/</loc>
     <lastmod>2025-06-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
