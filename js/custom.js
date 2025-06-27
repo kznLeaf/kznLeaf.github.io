@@ -55,7 +55,18 @@ document.addEventListener('DOMContentLoaded', function() {
     $("#Loadanimation").fadeOut(500);
  }); */
 
-
+/* 
  $(window).on('load', function() {
   $("#Loadanimation").fadeOut(700);
+}); */
+
+$(document).ready(function() {
+    let timeoutId = setTimeout(function() {
+        $("#Loadanimation").fadeOut(700);
+    }, 5000); // 5秒超时
+    
+    $(window).on('load', function() {
+        clearTimeout(timeoutId); // 清除超时
+        $("#Loadanimation").fadeOut(700);
+    });
 });

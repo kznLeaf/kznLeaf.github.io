@@ -23,12 +23,12 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="为预加载设定超时时间 老早就想完善这个洗细节了，结果最近才想起来😑 在网络环境比较差，尤其是不使用代理的情况下，我这个博客的访问速度是非常慢滴， DOM 结构迟迟加载不完，结果就是用户盯着屏幕上的圈圈了半天也没看见博客，于是愤然退出😡 最根本的解决方案，如果以国内的访问者为优先的话自然是备案，但这是不可能滴，这辈子都不可能备案滴😋我也不打算专门为国内的访问者花费太多精力，所以直接给">
+    <meta name="description" content="最近又折腾了一下博客，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Cloudflare for SaaS加速博客国内访问速度">
 <meta property="og:url" content="https://kznleaf.site/2025/06/27/%E4%BD%BF%E7%94%A8Cloudflare-for-SaaS%E5%8A%A0%E9%80%9F%E5%8D%9A%E5%AE%A2%E5%9B%BD%E5%86%85%E8%AE%BF%E9%97%AE%E9%80%9F%E5%BA%A6/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
-<meta property="og:description" content="为预加载设定超时时间 老早就想完善这个洗细节了，结果最近才想起来😑 在网络环境比较差，尤其是不使用代理的情况下，我这个博客的访问速度是非常慢滴， DOM 结构迟迟加载不完，结果就是用户盯着屏幕上的圈圈了半天也没看见博客，于是愤然退出😡 最根本的解决方案，如果以国内的访问者为优先的话自然是备案，但这是不可能滴，这辈子都不可能备案滴😋我也不打算专门为国内的访问者花费太多精力，所以直接给">
+<meta property="og:description" content="最近又折腾了一下博客，">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s21.ax1x.com/2025/06/27/pVmLdij.png">
 <meta property="og:image" content="https://s21.ax1x.com/2025/06/27/pVmLwJs.png">
@@ -36,12 +36,13 @@
 <meta property="og:image" content="https://s21.ax1x.com/2025/06/27/pVmOnXV.jpg">
 <meta property="og:image" content="https://s21.ax1x.com/2025/06/27/pVmh91g.png">
 <meta property="article:published_time" content="2025-06-27T06:05:01.000Z">
-<meta property="article:modified_time" content="2025-06-27T15:48:32.602Z">
+<meta property="article:modified_time" content="2025-06-27T16:32:31.149Z">
 <meta property="article:author" content="banyee">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="Fluid">
 <meta property="article:tag" content="Cloudflare">
 <meta property="article:tag" content="危">
+<meta property="article:tag" content="折腾博客">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://s21.ax1x.com/2025/06/27/pVmLdij.png">
   
@@ -267,7 +268,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          1.9k 字
         
       </span>
     
@@ -278,7 +279,7 @@
         
         
         
-          13 分钟
+          16 分钟
         
       </span>
     
@@ -320,16 +321,36 @@
             
               <div class="markdown-body">
                 
-                <h2 id="为预加载设定超时时间">为预加载设定超时时间</h2>
+                <p>最近又折腾了一下博客，</p>
+<span id="more"></span>
+<h2 id="为预加载设定超时时间">为预加载设定超时时间</h2>
 <p>老早就想完善这个洗细节了，结果最近才想起来😑</p>
 <p>在网络环境比较差，尤其是<strong>不使用代理</strong>的情况下，我这个博客的访问速度是非常慢滴，
 DOM
 结构迟迟加载不完，结果就是用户盯着屏幕上的圈圈了半天也没看见博客，于是愤然退出😡</p>
 <p>最根本的解决方案，如果以国内的访问者为优先的话自然是备案，但这是不可能滴，这辈子都不可能备案滴😋我也不打算专门为国内的访问者花费太多精力，所以直接给预加载动画设定一个超时时间算了，照顾那些挂了代理但是网速不好的访问者。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js">$(<span class="hljs-variable language_">document</span>).<span class="hljs-title function_">ready</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">let</span> timeoutId = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        $(<span class="hljs-string">&quot;#Loadanimation&quot;</span>).<span class="hljs-title function_">fadeOut</span>(<span class="hljs-number">700</span>);<br>    &#125;, <span class="hljs-number">5000</span>); <span class="hljs-comment">// 5秒超时</span><br>    <br>    $(<span class="hljs-variable language_">window</span>).<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;load&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-built_in">clearTimeout</span>(timeoutId); <span class="hljs-comment">// 清除超时</span><br>        $(<span class="hljs-string">&quot;#Loadanimation&quot;</span>).<span class="hljs-title function_">fadeOut</span>(<span class="hljs-number">700</span>);<br>    &#125;);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>实现思路：</p>
+<ul>
+<li>设置一个定时器<code>timeoutId</code>，如果 5
+秒内没有触发<code>window.load</code>，就自动执行<code>fadeOut(700)</code>，强制隐藏加载动画。</li>
+<li>当页面所有资源加载完毕后，出发下面的代码，先取消定时器<code>clearTimeout</code>，防止<code>fadeOut</code>多次触发，然后正常执行隐藏动画。</li>
+</ul>
 <h2
 id="用hexo注入器单独修改首页副标题字体">用Hexo注入器单独修改首页副标题字体</h2>
-<p>首页副标题首先要要的是<strong>美观</strong>，要契合首页壁纸的风格。我一直想把这里的日语字体修改成游明朝，或者
-A1 明朝体之类的有衬线字体，但是遇到了比较尴尬的地方：</p>
+<p>我觉得首页副标题首先要的是<strong>美观</strong>，要契合首页壁纸的风格。我一直想把这里的日语字体修改成游明朝，或者
+A1
+明朝体之类的有衬线字体，但是遇到了比较尴尬的地方：文章页副标题和首页副标题公用同一个<code>id</code>和<code>class</code>，像下面这样：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;subtitle&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;visible&quot;</span>&gt;</span>副标题<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>直接修改<code>id</code>或者<code>class</code>的 CSS
+样式的话会殃及文章页，这是我不想看到的。</p>
+<p>解决方案是使用 Hexo 注入器，实现无侵入地注入 HTML
+片段。具体用法参见<a
+target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/advance/#hexo-%E6%B3%A8%E5%85%A5%E4%BB%A3%E7%A0%81">Hexo
+注入代码</a>，我采用的注入方式如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">/* 为首页的副标题插入class */</span><br>hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">injector</span>.<span class="hljs-title function_">register</span>(<span class="hljs-string">&#x27;body_begin&#x27;</span>, <br>     <span class="hljs-string">`</span><br><span class="hljs-string">      &lt;style&gt;</span><br><span class="hljs-string">        .banner-text .h2 &gt; #subtitle.visible &#123;</span><br><span class="hljs-string">          font-family: &quot;Yu Mincho&quot;, &quot;游明朝&quot;, serif !important;</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">      &lt;/style&gt;</span><br><span class="hljs-string">    `</span>,<br>     <span class="hljs-string">&#x27;home&#x27;</span>);<br></code></pre></td></tr></table></figure>
+<p>在<code>home</code>（首页）的<code>&lt;head&gt;</code>标签之后，注入内部
+CSS 用于修改字体，非常简单。</p>
 <h2 id="借助-inkscape-完善艺术字签名">借助 Inkscape 完善艺术字签名</h2>
 <p>看了一些大网站的页面设计，每一个页面的左上角往往都是网站的图标，比如：</p>
 <figure>
@@ -342,7 +363,7 @@ A1 明朝体之类的有衬线字体，但是遇到了比较尴尬的地方：</
 </figure>
 <ol type="1">
 <li>都是<strong>图标+文字</strong>的形式，</li>
-<li>点击图标就会跳转到首页。</li>
+<li>点击图标就会<strong>跳转到首页</strong>。</li>
 </ol>
 <p>下面解释一下第一项：<em>把图标添加到页面左上角</em>
 是怎么实现的。</p>
@@ -366,16 +387,17 @@ Font to Svg Path</a> 生成需要的字体 svg
 <figcaption aria-hidden="true">满昏</figcaption>
 </figure>
 <h2 id="点击图标跳转到首页">点击图标跳转到首页</h2>
+<p>下面解释第二个功能。</p>
 <p>这里的图标和艺术字是由一个 svg
 文件呈现的，只要点击这一块就会跳转。</p>
 <p>其实 Hexo Fluid
-主题默认配置下，点击左上角的文字是可以跳转首页的，但是这里却不奏效了，为什么？不妨看看以前是怎么把文字替换成
+主题默认配置下，点击左上角的文字是可以跳转首页的，但是替换成艺术字就不奏效了，为什么？不妨看看以前是怎么把文字替换成
 svg 艺术字的：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span>  navbarBrand  =  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.container a&#x27;</span>);<br><br>navbarBrand.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">`</span><br><span class="hljs-string">  &lt;object type=&quot;image/svg+xml&quot; data=&quot;/img/banyee&#x27;s Blog.svg&quot;&gt;&lt;/object&gt;</span><br><span class="hljs-string">`</span>;<br></code></pre></td></tr></table></figure>
 <p>注意：<code>&lt;object&gt;</code>标签会阻止点击事件传递到父元素。这是因为<code>&lt;object&gt;</code>内部的内容会被当成一个<strong>独立的文档</strong>加载进来，它和父页面是<strong>隔离</strong>的，自然不会继承点击跳转的功能。</p>
 <p><strong>解决方案</strong>：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span>  navbarBrand  =  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.container a&#x27;</span>);<br><br><span class="hljs-comment">/* &lt;object&gt; 标签会阻止点击事件传递到父元素。这是因为 &lt;object&gt; 内部的内容（SVG）会&quot;吸收&quot;点击事件。</span><br><span class="hljs-comment">使用 pointer-events: none 可以解决这个问题 */</span><br><br>navbarBrand.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">`</span><br><span class="hljs-string">  &lt;object type=&quot;image/svg+xml&quot; data=&quot;/img/banyee&#x27;s Blog.svg&quot; style=&quot;pointer-events: none;&quot;&gt;&lt;/object&gt;</span><br><span class="hljs-string">`</span>;<br><br>navbarBrand.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">window</span>.<span class="hljs-property">location</span>.<span class="hljs-property">href</span> = <span class="hljs-string">&#x27;https://kznleaf.top&#x27;</span>;<br>&#125;);<br></code></pre></td></tr></table></figure>
-<p>只添加了一点点代码：<code>style="pointer-events: none</code>，原理是规定我们插入的元素不会相应任何鼠标交互事件，也就是说插入的
+<p>只添加了一点点代码：<code>style="pointer-events: none</code>，原理是规定我们插入的元素不会响应任何鼠标交互事件，也就是说插入的
 svg
 对于鼠标来说是<strong>透明</strong>的，你对它的点击都会穿透到下面去，这样一来就能正常跳转了。</p>
 <h2 id="加快国内访问速度">加快国内访问速度</h2>
@@ -453,6 +475,8 @@ Cloudflare 为用户分配的节点都已经被 GFW
         <a href="/tags/Cloudflare/" class="print-no-link">#Cloudflare</a>
       
         <a href="/tags/%E5%8D%B1/" class="print-no-link">#危</a>
+      
+        <a href="/tags/%E6%8A%98%E8%85%BE%E5%8D%9A%E5%AE%A2/" class="print-no-link">#折腾博客</a>
       
     </div>
   

@@ -504,10 +504,17 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://kznleaf.site/tags/%E6%8A%98%E8%85%BE%E5%8D%9A%E5%AE%A2/</loc>
+    <lastmod>2025-06-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
-    <loc>https://kznleaf.site/categories/Cloudflare/</loc>
+    <loc>https://kznleaf.site/categories/%E6%97%A5%E8%AF%AD/</loc>
     <lastmod>2025-06-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -521,14 +528,7 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.site/categories/%E6%97%A5%E8%AF%AD/</loc>
-    <lastmod>2025-06-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kznleaf.site/categories/Theme/</loc>
+    <loc>https://kznleaf.site/categories/Cloudflare/</loc>
     <lastmod>2025-06-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -542,7 +542,7 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.site/categories/Web-Development/</loc>
+    <loc>https://kznleaf.site/categories/Theme/</loc>
     <lastmod>2025-06-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -556,7 +556,7 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.site/categories/EE/</loc>
+    <loc>https://kznleaf.site/categories/Web-Development/</loc>
     <lastmod>2025-06-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -577,6 +577,13 @@
   </url>
   
   <url>
+    <loc>https://kznleaf.site/categories/EE/</loc>
+    <lastmod>2025-06-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://kznleaf.site/categories/Database/</loc>
     <lastmod>2025-06-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -584,14 +591,14 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.site/categories/Computer-Networking/</loc>
+    <loc>https://kznleaf.site/categories/Redis/</loc>
     <lastmod>2025-06-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://kznleaf.site/categories/Redis/</loc>
+    <loc>https://kznleaf.site/categories/Computer-Networking/</loc>
     <lastmod>2025-06-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
