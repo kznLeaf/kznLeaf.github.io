@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
   <link rel="icon" href="/img/tree.png">
   
-    <link rel="canonical" href="https://kznleaf.top/2025/06/27/使用Cloudflare-for-SaaS加速博客国内访问速度/"/>
+    <link rel="canonical" href="https://kznleaf.site/2025/06/27/使用Cloudflare-for-SaaS加速博客国内访问速度/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -23,22 +23,27 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="加快国内访问速度 Cloudflare 被称为赛博活佛，向用户提供不需要实名认证的、免费的 CDN 加速服务。但是呢，由于国内奇葩的网络环境，使用 Cloudflare 提供的服务反而会拖慢国内的加载速度，近年来不少 Cloudflare 为用户分配的节点都已经被 GFW 屏蔽（包括俺使用的节点）。为了规避 GFW，有人想出了使用优选域名&#x2F; IP 的解决方案，但是现在很多优选域名也被 G">
+    <meta name="description" content="为预加载设定超时时间 老早就想完善这个洗细节了，结果最近才想起来😑 在网络环境比较差，尤其是不使用代理的情况下，我这个博客的访问速度是非常慢滴， DOM 结构迟迟加载不完，结果就是用户盯着屏幕上的圈圈了半天也没看见博客，于是愤然退出😡 最根本的解决方案，如果以国内的访问者为优先的话自然是备案，但这是不可能滴，这辈子都不可能备案滴😋我也不打算专门为国内的访问者花费太多精力，所以直接给">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Cloudflare for SaaS加速博客国内访问速度">
-<meta property="og:url" content="https://kznleaf.top/2025/06/27/%E4%BD%BF%E7%94%A8Cloudflare-for-SaaS%E5%8A%A0%E9%80%9F%E5%8D%9A%E5%AE%A2%E5%9B%BD%E5%86%85%E8%AE%BF%E9%97%AE%E9%80%9F%E5%BA%A6/index.html">
+<meta property="og:url" content="https://kznleaf.site/2025/06/27/%E4%BD%BF%E7%94%A8Cloudflare-for-SaaS%E5%8A%A0%E9%80%9F%E5%8D%9A%E5%AE%A2%E5%9B%BD%E5%86%85%E8%AE%BF%E9%97%AE%E9%80%9F%E5%BA%A6/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
-<meta property="og:description" content="加快国内访问速度 Cloudflare 被称为赛博活佛，向用户提供不需要实名认证的、免费的 CDN 加速服务。但是呢，由于国内奇葩的网络环境，使用 Cloudflare 提供的服务反而会拖慢国内的加载速度，近年来不少 Cloudflare 为用户分配的节点都已经被 GFW 屏蔽（包括俺使用的节点）。为了规避 GFW，有人想出了使用优选域名&#x2F; IP 的解决方案，但是现在很多优选域名也被 G">
+<meta property="og:description" content="为预加载设定超时时间 老早就想完善这个洗细节了，结果最近才想起来😑 在网络环境比较差，尤其是不使用代理的情况下，我这个博客的访问速度是非常慢滴， DOM 结构迟迟加载不完，结果就是用户盯着屏幕上的圈圈了半天也没看见博客，于是愤然退出😡 最根本的解决方案，如果以国内的访问者为优先的话自然是备案，但这是不可能滴，这辈子都不可能备案滴😋我也不打算专门为国内的访问者花费太多精力，所以直接给">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s21.ax1x.com/2025/06/27/pVmLdij.png">
+<meta property="og:image" content="https://s21.ax1x.com/2025/06/27/pVmLwJs.png">
+<meta property="og:image" content="https://s21.ax1x.com/2025/06/27/pVmqvrT.png">
+<meta property="og:image" content="https://s21.ax1x.com/2025/06/27/pVmOnXV.jpg">
 <meta property="og:image" content="https://s21.ax1x.com/2025/06/27/pVmh91g.png">
 <meta property="article:published_time" content="2025-06-27T06:05:01.000Z">
-<meta property="article:modified_time" content="2025-06-27T08:20:36.822Z">
+<meta property="article:modified_time" content="2025-06-27T15:48:32.602Z">
 <meta property="article:author" content="banyee">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="Fluid">
 <meta property="article:tag" content="Cloudflare">
+<meta property="article:tag" content="危">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/06/27/pVmh91g.png">
+<meta name="twitter:image" content="https://s21.ax1x.com/2025/06/27/pVmLdij.png">
   
   
   
@@ -87,7 +92,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"kznleaf.site","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -262,7 +267,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          479 字
+          1.6k 字
         
       </span>
     
@@ -273,7 +278,7 @@
         
         
         
-          4 分钟
+          13 分钟
         
       </span>
     
@@ -315,34 +320,95 @@
             
               <div class="markdown-body">
                 
-                <h2 id="加快国内访问速度">加快国内访问速度</h2>
-<p>Cloudflare 被称为赛博活佛，向用户提供不需要实名认证的、免费的 CDN
-加速服务。但是呢，由于国内奇葩的网络环境，使用 Cloudflare
-提供的服务反而会拖慢国内的加载速度，近年来不少 Cloudflare
-为用户分配的节点都已经被 GFW 屏蔽（包括俺使用的节点）。为了规避
-GFW，有人想出了使用优选域名/ IP 的解决方案，但是现在很多优选域名也被 GFW
-屏蔽了😂这也符合 GFW
-的一贯原则：宁可滥杀错杀，也绝不漏掉任何一个<strong>可能</strong>包含政治敏感信息的网站。</p>
+                <h2 id="为预加载设定超时时间">为预加载设定超时时间</h2>
+<p>老早就想完善这个洗细节了，结果最近才想起来😑</p>
+<p>在网络环境比较差，尤其是<strong>不使用代理</strong>的情况下，我这个博客的访问速度是非常慢滴，
+DOM
+结构迟迟加载不完，结果就是用户盯着屏幕上的圈圈了半天也没看见博客，于是愤然退出😡</p>
+<p>最根本的解决方案，如果以国内的访问者为优先的话自然是备案，但这是不可能滴，这辈子都不可能备案滴😋我也不打算专门为国内的访问者花费太多精力，所以直接给预加载动画设定一个超时时间算了，照顾那些挂了代理但是网速不好的访问者。</p>
+<h2
+id="用hexo注入器单独修改首页副标题字体">用Hexo注入器单独修改首页副标题字体</h2>
+<p>首页副标题首先要要的是<strong>美观</strong>，要契合首页壁纸的风格。我一直想把这里的日语字体修改成游明朝，或者
+A1 明朝体之类的有衬线字体，但是遇到了比较尴尬的地方：</p>
+<h2 id="借助-inkscape-完善艺术字签名">借助 Inkscape 完善艺术字签名</h2>
+<p>看了一些大网站的页面设计，每一个页面的左上角往往都是网站的图标，比如：</p>
+<figure>
+<img src="https://s21.ax1x.com/2025/06/27/pVmLdij.png" srcset="/img/loading.gif" lazyload alt="Youtube" />
+<figcaption aria-hidden="true">Youtube</figcaption>
+</figure>
+<figure>
+<img src="https://s21.ax1x.com/2025/06/27/pVmLwJs.png" srcset="/img/loading.gif" lazyload alt="Github" />
+<figcaption aria-hidden="true">Github</figcaption>
+</figure>
+<ol type="1">
+<li>都是<strong>图标+文字</strong>的形式，</li>
+<li>点击图标就会跳转到首页。</li>
+</ol>
+<p>下面解释一下第一项：<em>把图标添加到页面左上角</em>
+是怎么实现的。</p>
+<p>原来采用的方案是直接在 <a
+target="_blank" rel="noopener" href="https://danmarshall.github.io/google-font-to-svg-path/">Google
+Font to Svg Path</a> 生成需要的字体 svg
+文件，所以下一步只需要把图标的图像文件跟这个 svg
+合并在一起，生成一个大小合适的新的 svg 文件即可。</p>
+<p>嘛，目标很明确，但是关键是选择合适的<strong>用于编辑 svg
+图像的工具</strong>。我最开始是尝试了好几个在线编辑 svg
+的网站，要么是乱收费，要么是功能欠佳。花了不少时间，最后终于让我找到了
+<strong>Inkscape</strong>，一个<strong>免费开源</strong>的矢量图形编辑软件，功能相当强大，只需要把已有的图标<code>img2</code>和艺术字<code>path2</code>导入即可开始编辑：</p>
+<figure>
+<img src="https://s21.ax1x.com/2025/06/27/pVmqvrT.png" srcset="/img/loading.gif" lazyload alt="编辑页面" />
+<figcaption aria-hidden="true">编辑页面</figcaption>
+</figure>
+<p>把图标和文字放到合适的位置，调整一下大小，最后使用界面右下角的<code>文档属性</code>修改图形大小就可以裁剪掉多余的部分了，非常的傻瓜😂当然这只是最基础的操作，这个软件的功能远比它多得多，留到以后俺再慢慢研究。</p>
+<p>最终效果如下（左上角）：</p>
+<figure>
+<img src="https://s21.ax1x.com/2025/06/27/pVmOnXV.jpg" srcset="/img/loading.gif" lazyload alt="满昏" />
+<figcaption aria-hidden="true">满昏</figcaption>
+</figure>
+<h2 id="点击图标跳转到首页">点击图标跳转到首页</h2>
+<p>这里的图标和艺术字是由一个 svg
+文件呈现的，只要点击这一块就会跳转。</p>
+<p>其实 Hexo Fluid
+主题默认配置下，点击左上角的文字是可以跳转首页的，但是这里却不奏效了，为什么？不妨看看以前是怎么把文字替换成
+svg 艺术字的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span>  navbarBrand  =  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.container a&#x27;</span>);<br><br>navbarBrand.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">`</span><br><span class="hljs-string">  &lt;object type=&quot;image/svg+xml&quot; data=&quot;/img/banyee&#x27;s Blog.svg&quot;&gt;&lt;/object&gt;</span><br><span class="hljs-string">`</span>;<br></code></pre></td></tr></table></figure>
+<p>注意：<code>&lt;object&gt;</code>标签会阻止点击事件传递到父元素。这是因为<code>&lt;object&gt;</code>内部的内容会被当成一个<strong>独立的文档</strong>加载进来，它和父页面是<strong>隔离</strong>的，自然不会继承点击跳转的功能。</p>
+<p><strong>解决方案</strong>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span>  navbarBrand  =  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;.container a&#x27;</span>);<br><br><span class="hljs-comment">/* &lt;object&gt; 标签会阻止点击事件传递到父元素。这是因为 &lt;object&gt; 内部的内容（SVG）会&quot;吸收&quot;点击事件。</span><br><span class="hljs-comment">使用 pointer-events: none 可以解决这个问题 */</span><br><br>navbarBrand.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">`</span><br><span class="hljs-string">  &lt;object type=&quot;image/svg+xml&quot; data=&quot;/img/banyee&#x27;s Blog.svg&quot; style=&quot;pointer-events: none;&quot;&gt;&lt;/object&gt;</span><br><span class="hljs-string">`</span>;<br><br>navbarBrand.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">window</span>.<span class="hljs-property">location</span>.<span class="hljs-property">href</span> = <span class="hljs-string">&#x27;https://kznleaf.top&#x27;</span>;<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>只添加了一点点代码：<code>style="pointer-events: none</code>，原理是规定我们插入的元素不会相应任何鼠标交互事件，也就是说插入的
+svg
+对于鼠标来说是<strong>透明</strong>的，你对它的点击都会穿透到下面去，这样一来就能正常跳转了。</p>
+<h2 id="加快国内访问速度">加快国内访问速度</h2>
+<p>Cloudflare
+被称为赛博活佛，向用户提供<strong>不需要实名认证的、免费的</strong> CDN
+加速服务。但是呢，由于天朝奇葩的网络环境，使用 Cloudflare
+提供的服务反而会<strong>拖慢</strong>国内的加载速度，近年来不少
+Cloudflare 为用户分配的节点都已经被 GFW
+屏蔽（包括俺使用的节点）。为了规避 GFW，有人想出了使用优选域名/ IP
+的解决方案，但是现在很多优选域名也被 GFW 屏蔽了😂这也符合 GFW
+的一贯原则：宁可滥杀错杀，也绝不漏掉任何一个【<strong>可能</strong>】包含政治敏感信息的网站。</p>
 <p>嘛，要想享受国内的加速服务，最符合【国家意志】的做法就是域名备案:</p>
 <blockquote>
 <p>根据国务院令第292号《互联网信息服务管理办法》和
 《非经营性互联网信息服务备案管理办法》规定，国家对经营性互联网信息服务实行许可制度，对非经营性互联网信息服务实行备案制度。未获取许可或者未履行备案手续的，不得从事互联网信息服务，否则属于违法行为。</p>
 </blockquote>
-<p>有如下缺点：</p>
+<p>优点：运营商大发慈悲为你提供大陆加速服务</p>
+<p>缺点：</p>
 <ol type="1">
 <li>备案流程<strong>又臭又长</strong>，以腾讯云为例：
 <ul>
 <li>验证备案类型</li>
 <li>填写主体信息</li>
 <li>填写网站/域名或 APP 信息</li>
-<li>上传补充材料</li>
+<li>上传补充材料（比如身份证，连盒武器都不需要了😂）</li>
 <li>提交备案</li>
 <li>短信核验</li>
 <li>管局审核</li>
 </ul></li>
-<li>备案就意味着把网站的所有内容主动提交给天朝审查，这俺可没法接受</li>
+<li>备案就意味着把网站的所有内容【主动】提交给天朝审查，这俺可没法接受。</li>
 </ol>
-<p>在不备案的情况下，提高国内访问速度的一个方法是使用 Cloudflare
+<hr />
+<p>在不备案的情况下，稍稍提高国内访问速度的一个方法是使用 Cloudflare
 的<strong>自定义主机名</strong>服务。</p>
 <p><img src="https://s21.ax1x.com/2025/06/27/pVmh91g.png" srcset="/img/loading.gif" lazyload /></p>
 <p>在源站的 Cloudflare
@@ -386,6 +452,8 @@ GFW，有人想出了使用优选域名/ IP 的解决方案，但是现在很多
       
         <a href="/tags/Cloudflare/" class="print-no-link">#Cloudflare</a>
       
+        <a href="/tags/%E5%8D%B1/" class="print-no-link">#危</a>
+      
     </div>
   
 </div>
@@ -397,7 +465,7 @@ GFW，有人想出了使用优选域名/ IP 的解决方案，但是现在很多
   <div class="license-box my-3">
     <div class="license-title">
       <div>使用Cloudflare for SaaS加速博客国内访问速度</div>
-      <div>https://kznleaf.top/2025/06/27/使用Cloudflare-for-SaaS加速博客国内访问速度/</div>
+      <div>https://kznleaf.site/2025/06/27/使用Cloudflare-for-SaaS加速博客国内访问速度/</div>
     </div>
     <div class="license-meta">
       
