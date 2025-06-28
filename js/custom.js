@@ -55,12 +55,12 @@ document.addEventListener('DOMContentLoaded', function() {
     $("#Loadanimation").fadeOut(500);
  }); */
 
-/* 
+
  $(window).on('load', function() {
   $("#Loadanimation").fadeOut(700);
-}); */
+});
 
-$(document).ready(function() {
+/* $(document).ready(function() {
     let timeoutId = setTimeout(function() {
         $("#Loadanimation").fadeOut(700);
     }, 5000); // 5秒超时
@@ -70,3 +70,4 @@ $(document).ready(function() {
         $("#Loadanimation").fadeOut(700);
     });
 });
+ */
