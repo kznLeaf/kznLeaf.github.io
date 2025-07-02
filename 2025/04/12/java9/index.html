@@ -25,19 +25,21 @@
   
     <meta name="description" content="ArrayList ArrayList是 Java 中基于数组实现的一个可变长度的动态数组，它实现了List接口。位置：java.util.ArrayList Java 8及之后的版本： 底层数据结构： 创建一个Object数组，默认为空数组（懒汉式） 12transient Object[] elementData; &#x2F;&#x2F; 实际存储元素的数组private int size;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java集合底层源码">
+<meta property="og:title" content="Java-ArrayList源码简析">
 <meta property="og:url" content="https://kznleaf.site/2025/04/12/java9/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="ArrayList ArrayList是 Java 中基于数组实现的一个可变长度的动态数组，它实现了List接口。位置：java.util.ArrayList Java 8及之后的版本： 底层数据结构： 创建一个Object数组，默认为空数组（懒汉式） 12transient Object[] elementData; &#x2F;&#x2F; 实际存储元素的数组private int size;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-04-12T11:59:07.000Z">
-<meta property="article:modified_time" content="2025-04-19T13:13:11.725Z">
+<meta property="article:modified_time" content="2025-07-02T15:36:22.133Z">
 <meta property="article:author" content="banyee">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="源码剖析">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Java集合底层源码 - 絆叶の片隅</title>
+  <title>Java-ArrayList源码简析 - 絆叶の片隅</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -234,7 +236,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Java集合底层源码</span>
+            <span id="subtitle">Java-ArrayList源码简析</span>
           
         </div>
 
@@ -305,7 +307,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Java集合底层源码</h1>
+            <h1 id="seo-header">Java-ArrayList源码简析</h1>
             
             
               <div class="markdown-body">
@@ -367,6 +369,15 @@
     </div>
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/" class="print-no-link">#Java</a>
+      
+        <a href="/tags/%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/" class="print-no-link">#源码剖析</a>
+      
+    </div>
+  
 </div>
 
 
@@ -375,7 +386,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Java集合底层源码</div>
+      <div>Java-ArrayList源码简析</div>
       <div>https://kznleaf.site/2025/04/12/java9/</div>
     </div>
     <div class="license-meta">
