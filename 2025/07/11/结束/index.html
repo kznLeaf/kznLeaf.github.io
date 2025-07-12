@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
   <link rel="icon" href="/img/tree.png">
   
-    <link rel="canonical" href="https://kznleaf.site/2025/05/30/Cloudflare重定向配置指南/"/>
+    <link rel="canonical" href="https://kznleaf.site/2025/07/11/结束/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -23,25 +23,24 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在博客更换域名之后利用Cloudflare将向旧域名的请求重定向到新域名，并且保留请求的资源路径和查询字符串">
+    <meta name="description" content="7月9号下午，太阳下山之后跟队友到湖边讨论到晚上九点，主要讨论了要不要继续打电赛的问题，当然了期间也扯了其他一堆乱七八糟的话题。当然最后我还是坚持不打喽。   2025.7.9 20:07    2025.7.9 20:08    2025.7.9 20:18  如果能觉悟得早一点的话，从一开始就不会参加这个破比赛了，笑死。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Cloudflare配置将博客旧域名的请求重定向到新域名">
-<meta property="og:url" content="https://kznleaf.site/2025/05/30/Cloudflare%E9%87%8D%E5%AE%9A%E5%90%91%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:title" content="溜了溜了">
+<meta property="og:url" content="https://kznleaf.site/2025/07/11/%E7%BB%93%E6%9D%9F/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
-<meta property="og:description" content="在博客更换域名之后利用Cloudflare将向旧域名的请求重定向到新域名，并且保留请求的资源路径和查询字符串">
+<meta property="og:description" content="7月9号下午，太阳下山之后跟队友到湖边讨论到晚上九点，主要讨论了要不要继续打电赛的问题，当然了期间也扯了其他一堆乱七八糟的话题。当然最后我还是坚持不打喽。   2025.7.9 20:07    2025.7.9 20:08    2025.7.9 20:18  如果能觉悟得早一点的话，从一开始就不会参加这个破比赛了，笑死。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/30/pV9ZSaQ.jpg">
-<meta property="article:published_time" content="2025-05-30T15:07:40.000Z">
-<meta property="article:modified_time" content="2025-07-02T15:25:37.830Z">
+<meta property="og:image" content="https://i.imgur.com/aDtk3pQ.jpeg">
+<meta property="article:published_time" content="2025-07-11T14:50:42.000Z">
+<meta property="article:modified_time" content="2025-07-12T04:50:31.331Z">
 <meta property="article:author" content="banyee">
-<meta property="article:tag" content="折腾记录">
-<meta property="article:tag" content="Cloudflare">
+<meta property="article:tag" content="生活">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/05/30/pV9ZSaQ.jpg">
+<meta name="twitter:image" content="https://i.imgur.com/aDtk3pQ.jpeg">
   
   
   
-  <title>Cloudflare配置将博客旧域名的请求重定向到新域名 - 絆叶の片隅</title>
+  <title>溜了溜了 - 絆叶の片隅</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -238,7 +237,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Cloudflare配置将博客旧域名的请求重定向到新域名</span>
+            <span id="subtitle">溜了溜了</span>
           
         </div>
 
@@ -249,8 +248,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-05-30 23:07" pubdate>
-          2025年5月30日 晚上
+        <time datetime="2025-07-11 22:50" pubdate>
+          2025年7月11日 晚上
         </time>
       </span>
     
@@ -261,7 +260,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          109 字
         
       </span>
     
@@ -272,7 +271,7 @@
         
         
         
-          11 分钟
+          1 分钟
         
       </span>
     
@@ -309,90 +308,30 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Cloudflare配置将博客旧域名的请求重定向到新域名</h1>
+            <h1 id="seo-header">溜了溜了</h1>
             
             
               <div class="markdown-body">
                 
-                <p>在博客更换域名之后利用Cloudflare将向旧域名的请求重定向到新域名，并且保留请求的资源路径和查询字符串</p>
-<span id="more"></span>
-<h2 id="前言">前言</h2>
-<p>最近为博客更换了域名，原域名为<code>kznep19.blog</code>，因为续费费用过高而更换为现在的<code>kznleaf.top</code>。现在遇到了几个问题：</p>
-<ol type="1">
-<li>原域名虽然不再使用了，但是一直到2026年1月才过期；</li>
-<li>Google
-和必应搜索引擎仍在收录原域名下的文章页，如果马上废弃原域名，又要重新抓取一遍文章；</li>
-<li>有几篇博客在别的地方被引用了，我希望这些外链仍然能够生效</li>
-</ol>
-<p>综上考虑，我希望获得的效果是：将博客切换为新域名，同时为旧域名配置重定向，使得对旧域名下的资源的请求会被自动重定向到新域名下对于的资源路径。</p>
-<p>花了不少时间查资料，大部分的解决方案都是通过配置页面规则(Page
-Rules)配置的方式实现重定向，我经过尝试之后发现并没有效果。最后找到了这篇博客：</p>
-<p><a
-target="_blank" rel="noopener" href="https://appscross.com/blog/issues-resolved-during-cloudflares-configuration-site-redirection-process.html">Cloudflare配置站点重定向</a></p>
-<p>这个博客是把对旧域名下的任何资源的请求都重定向到一个固定的URL下，我在该博客的基础上做了一些补充，最后达到了理想的效果。</p>
-<h2 id="配置要点">配置要点</h2>
-<h3 id="配置重定向规则">配置重定向规则</h3>
-<p>先打开主页左侧的“规则”，然后点击右侧的创建规则——<strong>重定向规则</strong>。（注意不是最左边的页面规则，这两个不是一个东西，后面会说）</p>
+                <p>7月9号下午，太阳下山之后跟队友到湖边讨论到晚上九点，主要讨论了要不要继续打电赛的问题，当然了期间也扯了其他一堆乱七八糟的话题。当然最后我还是坚持不打喽。</p>
 <figure>
-<img src="https://s21.ax1x.com/2025/05/30/pV9F3fP.png" srcset="/img/loading.gif" lazyload
-alt="重定向规则" />
-<figcaption aria-hidden="true">重定向规则</figcaption>
+<img src="https://i.imgur.com/aDtk3pQ.jpeg" srcset="/img/loading.gif" lazyload alt="2025.7.9 20:07" />
+<figcaption aria-hidden="true">2025.7.9 20:07</figcaption>
 </figure>
-<p>这里为我们提供了三个选项：</p>
-<p><img src="https://s21.ax1x.com/2025/05/30/pV9FGSf.png" srcset="/img/loading.gif" lazyload /></p>
-<p>应当选择<strong>重定向到其他域</strong>。<a
-target="_blank" rel="noopener" href="https://developers.cloudflare.com/rules/url-forwarding/examples/redirect-all-different-hostname/">官方文档</a>对它的描述为：</p>
-<div class="note note-secondary">
-            <p>创建重定向规则，将对<code>smallshop.example.com</code>的所有请求重定向到使用HTTPS 的其他主机名，同时保留原始路径和查询字符串。</p>
-          </div>
-<p>使用通配符匹配模式，如果请求的URL为<code>http*://smallshop.example.com/*</code>，那么：</p>
-<ul>
-<li>目标URL：<code>https://globalstore.example.net/$&#123;2&#125;</code></li>
-<li>状态码：301</li>
-<li>保留查询字符串：启用</li>
-</ul>
-<p>请求URL中的<code>*</code>是对零个或者多个字符进行匹配，这里表示使用
-HTTP 或 HTTPS
-协议对<code>smallshop.example.com</code>下的任意资源的请求都将被匹配。</p>
-<p>目标URL即该请求将会被重定向到的URL，其中的<code>$&#123;2&#125;</code>是对通配符捕获的内容的引用，这里代表的是请求URL中的第二个<code>*</code>，所以用户最终访问的是新域名<code>globalstore.example.net</code>下的对应资源。</p>
-<p>从上面的描述可以看出这就是我们想要的东西。那接下来的配置就很简单了，按照刚才提到的三点：目标URL、状态码、启用保留查询字符串
-配置即可。</p>
-<p><img src="https://s21.ax1x.com/2025/05/30/pV9FO7d.png" srcset="/img/loading.gif" lazyload /></p>
-<h3 id="使规则生效">使规则生效</h3>
-<p>光是配置规则是不够的，还要给这个域名添加DNS记录以使规则生效。创建一条A记录即可，IP地址可以随便写，我这里用的是保留IP地址<code>192.0.2.1</code>，写了两条</p>
-<p><img src="https://s21.ax1x.com/2025/05/30/pV9kn3V.png" srcset="/img/loading.gif" lazyload /></p>
-<p>关于这一部分，Cloudflare文档在Page Rules一节中是这样说的：</p>
-<p><img src="https://s21.ax1x.com/2025/05/30/pV9kajO.png" srcset="/img/loading.gif" lazyload /></p>
-<p><a
-target="_blank" rel="noopener" href="https://developers.cloudflare.com/rules/page-rules/">原文链接</a></p>
-<p>也就是说如果IP地址作为占位符的话，最好使用保留IP地址<code>192.0.2.*</code>，避免把流量发到什么奇怪的地方。</p>
-<h2 id="page-rules和redirects的区别">Page Rules和Redirects的区别</h2>
-<p>前面提到了，在搜索引擎中搜索“使用Cloudflare把旧域名重定向到新域名”，弹出来的结果大部分都是使用Page
-Rules的，但这其实不太合适。其实关键就是<strong>转发</strong>和<strong>重定向</strong>的区别。Page
-Rules中可以配置一个叫做<code>URL Forwarding(转发URL)</code>的东西：</p>
 <figure>
-<img src="https://s21.ax1x.com/2025/05/30/pV9Alxf.png" srcset="/img/loading.gif" lazyload
-alt="页面规则中的转发URL" />
-<figcaption aria-hidden="true">页面规则中的转发URL</figcaption>
+<img src="https://i.imgur.com/DHuBQSO.jpeg" srcset="/img/loading.gif" lazyload alt="2025.7.9 20:08" />
+<figcaption aria-hidden="true">2025.7.9 20:08</figcaption>
 </figure>
-<p>如果你配置了目标地址，那么：</p>
-<div class="note note-secondary">
-            <p>If you enter the address above in the forwarding box and select AddRule, within a few seconds any requests that match the pattern youentered will automatically be forwarded with an HTTP 302 redirect statuscode to the new URL.</p>
-          </div>
-<p>即这样配置返回的状态码是<code>302</code>，而刚才的重定向状态码是301，至此熟悉计网的人应该清楚是怎么一回事了。不过还是再看看
-<a
-target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/HTTP%E7%8A%B6%E6%80%81%E7%A0%81">wiki</a>
-对这两种状态码的表述：</p>
 <figure>
-<img src="https://s21.ax1x.com/2025/05/30/pV9Amad.png" srcset="/img/loading.gif" lazyload
-alt="状态码301和302的区别" />
-<figcaption aria-hidden="true">状态码301和302的区别</figcaption>
+<img src="https://i.imgur.com/V11g5k4.jpg" srcset="/img/loading.gif" lazyload alt="2025.7.9 20:18" />
+<figcaption aria-hidden="true">2025.7.9 20:18</figcaption>
 </figure>
-<ul>
-<li>301用于永久重定向的情况，发起请求的客户端收到这个状态码之后，除了收到一个用于重定向的地址以外，还会被告知把以后的请求目标地址也改成这个地址，而且这个地址默认是会被缓存的。</li>
-<li>302用于临时重定向，而且这个响应不会被缓存，客户端以后继续向旧域名发送请求。</li>
-</ul>
-<p>所以在考虑是选择页面规则中的转发URL还是创建重定向规则的时候，应当根据以上内容进行考虑。像我这种为网站更换域名的情况当然是选择重定向了。</p>
+<p>如果能觉悟得早一点的话，从一开始就不会参加这个破比赛了，笑死。</p>
+<!-- 大一上，学子餐厅旁边有人宣传盟升杯电子设计竞赛，当时我处于想去又不敢去的状态，想去是因为暑假的时候摸了一下Arduino（Arduino你害人不浅），于是就对自己有了莫名的自信，不敢去是因为自己是小院的，怕丢人。然后就拉上两个舍友一起参加了。这是我第一次参加电子类比赛，另外两个舍友因为忙所以大部分都是我自己完成的，最后因为放弃了几个指标没做所以连三等奖都没捞到。
+
+大约是大一上的十一月份，电赛校队开始招新了，
+
+大一花了整整一年的时间在电赛上面，结果是自己照着数据手册琢磨两三个星期画出来的模块还比不过别人赛前临时砸钱从网上买的模块；专心准备了两三个月的信号类题目，结果根本没出，唯一一道跟 ADC 沾边的题目还强制使用 TI的垃圾单片机。具体看[2024年电赛记录](https://www.cnblogs.com/Banyee/p/18343048)吧。 -->
 
                 
               </div>
@@ -401,34 +340,11 @@ alt="状态码301和302的区别" />
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Cloudflare/" class="category-chain-item">Cloudflare</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="print-no-link">#折腾记录</a>
-      
-        <a href="/tags/Cloudflare/" class="print-no-link">#Cloudflare</a>
+        <a href="/tags/%E7%94%9F%E6%B4%BB/" class="print-no-link">#生活</a>
       
     </div>
   
@@ -440,8 +356,8 @@ alt="状态码301和302的区别" />
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Cloudflare配置将博客旧域名的请求重定向到新域名</div>
-      <div>https://kznleaf.site/2025/05/30/Cloudflare重定向配置指南/</div>
+      <div>溜了溜了</div>
+      <div>https://kznleaf.site/2025/07/11/结束/</div>
     </div>
     <div class="license-meta">
       
@@ -453,7 +369,7 @@ alt="状态码301和302的区别" />
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年5月30日</div>
+          <div>2025年7月11日</div>
         </div>
       
       
@@ -485,18 +401,12 @@ alt="状态码301和302的区别" />
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/05/31/JVM-2.2-%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%9F%9F/" title="JVM：运行时数据区域简析">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">JVM：运行时数据区域简析</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/05/27/%E7%AC%AC%E4%B8%89%E6%AC%A1%E6%8A%98%E8%85%BE/" title="第三次博客折腾记录">
-                        <span class="hidden-mobile">第三次博客折腾记录</span>
+                      <a href="/2025/07/01/Redis%E5%AE%9E%E6%88%98%E7%AF%87-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" title="Redis-分布式锁">
+                        <span class="hidden-mobile">Redis-分布式锁</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
