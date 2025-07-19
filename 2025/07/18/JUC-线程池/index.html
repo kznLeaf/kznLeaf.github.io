@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://s21.ax1x.com/2025/07/16/pV1bixH.png">
 <meta property="og:image" content="https://s21.ax1x.com/2025/07/16/pV1qs1g.png">
 <meta property="article:published_time" content="2025-07-18T11:20:27.000Z">
-<meta property="article:modified_time" content="2025-07-18T12:33:18.403Z">
+<meta property="article:modified_time" content="2025-07-19T12:34:39.667Z">
 <meta property="article:author" content="banyee">
 <meta property="article:tag" content="并发">
 <meta name="twitter:card" content="summary_large_image">
@@ -359,20 +359,18 @@ alt="ThreadPoolExecutor执行示意图" />
 <p>这一部分属于<code>ThreadPoolExecutor</code>的基本字段，如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">AtomicInteger</span> <span class="hljs-variable">ctl</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AtomicInteger</span>(ctlOf(RUNNING, <span class="hljs-number">0</span>));<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">COUNT_BITS</span> <span class="hljs-operator">=</span> Integer.SIZE - <span class="hljs-number">3</span>; <span class="hljs-comment">// 也就是29</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">COUNT_MASK</span> <span class="hljs-operator">=</span> (<span class="hljs-number">1</span> &lt;&lt; COUNT_BITS) - <span class="hljs-number">1</span>; <br><span class="hljs-comment">// COUNT_MASK 是掩码常量，用于移位</span><br><span class="hljs-comment">// COUNT_MASK 的低29位全是1，其余为0</span><br><br><span class="hljs-comment">// runState is stored in the high-order bits</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">RUNNING</span>    <span class="hljs-operator">=</span> -<span class="hljs-number">1</span> &lt;&lt; COUNT_BITS;<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">SHUTDOWN</span>   <span class="hljs-operator">=</span>  <span class="hljs-number">0</span> &lt;&lt; COUNT_BITS;<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">STOP</span>       <span class="hljs-operator">=</span>  <span class="hljs-number">1</span> &lt;&lt; COUNT_BITS;<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">TIDYING</span>    <span class="hljs-operator">=</span>  <span class="hljs-number">2</span> &lt;&lt; COUNT_BITS;<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">TERMINATED</span> <span class="hljs-operator">=</span>  <span class="hljs-number">3</span> &lt;&lt; COUNT_BITS;<br></code></pre></td></tr></table></figure>
 <p>用一个原子整数<code>ctl</code>的<code>高3位</code>保存<strong>线程池的状态</strong><code>runState</code>；<code>低29位</code>保存<code>workerCount</code>，表示有效的线程数量，即<strong>已经启动但还没有结束的线程数量</strong>。</p>
-<p><code>runState</code><strong>是线程池生命周期控制的核心，其取值包括</strong>：
--
-<code>RUNNING</code>（<strong>运行中</strong>）：接受新任务，并处理队列中的任务。
--
-<code>SHUTDOWN</code>（<strong>关闭中</strong>）：不接受新任务，但处理队列中已有的任务。
--
-<code>STOP</code>（<strong>停止</strong>）：不接受新任务，不处理队列任务，并中断正在执行的任务。
--
-<code>TIDYING</code>（<strong>整理中</strong>）：所有任务都已终止，workerCount
-为 0，负责转入该状态的线程将执行<code>terminated()</code>钩子方法。 -
-<code>TERMINATED</code>（<strong>已终止</strong>）：terminated()
-钩子方法已执行完毕。
-这些状态的数值顺序很重要，用于实现有序比较。runState
-的值是单调递增的，但不会保证每个状态都会经历。</p>
+<p><code>runState</code><strong>是线程池生命周期控制的核心，其取值包括</strong>：</p>
+<ul>
+<li><code>RUNNING</code>（<strong>运行中</strong>）：接受新任务，并处理队列中的任务。</li>
+<li><code>SHUTDOWN</code>（<strong>关闭中</strong>）：不接受新任务，但处理队列中已有的任务。</li>
+<li><code>STOP</code>（<strong>停止</strong>）：不接受新任务，不处理队列任务，并中断正在执行的任务。</li>
+<li><code>TIDYING</code>（<strong>整理中</strong>）：所有任务都已终止，workerCount
+为 0，负责转入该状态的线程将执行<code>terminated()</code>钩子方法。</li>
+<li><code>TERMINATED</code>（<strong>已终止</strong>）：terminated()
+钩子方法已执行完毕。</li>
+</ul>
+<p>这些状态的数值顺序很重要，用于实现有序比较。runState
+的值是单调递增的，但不会保证每个状态都会经历一遍。</p>
 <hr />
 <p><strong>状态转移路径如下：</strong></p>
 <ul>
