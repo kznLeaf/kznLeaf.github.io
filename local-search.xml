@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>ArchLinux运行 1.8.9 Minecraft失败解决方法</title>
+    <link href="/2025/07/25/ArchLinux%E5%90%AF%E5%8A%A8mc%E5%B4%A9%E6%BA%83/"/>
+    <url>/2025/07/25/ArchLinux%E5%90%AF%E5%8A%A8mc%E5%B4%A9%E6%BA%83/</url>
+    
+    <content type="html"><![CDATA[<h2 id="问题描述">问题描述</h2><p>用 HTML 启动1.8.9版本，需要下载Java8，使用命令<code>sudo pacman -S jdk8-openjdk</code>成功安装，然后用java8运行游戏，启动失败，<code>./minecraft/crash-resources</code>目录下的崩溃日志完整内容如下：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">----</span> <span class="hljs-string">Minecraft</span> <span class="hljs-string">Crash</span> <span class="hljs-string">Report</span> <span class="hljs-string">----</span><br><span class="hljs-string">//</span> <span class="hljs-string">Don&#x27;t</span> <span class="hljs-string">be</span> <span class="hljs-string">sad,</span> <span class="hljs-string">have</span> <span class="hljs-string">a</span> <span class="hljs-string">hug!</span> <span class="hljs-string">&lt;3</span><br><br><span class="hljs-attr">Time:</span> <span class="hljs-number">25</span><span class="hljs-number">-7</span><span class="hljs-number">-25</span> <span class="hljs-string">下午6:03</span><br><span class="hljs-attr">Description:</span> <span class="hljs-string">Initializing</span> <span class="hljs-string">game</span><br><br><span class="hljs-string">java.lang.ExceptionInInitializerError</span><br><span class="hljs-string">at</span> <span class="hljs-string">Config.getDisplayModes(Config.java:1862)</span><br><span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.settings.GameSettings$Options.&lt;clinit&gt;(GameSettings.java:3384)</span><br><span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.settings.GameSettings.&lt;init&gt;(GameSettings.java:313)</span><br><span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.Minecraft.func_71384_a(Minecraft.java:395)</span><br><span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.Minecraft.func_99999_d(Minecraft.java:329)</span><br><span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.main.Main.main(SourceFile:124)</span><br><span class="hljs-string">at</span> <span class="hljs-string">sun.reflect.NativeMethodAccessorImpl.invoke0(Native</span> <span class="hljs-string">Method)</span><br><span class="hljs-string">at</span> <span class="hljs-string">sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</span><br><span class="hljs-string">at</span> <span class="hljs-string">sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="hljs-string">at</span> <span class="hljs-string">java.lang.reflect.Method.invoke(Method.java:498)</span><br><span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.launchwrapper.Launch.launch(Launch.java:135)</span><br><span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.launchwrapper.Launch.main(Launch.java:28)</span><br><span class="hljs-attr">Caused by: java.lang.ArrayIndexOutOfBoundsException:</span> <span class="hljs-number">0</span><br><span class="hljs-string">at</span> <span class="hljs-string">org.lwjgl.opengl.LinuxDisplay.getAvailableDisplayModes(LinuxDisplay.java:951)</span><br><span class="hljs-string">at</span> <span class="hljs-string">org.lwjgl.opengl.LinuxDisplay.init(LinuxDisplay.java:738)</span><br><span class="hljs-string">at</span> <span class="hljs-string">org.lwjgl.opengl.Display.&lt;clinit&gt;(Display.java:138)</span><br><span class="hljs-string">...</span> <span class="hljs-number">12</span> <span class="hljs-string">more</span><br><br><br><span class="hljs-string">A</span> <span class="hljs-string">detailed</span> <span class="hljs-string">walkthrough</span> <span class="hljs-string">of</span> <span class="hljs-string">the</span> <span class="hljs-string">error,</span> <span class="hljs-attr">its code path and all known details is as follows:</span><br><span class="hljs-string">---------------------------------------------------------------------------------------</span><br><br><span class="hljs-string">--</span> <span class="hljs-string">Head</span> <span class="hljs-string">--</span><br><span class="hljs-attr">Stacktrace:</span><br><span class="hljs-string">at</span> <span class="hljs-string">Config.getDisplayModes(Config.java:1862)</span><br><span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.settings.GameSettings$Options.&lt;clinit&gt;(GameSettings.java:3384)</span><br><span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.settings.GameSettings.&lt;init&gt;(GameSettings.java:313)</span><br><span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.Minecraft.func_71384_a(Minecraft.java:395)</span><br><br><span class="hljs-string">--</span> <span class="hljs-string">Initialization</span> <span class="hljs-string">--</span><br><span class="hljs-attr">Details:</span><br><span class="hljs-attr">Stacktrace:</span><br><span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.Minecraft.func_99999_d(Minecraft.java:329)</span><br><span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.main.Main.main(SourceFile:124)</span><br><span class="hljs-string">at</span> <span class="hljs-string">sun.reflect.NativeMethodAccessorImpl.invoke0(Native</span> <span class="hljs-string">Method)</span><br><span class="hljs-string">at</span> <span class="hljs-string">sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</span><br><span class="hljs-string">at</span> <span class="hljs-string">sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="hljs-string">at</span> <span class="hljs-string">java.lang.reflect.Method.invoke(Method.java:498)</span><br><span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.launchwrapper.Launch.launch(Launch.java:135)</span><br><span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.launchwrapper.Launch.main(Launch.java:28)</span><br><br><span class="hljs-string">--</span> <span class="hljs-string">System</span> <span class="hljs-string">Details</span> <span class="hljs-string">--</span><br><span class="hljs-attr">Details:</span><br><span class="hljs-attr">Minecraft Version:</span> <span class="hljs-number">1.8</span><span class="hljs-number">.9</span><br><span class="hljs-attr">Operating System:</span> <span class="hljs-string">Linux</span> <span class="hljs-string">(amd64)</span> <span class="hljs-string">version</span> <span class="hljs-number">6.15</span><span class="hljs-number">.7</span><span class="hljs-string">-arch1-1</span><br><span class="hljs-attr">Java Version:</span> <span class="hljs-number">1.8</span><span class="hljs-string">.0_462,</span> <span class="hljs-string">Arch</span> <span class="hljs-string">Linux</span><br><span class="hljs-attr">Java VM Version:</span> <span class="hljs-string">OpenJDK</span> <span class="hljs-number">64</span><span class="hljs-string">-Bit</span> <span class="hljs-string">Server</span> <span class="hljs-string">VM</span> <span class="hljs-string">(mixed</span> <span class="hljs-string">mode),</span> <span class="hljs-string">Arch</span> <span class="hljs-string">Linux</span><br><span class="hljs-attr">Memory:</span> <span class="hljs-number">130908928</span> <span class="hljs-string">bytes</span> <span class="hljs-string">(124</span> <span class="hljs-string">MB)</span> <span class="hljs-string">/</span> <span class="hljs-number">301989888</span> <span class="hljs-string">bytes</span> <span class="hljs-string">(288</span> <span class="hljs-string">MB)</span> <span class="hljs-string">up</span> <span class="hljs-string">to</span> <span class="hljs-number">7952400384</span> <span class="hljs-string">bytes</span> <span class="hljs-string">(7584</span> <span class="hljs-string">MB)</span><br><span class="hljs-attr">JVM Flags:</span> <span class="hljs-number">17</span> <span class="hljs-string">total;</span> <span class="hljs-string">-Xmx7559m</span> <span class="hljs-string">-XX:+UnlockExperimentalVMOptions</span> <span class="hljs-string">-XX:+UnlockDiagnosticVMOptions</span> <span class="hljs-string">-XX:+UseG1GC</span> <span class="hljs-string">-XX:G1MixedGCCountTarget=5</span> <span class="hljs-string">-XX:G1NewSizePercent=20</span> <span class="hljs-string">-XX:G1ReservePercent=20</span> <span class="hljs-string">-XX:MaxGCPauseMillis=50</span> <span class="hljs-string">-XX:G1HeapRegionSize=32m</span> <span class="hljs-string">-XX:-OmitStackTraceInFastThrow</span> <span class="hljs-string">-XX:MaxInlineLevel=15</span> <span class="hljs-string">-XX:-DontCompileHugeMethods</span> <span class="hljs-string">-XX:MaxNodeLimit=240000</span> <span class="hljs-string">-XX:NodeLimitFudgeFactor=8000</span> <span class="hljs-string">-XX:TieredCompileTaskTimeout=10000</span> <span class="hljs-string">-XX:ReservedCodeCacheSize=400M</span> <span class="hljs-string">-XX:NmethodSweepActivity=1</span><br><span class="hljs-attr">IntCache: cache:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">tcache:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">allocated:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">tallocated:</span> <span class="hljs-number">0</span><br><span class="hljs-attr">FML:</span> <br><span class="hljs-attr">Loaded coremods (and transformers):</span> <br><span class="hljs-attr">Launched Version:</span> <span class="hljs-number">1.8</span><span class="hljs-number">.9</span><span class="hljs-string">-Forge-OptiFine</span><br><span class="hljs-attr">LWJGL:</span> <span class="hljs-number">2.9</span><span class="hljs-number">.4</span><br><span class="hljs-attr">OpenGL:</span> <span class="hljs-string">~~ERROR~~</span> <span class="hljs-attr">RuntimeException:</span> <span class="hljs-literal">No</span> <span class="hljs-string">OpenGL</span> <span class="hljs-string">context</span> <span class="hljs-string">found</span> <span class="hljs-string">in</span> <span class="hljs-string">the</span> <span class="hljs-string">current</span> <span class="hljs-string">thread.</span><br><span class="hljs-attr">GL Caps:</span> <br><span class="hljs-attr">Using VBOs:</span> <span class="hljs-string">~~ERROR~~</span> <span class="hljs-attr">NullPointerException:</span> <span class="hljs-literal">null</span><br><span class="hljs-attr">Is Modded:</span> <span class="hljs-string">Definitely;</span> <span class="hljs-string">Client</span> <span class="hljs-string">brand</span> <span class="hljs-string">changed</span> <span class="hljs-string">to</span> <span class="hljs-string">&#x27;fml,forge&#x27;</span><br><span class="hljs-attr">Type:</span> <span class="hljs-string">Client</span> <span class="hljs-string">(map_client.txt)</span><br><span class="hljs-attr">Resource Packs:</span> <span class="hljs-string">~~ERROR~~</span> <span class="hljs-attr">NullPointerException:</span> <span class="hljs-literal">null</span><br><span class="hljs-attr">Current Language:</span> <span class="hljs-string">~~ERROR~~</span> <span class="hljs-attr">NullPointerException:</span> <span class="hljs-literal">null</span><br><span class="hljs-attr">Profiler Position:</span> <span class="hljs-string">N/A</span> <span class="hljs-string">(disabled)</span><br><span class="hljs-attr">CPU:</span> <span class="hljs-string">&lt;unknown&gt;</span><br><span class="hljs-attr">OptiFine Version:</span> <span class="hljs-string">OptiFine_1.8.9_HD_U_M5</span><br><span class="hljs-attr">OptiFine Build:</span> <span class="hljs-number">20210124</span><span class="hljs-number">-163719</span><br><span class="hljs-attr">Shaders:</span> <span class="hljs-literal">null</span><br><span class="hljs-attr">OpenGlVersion:</span> <span class="hljs-literal">null</span><br><span class="hljs-attr">OpenGlRenderer:</span> <span class="hljs-literal">null</span><br><span class="hljs-attr">OpenGlVendor:</span> <span class="hljs-literal">null</span><br><span class="hljs-attr">CpuCount:</span> <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure><p>关键在这两行：</p><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus">Caused by: java<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.ArrayIndexOutOfBoundsException</span>: <span class="hljs-number">0</span><br>at org<span class="hljs-selector-class">.lwjgl</span><span class="hljs-selector-class">.opengl</span><span class="hljs-selector-class">.LinuxDisplay</span><span class="hljs-selector-class">.getAvailableDisplayModes</span>(LinuxDisplay<span class="hljs-selector-class">.java</span>:<span class="hljs-number">951</span>)<br><br>OpenGL: ~~ERROR~~ RuntimeException: No OpenGL context found <span class="hljs-keyword">in</span> the current thread.<br></code></pre></td></tr></table></figure><p>对应两个问题：</p><ol type="1"><li><strong>lwjgl 获取不到任何显示模式</strong></li><li><strong>找不到 OpenGL</strong></li></ol><p>硬件信息：</p><figure><img src="https://s21.ax1x.com/2025/07/25/pVJ0yPx.png" alt="硬件信息" /><figcaption aria-hidden="true">硬件信息</figcaption></figure><h2 id="问题排查">问题排查</h2><p>先排查openGL相关的问题：</p><ol type="1"><li>查看显卡信息、加载的内核模块</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">lspci -k | grep -A 3 -E <span class="hljs-string">&quot;(VGA|3D)&quot;</span><br>lsmod | grep amdgpu<br></code></pre></td></tr></table></figure><ol start="2" type="1"><li>检查openGL是否工作正常</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">glxgears<br></code></pre></td></tr></table></figure><p>出现一个转动的齿轮窗口，说明 OpenGL渲染正常。前两步的运行结果如下：</p><p><img src="https://s21.ax1x.com/2025/07/25/pVJwZX4.png" /></p><p>都没有问题。</p><p>下面排查LWJGL。在一番查找后我找到了<ahref="https://github.com/PolyMC/PolyMC/issues/1533">这个issue</a>，里面提到：</p><blockquote><p>LWJGL 在底层使用 xrandr，通过解析 xrandr -q命令的输出来获取屏幕分辨率。</p><p>我安装了 xrandr，各个版本加载都没有问题。</p></blockquote><p>Arch Linux安装xrandr的指令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S xorg-xrandr<br></code></pre></td></tr></table></figure><p>安装后成功启动游戏。游戏截图：</p><figure><img src="https://s21.ax1x.com/2025/07/25/pVJ03an.png" alt="截图" /><figcaption aria-hidden="true">截图</figcaption></figure><p>（六年前的牢核显低端笔记本还能稳定在60Hz，满足了）</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Linux</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>折腾记录</tag>
+      
+      <tag>Linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>【转载】折腾的重要性</title>
     <link href="/2025/07/19/%E6%8A%98%E8%85%BE%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7/"/>
     <url>/2025/07/19/%E6%8A%98%E8%85%BE%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7/</url>
@@ -239,9 +266,9 @@
     
     <tags>
       
-      <tag>折腾记录</tag>
-      
       <tag>Cloudflare</tag>
+      
+      <tag>折腾记录</tag>
       
       <tag>Hexo</tag>
       
@@ -351,9 +378,9 @@
     
     <tags>
       
-      <tag>JVM</tag>
-      
       <tag>Java</tag>
+      
+      <tag>JVM</tag>
       
     </tags>
     
@@ -457,9 +484,9 @@
     
     <tags>
       
-      <tag>JVM</tag>
-      
       <tag>Java</tag>
+      
+      <tag>JVM</tag>
       
     </tags>
     
@@ -484,9 +511,9 @@
     
     <tags>
       
-      <tag>JVM</tag>
-      
       <tag>Java</tag>
+      
+      <tag>JVM</tag>
       
     </tags>
     
@@ -536,9 +563,9 @@
     
     <tags>
       
-      <tag>JVM</tag>
-      
       <tag>Java</tag>
+      
+      <tag>JVM</tag>
       
     </tags>
     
@@ -563,9 +590,9 @@
     
     <tags>
       
-      <tag>折腾记录</tag>
-      
       <tag>Cloudflare</tag>
+      
+      <tag>折腾记录</tag>
       
     </tags>
     

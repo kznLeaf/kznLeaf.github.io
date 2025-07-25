@@ -1,0 +1,709 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
+  <link rel="icon" href="/img/tree.png">
+  
+    <link rel="canonical" href="https://kznleaf.site/2025/07/25/ArchLinux启动mc崩溃/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="banyee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="问题描述 用 HTML 启动1.8.9版本，需要下载Java 8，使用命令sudo pacman -S jdk8-openjdk成功安装，然后用 java8 运行游戏，启动失败，.&#x2F;minecraft&#x2F;crash-resources目录下的崩溃日志完整内容如下： 123456789101112131415161718192021222324252627282930313233343536">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ArchLinux运行 1.8.9 Minecraft失败解决方法">
+<meta property="og:url" content="https://kznleaf.site/2025/07/25/ArchLinux%E5%90%AF%E5%8A%A8mc%E5%B4%A9%E6%BA%83/index.html">
+<meta property="og:site_name" content="絆叶の片隅">
+<meta property="og:description" content="问题描述 用 HTML 启动1.8.9版本，需要下载Java 8，使用命令sudo pacman -S jdk8-openjdk成功安装，然后用 java8 运行游戏，启动失败，.&#x2F;minecraft&#x2F;crash-resources目录下的崩溃日志完整内容如下： 123456789101112131415161718192021222324252627282930313233343536">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s21.ax1x.com/2025/07/25/pVJ0yPx.png">
+<meta property="og:image" content="https://s21.ax1x.com/2025/07/25/pVJwZX4.png">
+<meta property="og:image" content="https://s21.ax1x.com/2025/07/25/pVJ03an.png">
+<meta property="article:published_time" content="2025-07-25T12:25:10.000Z">
+<meta property="article:modified_time" content="2025-07-25T12:28:43.225Z">
+<meta property="article:author" content="banyee">
+<meta property="article:tag" content="折腾记录">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s21.ax1x.com/2025/07/25/pVJ0yPx.png">
+  
+  
+  
+  <title>ArchLinux运行 1.8.9 Minecraft失败解决方法 - 絆叶の片隅</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/macBorder.css">
+<link rel="stylesheet" href="/css/sign.css">
+<link rel="stylesheet" href="/css/backgroundize.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"kznleaf.site","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+
+  <div id="Loadanimation" style="z-index:999999;">
+    <div id="Loadanimation-center">
+       <div id="Loadanimation-center-absolute">
+           <div class="xccx_object" id="xccx_four"></div>
+           <div class="xccx_object" id="xccx_three"></div>
+           <div class="xccx_object" id="xccx_two"></div>
+           <div class="xccx_object" id="xccx_one"></div>
+       </div>
+    </div>
+    </div>
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>banyee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">ArchLinux运行 1.8.9 Minecraft失败解决方法</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-25 20:25" pubdate>
+          2025年7月25日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          671 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          6 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">ArchLinux运行 1.8.9 Minecraft失败解决方法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="问题描述">问题描述</h2>
+<p>用 HTML 启动1.8.9版本，需要下载Java
+8，使用命令<code>sudo pacman -S jdk8-openjdk</code>成功安装，然后用
+java8
+运行游戏，启动失败，<code>./minecraft/crash-resources</code>目录下的崩溃日志完整内容如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">----</span> <span class="hljs-string">Minecraft</span> <span class="hljs-string">Crash</span> <span class="hljs-string">Report</span> <span class="hljs-string">----</span><br><span class="hljs-string">//</span> <span class="hljs-string">Don&#x27;t</span> <span class="hljs-string">be</span> <span class="hljs-string">sad,</span> <span class="hljs-string">have</span> <span class="hljs-string">a</span> <span class="hljs-string">hug!</span> <span class="hljs-string">&lt;3</span><br><br><span class="hljs-attr">Time:</span> <span class="hljs-number">25</span><span class="hljs-number">-7</span><span class="hljs-number">-25</span> <span class="hljs-string">下午6:03</span><br><span class="hljs-attr">Description:</span> <span class="hljs-string">Initializing</span> <span class="hljs-string">game</span><br><br><span class="hljs-string">java.lang.ExceptionInInitializerError</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">Config.getDisplayModes(Config.java:1862)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.settings.GameSettings$Options.&lt;clinit&gt;(GameSettings.java:3384)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.settings.GameSettings.&lt;init&gt;(GameSettings.java:313)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.Minecraft.func_71384_a(Minecraft.java:395)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.Minecraft.func_99999_d(Minecraft.java:329)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.main.Main.main(SourceFile:124)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">sun.reflect.NativeMethodAccessorImpl.invoke0(Native</span> <span class="hljs-string">Method)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">java.lang.reflect.Method.invoke(Method.java:498)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.launchwrapper.Launch.launch(Launch.java:135)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.launchwrapper.Launch.main(Launch.java:28)</span><br><span class="hljs-attr">Caused by: java.lang.ArrayIndexOutOfBoundsException:</span> <span class="hljs-number">0</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">org.lwjgl.opengl.LinuxDisplay.getAvailableDisplayModes(LinuxDisplay.java:951)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">org.lwjgl.opengl.LinuxDisplay.init(LinuxDisplay.java:738)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">org.lwjgl.opengl.Display.&lt;clinit&gt;(Display.java:138)</span><br>	<span class="hljs-string">...</span> <span class="hljs-number">12</span> <span class="hljs-string">more</span><br><br><br><span class="hljs-string">A</span> <span class="hljs-string">detailed</span> <span class="hljs-string">walkthrough</span> <span class="hljs-string">of</span> <span class="hljs-string">the</span> <span class="hljs-string">error,</span> <span class="hljs-attr">its code path and all known details is as follows:</span><br><span class="hljs-string">---------------------------------------------------------------------------------------</span><br><br><span class="hljs-string">--</span> <span class="hljs-string">Head</span> <span class="hljs-string">--</span><br><span class="hljs-attr">Stacktrace:</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">Config.getDisplayModes(Config.java:1862)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.settings.GameSettings$Options.&lt;clinit&gt;(GameSettings.java:3384)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.settings.GameSettings.&lt;init&gt;(GameSettings.java:313)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.Minecraft.func_71384_a(Minecraft.java:395)</span><br><br><span class="hljs-string">--</span> <span class="hljs-string">Initialization</span> <span class="hljs-string">--</span><br><span class="hljs-attr">Details:</span><br><span class="hljs-attr">Stacktrace:</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.Minecraft.func_99999_d(Minecraft.java:329)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.client.main.Main.main(SourceFile:124)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">sun.reflect.NativeMethodAccessorImpl.invoke0(Native</span> <span class="hljs-string">Method)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">java.lang.reflect.Method.invoke(Method.java:498)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.launchwrapper.Launch.launch(Launch.java:135)</span><br>	<span class="hljs-string">at</span> <span class="hljs-string">net.minecraft.launchwrapper.Launch.main(Launch.java:28)</span><br><br><span class="hljs-string">--</span> <span class="hljs-string">System</span> <span class="hljs-string">Details</span> <span class="hljs-string">--</span><br><span class="hljs-attr">Details:</span><br>	<span class="hljs-attr">Minecraft Version:</span> <span class="hljs-number">1.8</span><span class="hljs-number">.9</span><br>	<span class="hljs-attr">Operating System:</span> <span class="hljs-string">Linux</span> <span class="hljs-string">(amd64)</span> <span class="hljs-string">version</span> <span class="hljs-number">6.15</span><span class="hljs-number">.7</span><span class="hljs-string">-arch1-1</span><br>	<span class="hljs-attr">Java Version:</span> <span class="hljs-number">1.8</span><span class="hljs-string">.0_462,</span> <span class="hljs-string">Arch</span> <span class="hljs-string">Linux</span><br>	<span class="hljs-attr">Java VM Version:</span> <span class="hljs-string">OpenJDK</span> <span class="hljs-number">64</span><span class="hljs-string">-Bit</span> <span class="hljs-string">Server</span> <span class="hljs-string">VM</span> <span class="hljs-string">(mixed</span> <span class="hljs-string">mode),</span> <span class="hljs-string">Arch</span> <span class="hljs-string">Linux</span><br>	<span class="hljs-attr">Memory:</span> <span class="hljs-number">130908928</span> <span class="hljs-string">bytes</span> <span class="hljs-string">(124</span> <span class="hljs-string">MB)</span> <span class="hljs-string">/</span> <span class="hljs-number">301989888</span> <span class="hljs-string">bytes</span> <span class="hljs-string">(288</span> <span class="hljs-string">MB)</span> <span class="hljs-string">up</span> <span class="hljs-string">to</span> <span class="hljs-number">7952400384</span> <span class="hljs-string">bytes</span> <span class="hljs-string">(7584</span> <span class="hljs-string">MB)</span><br>	<span class="hljs-attr">JVM Flags:</span> <span class="hljs-number">17</span> <span class="hljs-string">total;</span> <span class="hljs-string">-Xmx7559m</span> <span class="hljs-string">-XX:+UnlockExperimentalVMOptions</span> <span class="hljs-string">-XX:+UnlockDiagnosticVMOptions</span> <span class="hljs-string">-XX:+UseG1GC</span> <span class="hljs-string">-XX:G1MixedGCCountTarget=5</span> <span class="hljs-string">-XX:G1NewSizePercent=20</span> <span class="hljs-string">-XX:G1ReservePercent=20</span> <span class="hljs-string">-XX:MaxGCPauseMillis=50</span> <span class="hljs-string">-XX:G1HeapRegionSize=32m</span> <span class="hljs-string">-XX:-OmitStackTraceInFastThrow</span> <span class="hljs-string">-XX:MaxInlineLevel=15</span> <span class="hljs-string">-XX:-DontCompileHugeMethods</span> <span class="hljs-string">-XX:MaxNodeLimit=240000</span> <span class="hljs-string">-XX:NodeLimitFudgeFactor=8000</span> <span class="hljs-string">-XX:TieredCompileTaskTimeout=10000</span> <span class="hljs-string">-XX:ReservedCodeCacheSize=400M</span> <span class="hljs-string">-XX:NmethodSweepActivity=1</span><br>	<span class="hljs-attr">IntCache: cache:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">tcache:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">allocated:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">tallocated:</span> <span class="hljs-number">0</span><br>	<span class="hljs-attr">FML:</span> <br>	<span class="hljs-attr">Loaded coremods (and transformers):</span> <br>	<span class="hljs-attr">Launched Version:</span> <span class="hljs-number">1.8</span><span class="hljs-number">.9</span><span class="hljs-string">-Forge-OptiFine</span><br>	<span class="hljs-attr">LWJGL:</span> <span class="hljs-number">2.9</span><span class="hljs-number">.4</span><br>	<span class="hljs-attr">OpenGL:</span> <span class="hljs-string">~~ERROR~~</span> <span class="hljs-attr">RuntimeException:</span> <span class="hljs-literal">No</span> <span class="hljs-string">OpenGL</span> <span class="hljs-string">context</span> <span class="hljs-string">found</span> <span class="hljs-string">in</span> <span class="hljs-string">the</span> <span class="hljs-string">current</span> <span class="hljs-string">thread.</span><br>	<span class="hljs-attr">GL Caps:</span> <br>	<span class="hljs-attr">Using VBOs:</span> <span class="hljs-string">~~ERROR~~</span> <span class="hljs-attr">NullPointerException:</span> <span class="hljs-literal">null</span><br>	<span class="hljs-attr">Is Modded:</span> <span class="hljs-string">Definitely;</span> <span class="hljs-string">Client</span> <span class="hljs-string">brand</span> <span class="hljs-string">changed</span> <span class="hljs-string">to</span> <span class="hljs-string">&#x27;fml,forge&#x27;</span><br>	<span class="hljs-attr">Type:</span> <span class="hljs-string">Client</span> <span class="hljs-string">(map_client.txt)</span><br>	<span class="hljs-attr">Resource Packs:</span> <span class="hljs-string">~~ERROR~~</span> <span class="hljs-attr">NullPointerException:</span> <span class="hljs-literal">null</span><br>	<span class="hljs-attr">Current Language:</span> <span class="hljs-string">~~ERROR~~</span> <span class="hljs-attr">NullPointerException:</span> <span class="hljs-literal">null</span><br>	<span class="hljs-attr">Profiler Position:</span> <span class="hljs-string">N/A</span> <span class="hljs-string">(disabled)</span><br>	<span class="hljs-attr">CPU:</span> <span class="hljs-string">&lt;unknown&gt;</span><br>	<span class="hljs-attr">OptiFine Version:</span> <span class="hljs-string">OptiFine_1.8.9_HD_U_M5</span><br>	<span class="hljs-attr">OptiFine Build:</span> <span class="hljs-number">20210124</span><span class="hljs-number">-163719</span><br>	<span class="hljs-attr">Shaders:</span> <span class="hljs-literal">null</span><br>	<span class="hljs-attr">OpenGlVersion:</span> <span class="hljs-literal">null</span><br>	<span class="hljs-attr">OpenGlRenderer:</span> <span class="hljs-literal">null</span><br>	<span class="hljs-attr">OpenGlVendor:</span> <span class="hljs-literal">null</span><br>	<span class="hljs-attr">CpuCount:</span> <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+<p>关键在这两行：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus">Caused by: java<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.ArrayIndexOutOfBoundsException</span>: <span class="hljs-number">0</span><br>	at org<span class="hljs-selector-class">.lwjgl</span><span class="hljs-selector-class">.opengl</span><span class="hljs-selector-class">.LinuxDisplay</span><span class="hljs-selector-class">.getAvailableDisplayModes</span>(LinuxDisplay<span class="hljs-selector-class">.java</span>:<span class="hljs-number">951</span>)<br><br>OpenGL: ~~ERROR~~ RuntimeException: No OpenGL context found <span class="hljs-keyword">in</span> the current thread.<br></code></pre></td></tr></table></figure>
+<p>对应两个问题：</p>
+<ol type="1">
+<li><strong>lwjgl 获取不到任何显示模式</strong></li>
+<li><strong>找不到 OpenGL</strong></li>
+</ol>
+<p>硬件信息：</p>
+<figure>
+<img src="https://s21.ax1x.com/2025/07/25/pVJ0yPx.png" srcset="/img/loading.gif" lazyload alt="硬件信息" />
+<figcaption aria-hidden="true">硬件信息</figcaption>
+</figure>
+<h2 id="问题排查">问题排查</h2>
+<p>先排查openGL相关的问题：</p>
+<ol type="1">
+<li>查看显卡信息、加载的内核模块</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">lspci -k | grep -A 3 -E <span class="hljs-string">&quot;(VGA|3D)&quot;</span><br>lsmod | grep amdgpu<br></code></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>检查openGL是否工作正常</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">glxgears<br></code></pre></td></tr></table></figure>
+<p>出现一个转动的齿轮窗口，说明 OpenGL
+渲染正常。前两步的运行结果如下：</p>
+<p><img src="https://s21.ax1x.com/2025/07/25/pVJwZX4.png" srcset="/img/loading.gif" lazyload /></p>
+<p>都没有问题。</p>
+<p>下面排查LWJGL。在一番查找后我找到了<a
+target="_blank" rel="noopener" href="https://github.com/PolyMC/PolyMC/issues/1533">这个issue</a>，里面提到：</p>
+<blockquote>
+<p>LWJGL 在底层使用 xrandr，通过解析 xrandr -q
+命令的输出来获取屏幕分辨率。</p>
+<p>我安装了 xrandr，各个版本加载都没有问题。</p>
+</blockquote>
+<p>Arch Linux安装xrandr的指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S xorg-xrandr<br></code></pre></td></tr></table></figure>
+<p>安装后成功启动游戏。游戏截图：</p>
+<figure>
+<img src="https://s21.ax1x.com/2025/07/25/pVJ03an.png" srcset="/img/loading.gif" lazyload alt="截图" />
+<figcaption aria-hidden="true">截图</figcaption>
+</figure>
+<p>（六年前的牢核显低端笔记本还能稳定在60Hz，满足了）</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="print-no-link">#折腾记录</a>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ArchLinux运行 1.8.9 Minecraft失败解决方法</div>
+      <div>https://kznleaf.site/2025/07/25/ArchLinux启动mc崩溃/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>banyee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年7月25日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/19/%E6%8A%98%E8%85%BE%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7/" title="【转载】折腾的重要性">
+                        <span class="hidden-mobile">【转载】折腾的重要性</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/vvd_js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+<script src="/js/sign.js"></script>
+<script src="/js/backgroundize.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>
