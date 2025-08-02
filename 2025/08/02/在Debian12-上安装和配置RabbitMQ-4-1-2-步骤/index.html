@@ -23,16 +23,16 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="透明代理 rabbitmq.com在国内的访问速度较慢，为了保证后续的安装能够顺利进行，建议先配置透明代理（全局代理）。一开始我安装的是 Clash-Verge，但是不知道为什么在 Clash 内开启系统代理之后，系统的流量并不会经过Clash，所以后来换成了v2ray。 curl 下一步要用curl直接拉拉取安装脚本，所以要确保curl已经安装完成 12sudo apt update">
+    <meta name="description" content="透明代理 rabbitmq.com在国内的访问速度较慢，为了保证后续的安装能够顺利进行，建议先配置透明代理（全局代理）。一开始我安装的是 Clash-Verge，但是不知道为什么在 Clash 内开启系统代理之后，系统的流量并不会经过Clash，所以后来换成了v2ray。 curl 下一步要用curl直接拉取安装脚本，所以要确保curl已经安装完成 12sudo apt updates">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Debian12 安装 RabbitMQ 4.1.2 详细步骤">
+<meta property="og:title" content="Debian12 虚拟机安装 RabbitMQ 4.1.2 详细步骤">
 <meta property="og:url" content="https://kznleaf.site/2025/08/02/%E5%9C%A8Debian12-%E4%B8%8A%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AERabbitMQ-4-1-2-%E6%AD%A5%E9%AA%A4/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
-<meta property="og:description" content="透明代理 rabbitmq.com在国内的访问速度较慢，为了保证后续的安装能够顺利进行，建议先配置透明代理（全局代理）。一开始我安装的是 Clash-Verge，但是不知道为什么在 Clash 内开启系统代理之后，系统的流量并不会经过Clash，所以后来换成了v2ray。 curl 下一步要用curl直接拉拉取安装脚本，所以要确保curl已经安装完成 12sudo apt update">
+<meta property="og:description" content="透明代理 rabbitmq.com在国内的访问速度较慢，为了保证后续的安装能够顺利进行，建议先配置透明代理（全局代理）。一开始我安装的是 Clash-Verge，但是不知道为什么在 Clash 内开启系统代理之后，系统的流量并不会经过Clash，所以后来换成了v2ray。 curl 下一步要用curl直接拉取安装脚本，所以要确保curl已经安装完成 12sudo apt updates">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s21.ax1x.com/2025/08/02/pVNybTO.png">
 <meta property="article:published_time" content="2025-08-02T11:44:27.000Z">
-<meta property="article:modified_time" content="2025-08-02T11:51:35.282Z">
+<meta property="article:modified_time" content="2025-08-02T11:56:02.023Z">
 <meta property="article:author" content="banyee">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary_large_image">
@@ -40,7 +40,7 @@
   
   
   
-  <title>Debian12 安装 RabbitMQ 4.1.2 详细步骤 - 絆叶の片隅</title>
+  <title>Debian12 虚拟机安装 RabbitMQ 4.1.2 详细步骤 - 絆叶の片隅</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -237,7 +237,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Debian12 安装 RabbitMQ 4.1.2 详细步骤</span>
+            <span id="subtitle">Debian12 虚拟机安装 RabbitMQ 4.1.2 详细步骤</span>
           
         </div>
 
@@ -260,7 +260,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          948 字
+          942 字
         
       </span>
     
@@ -308,7 +308,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Debian12 安装 RabbitMQ 4.1.2 详细步骤</h1>
+            <h1 id="seo-header">Debian12 虚拟机安装 RabbitMQ 4.1.2 详细步骤</h1>
             
             
               <div class="markdown-body">
@@ -318,13 +318,13 @@
 Clash-Verge，但是不知道为什么在 Clash
 内开启系统代理之后，系统的流量并不会经过Clash，所以后来换成了v2ray。</p>
 <h3 id="curl">curl</h3>
-<p>下一步要用curl直接拉拉取安装脚本，所以要确保curl已经安装完成</p>
+<p>下一步要用curl直接拉取安装脚本，所以要确保curl已经安装完成</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install curl -y<br></code></pre></td></tr></table></figure>
 <h3 id="v2ray">v2ray</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> -i<br>bash &lt;(curl -Ls https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)<br></code></pre></td></tr></table></figure>
 <h3 id="v2raya">v2rayA</h3>
-<p>https://github.com/v2rayA/v2rayA/releases 先用能够访问 github
-的宿主机在这里下载<code>installer_debian_x64_2.2.6.7.deb</code>，然后拖到虚拟机内的目录下执行</p>
+<p>先用能够访问 github 的宿主机在<a
+target="_blank" rel="noopener" href="https://github.com/v2rayA/v2rayA/releases">这里</a>下载<code>installer_debian_x64_2.2.6.7.deb</code>，然后拖到虚拟机内的目录下执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt install ./installer_debian_x64_2.2.6.7.deb<br></code></pre></td></tr></table></figure>
 <p>安装完毕后启用服务</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> v2raya<br><span class="hljs-built_in">sudo</span> systemctl start v2raya<br></code></pre></td></tr></table></figure>
@@ -430,7 +430,7 @@ localhost
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Debian12 安装 RabbitMQ 4.1.2 详细步骤</div>
+      <div>Debian12 虚拟机安装 RabbitMQ 4.1.2 详细步骤</div>
       <div>https://kznleaf.site/2025/08/02/在Debian12-上安装和配置RabbitMQ-4-1-2-步骤/</div>
     </div>
     <div class="license-meta">
