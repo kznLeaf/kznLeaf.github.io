@@ -268,6 +268,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2025/08/12/MySQL%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B01/" target="_self">
+          《MySQL技术内幕》读书笔记1-锁
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/08/12/MySQL%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B01/" target="_self">
+        <div>
+          锁的类型 InnoDB引擎有两种行级锁：  共享锁 S：允许事务读一行数据 排他锁 X: 允许事务删除或者更新一行数据。  除此之外还有意向锁，意向锁是为了告诉表在更细的粒度上加锁  意向共享锁：事务想要获得某几行的共享锁 意向排他锁：事务想要获得某一行的排他锁  读操作 一致性非锁定读：  如果读取的行正在执行删除或者更新操作，这时不会去等待锁的释放，而是读取锁的一个
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-08-12 19:19" pubdate>
+              2025-08-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/DataBase/" class="category-chain-item">DataBase</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">#数据库</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2025/08/10/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E4%B8%89%E4%B8%AA%E5%87%BD%E6%95%B0/" target="_self">
           IO多路复用-select, poll, epoll的区别
         </a>
@@ -699,67 +760,6 @@
             <i class="iconfont icon-date"></i>
             <time datetime="2025-07-18 19:20" pubdate>
               2025-07-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/JUC/" class="category-chain-item">JUC</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%B9%B6%E5%8F%91/">#并发</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/07/17/JUC-synchronized/" target="_self">
-          JUC-synchronized关键字
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/07/17/JUC-synchronized/" target="_self">
-        <div>
-          共享问题  多个线程访问共享资源，进行读写操作时发生指令的交错就会发生问题。 一段代码块内如果存在对共享资源的读写操作，称这段代码块为临界区。 多个代码在临界区内运行，由于代码的执行序列不同而导致结果无法预测，称之发生了竞态条件。  如何避免临界区的互斥条件的发生？两种方法：  阻塞式的解决方法：synchronized Lock 非阻塞式的：原子变量  synchroniz
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-07-17 21:18" pubdate>
-              2025-07-17
             </time>
           </div>
         
