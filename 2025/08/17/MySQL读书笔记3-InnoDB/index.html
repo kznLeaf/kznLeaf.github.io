@@ -1,0 +1,909 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
+  <link rel="icon" href="/img/tree.png">
+  
+    <link rel="canonical" href="https://kznleaf.site/2025/08/17/MySQL读书笔记3-InnoDB/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="banyee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="目录  不同存储引擎的比较 连接MySQL InnoDB存储引擎架构  后台线程 内存  缓冲池 如何管理内存区域 重做日志缓冲   Checkpoint 旧版本Master Thread  Loop background loop  新版本主线程的变化 InnoDB关键特性  插入缓冲 doublewrite 自适应哈希索引 异步IO 刷新邻">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《MySQL技术内幕》读书笔记3-InnoDB">
+<meta property="og:url" content="https://kznleaf.site/2025/08/17/MySQL%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B03-InnoDB/index.html">
+<meta property="og:site_name" content="絆叶の片隅">
+<meta property="og:description" content="目录  不同存储引擎的比较 连接MySQL InnoDB存储引擎架构  后台线程 内存  缓冲池 如何管理内存区域 重做日志缓冲   Checkpoint 旧版本Master Thread  Loop background loop  新版本主线程的变化 InnoDB关键特性  插入缓冲 doublewrite 自适应哈希索引 异步IO 刷新邻">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s21.ax1x.com/2025/08/13/pVwN15d.png">
+<meta property="og:image" content="https://s21.ax1x.com/2025/08/13/pVwdUr6.png">
+<meta property="og:image" content="https://s21.ax1x.com/2025/08/13/pVw0KNF.png">
+<meta property="og:image" content="https://s21.ax1x.com/2025/08/14/pVwgttP.png">
+<meta property="article:published_time" content="2025-08-17T10:56:02.000Z">
+<meta property="article:modified_time" content="2025-08-17T11:04:26.125Z">
+<meta property="article:author" content="banyee">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s21.ax1x.com/2025/08/13/pVwN15d.png">
+  
+  
+  
+  <title>《MySQL技术内幕》读书笔记3-InnoDB - 絆叶の片隅</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/macBorder.css">
+<link rel="stylesheet" href="/css/sign.css">
+<link rel="stylesheet" href="/css/backgroundize.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"kznleaf.site","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+
+  <div id="Loadanimation" style="z-index:999999;">
+    <div id="Loadanimation-center">
+       <div id="Loadanimation-center-absolute">
+           <div class="xccx_object" id="xccx_four"></div>
+           <div class="xccx_object" id="xccx_three"></div>
+           <div class="xccx_object" id="xccx_two"></div>
+           <div class="xccx_object" id="xccx_one"></div>
+       </div>
+    </div>
+    </div>
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>banyee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">《MySQL技术内幕》读书笔记3-InnoDB</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-08-17 18:56" pubdate>
+          2025年8月17日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          28 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">《MySQL技术内幕》读书笔记3-InnoDB</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="目录">目录</h2>
+<ol type="1">
+<li><a href="#不同存储引擎的比较">不同存储引擎的比较</a></li>
+<li><a href="#连接mysql">连接MySQL</a></li>
+<li><a href="#innodb存储引擎架构">InnoDB存储引擎架构</a>
+<ol type="1">
+<li><a href="#后台线程">后台线程</a></li>
+<li><a href="#内存">内存</a>
+<ol type="1">
+<li><a href="#缓冲池">缓冲池</a></li>
+<li><a href="#如何管理内存区域">如何管理内存区域</a></li>
+<li><a href="#重做日志缓冲">重做日志缓冲</a></li>
+</ol></li>
+</ol></li>
+<li><a href="#checkpoint">Checkpoint</a></li>
+<li><a href="#旧版本master-thread">旧版本Master Thread</a>
+<ol type="1">
+<li><a href="#loop">Loop</a></li>
+<li><a href="#background-loop">background loop</a></li>
+</ol></li>
+<li><a href="#新版本主线程的变化">新版本主线程的变化</a></li>
+<li><a href="#innodb关键特性">InnoDB关键特性</a>
+<ol type="1">
+<li><a href="#插入缓冲">插入缓冲</a></li>
+<li><a href="#doublewrite">doublewrite</a></li>
+<li><a href="#自适应哈希索引">自适应哈希索引</a></li>
+<li><a href="#异步io">异步IO</a></li>
+<li><a href="#刷新邻居页">刷新邻居页</a></li>
+</ol></li>
+</ol>
+<h2 id="不同存储引擎的比较">不同存储引擎的比较</h2>
+<ul>
+<li>MyISAM:
+不支持事务、表锁，支持全文索引，缓冲池只缓冲索引文件而不会缓冲数据文件</li>
+</ul>
+<p>面试题可能会让比较InnoDB和MyISAM</p>
+<p><img src="https://s21.ax1x.com/2025/08/13/pVwN15d.png" srcset="/img/loading.gif" lazyload /></p>
+<p>MyISAM相比于InnoDB的主要缺陷：</p>
+<ul>
+<li><strong>不支持事务</strong>（最大的区别）</li>
+<li>不支持哈希索引</li>
+<li>不支持数据缓存</li>
+<li>不支持外键</li>
+<li>不支持 MVCC/快照读</li>
+</ul>
+<p>InnoDB引擎最大的区别就是：<strong>事务，外键，行级锁</strong>。</p>
+<h2 id="连接mysql">连接MySQL</h2>
+<p><strong>本质上是进程间通信</strong>。</p>
+<p>复习常见的进程间通信方式：</p>
+<ul>
+<li><strong>管道</strong>（Pipe）：半双工通信方式，数据只能单向流动。通常用于父子进程之间的通信。管道分为无名管道和有名管道，无名管道只能在具有亲缘关系的进程间使用，有名管道可以在任意进程间使用。</li>
+<li><strong>消息队列</strong>（Message
+Queue）：消息队列是一种消息的链表，存放在内核中，并由消息队列标识符标识。进程可以通过发送和接收消息来进行通信。消息队列可以实现异步通信，发送方和接收方不需要同时运行。</li>
+<li><strong>共享内存</strong>（Shared
+Memory）：多个进程可以共享一块内存区域，直接对内存进行读写操作，速度非常快。需要使用同步机制（如信号量）来协调对共享内存的访问，以避免竞争条件。另外，共享内存由内核负责管理。</li>
+<li><strong>信号量</strong>（Semaphore）：用于控制多个进程对共享资源的访问。信号量是一个整数，通过对其进行加
+1 和减 1
+操作来实现对资源的占用和释放。可以用于实现进程的同步和互斥。</li>
+<li><strong>套接字</strong>（Socket）：可用于不同主机上的进程间通信，也可以用于同一主机上的进程间通信。支持多种通信协议，如
+TCP、UDP 等。</li>
+</ul>
+<h2 id="innodb存储引擎架构">InnoDB存储引擎架构</h2>
+<p><img src="https://s21.ax1x.com/2025/08/13/pVwdUr6.png" srcset="/img/loading.gif" lazyload /></p>
+<p>后台线程负责刷新内存池中的数据（LRU），此外把已经修改的数据文件刷新到磁盘文件。</p>
+<h3 id="后台线程">后台线程</h3>
+<p>InnoDB存储引擎是多线程的模型：</p>
+<ul>
+<li>Master Thread 主要负责将缓冲池中的数据异步刷新到磁盘</li>
+<li>IO Thread：负责处理异步 IO 请求的回调，包括write, read, insert
+buffer, log IO thread</li>
+<li>Purge Thread：回收不用的undolog</li>
+<li>Page Cleaner Thread：单独的线程，专门用来刷新脏页</li>
+</ul>
+<h3 id="内存">内存</h3>
+<h4 id="缓冲池">缓冲池</h4>
+<ul>
+<li>数据库读取页时，先把从磁盘读到的页缓存在内存缓冲池中。下次再读相同的页时，先看看缓冲池里面有没有，有的话直接读取。</li>
+<li>修改操作，先修改缓冲池中的页，然后再以一定的频率刷新到磁盘。<strong>数据页通过
+Checkpoint 机制刷新到磁盘</strong>。</li>
+</ul>
+<p>缓冲池缓存的数据页有各种类型，插入缓冲、自适应哈希索引等是不受LRU算法管理的。内存结构如下：</p>
+<figure>
+<img src="https://s21.ax1x.com/2025/08/13/pVw0KNF.png" srcset="/img/loading.gif" lazyload
+alt="InnoDB引擎内存结构" />
+<figcaption aria-hidden="true">InnoDB引擎内存结构</figcaption>
+</figure>
+<p>缓冲池也可以有多个，是可以配置的。</p>
+<h4 id="如何管理内存区域">如何管理内存区域</h4>
+<p>涉及LRU list; Free list; Flush list.</p>
+<p><strong>中点插入策略</strong></p>
+<p>缓冲池以页为单位进行管理，一页是16KB，使用改进的 LRU
+算法对缓冲池进行管理。具体来说，InnoDB存储引擎引入了 midpoint insertion
+strategy，最新访问的页不会直接移动到链表约头部，而是先放到<code>midpoint</code>。该位置可以通过下面的命令查询：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams">show <span class="hljs-keyword">variables</span> like <span class="hljs-comment">&#x27;innodb_old_blocks_pct&#x27;</span>;<br></code></pre></td></tr></table></figure>
+<p>默认值为<code>37</code>，表示距离尾部37%的位置。该 midpoint
+将LRU链表分为两部分：</p>
+<ul>
+<li>young区 前5/8，属于热点区</li>
+<li>old区，后3/8，属于老旧区</li>
+</ul>
+<p><strong>延迟提升机制</strong></p>
+<p><code>innodb_old_blocks_time</code>，页第一次被插入中点后，如果下次访问距离上次访问时间小于该数值（默认1000ms），不会被提升到热点区。如果页成功熬过该时间被晋升到热点区，就称之为<code>page made young</code>。</p>
+<p><strong>空闲列表</strong></p>
+<p>空闲列表 Free list
+记录了尚未被使用的内存页。<code>Free Buffers</code>就是空闲列表中页的数量，<code>Database pages</code>则是LRU列表中页的数量。</p>
+<ul>
+<li>如果LRU列表尚未满，就从空闲列表中寻找可用的内存页，找到就删除，放入LRU列表。如果</li>
+<li>Page Cleaner
+线程检查剩余页的数量，如果LRU列表的空闲页不足100个，根据LRU算法淘汰尾部的页，把释放的空间分配给新的页。</li>
+</ul>
+<p>LRU链表支持压缩页，通过unzip_LRU列表管理，原来16KB的页可以被压缩到8KB和4KB。</p>
+<p><strong>Flush List</strong></p>
+<p>Flush List用于管理脏页刷新到磁盘。Flush List和LRU
+List都记录了脏页，后者用于管理页的可用性，前者用于刷盘。</p>
+<h4 id="重做日志缓冲">重做日志缓冲</h4>
+<p>重做日志首先被写入这个缓冲区，然后按照一定的频率刷新到磁盘文件。<strong>重做日志文件的刷盘时机</strong>：</p>
+<ul>
+<li>Master Thread 每秒刷盘一次</li>
+<li>每个事务提交时</li>
+<li>redo log buffer剩余空间小于1/2时</li>
+</ul>
+<p>查看重做日志缓冲区大小的命令：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">show</span> varaibles <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;innodb_log_buffer_size&#x27;</span>\G;<br></code></pre></td></tr></table></figure>
+<p>我查出来的是16MB。重做日志缓冲区不会太大，因为刷频时机足够频繁，缓冲区不会积累过多的日志。</p>
+<h2 id="checkpoint">Checkpoint</h2>
+<blockquote>
+<p><strong>WAL
+策略</strong>：<strong>事务提交时，先写重做日志，再修改数据页</strong>。当由于系统崩溃导致数据丢失时，通过重做日志来完成数据的恢复。</p>
+</blockquote>
+<p>检查点技术的目的：</p>
+<ul>
+<li>缩短数据库的恢复时间</li>
+<li>缓冲池不够用时，强制执行检查点，根据LRU算法将溢出的脏页刷新到磁盘</li>
+<li>重做日志不可用时，刷新脏页。重做日志是循环可重用的，不需要的日志会被覆盖。如果即将被覆盖的日志还需要使用，就需要执行检查点，将磁盘至少同步到即将被覆盖的日志以后的状态，防止状态丢失。</li>
+</ul>
+<p>InnoDB存储引擎通过LSN来标记版本，日志、页、检查点都有自己的LSN。数据库启动时，从checkpoint的LSN开始向后读取重做日志，恢复数据库。</p>
+<h2 id="旧版本master-thread">旧版本Master Thread</h2>
+<p>Master Thread内部包含多个循环。</p>
+<h3 id="loop">Loop</h3>
+<p><strong>Loop</strong>
+称为主循环，包含每秒钟的操作和每十秒钟的操作。每秒一次的操作包括：</p>
+<ul>
+<li><strong>把日志缓冲刷新到磁盘，即使事务还没有提交</strong>（总是）</li>
+<li>（可能）合并插入缓冲，前提是IO压力很小</li>
+<li>（可能）最多刷新100个缓冲池中的脏页到磁盘，前提是缓冲池脏页的比例超过90%（后来刷新脏页被分离给了单独的线程）</li>
+<li>（可能）如果没有用户活动，切换到background loop</li>
+</ul>
+<p>每十秒的操作包括以下内容：</p>
+<ul>
+<li>（可能）刷新100个脏页到硬盘</li>
+<li>（总是）合并最多五个插入缓冲</li>
+<li>（总是）将日至缓冲刷新到磁盘</li>
+<li>（总是）删除无用的undo页。对表进行delete、update时，原先的行被标记为删除，版本信息被保留，由这一步full
+perge删除。</li>
+<li>（总是）刷新100个或者10个脏页到磁盘</li>
+</ul>
+<h3 id="background-loop">background loop</h3>
+<p>数据库空闲或者关闭时，就会切换到这个循环。该循环进行以下操作</p>
+<ul>
+<li>（总是）删除无用的undo页</li>
+<li>（总是）合并20个插入缓冲</li>
+<li>（总是）如果不空闲，回到主循环</li>
+<li>否则跳转到flush loop，刷新缓冲池100个脏页</li>
+</ul>
+<h2 id="新版本主线程的变化">新版本主线程的变化</h2>
+<ul>
+<li>刷新到磁盘的页数量不再限制为100，可以通过<code>innodb_io_capacity</code>设定，默认200。从缓冲区刷新脏页时，刷新脏页的数量为<code>innodb_io_capacity</code>；合并插入缓冲是这个值的5%。</li>
+<li>原来脏页达到90%才会开始刷新，后来把默认值改成了75%。</li>
+<li><code>innodb_adaptive_flushing</code>，通过判断重做日志的产生速度决定刷新脏页的数量。</li>
+<li>可以根据需要修改 full perge 每次回收的脏页数量。</li>
+<li>最后把刷新脏页的操作单独分了到了一个线程 Page Cleaner。</li>
+</ul>
+<h2 id="innodb关键特性">InnoDB关键特性</h2>
+<p><img src="https://s21.ax1x.com/2025/08/14/pVwgttP.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="插入缓冲">插入缓冲</h3>
+<p><code>Insert Buffer</code></p>
+<p>插入缓冲不是缓存(cache)，而是表空间的一部分，主要用于处理非唯一索引的插入和更新操作。</p>
+<ul>
+<li>行数据的插入顺序是按照逐渐递增的顺序插入，速度非常快</li>
+<li>存放顺序还是主键，导致非聚集索引页的访问是离散的，插入也是离散的，速度较慢</li>
+</ul>
+<p>如果辅助索引是<strong>非唯一</strong>的，那么就可以使用<strong>插入缓冲</strong>来<strong>提高辅助索引的插入性能</strong>：</p>
+<p>对于非唯一索引，辅助索引的修改操作并非实时更新索引页，而是把若干对同一页面的更新缓存起来做，合并为一次性更新操作，减少IO。而且转随机IO为顺序IO,这样可以避免随机IO带来性能损耗，提高数据库的写性能。</p>
+<blockquote>
+<p>插入或者更新辅助索引时，先判断要插入的页是否在缓冲池中，如果是则直接插入，否则先放入到缓冲池的插入缓冲对象，后续再合并，这样一次能执行多个插入。</p>
+</blockquote>
+<p><code>Change Buffer</code></p>
+<p>插入缓冲的升级版，适用于非唯一的辅助索引，涵盖了插入，更新，删除三个操作。</p>
+<p><strong>插入缓冲内部实现</strong></p>
+<p>数据库全局拥有一个B+树，负责对所有表的辅助索引进行插入缓冲。B+树存放在共享表空间。非叶子节点存放的是search
+key键值，即：</p>
+<p>合并插入缓冲见P65.
+合并的目的，是把插入缓冲记录的辅助索引合并到真正的辅助索引中。</p>
+<p>工作流程：</p>
+<ol type="1">
+<li>Buffering：当需要插入或者更新辅助索引时，如果索引页在缓冲池则直接更新，如果相应的索引页不在缓冲池中，那么就把修改操作缓存在<code>插入缓冲</code>中。</li>
+<li>Bitmap
+tracking：用一个位图页跟踪缓冲池中每个索引页的空闲空间。<br />
+</li>
+<li>合并：被缓冲的更改会被定期合并回真正的索引页。</li>
+</ol>
+<p>合并发生的时机：</p>
+<blockquote>
+<p>The buffered changes are periodically merged back into the actual
+index pages. This can happen in several scenarios:</p>
+<ul>
+<li>On-demand merge: When a page containing buffered changes is accessed
+(read), the changes are merged before the page is returned.</li>
+<li>Scheduled merge: The InnoDB master thread periodically checks for
+merge operations.</li>
+<li>Bitmap-triggered merge: If the Insert Buffer Bitmap indicates that
+an index page has little free space left, a merge operation is
+triggered.</li>
+</ul>
+</blockquote>
+<h3 id="doublewrite">doublewrite</h3>
+<p>双写主要用来解决数据页刷新到磁盘时，因为意外导致写了不完整的数据页的问题。</p>
+<p>关于IO的最小单位：</p>
+<ol type="1">
+<li><p>数据库IO的最小单位是16K（MySQL默认，oracle是8K）</p></li>
+<li><p>文件系统IO的最小单位是4K（也有1K的）</p></li>
+<li><p>磁盘IO的最小单位是512字节</p></li>
+</ol>
+<p>重做日志以页为单位进行恢复，但是如果在数据页刷新到磁盘的过程中（每次4KB，但是完整的一页是16KB），页本身发生损坏（比如写到一半的时候宕机了），那redo也无力回天。</p>
+<blockquote>
+<p>重做日志是以<strong>日志块</strong>（redo log
+block）为单位进行存储的，而一个日志块的大小是（512字节），原因就在上面。得益于此，日志块
+512
+字节的写入也都是原子的，而且不管是缓存中还是磁盘中，重做日志都是以块的方式存储的。所以写日志到磁盘的过程不需要担心页写不完整的问题。</p>
+</blockquote>
+<p>doublewrite由两部分组成，一部分为内存中的<code>doublewrite buffer</code>，其大小为2MB，另一部分是磁盘上共享表空间(ibdata
+x)中<strong>连续</strong>的128个页，即2个区(extent)，大小也是2M。双写的工作原理：</p>
+<blockquote>
+<p>触发脏页刷新过程时，先把脏页复制到内存中的<code>doublewrite buffer</code>，然后写入磁盘共享表空间中的区域，最后马上调用<code>fsync</code>，把缓冲区中的脏页写入实际的磁盘文件（离散写）。</p>
+</blockquote>
+<p>尽管双写操作要求每个页面写入两次，但其开销远低于一般的两次写操作。磁盘中的共享表空间区域都是连续的，因此开销非常低。它还允许
+Innodb 节省 <code>fsync()</code> 操作——Innodb 无需为每个页面写入都调用
+<code>fsync()</code>，而是提交多个页面写入并调用
+<code>fsync()</code>，这使得操作系统能够优化写入的执行顺序，并并行使用多个设备。虽然这种优化可以在没有双写操作的情况下使用，但它只是同时实现的。因此，总体而言，我预计使用双写操作的性能损失不会超过
+5-10%。</p>
+<p><strong>崩溃恢复</strong></p>
+<p>如果将页写入磁盘中实际文件的过程中宕机，那么innoDB可以从磁盘共享表空间区域找到副本，复制到正确的位置即可，这样就恢复了页，再读取redo
+log，就恢复了所有记录。</p>
+<h3 id="自适应哈希索引">自适应哈希索引</h3>
+<p>InnoDB自动建立哈希索引，从B+树改造而来，尤其是热点数据。</p>
+<h3 id="异步io">异步IO</h3>
+<p>当前数据库都采用异步IO操作。脏页的刷新（磁盘的写入）全部由异步IO完成.</p>
+<h3 id="刷新邻居页">刷新邻居页</h3>
+<p>当刷新一个脏页时，检测该页所在区的所有页，如果是脏页则一起刷新。可以关闭，对于固态硬盘不需要这个。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Database/" class="category-chain-item">Database</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="print-no-link">#数据库</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>《MySQL技术内幕》读书笔记3-InnoDB</div>
+      <div>https://kznleaf.site/2025/08/17/MySQL读书笔记3-InnoDB/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>banyee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年8月17日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/08/17/MySQL%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B02-%E4%BA%8B%E5%8A%A1/" title="《MySQL技术内幕》读书笔记2-事务">
+                        <span class="hidden-mobile">《MySQL技术内幕》读书笔记2-事务</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/vvd_js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+<script src="/js/sign.js"></script>
+<script src="/js/backgroundize.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>
