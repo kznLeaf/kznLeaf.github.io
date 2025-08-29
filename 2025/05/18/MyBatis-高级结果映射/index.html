@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
   <link rel="icon" href="/img/tree.png">
   
-    <link rel="canonical" href="https://kznleaf.site/2025/05/18/MyBatis-高级结果映射/"/>
+    <link rel="canonical" href="https://kznleaf.top/2025/05/18/MyBatis-高级结果映射/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -26,7 +26,7 @@
     <meta name="description" content="MyBatis-结果映射（resultMap）详解 前言 看MyBatis网课的时候这一部分把我听红温了，遂自己梳理。 resultMap的作用是什么？如果JavaBean的属性名和数据库中的列名（字段名）刚好一一对应并且名字也相同，那么就不需要什么映射关系了，可以直接通过SQL查询出表中的所有信息。但是事实往往没那么理想，很多情况下这两个的名字并不相同，甚至不存在一一对应的关系；而且我们可">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MyBatis-结果映射（resultMap）详解">
-<meta property="og:url" content="https://kznleaf.site/2025/05/18/MyBatis-%E9%AB%98%E7%BA%A7%E7%BB%93%E6%9E%9C%E6%98%A0%E5%B0%84/index.html">
+<meta property="og:url" content="https://kznleaf.top/2025/05/18/MyBatis-%E9%AB%98%E7%BA%A7%E7%BB%93%E6%9E%9C%E6%98%A0%E5%B0%84/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="MyBatis-结果映射（resultMap）详解 前言 看MyBatis网课的时候这一部分把我听红温了，遂自己梳理。 resultMap的作用是什么？如果JavaBean的属性名和数据库中的列名（字段名）刚好一一对应并且名字也相同，那么就不需要什么映射关系了，可以直接通过SQL查询出表中的所有信息。但是事实往往没那么理想，很多情况下这两个的名字并不相同，甚至不存在一一对应的关系；而且我们可">
 <meta property="og:locale" content="zh_CN">
@@ -86,7 +86,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"kznleaf.site","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -643,7 +643,7 @@ title，没有查询的数据均显示为null，这样只查询了必要的数�
   <div class="license-box my-3">
     <div class="license-title">
       <div>MyBatis-结果映射（resultMap）详解</div>
-      <div>https://kznleaf.site/2025/05/18/MyBatis-高级结果映射/</div>
+      <div>https://kznleaf.top/2025/05/18/MyBatis-高级结果映射/</div>
     </div>
     <div class="license-meta">
       

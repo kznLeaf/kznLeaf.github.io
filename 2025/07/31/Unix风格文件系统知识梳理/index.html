@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
   <link rel="icon" href="/img/tree.png">
   
-    <link rel="canonical" href="https://kznleaf.site/2025/07/31/Unix风格文件系统知识梳理/"/>
+    <link rel="canonical" href="https://kznleaf.top/2025/07/31/Unix风格文件系统知识梳理/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -26,7 +26,7 @@
     <meta name="description" content="Unix风格文件系统总结，本文的所有命令均在Linux上运行过。 最近学到这一块的时候找不到质量很高的相关文章，干脆自己总结一下好了。  目录（directory）  简介 存储位置  文件的元数据 文件描述符  什么是文件描述符 如何分配？ 通过终端查看文件描述符  ⭐inode⭐  什么是inode 什么是inode number inode和数据块的关系">
 <meta property="og:type" content="article">
 <meta property="og:title" content="操作系统-Unix风格文件系统知识梳理">
-<meta property="og:url" content="https://kznleaf.site/2025/07/31/Unix%E9%A3%8E%E6%A0%BC%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/index.html">
+<meta property="og:url" content="https://kznleaf.top/2025/07/31/Unix%E9%A3%8E%E6%A0%BC%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="Unix风格文件系统总结，本文的所有命令均在Linux上运行过。 最近学到这一块的时候找不到质量很高的相关文章，干脆自己总结一下好了。  目录（directory）  简介 存储位置  文件的元数据 文件描述符  什么是文件描述符 如何分配？ 通过终端查看文件描述符  ⭐inode⭐  什么是inode 什么是inode number inode和数据块的关系">
 <meta property="og:locale" content="zh_CN">
@@ -85,7 +85,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"kznleaf.site","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -658,7 +658,7 @@ class="footnote-text"><span>https://en.wikipedia.org/wiki/Inode
   <div class="license-box my-3">
     <div class="license-title">
       <div>操作系统-Unix风格文件系统知识梳理</div>
-      <div>https://kznleaf.site/2025/07/31/Unix风格文件系统知识梳理/</div>
+      <div>https://kznleaf.top/2025/07/31/Unix风格文件系统知识梳理/</div>
     </div>
     <div class="license-meta">
       

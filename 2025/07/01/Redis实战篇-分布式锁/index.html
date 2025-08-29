@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
   <link rel="icon" href="/img/tree.png">
   
-    <link rel="canonical" href="https://kznleaf.site/2025/07/01/Redis实战篇-分布式锁/"/>
+    <link rel="canonical" href="https://kznleaf.top/2025/07/01/Redis实战篇-分布式锁/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -26,7 +26,7 @@
     <meta name="description" content="分布式锁 通过分布式锁，让多个jvm可以共享一个锁监视器。 分布式锁是满足分布式系统下或集群模式下多进程可见并且互斥的锁。 目的：在 Tomcat 服务器集群的条件下，保证秒杀服务的一人一单。适用于高并发缓存&#x2F;数据库保护&#x2F;多服务部署任务控制&#x2F;多线程并发。  简单实现  获取锁：SETNX添加锁，EXPIRE添加锁的过期时间，可以合并为SET lock thread NX EX 时间">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis-分布式锁">
-<meta property="og:url" content="https://kznleaf.site/2025/07/01/Redis%E5%AE%9E%E6%88%98%E7%AF%87-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/index.html">
+<meta property="og:url" content="https://kznleaf.top/2025/07/01/Redis%E5%AE%9E%E6%88%98%E7%AF%87-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="分布式锁 通过分布式锁，让多个jvm可以共享一个锁监视器。 分布式锁是满足分布式系统下或集群模式下多进程可见并且互斥的锁。 目的：在 Tomcat 服务器集群的条件下，保证秒杀服务的一人一单。适用于高并发缓存&#x2F;数据库保护&#x2F;多服务部署任务控制&#x2F;多线程并发。  简单实现  获取锁：SETNX添加锁，EXPIRE添加锁的过期时间，可以合并为SET lock thread NX EX 时间">
 <meta property="og:locale" content="zh_CN">
@@ -94,7 +94,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"kznleaf.site","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -504,7 +504,7 @@ ID 放入当前优惠券的<code>SET</code>集合。</p>
   <div class="license-box my-3">
     <div class="license-title">
       <div>Redis-分布式锁</div>
-      <div>https://kznleaf.site/2025/07/01/Redis实战篇-分布式锁/</div>
+      <div>https://kznleaf.top/2025/07/01/Redis实战篇-分布式锁/</div>
     </div>
     <div class="license-meta">
       

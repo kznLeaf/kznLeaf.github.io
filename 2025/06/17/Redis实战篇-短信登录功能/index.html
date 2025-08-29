@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
   <link rel="icon" href="/img/tree.png">
   
-    <link rel="canonical" href="https://kznleaf.site/2025/06/17/Redis实战篇-短信登录功能/"/>
+    <link rel="canonical" href="https://kznleaf.top/2025/06/17/Redis实战篇-短信登录功能/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -26,7 +26,7 @@
     <meta name="description" content="总览    项目架构  短信登录 回顾：cookie&amp;session基础 cookie是一种客户端会话技术, cookie 由服务端产生,它是服务器存放在浏览器的一小份数据,浏览器以后每次访问该服务器的时候都会将这小份数据携带到服务器去。  服务端创建cookie,将cookie放入响应对象中,Tomcat容器将cookie转化为set-cookie响应头,响">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis-短信登录功能">
-<meta property="og:url" content="https://kznleaf.site/2025/06/17/Redis%E5%AE%9E%E6%88%98%E7%AF%87-%E7%9F%AD%E4%BF%A1%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD/index.html">
+<meta property="og:url" content="https://kznleaf.top/2025/06/17/Redis%E5%AE%9E%E6%88%98%E7%AF%87-%E7%9F%AD%E4%BF%A1%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="总览    项目架构  短信登录 回顾：cookie&amp;session基础 cookie是一种客户端会话技术, cookie 由服务端产生,它是服务器存放在浏览器的一小份数据,浏览器以后每次访问该服务器的时候都会将这小份数据携带到服务器去。  服务端创建cookie,将cookie放入响应对象中,Tomcat容器将cookie转化为set-cookie响应头,响">
 <meta property="og:locale" content="zh_CN">
@@ -98,7 +98,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"kznleaf.site","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -443,7 +443,7 @@ id="基于sessionthreadlocal的登录验证">基于Session+ThreadLocal的登录�
 </figure>
 <p>还有一个问题：拦截器是能完成用户校验不假，但是在后续的业务中其他的模块也需要用到用户信息，所以需要把拦截得到的用户信息向后传递，同时保证线程安全，使用<code>ThreadLocal</code>可以做到这一点。</p>
 <p><code>ThreadLocal</code>具体介绍详见<a
-target="_blank" rel="noopener" href="https://kznleaf.top/2025/06/07/ThreadLocal%E5%89%96%E6%9E%90/">https://kznleaf.top/2025/06/07/ThreadLocal%E5%89%96%E6%9E%90/</a></p>
+href="https://kznleaf.top/2025/06/07/ThreadLocal%E5%89%96%E6%9E%90/">https://kznleaf.top/2025/06/07/ThreadLocal%E5%89%96%E6%9E%90/</a></p>
 <p>有了 ThreadLocal ，校验登录状态的流程图如下：</p>
 <figure>
 <img src="https://s21.ax1x.com/2025/06/16/pVEVs6H.png" srcset="/img/loading.gif" lazyload
@@ -643,7 +643,7 @@ token，获取失败则拦截，可以使用<code>StringUtils.hasLength(token)</
   <div class="license-box my-3">
     <div class="license-title">
       <div>Redis-短信登录功能</div>
-      <div>https://kznleaf.site/2025/06/17/Redis实战篇-短信登录功能/</div>
+      <div>https://kznleaf.top/2025/06/17/Redis实战篇-短信登录功能/</div>
     </div>
     <div class="license-meta">
       
