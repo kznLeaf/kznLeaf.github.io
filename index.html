@@ -265,7 +265,13 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2025/08/28/Linux-swappiness/" target="_self">
+          <img src="https://s21.ax1x.com/2025/08/30/pVcGtgJ.png" srcset="/img/loading.gif" lazyload alt="关于Linux的swap分区的广泛误解-swappiness参数">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h2 class="index-header">
         
         <a href="/2025/08/28/Linux-swappiness/" target="_self">
@@ -274,7 +280,7 @@
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/08/28/Linux-swappiness/" target="_self">
+      <a class="index-excerpt " href="/2025/08/28/Linux-swappiness/" target="_self">
         <div>
           swappiness是一个和Linux系统交换分区的行为有关的函数。通过下面的命令可以查看该参数的值： 1cat /proc/sys/vm/swappiness sudo nano /etc/sysctl.conf可永久修改此参数。默认值是60. 很多人认为这个参数给物理内存设定了一个阈值，当使用的内存超过(100-60)%时，就会开始内存交换，把内存中最远未使用的数据写入 swap 分区
         </div>
