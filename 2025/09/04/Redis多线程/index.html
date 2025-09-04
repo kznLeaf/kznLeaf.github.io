@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
   <link rel="icon" href="/img/tree.png">
   
-    <link rel="canonical" href="https://kznleaf.top/2025/08/06/HTTP缓存机制梳理/"/>
+    <link rel="canonical" href="https://kznleaf.top/2025/09/04/Redis多线程/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -23,25 +23,24 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="GET和POST GET：从服务器获取指定的资源，请求的参数一般写在URL中。 POST是根据请求体的内容对指定的资源做出处理。POST 请求携带数据的位置一般是写在请求体中，json格式比较常见。 HTTP协议中的安全和幂等：  安全 指的是请求方法不会破坏服务器上的资源 幂等 指的是多次执行相同的操作，结果都是相同的。  结论：  GET请求是安全且幂等的，因为它不会对服">
+    <meta name="description" content="Redis 的核心是单线程处理客户端的 SET&#x2F;GET 请求，但现在大多数机器都是多核的。为了利用到多核，减少单线程成为瓶颈，AWS 为自己的 ElasticCache 做了很多改进，包括：（均已合并到Valkey 8.0） - 2019年推出IO线程，承担一部分主线程的工作 - 2021年进一步优化IO线程，将开启 TLS 的集群加解密和连接处理操作从主线程移到 IO 线程 - 20">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTTP缓存机制梳理">
-<meta property="og:url" content="https://kznleaf.top/2025/08/06/HTTP%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6%E6%A2%B3%E7%90%86/index.html">
+<meta property="og:title" content="Valkey&#x2F;Redis-如何通过多线程达到单点 1M RPS?">
+<meta property="og:url" content="https://kznleaf.top/2025/09/04/Redis%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
-<meta property="og:description" content="GET和POST GET：从服务器获取指定的资源，请求的参数一般写在URL中。 POST是根据请求体的内容对指定的资源做出处理。POST 请求携带数据的位置一般是写在请求体中，json格式比较常见。 HTTP协议中的安全和幂等：  安全 指的是请求方法不会破坏服务器上的资源 幂等 指的是多次执行相同的操作，结果都是相同的。  结论：  GET请求是安全且幂等的，因为它不会对服">
+<meta property="og:description" content="Redis 的核心是单线程处理客户端的 SET&#x2F;GET 请求，但现在大多数机器都是多核的。为了利用到多核，减少单线程成为瓶颈，AWS 为自己的 ElasticCache 做了很多改进，包括：（均已合并到Valkey 8.0） - 2019年推出IO线程，承担一部分主线程的工作 - 2021年进一步优化IO线程，将开启 TLS 的集群加解密和连接处理操作从主线程移到 IO 线程 - 20">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s21.ax1x.com/2025/08/06/pVUHqoQ.jpg">
-<meta property="og:image" content="https://s21.ax1x.com/2025/08/06/pVUHOij.jpg">
-<meta property="article:published_time" content="2025-08-06T12:22:36.000Z">
-<meta property="article:modified_time" content="2025-08-06T12:24:25.081Z">
+<meta property="og:image" content="https://s21.ax1x.com/2025/08/22/pVDDgxg.png">
+<meta property="article:published_time" content="2025-09-04T14:37:06.000Z">
+<meta property="article:modified_time" content="2025-09-04T14:54:13.219Z">
 <meta property="article:author" content="banyee">
-<meta property="article:tag" content="计网">
+<meta property="article:tag" content="中间件">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/08/06/pVUHqoQ.jpg">
+<meta name="twitter:image" content="https://s21.ax1x.com/2025/08/22/pVDDgxg.png">
   
   
   
-  <title>HTTP缓存机制梳理 - 絆叶の片隅</title>
+  <title>Valkey/Redis-如何通过多线程达到单点 1M RPS? - 絆叶の片隅</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -238,7 +237,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">HTTP缓存机制梳理</span>
+            <span id="subtitle">Valkey/Redis-如何通过多线程达到单点 1M RPS?</span>
           
         </div>
 
@@ -249,8 +248,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-08-06 20:22" pubdate>
-          2025年8月6日 晚上
+        <time datetime="2025-09-04 22:37" pubdate>
+          2025年9月4日 晚上
         </time>
       </span>
     
@@ -261,7 +260,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k 字
+          1.5k 字
         
       </span>
     
@@ -272,7 +271,7 @@
         
         
         
-          17 分钟
+          13 分钟
         
       </span>
     
@@ -309,139 +308,93 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">HTTP缓存机制梳理</h1>
+            <h1 id="seo-header">Valkey/Redis-如何通过多线程达到单点 1M RPS?</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="get和post">GET和POST</h2>
-<p><strong>GET：从服务器获取指定的资源，请求的参数一般写在URL中</strong>。</p>
-<p><strong>POST是根据请求体的内容对指定的资源做出处理</strong>。POST
-请求携带数据的位置一般是写在请求体中，json格式比较常见。</p>
-<p>HTTP协议中的<strong>安全</strong>和<strong>幂等</strong>：</p>
-<ul>
-<li>安全 指的是请求方法不会破坏服务器上的资源</li>
-<li>幂等 指的是多次执行相同的操作，结果都是相同的。</li>
-</ul>
-<p>结论：</p>
+                <p>Redis 的核心是单线程处理客户端的 SET/GET
+请求，但现在大多数机器都是<strong>多核</strong>的。为了利用到多核，减少单线程成为瓶颈，AWS
+为自己的 ElasticCache 做了很多改进，包括：（均已合并到Valkey 8.0） -
+2019年推出IO线程，承担一部分主线程的工作 -
+2021年进一步优化IO线程，将开启 TLS
+的集群加解密和连接处理操作从主线程移到 IO 线程 -
+2023年推出增强的IO多路复用 -
+2023年提出表示层卸载和内存访问摊销技术，实现单节点处理超过100万RPS。</p>
+<h2 id="增强io处理">增强I/O处理</h2>
+<p>增强的 I/O
+多路复用可显著改善大规模吞吐量和延迟。先看看以前的IO多路复用是怎么做的：</p>
+<p><img src="https://s21.ax1x.com/2025/08/22/pVDDBVI.png" srcset="/img/loading.gif" lazyload /></p>
+<p>每个客户端都与单线程的处理引擎建立一个连接通道，因此引擎要单独为每一个客户端的建立网络连接、解析发来的请求、运行解析出来的命令。这样的架构有两个问题：</p>
 <ol type="1">
-<li>GET请求是安全且幂等的，因为它不会对服务器上的数据动手脚，每次返回的结果都相同。正因如此，GET请求返回的响应是可以被缓存的，浏览器基本都有这个功能，而且浏览器还可以吧GET请求保存为书签。</li>
-<li>POST可能会修改服务器上的资源，所以不安全；多次提交就会多次修改资源，结果不一样，所以不幂等。所以浏览器既不会把POST请求缓存，也不会保存为书签。</li>
+<li><strong>处理引擎必须亲自处理网络连接，必须亲自解析命令，不能专注于运行命令</strong></li>
+<li><strong>多余的CPU核心没有得到利用</strong></li>
 </ol>
-<p>GET请求也是可以带请求体的。RFC规范定义的GET请求时获取资源，从这个意思上讲它不需要请求体，但也没有规定说禁止使用请求体。</p>
-<h2 id="etag">ETag</h2>
-<p>HTTP首部字段 ETag
-能告知客户端实体标识，它是一种可以将资源以字符串形式唯一性标识的方式。服务器会为每一份资源分配对应的
-ETag 值。当资源更新时，ETag 也需要更新。生成
-ETag时，没有统一的算法规则，而仅仅是由服务器来分配。</p>
-<h2 id="http缓存">HTTP缓存</h2>
-<p>HTTP 缓存会存储与请求关联的响应，并将存储的响应复用于后续请求。</p>
-<p>当响应可复用时，源服务器不需要处理请求——因为它不需要解析和路由请求、根据
-cookie
-恢复会话、查询数据库以获取结果或渲染模板引擎。<strong>这减少了服务器上的负载</strong>。</p>
-<p>有两种不同类型的缓存：<strong>私有缓存和共享缓存</strong>。</p>
-<h3 id="强制缓存">强制缓存</h3>
-<blockquote>
-<p>强制缓存，只要浏览器判断缓存没有过期，则直接使用浏览器的本地缓存，也就是说是否使用缓存的决定权在浏览器身上。</p>
-</blockquote>
-<p>强制缓存启用时，服务器返回的状态码仍然是<code>200</code>，但是后面会加个括号，例如<code>200 OK (从磁盘缓存)</code></p>
-<h4 id="cache-control">Cache-Control</h4>
-<p>浏览器缓存的一个例子（来自对某个背景图片的GET请求的响应标头）</p>
-<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lasso"><span class="hljs-keyword">Cache</span><span class="hljs-params">-Control</span>: <span class="hljs-keyword">max</span><span class="hljs-params">-age</span>=<span class="hljs-number">14400</span><br></code></pre></td></tr></table></figure>
-<p>意思是这个资源可以被缓存，并且最大存活时间是14400秒，即四个小时。四个小时以内访问这个资源，浏览器都会直接从缓存中读取，不会访问服务器。超过
-4 小时后，再访问这个资源，就会重新请求服务器以确认是否有更新。</p>
-<p><code>Cache-Control: max-age</code>的值是由后端开发者或运维根据资源的变化频率和使用场景<strong>手动设定</strong>的，不同类型的资源设定不同，目的是在“节省带宽”与“数据新鲜度”之间取得平衡。<strong>服务器本身并不会“自动判断”资源是否应该缓存，这是人为配置出来的行为</strong>。开发者可以在后端代码里显式指定服务器应当采取的配置。</p>
-<p>静态资源如背景图片、CSS、JS等变化较少，可以长时间缓存。JSON则根据业务需求确定。</p>
-<p>还有一个比较古老的字段：<code>Expire</code>。它指定资源失效的<strong>绝对时间</strong>，但有一个问题：到期时间是由服务端生成的，如果客户端时间跟服务器时间不一致，这就会导致缓存命中的误差。<strong>在
-HTTP 1.1 的版本，Expires 被 Cache-Control 替代</strong>。</p>
-<blockquote>
-<p>Q:
-还有个问题，如果某张图片的响应标头的Cache-Control的值设置的是4小时，但是在它过期之前，服务器修改了这张背景图片，那么客户端必须等到过期时间到来才会受到通知吗？</p>
-<p>A:
-是这样的，设置了<code>Cache-Control: max-age=14400</code>后，客户端在 4
-小时内会直接使用本地缓存，不会向服务器发送请求，也就无法感知到服务器资源的变化。这是强缓存的代价之一。</p>
-</blockquote>
-<h4 id="cache-control的执行流程">Cache-Control的执行流程</h4>
+<p>为了解决这几个问题，增强型的IO多路复用使用以下架构：</p>
+<p><img src="https://s21.ax1x.com/2025/08/22/pVDDgxg.png" srcset="/img/loading.gif" lazyload /></p>
+<p>其余可用的 CPU
+核心用来分担主线程的压力，<strong>把处理网络IO的工作转移到 IO
+线程上</strong>，主线程负责给IO线程分配任务。使用多路复用时，每个增强型
+I/O
+线程不会为每个客户端打开一个通道（如上图所示），而是<strong>多个客户端共用一个IO线程</strong>，由IO线程把收集到的命令通过单个通道发送给主线程处理。</p>
+<p>这样做带来了哪些好处？具体来说：</p>
 <ol type="1">
-<li>浏览器第一次请求访问服务器上的资源，服务器根据配置，在返回资源的同时在响应标头加上<code>Cache-Control</code>，设置过期时间的大小</li>
-<li>浏览器再次访问这个资源，浏览器会先根据自己上次请求的时间和过期时间进行比较，如果还没过期，就不请求了。</li>
-<li>服务器再次受到请求后，会更新响应标头的字段。</li>
+<li>增强型 I/O
+多路复用将源自多个客户端（有时是数千个）的命令组合到少量通道中，在相同连接数下通道的数量更少，提高了吞吐量。</li>
+<li>通道数量的减少增加了<strong>访问局部性</strong>，从而提高了内存缓存的使用率。</li>
+<li>缓存的命中率提高，于是命令的平均执行时间减少，降低了延迟。</li>
 </ol>
-<h3 id="共享缓存">共享缓存</h3>
-<p>共享缓存位于客户端和服务器之间，可以存储能在用户之间共享的响应。共享缓存可以进一步细分为代理缓存和托管缓存。</p>
-<p>共享cache主要用在一些<strong>web代理</strong>上，比如web代理服务器，因为web代理服务器可能会为众多的用户提供资源服务，对于这些用户共同访问的资源就不必要每个用户保存一份了，只需要在web代理服务器中保存一份即可，这样可以减少资源的无效拷贝。</p>
-<h3 id="协商缓存">协商缓存</h3>
-<p>省流：</p>
-<blockquote>
-<p>HTTP 协商缓存是通过 ETag 和 Last-Modified
-机制实现的。每次请求需要让服务器判断一下资源是否更新过，服务器根据资源是否修改来决定返回
-304 Not Modified
-还是新内容，从而决定客户端浏览器是否使用缓存。它比强缓存更灵活，能确保资源最新状态，但性能略差于强缓存。</p>
-</blockquote>
-<p>也叫对比缓存。与强制缓存相比，这次是服务器负责判断缓存的资源有没有过期，如果返回304说明没有过期。</p>
-<p>协商缓存的两个主要机制：</p>
-<table>
-
-<thead>
-<tr>
-<th>机制</th>
-<th>请求头（浏览器）</th>
-<th>响应头（服务器）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Last-Modified</strong></td>
-<td><code>If-Modified-Since</code></td>
-<td><code>Last-Modified</code></td>
-</tr>
-<tr>
-<td><strong>ETag</strong></td>
-<td><code>If-None-Match</code></td>
-<td><code>ETag</code></td>
-</tr>
-</tbody>
-</table>
-<p>图解如下：</p>
+<h2 id="表示层卸载">表示层卸载</h2>
+<p>7.1 版本引入表示层卸载（Redis presentation layer
+offloading），指的是客户端命令的解析操作。增强型 IO
+多路复用把网络IO的处理交给了单独的IO线程，而<strong>表示层卸载在此基础上更进一步，让
+IO 线程顺便把客户端的命令解析为 Redis
+二进制命令的格式，然后转发到主线程进行</strong>。这样有两个好处：</p>
+<ol type="1">
+<li>多个CPU<strong>并行</strong>处理网络 IO
+和解析命令的工作，充分利用到每一个CPU核心，大大提升执行效率</li>
+<li>主线程只需要专注于运行命令，提高了命令的执行效率</li>
+</ol>
 <figure>
-<img src="https://s21.ax1x.com/2025/08/06/pVUHqoQ.jpg" srcset="/img/loading.gif" lazyload
-alt="if-None-Match" />
-<figcaption aria-hidden="true">if-None-Match</figcaption>
+<img src="https://s21.ax1x.com/2025/08/22/pVDDTiV.png" srcset="/img/loading.gif" lazyload
+alt="表示层卸载" />
+<figcaption aria-hidden="true">表示层卸载</figcaption>
 </figure>
-<figure>
-<img src="https://s21.ax1x.com/2025/08/06/pVUHOij.jpg" srcset="/img/loading.gif" lazyload
-alt="if-Modified-Since" />
-<figcaption aria-hidden="true">if-Modified-Since</figcaption>
-</figure>
-<ol type="1">
-<li><strong>第一次请求资源</strong></li>
-</ol>
-<p>如果服务器的响应头返回</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Last</span>-Modified: Tue, <span class="hljs-number">03</span> Jun <span class="hljs-number">2025</span> <span class="hljs-number">10</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span> GMT<br><span class="hljs-attribute">ETag</span>: <span class="hljs-string">&quot;v1.23abc&quot;</span><br><span class="hljs-attribute">Cache</span>-Control: no-cache<br></code></pre></td></tr></table></figure>
-<p>就说明不允许使用强制缓存，但是可以协商缓存。</p>
-<p><code>Last-Modified</code>表示这个资源的最后修改时间;<code>ETag</code>告诉浏览器当前资源在服务器的唯一标识（生成规则由服务器决定）</p>
-<ol start="2" type="1">
-<li><strong>再次请求资源</strong></li>
-</ol>
-<p>请求头：</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">If</span>-Modified-Since: Tue, <span class="hljs-number">03</span> Jun <span class="hljs-number">2025</span> <span class="hljs-number">10</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span> GMT<br><span class="hljs-attribute">If</span>-None-Match: <span class="hljs-string">&quot;v1.23abc&quot;</span><br></code></pre></td></tr></table></figure>
-<p>如果资源没有发生变化，服务器返回</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">HTTP</span>/<span class="hljs-number">1</span>.<span class="hljs-number">1</span> <span class="hljs-number">304</span> Not Modified<br></code></pre></td></tr></table></figure>
+<h2 id="内存访问摊销">内存访问摊销</h2>
+<p>内存访问摊销（Memory access
+amortization）是为了解决随机内存访问开销过大的问题，旨在降低内存访问成本，降低延迟。在7.1版本引入。</p>
+<p>Redis执行命令时经常需要通过字典去寻找key，对于需要查找多个key的情况，传统的做法是一个一个找，找完一个再重新访问内存寻找下一个，换句话说<strong>哈希表遍历将串行运行</strong>。而内存访问摊销采用的方式如下：</p>
+<p><img src="https://s21.ax1x.com/2025/08/22/pVDrv6g.png" srcset="/img/loading.gif" lazyload /></p>
+<p>分析：</p>
 <ul>
-<li><p><code>If-Modified-Since</code>是浏览器在询问服务端资源是否过期，后面紧跟的日期是客户端上次从服务器那里收到的最后修改日期。</p></li>
-<li><p><code>If-None-Match</code>发出去的值就是上次从服务器收到的值。服务器会比较请求资源的现在的<code>Etag</code>的值和客户端发过来的值是否相同，不一致说明这个资源已经被修改过了，那么就返回最新资源，状态码200.如果没有被修改过，返回304。</p></li>
+<li><strong>并行访问内存</strong>，通过 <strong>dictPrefetch</strong>
+机制，将多个 IO 线程的读取请求合并到一起并行处理，并把结果放到主线程对应
+CPU 核的 L1/L2 私有缓存中，减少了 Redis
+主线程针对每个命令都要进行内存调用的消耗，提高了性能。</li>
 </ul>
-<p>实际项目中两种方式常常同时使用。ETag-<code>If-None-Match</code>的实现方式更优越：</p>
-<ul>
-<li>文件内容没有发生更改的情况下，最后修改时间也可能改变，造成误判；</li>
-<li><code>Last-Modified</code>方式精确到秒，如果需要资源在一秒内刷新多次，只有<code>ETag</code>能做到</li>
-<li>有的服务器不能精确获取文件的最后修改时间</li>
-</ul>
-<p>如果通过<code>ETag</code>已经判断过，就<strong>不会</strong>再使用<code>Last-Modified</code>。</p>
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pVCros1"><img
-src="https://s21.ax1x.com/2025/06/03/pVCros1.png" srcset="/img/loading.gif" lazyload
-alt="pVCros1.png" /></a></p>
-<p><strong>注意：协商缓存只有在强制缓存过期/未启用的情况下才会被采用</strong>。</p>
+<h2 id="主从复制优化">主从复制优化</h2>
+<p>在 Valkey/Redis
+进行主、从节点同步的时候，有时需要进行全量同步操作。比如有新的从节点加入，或者从节点和主节点复制延迟过大而主节点记录变更
+buffer 没有全部更新数据时，都会触发新的全量同步操作。Valkey 8.0
+通过<strong>双通道传输</strong>的机制，优化了全量同步，在某些情况下能降低
+50% 全量同步的时间，并减少 60% 的复制数据内存。</p>
+<p>全量同步时，主节点会生成 RDB 文件，同时会将生成 RDB
+过程中的【增量更改信息】存储在专门的 <strong>client output
+buffer</strong> 中。RDB 生成完毕后，主节点会将 RDB
+文件传输给从节点，从节点拿到 RDB 文件并 apply 后，会继续从主节点读取
+client output buffer 中的<strong>增量日志</strong>。Valkey 7.2/Redis
+在生成 RDB 文件过程中采用的 Copy-on-Write 的机制，即先 fork
+一个进程，指向相同的内存空间。在生成 RDB
+文件过程中，如果前端应用修改了部分数据，Valkey/Redis
+会对修改的数据页进行一个拷贝，并在拷贝上进行修改。因此，全量同步的时间会影响
+Redis 主节点的性能。</p>
+<p>Valkey 8.0 提出了<strong>双通道复制机制</strong>来分别复制 RDB
+和增量日志，同时将 client output buffer
+放到从节点。这样的改进使得主节点在进行 RDB
+文件生成的过程中，就可以将增量日志发送给从节点，<strong>将顺序传输的方式改成了并行传输</strong>，加快了同步速度。此外，从节点存放
+client output buffer，能够释放写节点的资源，避免 buffer
+过载，并使主节点更好地应对前端应用的负载。另外，同步速度加快，也能减少
+buffer 自身的大小，同时减少主节点 COW 的时间，降低对前端应用的影响。</p>
 
                 
               </div>
@@ -460,7 +413,7 @@ alt="pVCros1.png" /></a></p>
     
       <span class="category-chain">
         
-  <a href="/categories/Computer-Networking/" class="category-chain-item">Computer Networking</a>
+  <a href="/categories/Redis/" class="category-chain-item">Redis</a>
   
   
 
@@ -475,7 +428,7 @@ alt="pVCros1.png" /></a></p>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E8%AE%A1%E7%BD%91/" class="print-no-link">#计网</a>
+        <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="print-no-link">#中间件</a>
       
     </div>
   
@@ -487,8 +440,8 @@ alt="pVCros1.png" /></a></p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>HTTP缓存机制梳理</div>
-      <div>https://kznleaf.top/2025/08/06/HTTP缓存机制梳理/</div>
+      <div>Valkey/Redis-如何通过多线程达到单点 1M RPS?</div>
+      <div>https://kznleaf.top/2025/09/04/Redis多线程/</div>
     </div>
     <div class="license-meta">
       
@@ -500,7 +453,7 @@ alt="pVCros1.png" /></a></p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年8月6日</div>
+          <div>2025年9月4日</div>
         </div>
       
       
@@ -532,18 +485,12 @@ alt="pVCros1.png" /></a></p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/08/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%8C%96CPU%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/" title="操作系统-虚拟化CPU知识梳理">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">操作系统-虚拟化CPU知识梳理</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/07/31/Unix%E9%A3%8E%E6%A0%BC%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/" title="操作系统-Unix风格文件系统知识梳理">
-                        <span class="hidden-mobile">操作系统-Unix风格文件系统知识梳理</span>
+                      <a href="/2025/08/28/Linux-swappiness/" title="关于Linux的swap分区的广泛误解-swappiness参数">
+                        <span class="hidden-mobile">关于Linux的swap分区的广泛误解-swappiness参数</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

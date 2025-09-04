@@ -266,6 +266,73 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2025/09/04/Redis%E5%A4%9A%E7%BA%BF%E7%A8%8B/" target="_self">
+          <img src="https://s21.ax1x.com/2025/08/22/pVDDgxg.png" srcset="/img/loading.gif" lazyload alt="Valkey/Redis-如何通过多线程达到单点 1M RPS?">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/09/04/Redis%E5%A4%9A%E7%BA%BF%E7%A8%8B/" target="_self">
+          Valkey/Redis-如何通过多线程达到单点 1M RPS?
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2025/09/04/Redis%E5%A4%9A%E7%BA%BF%E7%A8%8B/" target="_self">
+        <div>
+          Redis 的核心是单线程处理客户端的 SET/GET 请求，但现在大多数机器都是多核的。为了利用到多核，减少单线程成为瓶颈，AWS 为自己的 ElasticCache 做了很多改进，包括：（均已合并到Valkey 8.0） - 2019年推出IO线程，承担一部分主线程的工作 - 2021年进一步优化IO线程，将开启 TLS 的集群加解密和连接处理操作从主线程移到 IO 线程 - 20
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-09-04 22:37" pubdate>
+              2025-09-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Redis/" class="category-chain-item">Redis</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/">#中间件</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2025/08/28/Linux-swappiness/" target="_self">
           <img src="https://s21.ax1x.com/2025/08/30/pVcGtgJ.png" srcset="/img/loading.gif" lazyload alt="关于Linux的swap分区的广泛误解-swappiness参数">
         </a>
@@ -721,54 +788,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/%E8%AE%A1%E7%BD%91/">#计网</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2025/08/02/%E5%9C%A8Debian12-%E4%B8%8A%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AERabbitMQ-4-1-2-%E6%AD%A5%E9%AA%A4/" target="_self">
-          <img src="https://s21.ax1x.com/2025/08/02/pVNybTO.png" srcset="/img/loading.gif" lazyload alt="Debian12 虚拟机安装 RabbitMQ 4.1.2 详细步骤">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/08/02/%E5%9C%A8Debian12-%E4%B8%8A%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AERabbitMQ-4-1-2-%E6%AD%A5%E9%AA%A4/" target="_self">
-          Debian12 虚拟机安装 RabbitMQ 4.1.2 详细步骤
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt " href="/2025/08/02/%E5%9C%A8Debian12-%E4%B8%8A%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AERabbitMQ-4-1-2-%E6%AD%A5%E9%AA%A4/" target="_self">
-        <div>
-          透明代理 rabbitmq.com在国内的访问速度较慢，为了保证后续的安装能够顺利进行，建议先配置透明代理（全局代理）。一开始我安装的是 Clash-Verge，但是不知道为什么在 Clash 内开启系统代理之后，系统的流量并不会经过Clash，所以后来换成了v2ray。 curl 下一步要用curl直接拉取安装脚本，所以要确保curl已经安装完成 12sudo apt updates
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-08-02 19:44" pubdate>
-              2025-08-02
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Linux/">#Linux</a>
-            
-              <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/">#中间件</a>
             
           </div>
         
