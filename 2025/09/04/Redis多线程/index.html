@@ -25,14 +25,14 @@
   
     <meta name="description" content="Redis 的核心是单线程处理客户端的 SET&#x2F;GET 请求，但现在大多数机器都是多核的。为了利用到多核，减少单线程成为瓶颈，AWS 为自己的 ElasticCache 做了很多改进，包括：（均已合并到Valkey 8.0） - 2019年推出IO线程，承担一部分主线程的工作 - 2021年进一步优化IO线程，将开启 TLS 的集群加解密和连接处理操作从主线程移到 IO 线程 - 20">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Valkey&#x2F;Redis-如何通过多线程达到单点 1M RPS?">
+<meta property="og:title" content="Valkey&#x2F;Redis 如何通过多线程达到单点 1M RPS?">
 <meta property="og:url" content="https://kznleaf.top/2025/09/04/Redis%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="Redis 的核心是单线程处理客户端的 SET&#x2F;GET 请求，但现在大多数机器都是多核的。为了利用到多核，减少单线程成为瓶颈，AWS 为自己的 ElasticCache 做了很多改进，包括：（均已合并到Valkey 8.0） - 2019年推出IO线程，承担一部分主线程的工作 - 2021年进一步优化IO线程，将开启 TLS 的集群加解密和连接处理操作从主线程移到 IO 线程 - 20">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s21.ax1x.com/2025/08/22/pVDDgxg.png">
 <meta property="article:published_time" content="2025-09-04T14:37:06.000Z">
-<meta property="article:modified_time" content="2025-09-04T14:54:13.219Z">
+<meta property="article:modified_time" content="2025-09-06T15:17:47.191Z">
 <meta property="article:author" content="banyee">
 <meta property="article:tag" content="中间件">
 <meta name="twitter:card" content="summary_large_image">
@@ -40,7 +40,7 @@
   
   
   
-  <title>Valkey/Redis-如何通过多线程达到单点 1M RPS? - 絆叶の片隅</title>
+  <title>Valkey/Redis 如何通过多线程达到单点 1M RPS? - 絆叶の片隅</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -196,18 +196,6 @@
             </li>
           
         
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/" target="_self">
-                <i class="iconfont icon-link-fill"></i>
-                <span>友链</span>
-              </a>
-            </li>
-          
-        
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
@@ -237,7 +225,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Valkey/Redis-如何通过多线程达到单点 1M RPS?</span>
+            <span id="subtitle">Valkey/Redis 如何通过多线程达到单点 1M RPS?</span>
           
         </div>
 
@@ -308,7 +296,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Valkey/Redis-如何通过多线程达到单点 1M RPS?</h1>
+            <h1 id="seo-header">Valkey/Redis 如何通过多线程达到单点 1M RPS?</h1>
             
             
               <div class="markdown-body">
@@ -440,7 +428,7 @@ buffer 自身的大小，同时减少主节点 COW 的时间，降低对前端�
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Valkey/Redis-如何通过多线程达到单点 1M RPS?</div>
+      <div>Valkey/Redis 如何通过多线程达到单点 1M RPS?</div>
       <div>https://kznleaf.top/2025/09/04/Redis多线程/</div>
     </div>
     <div class="license-meta">
