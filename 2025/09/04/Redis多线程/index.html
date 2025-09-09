@@ -23,16 +23,16 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Redis 的核心是单线程处理客户端的 SET&#x2F;GET 请求，但现在大多数机器都是多核的。为了利用到多核，减少单线程成为瓶颈，AWS 为自己的 ElasticCache 做了很多改进，包括：（均已合并到Valkey 8.0） - 2019年推出IO线程，承担一部分主线程的工作 - 2021年进一步优化IO线程，将开启 TLS 的集群加解密和连接处理操作从主线程移到 IO 线程 - 20">
+    <meta name="description" content="Redis 的核心是单线程处理客户端的 SET&#x2F;GET 请求，但现在大多数机器都是多核的。为了利用到多核，减少单线程成为瓶颈，AWS 为自己的 ElasticCache 做了很多改进，包括：（均已合并到Valkey 8.0）  2019年推出IO线程，承担一部分主线程的工作 2021年进一步优化IO线程，将开启 TLS 的集群加解密和连接处理操作从主线程移到 IO 线程 2023年推">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Valkey&#x2F;Redis 如何通过多线程达到单点 1M RPS?">
 <meta property="og:url" content="https://kznleaf.top/2025/09/04/Redis%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
-<meta property="og:description" content="Redis 的核心是单线程处理客户端的 SET&#x2F;GET 请求，但现在大多数机器都是多核的。为了利用到多核，减少单线程成为瓶颈，AWS 为自己的 ElasticCache 做了很多改进，包括：（均已合并到Valkey 8.0） - 2019年推出IO线程，承担一部分主线程的工作 - 2021年进一步优化IO线程，将开启 TLS 的集群加解密和连接处理操作从主线程移到 IO 线程 - 20">
+<meta property="og:description" content="Redis 的核心是单线程处理客户端的 SET&#x2F;GET 请求，但现在大多数机器都是多核的。为了利用到多核，减少单线程成为瓶颈，AWS 为自己的 ElasticCache 做了很多改进，包括：（均已合并到Valkey 8.0）  2019年推出IO线程，承担一部分主线程的工作 2021年进一步优化IO线程，将开启 TLS 的集群加解密和连接处理操作从主线程移到 IO 线程 2023年推">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s21.ax1x.com/2025/08/22/pVDDgxg.png">
 <meta property="article:published_time" content="2025-09-04T14:37:06.000Z">
-<meta property="article:modified_time" content="2025-09-06T15:17:47.191Z">
+<meta property="article:modified_time" content="2025-09-09T14:55:39.468Z">
 <meta property="article:author" content="banyee">
 <meta property="article:tag" content="中间件">
 <meta name="twitter:card" content="summary_large_image">
@@ -303,12 +303,14 @@
                 
                 <p>Redis 的核心是单线程处理客户端的 SET/GET
 请求，但现在大多数机器都是<strong>多核</strong>的。为了利用到多核，减少单线程成为瓶颈，AWS
-为自己的 ElasticCache 做了很多改进，包括：（均已合并到Valkey 8.0） -
-2019年推出IO线程，承担一部分主线程的工作 -
-2021年进一步优化IO线程，将开启 TLS
-的集群加解密和连接处理操作从主线程移到 IO 线程 -
-2023年推出增强的IO多路复用 -
-2023年提出表示层卸载和内存访问摊销技术，实现单节点处理超过100万RPS。</p>
+为自己的 ElasticCache 做了很多改进，包括：（均已合并到Valkey 8.0）</p>
+<ul>
+<li>2019年推出IO线程，承担一部分主线程的工作</li>
+<li>2021年进一步优化IO线程，将开启 TLS
+的集群加解密和连接处理操作从主线程移到 IO 线程</li>
+<li>2023年推出增强的IO多路复用</li>
+<li>2023年提出表示层卸载和内存访问摊销技术，实现单节点处理超过100万RPS。</li>
+</ul>
 <h2 id="增强io处理">增强I/O处理</h2>
 <p>增强的 I/O
 多路复用可显著改善大规模吞吐量和延迟。先看看以前的IO多路复用是怎么做的：</p>
