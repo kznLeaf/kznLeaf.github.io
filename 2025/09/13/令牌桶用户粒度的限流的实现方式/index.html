@@ -23,18 +23,18 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="前言 昨天面试遇到场景题：  Q：用户中可能混入很多机器人，向服务器发送大量请求。怎么在用户层面进行限流？   A：为每个用户维护一个令牌桶可以实现用户层面的限流，比如每秒只发放10个令牌。   Q：具体怎么实现这样的令牌桶？详细说一下。  当时没答上来，现在复盘一下，给出一个从设计到测试的完整解决方案。 令牌桶的状态  capacity桶的最大容量：用来限制令牌桶对并">
+    <meta name="description" content="复盘一下面试中遇到的场景题，给出从方案设计到压测的完整解决方案。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="借助 Redis Hash 实现用户粒度的令牌桶限流">
 <meta property="og:url" content="https://kznleaf.top/2025/09/13/%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%94%A8%E6%88%B7%E7%B2%92%E5%BA%A6%E7%9A%84%E9%99%90%E6%B5%81%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
-<meta property="og:description" content="前言 昨天面试遇到场景题：  Q：用户中可能混入很多机器人，向服务器发送大量请求。怎么在用户层面进行限流？   A：为每个用户维护一个令牌桶可以实现用户层面的限流，比如每秒只发放10个令牌。   Q：具体怎么实现这样的令牌桶？详细说一下。  当时没答上来，现在复盘一下，给出一个从设计到测试的完整解决方案。 令牌桶的状态  capacity桶的最大容量：用来限制令牌桶对并">
+<meta property="og:description" content="复盘一下面试中遇到的场景题，给出从方案设计到压测的完整解决方案。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s21.ax1x.com/2025/09/13/pVWR10A.png">
 <meta property="og:image" content="https://s21.ax1x.com/2025/09/13/pVWhU1K.png">
 <meta property="og:image" content="https://s21.ax1x.com/2025/09/13/pVWhjuF.png">
 <meta property="article:published_time" content="2025-09-13T15:11:33.000Z">
-<meta property="article:modified_time" content="2025-09-13T15:24:13.560Z">
+<meta property="article:modified_time" content="2025-09-18T14:19:23.658Z">
 <meta property="article:author" content="banyee">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="Fluid">
@@ -304,7 +304,9 @@
             
               <div class="markdown-body">
                 
-                <h2 id="前言">前言</h2>
+                <p>复盘一下面试中遇到的场景题，给出从方案设计到压测的完整解决方案。</p>
+<span id="more"></span>
+<h2 id="前言">前言</h2>
 <p>昨天面试遇到场景题：</p>
 <blockquote>
 <p>Q：用户中可能混入很多机器人，向服务器发送大量请求。怎么在用户层面进行限流？</p>
