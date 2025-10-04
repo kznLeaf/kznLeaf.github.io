@@ -1,0 +1,905 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
+  <link rel="icon" href="/img/tree.png">
+  
+    <link rel="canonical" href="https://kznleaf.top/2025/10/04/niri进阶安装/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="banyee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="最近给手上的荣耀x14Plus重装了 Arch 系统，niri 桌面环境折腾了整整三天时间，记录一下比较难搞的部分。 更多的软件推荐：https:&#x2F;&#x2F;ivonblog.com&#x2F;posts&#x2F;linux-recommended-application&#x2F; ⭐网络代理最终方案 之所以要一上来就折腾代理，是因为没有代理就装不了p10k，因为连不上Git，艹nmGFW Linux下的网络代理有很多种">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ArchLinux - niri 进阶安装&amp;问题汇总">
+<meta property="og:url" content="https://kznleaf.top/2025/10/04/niri%E8%BF%9B%E9%98%B6%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:site_name" content="絆叶の片隅">
+<meta property="og:description" content="最近给手上的荣耀x14Plus重装了 Arch 系统，niri 桌面环境折腾了整整三天时间，记录一下比较难搞的部分。 更多的软件推荐：https:&#x2F;&#x2F;ivonblog.com&#x2F;posts&#x2F;linux-recommended-application&#x2F; ⭐网络代理最终方案 之所以要一上来就折腾代理，是因为没有代理就装不了p10k，因为连不上Git，艹nmGFW Linux下的网络代理有很多种">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s21.ax1x.com/2025/10/04/pVTH7CV.png">
+<meta property="og:image" content="https://s21.ax1x.com/2025/10/04/pVTHH3T.png">
+<meta property="article:published_time" content="2025-10-04T03:26:49.000Z">
+<meta property="article:modified_time" content="2025-10-04T03:31:27.151Z">
+<meta property="article:author" content="banyee">
+<meta property="article:tag" content="折腾记录">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s21.ax1x.com/2025/10/04/pVTH7CV.png">
+  
+  
+  
+  <title>ArchLinux - niri 进阶安装&amp;问题汇总 - 絆叶の片隅</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/macBorder.css">
+<link rel="stylesheet" href="/css/sign.css">
+<link rel="stylesheet" href="/css/backgroundize.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+
+  <div id="Loadanimation" style="z-index:999999;">
+    <div id="Loadanimation-center">
+       <div id="Loadanimation-center-absolute">
+           <div class="xccx_object" id="xccx_four"></div>
+           <div class="xccx_object" id="xccx_three"></div>
+           <div class="xccx_object" id="xccx_two"></div>
+           <div class="xccx_object" id="xccx_one"></div>
+       </div>
+    </div>
+    </div>
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>banyee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">ArchLinux - niri 进阶安装&问题汇总</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-04 11:26" pubdate>
+          2025年10月4日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">ArchLinux - niri 进阶安装&amp;问题汇总</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>最近给手上的荣耀x14Plus重装了 Arch 系统，niri
+桌面环境折腾了整整三天时间，记录一下比较难搞的部分。</p>
+<p>更多的软件推荐：https://ivonblog.com/posts/linux-recommended-application/</p>
+<h2 id="网络代理最终方案">⭐网络代理最终方案</h2>
+<p>之所以要一上来就折腾代理，是因为没有代理就装不了p10k，因为连不上Git，艹nmGFW</p>
+<p>Linux下的网络代理有很多种方案，从资源占用的角度来说最好的应该是直接裸核运行
+mihomo
+内核，但是太折腾了，还要自己写配置文件。我是属于那种愿意折腾但是不愿意太折腾的，所以还是算了。最后我采用的方案是
+clash-verge-rev + proxychains4。</p>
+<h3 id="安装clash">安装clash</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yay -S clash-verge-rev-bin<br></code></pre></td></tr></table></figure>
+<p>然后导入订阅链接，打开系统代理。需要注意的是此时浏览器和终端还不能使用代理，需要进一步的配置。</p>
+<h3 id="浏览器代理">浏览器代理</h3>
+<p>参考：<a
+target="_blank" rel="noopener" href="https://www.linuxdashen.com/%E5%9C%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%8B%E4%B8%BAchromium%E5%92%8Cgoogle-chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86">在命令行下为Chromium和Google
+Chrome浏览器设置代理</a></p>
+<p>执行下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl --proxy http://127.0.0.1:7897 https://www.google.com<br></code></pre></td></tr></table></figure>
+<p>发现有正常输出，但是使用浏览器无法访问外网，但是不要紧，可以先在命令行强制使用代理启动chromium：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">chromium --proxy-server=<span class="hljs-string">&quot;http://127.0.0.1:7897&quot;</span><br></code></pre></td></tr></table></figure>
+<p>这时已经可以使用代理了，但是每次都从命令行启动的话很不方便，所以可以去插件市场下载<code>Proxy SwitchyOmega 3</code>插件，用于配置代理（感觉没什么用）</p>
+<p>我添加了一个快捷键：</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sqf">binds &#123;<br>    <span class="hljs-comment">// 启动 Chromium（自动使用代理）</span><br>    <span class="hljs-built_in">Mod</span>+B &#123; <span class="hljs-built_in">spawn</span> <span class="hljs-string">&quot;chromium&quot;</span> <span class="hljs-string">&quot;--proxy-server=http://127.0.0.1:7897&quot;</span>; &#125;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样通过<code>win+B</code>就可以快速用代理启动浏览器。</p>
+<h3 id="终端代理">终端代理</h3>
+<p><a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/166375631">https://zhuanlan.zhihu.com/p/166375631</a></p>
+<p>安装<code>proxychains-ng</code>软件包。</p>
+<p>配置文件位于<code>/etc/proxychains.conf</code>，把<code>http 127.0.0.1 7897</code>添加进去。</p>
+<p>使用方法：<code>proxychains4 + 要执行的命令</code>即可，自动走混合端口，国外流量和国内流量分流。</p>
+<h2
+id="触控板错误触发屏幕亮度的调节">⭐触控板错误触发屏幕亮度的调节</h2>
+<p>老问题了，大概十年前 Reddit 上就有人提到过。排查思路： 参考<a
+target="_blank" rel="noopener" href="https://askubuntu.com/questions/777754/brightness-randomly-up-and-down-on-msi-laptop">这个帖子</a>，排查过程涉及到两个命令：</p>
+<ul>
+<li><code>sudo libinput list-devices</code>：输出所有的设备</li>
+<li><code>sudo libinput debug-events</code>：用于监控所有的输入信息。</li>
+</ul>
+<p>在终端使用命令<code>sudo libinput debug-events | grep -i bright</code>挂在后台持续进行监控，使用触控板一段时间后发现原来的亮度50突然飙升到了100,后来又快速降到了零。这时的输出结果为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java">╰─❯ sudo libinput debug-events | grep -i bright<br>[sudo] password <span class="hljs-keyword">for</span> kznleaf:<br>-event8   KEYBOARD_KEY                 +<span class="hljs-number">30.</span>024s	<span class="hljs-title function_">KEY_BRIGHTNESSUP</span> <span class="hljs-params">(<span class="hljs-number">225</span>)</span> pressed<br>-event8   KEYBOARD_KEY                 +<span class="hljs-number">125.</span>247s	<span class="hljs-title function_">KEY_BRIGHTNESSUP</span> <span class="hljs-params">(<span class="hljs-number">225</span>)</span> released<br> event8   KEYBOARD_KEY                 +<span class="hljs-number">126.</span>253s	<span class="hljs-title function_">KEY_BRIGHTNESSUP</span> <span class="hljs-params">(<span class="hljs-number">225</span>)</span> pressed<br>-event8   KEYBOARD_KEY                 +<span class="hljs-number">553.</span>394s	<span class="hljs-title function_">KEY_BRIGHTNESSDOWN</span> <span class="hljs-params">(<span class="hljs-number">224</span>)</span> pressed<br></code></pre></td></tr></table></figure>
+<p>注意：<code>KEY_BRIGHTNESSUP</code> <code>KEY_BRIGHTNESSDOWN</code>
+都是键盘上的按键，但是这里我并没有对键盘进行任何操作。</p>
+<p>正常情况下，我们通过键盘操作亮度对应的是<code>event3</code>，而不是<code>event8</code>。通过命令
+1 获取<code>event8</code>的信息如下：</p>
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext"><span class="hljs-attribute">Device</span><span class="hljs-punctuation">:</span> <span class="hljs-string">                 GXTP7863:00 27C6:01E0 UNKNOWN</span><br><span class="hljs-attribute">Kernel</span><span class="hljs-punctuation">:</span> <span class="hljs-string">                 /dev/input/event8</span><br><span class="hljs-attribute">Id</span><span class="hljs-punctuation">:</span> <span class="hljs-string">                     i2c:27c6:01e0</span><br><span class="hljs-attribute">Group</span><span class="hljs-punctuation">:</span> <span class="hljs-string">                  5</span><br><span class="hljs-attribute">Seat</span><span class="hljs-punctuation">:</span> <span class="hljs-string">                   seat0, default</span><br><span class="hljs-attribute">Capabilities</span><span class="hljs-punctuation">:</span> <span class="hljs-string">           keyboard</span><br><span class="hljs-attribute">Tap-to-click</span><span class="hljs-punctuation">:</span> <span class="hljs-string">           n/a</span><br><span class="hljs-attribute">Tap-and-drag</span><span class="hljs-punctuation">:</span> <span class="hljs-string">           n/a</span><br><span class="hljs-attribute">Tap button map</span><span class="hljs-punctuation">:</span> <span class="hljs-string">         n/a</span><br><span class="hljs-attribute">Tap drag lock</span><span class="hljs-punctuation">:</span> <span class="hljs-string">          n/a</span><br><span class="hljs-attribute">Left-handed</span><span class="hljs-punctuation">:</span> <span class="hljs-string">            n/a</span><br><span class="hljs-attribute">Nat.scrolling</span><span class="hljs-punctuation">:</span> <span class="hljs-string">          n/a</span><br><span class="hljs-attribute">Middle emulation</span><span class="hljs-punctuation">:</span> <span class="hljs-string">       n/a</span><br><span class="hljs-attribute">Calibration</span><span class="hljs-punctuation">:</span> <span class="hljs-string">            n/a</span><br><span class="hljs-attribute">Scroll methods</span><span class="hljs-punctuation">:</span> <span class="hljs-string">         none</span><br><span class="hljs-attribute">Scroll button</span><span class="hljs-punctuation">:</span> <span class="hljs-string">          n/a</span><br><span class="hljs-attribute">Scroll button lock</span><span class="hljs-punctuation">:</span> <span class="hljs-string">     n/a</span><br><span class="hljs-attribute">Click methods</span><span class="hljs-punctuation">:</span> <span class="hljs-string">          none</span><br><span class="hljs-attribute">Clickfinger button map</span><span class="hljs-punctuation">:</span> <span class="hljs-string"> n/a</span><br><span class="hljs-attribute">Disable-w-typing</span><span class="hljs-punctuation">:</span> <span class="hljs-string">       n/a</span><br><span class="hljs-attribute">Disable-w-trackpointing</span><span class="hljs-punctuation">:</span> <span class="hljs-string">n/a</span><br><span class="hljs-attribute">Accel profiles</span><span class="hljs-punctuation">:</span> <span class="hljs-string">         n/a</span><br><span class="hljs-attribute">Rotation</span><span class="hljs-punctuation">:</span> <span class="hljs-string">               0.0</span><br><span class="hljs-attribute">Area rectangle</span><span class="hljs-punctuation">:</span> <span class="hljs-string">         n/a</span><br></code></pre></td></tr></table></figure>
+<p>GXTP7863 是 Goodix
+触控芯片，所以这个设备是触控屏的控制器。所以问题就出在<strong>触控板的操作事件会错误地触发本应来自键盘的亮度调节事件</strong>。</p>
+<p>下面就在键盘映射中把这个设备禁用掉。先分析一下这个设备的详细信息，Id：<code>i2c:27c6:01e0</code>的含义是：</p>
+<ul>
+<li>I2C总线通信</li>
+<li>供应商ID是<code>0x27c6</code></li>
+<li>产品ID是<code>0x01e0</code></li>
+</ul>
+<p><strong>解决方案</strong>：执行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">mkdir</span> -p /etc/libinput<br><span class="hljs-built_in">sudo</span> vim /etc/libinput/local-overrides.quirks<br></code></pre></td></tr></table></figure>
+<p>然后加入下面的内容：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[Touchpad Brightness Fix]</span><br><span class="hljs-attr">MatchBus</span>=i2c<br><span class="hljs-attr">MatchVendor</span>=<span class="hljs-number">0</span>x27C6<br><span class="hljs-attr">MatchProduct</span>=<span class="hljs-number">0</span>x01E0<br><span class="hljs-attr">AttrEventCode</span>=-EV_KEY:<span class="hljs-number">0</span>xe0<span class="hljs-comment">;-EV_KEY:0xe1</span><br></code></pre></td></tr></table></figure>
+<p>最后一行<code>AttrEventCode</code>表示修改设备的事件码的属性，<code>-</code>表示移除下面的两个事件：</p>
+<ul>
+<li><code>0xe0</code>：对应 <code>KEY_BRIGHTNESSUP</code>
+(225的十六进制是0xE1)</li>
+<li><code>0xe1</code>：对应 <code>KEY_BRIGHTNESSDOWN</code>
+(224的十六进制是0xE0)</li>
+</ul>
+<p>这样就能移除触控板设备的亮度调节键事件码。</p>
+<h2 id="编程工具相关问题">⭐编程工具相关问题</h2>
+<h3 id="vscode输入法缩放错误">VScode输入法缩放错误</h3>
+<p>niri 桌面环境 vscode 中使用 fcitx5
+输入法，会发现输入法的方框明显偏小。输入法候选框显示异常小是因为 VSCode
+的 Electron 框架在计算输入法位置时出现了缩放问题。</p>
+<p>编辑 <code>~/.config/code-flags.conf</code>（如果不存在则创建）：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-attribute">--enable-features</span>=UseOzonePlatform<br><span class="hljs-attribute">--ozone-platform</span>=wayland<br>--enable-wayland-ime<br></code></pre></td></tr></table></figure>
+<h3 id="goland安装与启动">GoLand安装与启动</h3>
+<p>安装GoLand应该先下载 <strong>JetBrains
+Toolbox</strong>，然后从里面下载 GoLand。虽然 AUR 有人打包了
+GoLand，可以通过<code>yay</code>安装，但是经过我的测试这样安装的 GoLand
+启动时会报错缺少运行环境。</p>
+<p>因为GoLand基本都是全屏使用的，所以可以配置一个窗口规则：</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs fsharp">window<span class="hljs-operator">-</span><span class="hljs-keyword">rule</span> &#123;<br>    <span class="hljs-keyword">match</span> app<span class="hljs-operator">-</span><span class="hljs-built_in">id</span><span class="hljs-operator">=</span><span class="hljs-string">&quot;GoLand&quot;</span><br>    <span class="hljs-keyword">open</span><span class="hljs-operator">-</span>maximized <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="goland-缩放比例">GoLand 缩放比例</h3>
+<p>开机之后每次第一次启动
+GoLand，界面UI的缩放比例都是明显偏小的。解决方法：<code>Help</code>
+-&gt; <code>Edit Custom VM Options</code>，然后加入下面一行：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">-Dsun.java2d.uiScale.enabled</span>=<span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+<h3 id="goland内输入法缩放比例错误">GoLand内输入法缩放比例错误</h3>
+<p>在 GoLand 中使用 fcitx5 输入法的话，会发现输入法的 UI
+比例明显偏小。自己折腾了将近一天的时间还是没有解决，然后去
+<strong>ArchLinux 中文论坛</strong>上问了一下，很快得到了答复。<a
+target="_blank" rel="noopener" href="https://forum.archlinuxcn.org/t/topic/14927">原帖地址</a></p>
+<blockquote>
+<p>它使用的是 Xwayland，输入法窗口是在 Xwayland 下渲染的，因此遵循 X11
+的 Xft.dpi 设置。见 https://wiki.archlinux.org/title/HiDPI#X_Resources
+。</p>
+</blockquote>
+<p>具体来说，Wayland 本身并不会直接使用<code>Xresources</code>，但是
+Xwayland 会，而输入法的候选框是在 Xwayland
+显示的，所以必须通过<code>xrdb</code>把配置加载到
+Xwayland。先安装<code>xorg</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S xorg-xrdb<br></code></pre></td></tr></table></figure>
+<p>然后编辑<code>~/.Xresources</code>文件，加入一行配置，表示使用 200%
+缩放：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">Xft.dpi: 192<br></code></pre></td></tr></table></figure>
+<p>最后执行下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">xrdb -merge ~/.Xresources<br></code></pre></td></tr></table></figure>
+<p>为了方便起见，可以把这个命令加入开机之后自动执行，具体方法是编辑 niri
+的配置文件<code>vim ~/.config/niri/config.kdl</code>，加入下面一行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">spawn-at-startup <span class="hljs-string">&quot;xrdb&quot;</span> <span class="hljs-string">&quot;-merge&quot;</span> <span class="hljs-string">&quot;/home/用户名/.Xresources&quot;</span><br></code></pre></td></tr></table></figure>
+<p>但是注意，因为非原生 wayland 应用程序在 xwayland
+中运行，它不支持缩放，因此当将 hidpi 显示器缩放到 2
+时，看起来会模糊。如果不打算在 Goland
+中输入中文，宁愿使用清晰度更高的UI的话，可以向 vmoptions
+中加入下面的参数：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">-Dawt.toolkit.name</span>=WLToolkit<br></code></pre></td></tr></table></figure>
+<p>这是因为 JetBrains 在去年推出了 Linux 下的 Wayland
+试验功能，通过这个配置强制使用 Wayland，代价是不能输入中文。</p>
+<h2 id="本地音乐播放器wine">本地音乐播放器&amp;wine</h2>
+<p>之前在win11上用的一直是MusicPlayer2，在Linux的可以用<a
+target="_blank" rel="noopener" href="https://www.strawberrymusicplayer.org/">Strawberry</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S strawberry<br></code></pre></td></tr></table></figure>
+<p>使用方法参考<a
+target="_blank" rel="noopener" href="https://lingyinaudio.com/tool-tutorial-play-music-on-linux-with-strawberry/">这里</a>。说实话用了半天也没用明白，最后我找到了更好的替代：<code>Tauon Music Box</code>，安装命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yay -S tauon-music-box<br></code></pre></td></tr></table></figure>
+<p>刚开始安装会提供一个选项，选2，后面一路回车就行了。这个软件可以直接扫描并识别本机上的所有歌曲，而且可以自动搜索歌词，刚好能满足我的需要。如下图：</p>
+<p><img src="https://s21.ax1x.com/2025/10/04/pVTH7CV.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img src="https://s21.ax1x.com/2025/10/04/pVTHH3T.png" srcset="/img/loading.gif" lazyload /></p>
+<p>视频介绍看<a
+target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=tk28ZVSUKcM">这里</a></p>
+<hr />
+<p>如果想运行 MusicPlayer2，可以用 wine 直接运行。安装 wine 的步骤：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S wine wine-mono wine-gecko winetricks<br></code></pre></td></tr></table></figure>
+<p><strong>默认情况下，Wine 将其配置文件和安装的 Windows 程序存储在
+<code>~/.wine</code></strong>，通常会把此目录叫作“Wine prefix”或“Wine
+bottle”。当您运行 Windows 程序或 Wine 的捆绑程序(如
+<code>winecfg</code>)时，它会自动创建/更新。前缀目录还包含一个目录，您的
+Windows 程序将其视为 <code>c:</code>（ C 盘）</p>
+<p>wine的具体安装可以参考<a
+target="_blank" rel="noopener" href="https://ivonblog.com/posts/linux-wine-introduction/">这个</a></p>
+<p>第一次尝试运行：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs swift">wine <span class="hljs-regexp">/home/</span>kznleaf<span class="hljs-regexp">/Downloads/</span><span class="hljs-type">MusicPlayer2_x64</span><span class="hljs-operator">/</span><span class="hljs-type">MusicPlayer2</span>.exe<br><span class="hljs-number">0024</span>:err:module:import_dll <span class="hljs-type">Library</span> mfc140u.dll (which <span class="hljs-keyword">is</span> needed by <span class="hljs-type">L</span><span class="hljs-string">&quot;Z:<span class="hljs-subst">\\</span>home<span class="hljs-subst">\\</span>kznleaf<span class="hljs-subst">\\</span>Downloads<span class="hljs-subst">\\</span>MusicPlayer2_x64<span class="hljs-subst">\\</span>MusicPlayer2.exe&quot;</span>) not found<br><span class="hljs-number">0024</span>:err:module:loader_init <span class="hljs-type">Importing</span> dlls <span class="hljs-keyword">for</span> <span class="hljs-type">L</span><span class="hljs-string">&quot;Z:<span class="hljs-subst">\\</span>home<span class="hljs-subst">\\</span>kznleaf<span class="hljs-subst">\\</span>Downloads<span class="hljs-subst">\\</span>MusicPlayer2_x64<span class="hljs-subst">\\</span>MusicPlayer2.exe&quot;</span> failed, status c0000135<br></code></pre></td></tr></table></figure>
+<p>报错，缺少了<code>mfc140u.dll</code>。安装一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">winetricks vcrun2015<br></code></pre></td></tr></table></figure>
+<p>能正常启动了，但是界面非常模糊，缩放比例也有问题。为保险起见进一步安装：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">winetricks</span> cjkfonts dotnet471<br></code></pre></td></tr></table></figure>
+<table>
+
+<thead>
+<tr>
+<th>套件</th>
+<th>作用</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cjkfonts</td>
+<td>安装中日韩字体</td>
+<td>中文/日文/韩文程序乱码问题</td>
+</tr>
+<tr>
+<td>dotnet471</td>
+<td>安装 .NET Framework 4.7.1</td>
+<td>需要 .NET 程序才能运行</td>
+</tr>
+</tbody>
+</table>
+<p>缩放问题可以运行<code>winecfg</code>手动调整缩放倍数，这里给到200%.</p>
+<h2 id="waybar">waybar</h2>
+<p>参考：https://github.com/1amSimp1e/dots</p>
+<h2 id="快照">快照</h2>
+<p>timeshift打不开的话：https://forum.archlinuxcn.org/t/topic/13359</p>
+<p>值得注意的是 ext4 文件系统本身是不支持快照的，使用 timeshift
+创建出来的快照基本上就是原来的文件的拷贝，通过使用硬链接使得增量快照占用的空间较少，但是所有的快照占用空间之和与原文件相当，相当于我们的磁盘可用空间直接少了一半。考虑到
+ext4
+文件系统本身比较稳定，对快照的需求不高，所以就算不用快照也是没问题的。</p>
+<h2 id="syncthing-跨平台同步文件">Syncthing 跨平台同步文件</h2>
+<p>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S syncthing<br></code></pre></td></tr></table></figure>
+<p>使用方法参照<a
+target="_blank" rel="noopener" href="https://vlinyu.com/archives/syncthing-sync-tools">这个</a>。在终端输入<code>syncthing</code>就可以开启同步，也可以设置为开机自启，但是对我来说没必要。</p>
+<h2 id="win虚拟机">win虚拟机</h2>
+<p>参考</p>
+<ul>
+<li>https://github.com/shorinkiwata/ArchlinuxInstallationGuide-ShorinArchExperience/tree/main?tab=readme-ov-file#%E8%99%9A%E6%8B%9F%E6%9C%BA</li>
+<li>https://ivonblog.com/posts/ubuntu-windows10-qemu/</li>
+</ul>
+<p>性能最好的方案：QEMU/KVM + virt-manager，接近原生速度。</p>
+<ul>
+<li>QEMU：硬件模拟器</li>
+<li>KVM (Kernel-based Virtual Machine)，本质上是一个内核驱动，让 QEMU
+可以直接用硬件运行虚拟机。</li>
+<li>Virt Manager：红帽发行的虚拟机管理软件</li>
+</ul>
+<p>安装下面的软件包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S qemu-full virt-manager <br></code></pre></td></tr></table></figure>
+<ul>
+<li>qemu-full → 跑虚拟机的“引擎”，包含 QEMU
+本体和支持的所有硬件模拟器（CPU、存储控制器、网卡、显卡等）。</li>
+<li>virt-manager → 管理虚拟机的GUI。</li>
+<li>dnsmasq → 提供 DHCP/DNS 服务，保证虚拟机能联网。</li>
+</ul>
+<p>开启libvirtd。libvirtd 是 libvirt
+的守护进程，它管理虚拟机运行环境。它提供一个统一的 API，前端工具（比如
+virt-manager、virsh 命令）通过它来控制虚拟机。没有它的话，只能直接用
+QEMU 的命令行来启动虚拟机，非常麻烦。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now libvirtd<br></code></pre></td></tr></table></figure>
+<p>开启<code>libvirt/virt-manager</code>默认创建的 <strong>NAT
+网络</strong>（通常是 virbr0
+网桥）。启动后，虚拟机就可以通过这个虚拟网络获得 NAT 地址（一般是
+192.168.122.0/24 网段），从而访问外部网络。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> virsh net-start default<br><span class="hljs-built_in">sudo</span> virsh net-autostart default<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>default 网络本身就是一个 NAT 网络 + 虚拟网桥（virbr0）
+的组合，虚拟机流量会通过主机的网卡转发到外网，主机也可以访问虚拟机，如果不需要从局域网的其他设备访问虚拟机的话，就没必要再进行额外的配置了。</p>
+</blockquote>
+<p>把自己加入 libvirt 用户组，这样以后就不用每次都sudo了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> usermod -a -G libvirt $(<span class="hljs-built_in">whoami</span>)<br></code></pre></td></tr></table></figure>
+<p>嵌套虚拟化：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> vim /etc/modprobe.d/kvm_amd.conf<br></code></pre></td></tr></table></figure>
+<p>写入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">options kvm_amd nested=1<br></code></pre></td></tr></table></figure>
+<p>执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> mkinitcpio -P<br></code></pre></td></tr></table></figure>
+<p>然后重启。</p>
+<p>接下来需要下载 Virtio
+镜像：https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md</p>
+<blockquote>
+<p>VirtIO 的相关信息参考：<a
+target="_blank" rel="noopener" href="https://pve.proxmox.com/wiki/Windows_VirtIO_Drivers">https://pve.proxmox.com/wiki/Windows_VirtIO_Drivers</a></p>
+<p>VirtIO 驱动程序是用于kvm /Linux 的半虚拟化驱动程序（请参阅 <a
+target="_blank" rel="noopener" href="http://www.ibm.com/developerworks/library/l-virtio">http://www.linux-kvm.org/page/Virtio</a>）。简而言之，它们允许虚拟机直接（半虚拟化）访问设备和外设，而不是通过速度较慢的模拟设备。有关
+VirtIO 驱动程序的更详细说明，请参阅 <a
+target="_blank" rel="noopener" href="http://www.ibm.com/developerworks/library/l-virtio">http://www.ibm.com/developerworks/library/l-virtio</a>。</p>
+<p>目前支持三种类型的设备：磁盘驱动器、网络、动态内存管理。</p>
+</blockquote>
+<p>现在可以用 Virt manager
+创建虚拟机了。创建过程中需要注意的是，如果想<strong>自定义虚拟机文件的存储位置</strong>，需要在<code>select or create custom storge</code>这一步先创建
+Storge
+Pool，然后选择该存储池作为自定义存储位置，并且创建一个指定大小的Volume，格式选择<code>qcow2</code>。添加存储池的具体操作参考<a
+target="_blank" rel="noopener" href="https://documentation.suse.com/zh-cn/sles/15-SP5/html/SLES-all/cha-libvirt-host.html#sec-libvirt-storage-vmm">这个</a>。</p>
+<p>在安装前的配置界面，Video Model 最好选择 QXL，Display Spice
+中勾不勾选 openGL 都差不多。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="print-no-link">#折腾记录</a>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+        <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="print-no-link">#操作系统</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ArchLinux - niri 进阶安装&amp;问题汇总</div>
+      <div>https://kznleaf.top/2025/10/04/niri进阶安装/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>banyee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年10月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/09/18/niri%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" title="无限平铺窗口管理器——niri在 ArchLinux 上的安装与配置">
+                        <span class="hidden-mobile">无限平铺窗口管理器——niri在 ArchLinux 上的安装与配置</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/vvd_js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+<script src="/js/sign.js"></script>
+<script src="/js/backgroundize.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>
