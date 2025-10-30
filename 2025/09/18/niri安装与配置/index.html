@@ -32,10 +32,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s21.ax1x.com/2025/09/18/pVhfYLD.png">
 <meta property="article:published_time" content="2025-09-18T14:05:01.000Z">
-<meta property="article:modified_time" content="2025-09-26T08:55:48.388Z">
+<meta property="article:modified_time" content="2025-10-30T17:38:14.229Z">
 <meta property="article:author" content="banyee">
-<meta property="article:tag" content="折腾记录">
 <meta property="article:tag" content="Linux">
+<meta property="article:tag" content="折腾记录">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://s21.ax1x.com/2025/09/18/pVhfYLD.png">
@@ -362,12 +362,12 @@ UEFI。剩下的参考ArchLinux安装指南即可。</p>
 </ul>
 <p>然后启用gdm：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl <span class="hljs-built_in">enable</span> gdm<br></code></pre></td></tr></table></figure>
-<p>之后重启，开机之后就会进入gdm界面。</p>
+<p>之后重启，开机之后就会进入gdm界面。别忘了在gdm界面右下角把桌面环境从gnome换成niri！</p>
 <hr />
 <p><strong>vmware安装arch
 linux之后，画面的大小固定为1200x800，怎么解决?</strong></p>
 <p>在简中互联网翻了半天，全是互相复制粘贴的文章，没找到一个靠谱的方法，最后还是问
-AI 解决的🤣</p>
+AI 解决的 xD</p>
 <p>先安装<strong>vmtools</strong>：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -Syu open-vm-tools<br></code></pre></td></tr></table></figure>
 <p>然后启动对应服务。第一个主要用来分辨率自动调整、剪贴板共享之类的问题，启动之后虚拟机窗口大小即可与屏幕自动适应；第二个负责实现拖放和复制粘贴文件的功能（不过启用之后还是没办法共享粘贴板，原因我没去深究）。</p>
@@ -484,6 +484,8 @@ target="_blank" rel="noopener" href="https://yalter.github.io/niri/Configuration
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">GTK_IM_MODULE</span>=fcitx<br><span class="hljs-attr">QT_IM_MODULE</span>=fcitx<br><span class="hljs-attr">XMODIFIERS</span>=@im=fcitx<br></code></pre></td></tr></table></figure>
 <p>最后配置开机自启。编辑<code>~/.config/niri/config.kdl</code>，添加下面的命令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kdl">spawn-at-startup &quot;fcitx5&quot;<br></code></pre></td></tr></table></figure>
+<p>最后推荐一个输入法皮肤：<a
+target="_blank" rel="noopener" href="https://github.com/Reverier-Xu/Fluent-fcitx5">https://github.com/Reverier-Xu/Fluent-fcitx5</a>，顺便把paru也装了。</p>
 
                 
               </div>
@@ -517,9 +519,9 @@ target="_blank" rel="noopener" href="https://yalter.github.io/niri/Configuration
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="print-no-link">#折腾记录</a>
-      
         <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+        <a href="/tags/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="print-no-link">#折腾记录</a>
       
         <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="print-no-link">#操作系统</a>
       
