@@ -1,0 +1,977 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
+  <link rel="icon" href="/img/tree.png">
+  
+    <link rel="canonical" href="https://kznleaf.top/2025/05/18/MyBatis-高级结果映射/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="banyee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="MyBatis-结果映射（resultMap）详解前言看MyBatis网课的时候这一部分把我听红温了，遂自己梳理。 resultMap的作用是什么？如果JavaBean的属性名和数据库中的列名（字段名）刚好一一对应并且名字也相同，那么就不需要什么映射关系了，可以直接通过SQL查询出表中的所有信息。但是事实往往没那么理想，很多情况下这两个的名字并不相同，甚至不存在一一对应的关系；而且我们可能并不满足">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis-结果映射（resultMap）详解">
+<meta property="og:url" content="https://kznleaf.top/2025/05/18/MyBatis-%E9%AB%98%E7%BA%A7%E7%BB%93%E6%9E%9C%E6%98%A0%E5%B0%84/index.html">
+<meta property="og:site_name" content="絆叶の片隅">
+<meta property="og:description" content="MyBatis-结果映射（resultMap）详解前言看MyBatis网课的时候这一部分把我听红温了，遂自己梳理。 resultMap的作用是什么？如果JavaBean的属性名和数据库中的列名（字段名）刚好一一对应并且名字也相同，那么就不需要什么映射关系了，可以直接通过SQL查询出表中的所有信息。但是事实往往没那么理想，很多情况下这两个的名字并不相同，甚至不存在一一对应的关系；而且我们可能并不满足">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s21.ax1x.com/2025/05/19/pEvL4Cq.png">
+<meta property="og:image" content="https://s21.ax1x.com/2025/05/19/pEvLbb4.png">
+<meta property="article:published_time" content="2025-05-18T14:32:05.000Z">
+<meta property="article:modified_time" content="2025-07-02T15:29:25.184Z">
+<meta property="article:author" content="banyee">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s21.ax1x.com/2025/05/19/pEvL4Cq.png">
+  
+  
+  
+  <title>MyBatis-结果映射（resultMap）详解 - 絆叶の片隅</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/macBorder.css">
+<link rel="stylesheet" href="/css/sign.css">
+<link rel="stylesheet" href="/css/backgroundize.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"Rs1qykYBxQwdjhZkWVB3fq7t-MdYXbMMI","app_key":"i1fqxvrusqbCUHDrnC4iGszb","server_url":"https://rs1qykyb.api.lncldglobal.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+
+  <div id="Loadanimation" style="z-index:999999;">
+    <div id="Loadanimation-center">
+       <div id="Loadanimation-center-absolute">
+           <div class="xccx_object" id="xccx_four"></div>
+           <div class="xccx_object" id="xccx_three"></div>
+           <div class="xccx_object" id="xccx_two"></div>
+           <div class="xccx_object" id="xccx_one"></div>
+       </div>
+    </div>
+    </div>
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>banyee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">MyBatis-结果映射（resultMap）详解</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-18 22:32" pubdate>
+          2025年5月18日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          36 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">MyBatis-结果映射（resultMap）详解</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="MyBatis-结果映射（resultMap）详解"><a href="#MyBatis-结果映射（resultMap）详解" class="headerlink" title="MyBatis-结果映射（resultMap）详解"></a>MyBatis-结果映射（resultMap）详解</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>看MyBatis网课的时候这一部分把我听红温了，遂自己梳理。</p>
+<p>resultMap的作用是什么？如果JavaBean的属性名和数据库中的列名（字段名）刚好一一对应并且名字也相同，那么就不需要什么映射关系了，可以直接通过SQL查询出表中的所有信息。但是事实往往没那么理想，很多情况下这两个的名字并不相同，甚至不存在一一对应的关系；而且我们可能并不满足于仅查询一张表，而是要把两张表的关键信息合在一起。不管是那种情况，都需要手动处理映射关系。</p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#mybatis%E7%9A%84%E7%BB%93%E6%9E%9C%E6%98%A0%E5%B0%84resultmap%E8%AF%A6%E8%A7%A3">MyBatis的结果映射（resultMap）详解</a><ol>
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#%E7%9B%AE%E5%BD%95">目录</a></li>
+<li><a href="#resultmap">resultMap</a></li>
+<li><a href="#id%E5%92%8Cresult">id和result</a></li>
+<li><a href="#constructor">constructor</a><ol>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95">为什么需要构造方法</a></li>
+<li><a href="#%E7%94%A8%E6%B3%95">用法</a></li>
+</ol>
+</li>
+<li><a href="#association">association</a><ol>
+<li><a href="#%E5%B5%8C%E5%A5%97-select-%E6%9F%A5%E8%AF%A2%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD">嵌套 Select 查询（按需加载）</a><ol>
+<li><a href="#%E6%A6%82%E5%BF%B5">概念</a></li>
+<li><a href="#%E5%AE%9E%E6%88%98">实战</a></li>
+<li><a href="#%E5%8F%8D%E6%80%9D">反思</a></li>
+</ol>
+</li>
+<li><a href="#%E5%B5%8C%E5%A5%97%E7%BB%93%E6%9E%9C%E6%98%A0%E5%B0%84">嵌套结果映射</a></li>
+</ol>
+</li>
+<li><a href="#resultset">resultSet</a></li>
+</ol>
+</li>
+</ol>
+<h2 id="resultMap"><a href="#resultMap" class="headerlink" title="resultMap"></a>resultMap</h2><p>一个映射关系由<code>&lt;resultMap&gt;</code>标签包裹，而这个标签本身也有它的属性：</p>
+<ul>
+<li><code>id</code>: <code>resultMap</code>标签的唯一标识。</li>
+<li><code>type</code>: 返回值的 Java 全限定类名，或类型别名（在已经处理好别名的情况下）。</li>
+<li><code>autoMapping </code>: MyBatis 用来控制是否自动映射数据库字段到 Java 对象属性的开关。<code>autoMapping=&quot;true&quot;</code>时，MyBatis 会自动匹配列名与属性名相同的字段。匹配规则：<ul>
+<li>数据库的列名与 Java 的属性名匹配（忽略大小写、支持下划线转驼峰）；</li>
+<li>没有被<code>&lt;result&gt;</code>明确指定</li>
+<li>必须依赖<code>&lt;setting&gt;</code>中的全局配置项：<code> &lt;setting name=&quot;mapUnderscoreToCamelCase&quot; value=&quot;true&quot;/&gt;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="id和result"><a href="#id和result" class="headerlink" title="id和result"></a>id和result</h2><blockquote>
+<p>id 和 result 元素都将一个列的值映射到一个简单数据类型（String, int, double, Date 等）的属性或字段。</p>
+</blockquote>
+<p>两个元素的常用属性有：</p>
+<ul>
+<li><code>property</code>: 映射到列结果的字段或属性。如果 JavaBean 有这个名字的属性（property），会先使用该属性。可以理解为“Java的实体类的属性”。<ul>
+<li><code>id</code>元素的<code>property</code>往往取表中的主键对应的Java1实体类的属性名，例如<code>&lt;id property=&quot;id&quot; column=&quot;user_id&quot; /&gt;</code>意思就是表的主键名字是<code>user_id</code>，与之对应的Java属性名为<code>id</code>。</li>
+<li><code>result</code>元素的<code>property</code>用来定义其他普通元素和表中的列的一一对应的映射关系。</li>
+</ul>
+</li>
+<li><code>column</code>：已经存在的数据库中的列名，如果有别名的话也可以是别名。</li>
+<li><code>javaType</code>: Java类的全限定名，对于内置的类型别名，如<code>java.lang.String</code>，可以写为<code>String</code>。如果映射到一个 JavaBean，MyBatis 通常可以推断类型，此项忽略不写。</li>
+</ul>
+<p>简而言之，<code>id</code>用于设置主键字段与领域模型属性的映射关系，<code>result</code>用于设置普通字段与领域模型属性的映射关系。</p>
+<h2 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h2><h3 id="为什么需要构造方法"><a href="#为什么需要构造方法" class="headerlink" title="为什么需要构造方法"></a>为什么需要构造方法</h3><p>首先明确一点，当我们执行查询操作的时候，MyBatis 不会直接返回数据库原始数据，它会把查询结果“映射”成<strong>Java对象</strong>返回给你。例如，<code>SELECT id, name FROM user;</code>这一sql语句，如果在MySQL中直接运行，返回的是一张表格，但你总不能让 Java 返回原始的 SQL 表格吧？你希望得到的是 <strong>Java对象</strong>，对应下面的接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;User&gt; users = userMapper.selectAll();<br></code></pre></td></tr></table></figure>
+
+<p>MyBatis 会把那张表的每一行构造成一个 User 对象，然后放到 List 里返回。</p>
+<p>对于一般的可变对象，JavaBean会提供一个<code>setter</code>方法，有了这个方法之后事情就很好办了，只需要这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">User</span> <span class="hljs-variable">u</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">User</span>();<br>u.setId(<span class="hljs-number">1</span>);<br>u.setName(<span class="hljs-string">&quot;Alice&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>MyBatis 先通过空参构造器构建一个<code>User</code>对象，然后通过 setter 为这个对象一一赋值。</p>
+<p>但是，有时我们希望一个类的对象一旦创建就不能更改（即不可变类），例如用户的 id ，名字和年龄在特定时间段内是固定不变的，那么 JavaBean 如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> id;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String username;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> age;<br><br>    <span class="hljs-comment">// 全参构造器</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">User</span><span class="hljs-params">(String name, String username, <span class="hljs-type">int</span> age)</span> &#123;<br>        <span class="hljs-built_in">this</span>.id = id;<br>        <span class="hljs-built_in">this</span>.username = username;<br>        <span class="hljs-built_in">this</span>.age = age;<br>    &#125;<br>    <span class="hljs-comment">// 没有 setter 方法</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>这时想给对象的属性赋值，最直接的一种方式就是使用构造函数，在初始化的时候就赋好值。</p>
+<p>因为 MyBatis 不能像原来一样调用 setter 来赋值，所以需要使用构造函数赋值。“赋值”这个操作也就是所谓的<strong>注入</strong>(injection)，官方文档是这样说的：</p>
+<blockquote>
+<p>MyBatis 也支持私有属性和私有 JavaBean 属性来完成注入，但有一些人更青睐于通过构造方法进行注入。</p>
+</blockquote>
+<p>这句话的意思就是：<em>MyBatis 也可以通过反射直接修改私有字段的值，但这不总是最好的做法。很多程序员更喜欢只允许通过构造函数设置属性值</em>。</p>
+<p>上面提到，MyBatis 也可以通过反射直接注入私有字段，不过有些程序员还是喜欢使用构造方法达成目的，而<code>constructor</code>就是为此而生的。</p>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><p>假设我们的数据库中的字段为：user_id, user_name, user_age。</p>
+<p>先把<code>User</code>需要用到的方法补充完整：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> id;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String username;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> age;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">User</span><span class="hljs-params">(<span class="hljs-meta">@Param(&quot;id&quot;)</span> <span class="hljs-type">int</span> id,</span><br><span class="hljs-params">                <span class="hljs-meta">@Param(&quot;username&quot;)</span> String username,</span><br><span class="hljs-params">                <span class="hljs-meta">@Param(&quot;age&quot;)</span> <span class="hljs-type">int</span> age)</span> &#123;<br>        <span class="hljs-built_in">this</span>.id = id;<br>        <span class="hljs-built_in">this</span>.username = username;<br>        <span class="hljs-built_in">this</span>.age = age;<br>    &#125;<br><br>    <span class="hljs-comment">// getter 方法</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getId</span><span class="hljs-params">()</span> &#123; <span class="hljs-keyword">return</span> id; &#125;<br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">getUsername</span><span class="hljs-params">()</span> &#123; <span class="hljs-keyword">return</span> username; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getAge</span><span class="hljs-params">()</span> &#123; <span class="hljs-keyword">return</span> age; &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Mapper接口：<code>User selectUserById(int id);</code></p>
+<p>然后为上面那个<code>User</code>写一个XML映射吧：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">resultMap</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userMap&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;com.example.User&quot;</span>&gt;</span><br><span class="hljs-comment">&lt;!-- 构造器 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">constructor</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">idArg</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;user_id&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;id&quot;</span> /&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">arg</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;user_name&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;username&quot;</span> /&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">arg</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;user_age&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;age&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">constructor</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">resultMap</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectUserById&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;userMap&quot;</span> <span class="hljs-attr">parameterType</span>=<span class="hljs-string">&quot;int&quot;</span>&gt;</span><br>    SELECT user_id, user_name, user_age FROM users WHERE user_id = #&#123;id&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>column=数据库字段名</code>   </li>
+<li><code>name=构造器参数名</code></li>
+<li><code>idArg</code>是主键，<code>arg</code>是普通字段</li>
+<li>因为我们在接口中使用<code>@Param</code>显式为参数起名，所以<code>&lt;constructor&gt;</code>内部的顺序可以是任意的。</li>
+</ul>
+<h2 id="association"><a href="#association" class="headerlink" title="association"></a>association</h2><p>关联（association）元素处理一对一类型的关系。MyBatis 有两种不同的方式加载关联：</p>
+<h3 id="嵌套-Select-查询（按需加载）"><a href="#嵌套-Select-查询（按需加载）" class="headerlink" title="嵌套 Select 查询（按需加载）"></a>嵌套 Select 查询（按需加载）</h3><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><ul>
+<li>嵌套 Select 查询：也叫<strong>延迟加载</strong>、<strong>按需加载</strong>。它是通过调用另一个 SQL 映射语句，来加载关联对象的。</li>
+</ul>
+<p><strong>嵌套Select查询的特点</strong>：按需加载，也就是“懒汉式”；执行效率稍慢。</p>
+<p>假如我们现在有两个表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql">users(id, name, dept_id)<br>departments(id, dept_name)<br></code></pre></td></tr></table></figure>
+
+<p>Java对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span> &#123;<br>    <span class="hljs-type">int</span> id;<br>    String name;<br>    Department dept;  <span class="hljs-comment">// 关联属性</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>假如我们定义一个<code>selectAllById</code>方法<code>User selectAllById(Integer id)</code>，User 的前两个属性都是基本数据类型，查询起来很简单。但是<code>dept</code>属于引用类型，<strong>MyBatis 不会自动填充这种关联字段</strong>，除非我显式地配置了关联查询。</p>
+<p>按照嵌套 Select 查询的思路，我们可以在映射关系中将<code>dept</code>属性和<code>selectDeptById</code>方法关联起来，需要查询时就调用<code>selectDeptById</code>部门查询语句：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 定义映射关系 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">resultMap</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userMap&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;User&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">id</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;id&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;id&quot;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;name&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;name&quot;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">association</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;dept&quot;</span> <span class="hljs-attr">javaType</span>=<span class="hljs-string">&quot;Department&quot;</span></span><br><span class="hljs-tag">               <span class="hljs-attr">select</span>=<span class="hljs-string">&quot;selectDeptById&quot;</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;dept_id&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">resultMap</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 部门查询语句 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectDeptById&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;Department&quot;</span>&gt;</span><br>  SELECT id, dept_name AS deptName<br>  FROM departments<br>  WHERE id = #&#123;id&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>javaType</code>用于修饰<code>dept</code>属性，指定该属性的数据类型；</li>
+<li><code>select</code>指定关联的是查询方法，且方法名为<code>selectDeptById</code>，意思就是<code>dept</code>这个属性是靠这个查询语句查出来的。</li>
+<li><code>column</code>为数据库中的列名，这里表示将数据库中的这一字段作为参数<strong>传递</strong>给<code>selectDeptById</code>语句，由<code>#&#123;id&#125;</code>接收。<code>column</code>往往是多个表共有的列。</li>
+</ul>
+<p>然后利用<code>resultMap</code>定义查询语句就OK：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectAllById&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;userMap&quot;</span>&gt;</span><br>SELECT * FROM users WHERE id = #&#123;id&#125;;<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这样依赖调用<code>selectAllById</code>就能获取用户的所有信息了。</p>
+<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><p>好了下面是实战环节🥰</p>
+<p>现在我的数据库中有两张表：</p>
+<ul>
+<li>sys_user</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>uid</th>
+<th>username</th>
+<th>user_pwd</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>zhangsan</td>
+<td>114411</td>
+</tr>
+<tr>
+<td>2</td>
+<td>测试</td>
+<td>111</td>
+</tr>
+<tr>
+<td>3</td>
+<td>CowBoy</td>
+<td>2233</td>
+</tr>
+</tbody></table>
+<ul>
+<li>sys_schedule</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>uid</th>
+<th>title</th>
+<th>completed</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+<td>学习Java</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>吃饭</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>目标：写一个查询语句，能够把所有用户本身的属性及其对应的事务一次性查询出来。</p>
+<p>根据两张表的字段名，定义两个Java类：</p>
+<ul>
+<li><code>User.java</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span> &#123;<br>    <span class="hljs-keyword">private</span> Integer uid;<br>    <span class="hljs-keyword">private</span> String username;<br>    <span class="hljs-keyword">private</span> String user_pwd;<br><br>    <span class="hljs-keyword">private</span> Schedule schedule;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">User</span><span class="hljs-params">()</span> &#123;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">User</span><span class="hljs-params">(Integer uid, String username, String user_pwd)</span> &#123;<br>        <span class="hljs-built_in">this</span>.uid = uid;<br>        <span class="hljs-built_in">this</span>.username = username;<br>        <span class="hljs-built_in">this</span>.user_pwd = user_pwd;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">User</span><span class="hljs-params">(String username, String user_pwd)</span> &#123;<br>        <span class="hljs-built_in">this</span>.username = username;<br>        <span class="hljs-built_in">this</span>.user_pwd = user_pwd;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;User&#123;&quot;</span> +<br>                <span class="hljs-string">&quot;uid=&quot;</span> + uid +<br>                <span class="hljs-string">&quot;, username=&#x27;&quot;</span> + username + <span class="hljs-string">&#x27;\&#x27;&#x27;</span> +<br>                <span class="hljs-string">&quot;, user_pwd=&#x27;&quot;</span> + user_pwd + <span class="hljs-string">&#x27;\&#x27;&#x27;</span> +<br>                <span class="hljs-string">&quot;, schedule=&quot;</span> + schedule +<br>                <span class="hljs-string">&#x27;&#125;&#x27;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>schedule.java</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Schedule</span> &#123;<br>    <span class="hljs-keyword">private</span> Integer sid;<br>    <span class="hljs-keyword">private</span> Integer uid;<br>    <span class="hljs-keyword">private</span> String title;<br>    <span class="hljs-keyword">private</span> Integer completed;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Schedule</span><span class="hljs-params">()</span> &#123;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Schedule&#123;&quot;</span> +<br>                <span class="hljs-string">&quot;sid=&quot;</span> + sid +<br>                <span class="hljs-string">&quot;, uid=&quot;</span> + uid +<br>                <span class="hljs-string">&quot;, title=&#x27;&quot;</span> + title + <span class="hljs-string">&#x27;\&#x27;&#x27;</span> +<br>                <span class="hljs-string">&quot;, completed=&quot;</span> + completed +<br>                <span class="hljs-string">&#x27;&#125;&#x27;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>下面开始考虑接口。</p>
+<p><code>sys_user</code>记录了每一个用户的信息，<code>sys_schedule</code>记录了用户的事务，两张表通过主键<code>uid</code>关联起来。现在的目标是：写一个查询语句，能够把所有用户的所有自带属性及其对应的事务一次性查询出来。编写接口如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 打印所有的用户及其对应的日程</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> 包含所有属性的用户实体类</span><br><span class="hljs-comment"> */</span><br>List&lt;User&gt; <span class="hljs-title function_">getAllUserAndSchedule</span><span class="hljs-params">()</span>;<br></code></pre></td></tr></table></figure>
+
+<p>既然要查询日程，那就少不了查询日程的方法，所以在<code>ScheduleMapper.java</code>添加接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">ScheduleMapper</span> &#123;<br>    <span class="hljs-comment">// 根据uid查询用户的事务</span><br>    Schedule <span class="hljs-title function_">getScheduleByUid</span><span class="hljs-params">(<span class="hljs-meta">@Param(&quot;uid&quot;)</span> Integer uid)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>OK下面可以配置XML了。先从最简单的日程的查询开始，在<code>ScheduleMapper.xml</code>：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--Schedule getScheduleByUid(Integer uid);--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;getScheduleByUid&quot;</span> <span class="hljs-attr">parameterType</span>=<span class="hljs-string">&quot;Integer&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;Schedule&quot;</span>&gt;</span><br>    SELECT *<br>    FROM sys_schedule<br>    WHERE uid = #&#123;uid&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这是很简单的根据<code>uid</code>查询指定日程的sql语句。</p>
+<p>接下来在<code>UserMapper.xml</code>配置映射关系和查询语句：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--获取所有的用户及其实体类，测试associate标签--&gt;</span><br><span class="hljs-comment">&lt;!--  User getAllUserAndSchedule();--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">resultMap</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;ScheduleAndUser&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;User&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">id</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;uid&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;uid&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;username&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;username&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">association</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;schedule&quot;</span> <span class="hljs-attr">select</span>=<span class="hljs-string">&quot;com.kzn.mapper.ScheduleMapper.getScheduleByUid&quot;</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;uid&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">resultMap</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;getAllUserAndSchedule&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;ScheduleAndUser&quot;</span>&gt;</span><br>    SELECT * FROM sys_user LIMIT 3<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>注意：因为在映射关系中引用的<code>getScheduleByUid</code>方法的XML配置位于另一个XML文件中，所以这里对该方法的引用要使用<code>全类名.方法名</code>的形式。</p>
+<p>所有的代码都准备完毕之后就可以测试了。准备单元测试：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testGetUserAndSchedule</span><span class="hljs-params">()</span> &#123;<br>    List&lt;User&gt; allUserAndSchedule = userMapper.getAllUserAndSchedule();<br>    allUserAndSchedule.forEach(System.out::println);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>运行结果（附带日志功能，这里我手动加了空行方便阅读）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs text">DEBUG [main] - ==&gt;  Preparing: SELECT * FROM sys_user LIMIT 3<br>DEBUG [main] - ==&gt; Parameters: <br>TRACE [main] - &lt;==    Columns: uid, username, user_pwd<br>TRACE [main] - &lt;==        Row: 1, zhangsan, 114411<br>DEBUG [main] - ====&gt;  Preparing: SELECT * FROM sys_schedule WHERE uid = ?<br>DEBUG [main] - ====&gt; Parameters: 1(Integer)<br>TRACE [main] - &lt;====    Columns: sid, uid, title, completed<br>TRACE [main] - &lt;====        Row: 1, 1, 学习Java, 0<br>DEBUG [main] - &lt;====      Total: 1<br><br>TRACE [main] - &lt;==        Row: 2, 测试, 111<br>DEBUG [main] - ====&gt;  Preparing: SELECT * FROM sys_schedule WHERE uid = ?<br>DEBUG [main] - ====&gt; Parameters: 2(Integer)<br>TRACE [main] - &lt;====    Columns: sid, uid, title, completed<br>TRACE [main] - &lt;====        Row: 2, 2, 吃饭, 1<br>DEBUG [main] - &lt;====      Total: 1<br><br>TRACE [main] - &lt;==        Row: 3, CowBoy, 2233<br>DEBUG [main] - ====&gt;  Preparing: SELECT * FROM sys_schedule WHERE uid = ?<br>DEBUG [main] - ====&gt; Parameters: 3(Integer)<br>DEBUG [main] - &lt;====      Total: 0<br>DEBUG [main] - &lt;==      Total: 3<br><br>User&#123;uid=1, username=&#x27;zhangsan&#x27;, user_pwd=&#x27;114411&#x27;, schedule=Schedule&#123;sid=1, uid=1, title=&#x27;学习Java&#x27;, completed=0&#125;&#125;<br>User&#123;uid=2, username=&#x27;测试&#x27;, user_pwd=&#x27;111&#x27;, schedule=Schedule&#123;sid=2, uid=2, title=&#x27;吃饭&#x27;, completed=1&#125;&#125;<br>User&#123;uid=3, username=&#x27;CowBoy&#x27;, user_pwd=&#x27;2233&#x27;, schedule=null&#125;<br></code></pre></td></tr></table></figure>
+
+<p>从日志中可以直观地发现一共执行了4次查询操作（每一组<code>==&gt;</code>都对应一次查询请求）。</p>
+<h4 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h4><p>嵌套 Select 的复用性更很好，结构也很清晰，方便维护，但是它会导致所谓的<strong>N+1查询问题</strong>，结合上面的例子就很好说明：</p>
+<ul>
+<li><code>1</code>，指的是操作者调用了一次查询语句<code>getAllUserAndSchedule</code>，操作者期望一次返回所有的用户及其日程</li>
+<li><code>N</code>，为了完成<code>getAllUserAndSchedule</code>的查询命令，对于N个用户，MyBatis一共需要调用N次<code>getScheduleByUid</code>查询语句以获取日程信息。</li>
+</ul>
+<p>宏观调用的一次加上MyBatis内部调用的N次，合起来就是N+1次。显然，这个问题会导致成百上千的 SQL 语句被执行，效率是非常低下的。</p>
+<blockquote>
+<p>好消息是，MyBatis 能够对这样的查询进行<strong>延迟加载</strong>，因此可以将大量语句同时运行的开销分散开来。然而，如果你加载记录列表之后立刻就遍历列表以获取嵌套的数据，就会触发所有的延迟加载查询，性能可能会变得很糟糕。</p>
+</blockquote>
+<p>所以还有另外一种方法——<strong>嵌套结果映射</strong>。</p>
+<h3 id="嵌套结果映射"><a href="#嵌套结果映射" class="headerlink" title="嵌套结果映射"></a>嵌套结果映射</h3><ul>
+<li>嵌套结果映射：使用嵌套的结果映射来处理连接结果的重复子集。</li>
+</ul>
+<p>嵌套结果映射的查询方式本质上还是MySQL的<a href="/2025/05/06/MySQL%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/#%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2%E8%81%94%E7%BB%93%E8%A1%A8">多表查询</a>。仍然以上面的情况为例，要把用户的基本信息和日程放在一起并且保证用户的信息一个不少，那不就是外部链接查询吗：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> user.uid, user.Username, schedule.title<br><span class="hljs-keyword">FROM</span> sys_user <span class="hljs-keyword">AS</span> <span class="hljs-keyword">user</span><br><span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> sys_schedule <span class="hljs-keyword">AS</span> schedule<br><span class="hljs-keyword">ON</span> schedule.uid <span class="hljs-operator">=</span> user.uid<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> user.uid<br>LIMIT <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+
+<p>（这是利用ORDER BY是因为不这样做的话输出会乱序）</p>
+<p>所以只要把剩下的xml配置做好就行了，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--嵌套映射方式--&gt;</span><br><span class="hljs-comment">&lt;!--List&lt;User&gt; getAllUserAndSchedule_mapping();--&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">resultMap</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;ScheduleAndUserMapping&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;User&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">id</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;uid&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;uid&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;username&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;username&quot;</span>/&gt;</span><br>    <span class="hljs-comment">&lt;!--第三列使用映射解决--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">association</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;schedule&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--把表中的title字段映射到Schedule的title属性--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;title&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;title&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">association</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">resultMap</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;getAllUserAndSchedule_mapping&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;ScheduleAndUserMapping&quot;</span>&gt;</span><br>    SELECT user.uid, user.Username, schedule.title<br>    FROM sys_user AS user<br>    LEFT JOIN sys_schedule AS schedule<br>    ON schedule.uid = user.uid<br>    ORDER BY user.uid<br>    LIMIT 3<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>测试结果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs text">DEBUG [main] - ==&gt;  Preparing: SELECT user.uid, user.Username, schedule.title FROM sys_user AS user LEFT JOIN sys_schedule AS schedule ON schedule.uid = user.uid ORDER BY user.uid LIMIT 3<br>DEBUG [main] - ==&gt; Parameters: <br>TRACE [main] - &lt;==    Columns: uid, Username, title<br>TRACE [main] - &lt;==        Row: 1, zhangsan, 学习Java<br>TRACE [main] - &lt;==        Row: 2, 测试, 吃饭<br>TRACE [main] - &lt;==        Row: 3, CowBoy, null<br>DEBUG [main] - &lt;==      Total: 3<br><br>User&#123;uid=1, username=&#x27;zhangsan&#x27;, user_pwd=&#x27;null&#x27;, schedule=Schedule&#123;sid=null, uid=null, title=&#x27;学习Java&#x27;, completed=null&#125;&#125;<br>User&#123;uid=2, username=&#x27;测试&#x27;, user_pwd=&#x27;null&#x27;, schedule=Schedule&#123;sid=null, uid=null, title=&#x27;吃饭&#x27;, completed=null&#125;&#125;<br>User&#123;uid=3, username=&#x27;CowBoy&#x27;, user_pwd=&#x27;null&#x27;, schedule=null&#125;<br></code></pre></td></tr></table></figure>
+
+<p>查询出的数据只有三列：uid, username, title，没有查询的数据均显示为null，这样只查询了必要的数据。</p>
+<p>而且，从日志可以发现全程只执行了一次查询操作，大大提高执行的效率。</p>
+<h2 id="resultSet"><a href="#resultSet" class="headerlink" title="resultSet"></a>resultSet</h2><div class="note note-secondary">
+            <p>某些数据库允许存储过程返回多个结果集(resultSet)，或一次性执行多个语句，每个语句返回一个结果集。 我们可以利用这个特性，在不使用连接的情况下，只访问数据库一次就能获得相关数据。</p>
+          </div>
+
+<p>比如，下面这个存储过程一次性执行了用户基本信息的查询和日程的查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sql">DELIMITER <span class="hljs-operator">/</span><span class="hljs-operator">/</span><br><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> get_student_by_id (<br>    <span class="hljs-keyword">IN</span> p_uid <span class="hljs-type">INT</span><br>)<br><span class="hljs-keyword">BEGIN</span><br>    <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> sys_user <span class="hljs-keyword">WHERE</span> uid <span class="hljs-operator">=</span> p_uid;<br>    <span class="hljs-keyword">SELECT</span> uid, title, completed <span class="hljs-keyword">FROM</span> sys_schedule <span class="hljs-keyword">WHERE</span> uid <span class="hljs-operator">=</span> p_uid;<br><span class="hljs-keyword">END</span> <span class="hljs-operator">/</span><span class="hljs-operator">/</span><br><br>DELIMITER ;<br></code></pre></td></tr></table></figure>
+
+<p>在DBeaver中调用这个存储过程：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">&#123; <span class="hljs-keyword">CALL</span> schedule_system.get_student_by_id(<span class="hljs-number">1</span>) &#125;<br></code></pre></td></tr></table></figure>
+
+<p>得到下面的结果：</p>
+<p><img src="https://s21.ax1x.com/2025/05/19/pEvL4Cq.png" srcset="/img/loading.gif" lazyload alt="第一张表"></p>
+<p><img src="https://s21.ax1x.com/2025/05/19/pEvLbb4.png" srcset="/img/loading.gif" lazyload alt="第二张表"></p>
+<p>这是两张独立的表，也就是两个<strong>结果集</strong>。</p>
+<p>我们要考虑的是如何用MyBatis完成对存储过程的调用，以及调用完成之后如何使用这两个结果集。这样做的目的是<strong>避免使用连接查询</strong>，改用“多个独立结果集”，来减少数据库的负担。</p>
+<hr>
+<p>定义以下接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">User <span class="hljs-title function_">getUserByResultSet</span><span class="hljs-params">(<span class="hljs-meta">@Param(&quot;uid&quot;)</span> Integer uid)</span>;<br></code></pre></td></tr></table></figure>
+
+<p>数据库中已经有存储过程<code>get_student_by_id(IN p_uid INT)</code>，想要使用这个存储过程，映射语句如下；</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--通过结果集查询--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">resultMap</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectByResultSet&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;User&quot;</span>&gt;</span><br>    <span class="hljs-comment">&lt;!--定义第一个结果集--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">id</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;uid&quot;</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;uid&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;username&quot;</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;username&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;user_pwd&quot;</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;user_pwd&quot;</span>/&gt;</span><br><br>    <span class="hljs-comment">&lt;!--定义第二个结果集--&gt;</span><br>    <span class="hljs-comment">&lt;!--column 表示第一个结果集中的字段（通常是主表字段），</span><br><span class="hljs-comment">         foreignColumn 表示第二个结果集中的字段（通常是子表字段）。--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">association</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;schedule&quot;</span> <span class="hljs-attr">javaType</span>=<span class="hljs-string">&quot;Schedule&quot;</span> <span class="hljs-attr">resultSet</span>=<span class="hljs-string">&quot;resultSet2&quot;</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;uid&quot;</span> <span class="hljs-attr">foreignColumn</span>=<span class="hljs-string">&quot;uid&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--这里必须和存储过程的第二个语句完全对应--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">id</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;uid&quot;</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;uid&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;title&quot;</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;title&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;completed&quot;</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;completed&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">association</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">resultMap</span>&gt;</span><br><br><span class="hljs-comment">&lt;!--getUserByResultSet--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;getUserByResultSet&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;selectByResultSet&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">statementType</span>=<span class="hljs-string">&quot;CALLABLE&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">resultSets</span>=<span class="hljs-string">&quot;resultSet1,resultSet2&quot;</span>&gt;</span><br>    <span class="hljs-comment">&lt;!--#&#123;传入参数名, jdbcType=类型, mode=模式&#125;--&gt;</span><br>    &#123;CALL get_student_by_id(#&#123;uid, jdbcType=INTEGER, mode=IN&#125;)&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>几个注意点：</p>
+<ul>
+<li><code>association</code>的<code>column</code>表示<strong>主结果集</strong>（父结果集，也就是第一个结果集<code>sys_user</code>表）中的字段，<code>foreignColumn</code>表示<strong>关联结果集</strong>（子结果集，比如<code>sys_schedule</code>表）中的字段匹配。</li>
+<li><code>resultSets</code>结果集的命名默认为<code>resultSet1, resultSet2, ...</code>，这里没有起别名，直接用默认的了</li>
+</ul>
+<p>然后测试输出结果如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs text">DEBUG [main] - ==&gt;  Preparing: &#123;CALL get_student_by_id(?)&#125;<br>DEBUG [main] - ==&gt; Parameters: 1(Integer)<br>TRACE [main] - &lt;==    Columns: uid, username, user_pwd<br>TRACE [main] - &lt;==        Row: 1, zhangsan, 114411<br>DEBUG [main] - &lt;==      Total: 1<br>TRACE [main] - &lt;==    Columns: uid, title, completed<br>TRACE [main] - &lt;==        Row: 1, 学习Java, 0<br>DEBUG [main] - &lt;==      Total: 1<br>DEBUG [main] - &lt;==    Updates: 0<br>User&#123;uid=1, username=&#x27;zhangsan&#x27;, user_pwd=&#x27;114411&#x27;, schedule=Schedule&#123;sid=null, uid=1, title=&#x27;学习Java&#x27;, completed=0&#125;&#125;<br></code></pre></td></tr></table></figure>
+
+<p>因为这里没有查询<code>sid</code>，所以显示为null。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/MyBatis/" class="category-chain-item">MyBatis</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="print-no-link">#数据库</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>MyBatis-结果映射（resultMap）详解</div>
+      <div>https://kznleaf.top/2025/05/18/MyBatis-高级结果映射/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>banyee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月18日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/05/20/MyBatis-%E7%BC%93%E5%AD%98/" title="MyBatis-缓存">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MyBatis-缓存</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/05/14/MyBatis%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/" title="MyBatis配置过程和基本用法">
+                        <span class="hidden-mobile">MyBatis配置过程和基本用法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'kznLeaf/kznLeaf.github.io');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'Comment');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/vvd_js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+<script src="/js/sign.js"></script>
+<script src="/js/backgroundize.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>

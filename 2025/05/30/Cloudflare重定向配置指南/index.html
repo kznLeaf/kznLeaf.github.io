@@ -1,0 +1,777 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
+  <link rel="icon" href="/img/tree.png">
+  
+    <link rel="canonical" href="https://kznleaf.top/2025/05/30/Cloudflare重定向配置指南/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="banyee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在博客更换域名之后利用Cloudflare将向旧域名的请求重定向到新域名，并且保留请求的资源路径和查询字符串">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cloudflare配置将博客旧域名的请求重定向到新域名">
+<meta property="og:url" content="https://kznleaf.top/2025/05/30/Cloudflare%E9%87%8D%E5%AE%9A%E5%90%91%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="絆叶の片隅">
+<meta property="og:description" content="在博客更换域名之后利用Cloudflare将向旧域名的请求重定向到新域名，并且保留请求的资源路径和查询字符串">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s21.ax1x.com/2025/05/30/pV9ZSaQ.jpg">
+<meta property="article:published_time" content="2025-05-30T15:07:40.000Z">
+<meta property="article:modified_time" content="2025-07-02T15:25:37.830Z">
+<meta property="article:author" content="banyee">
+<meta property="article:tag" content="折腾记录">
+<meta property="article:tag" content="Cloudflare">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s21.ax1x.com/2025/05/30/pV9ZSaQ.jpg">
+  
+  
+  
+  <title>Cloudflare配置将博客旧域名的请求重定向到新域名 - 絆叶の片隅</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/macBorder.css">
+<link rel="stylesheet" href="/css/sign.css">
+<link rel="stylesheet" href="/css/backgroundize.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"Rs1qykYBxQwdjhZkWVB3fq7t-MdYXbMMI","app_key":"i1fqxvrusqbCUHDrnC4iGszb","server_url":"https://rs1qykyb.api.lncldglobal.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+
+  <div id="Loadanimation" style="z-index:999999;">
+    <div id="Loadanimation-center">
+       <div id="Loadanimation-center-absolute">
+           <div class="xccx_object" id="xccx_four"></div>
+           <div class="xccx_object" id="xccx_three"></div>
+           <div class="xccx_object" id="xccx_two"></div>
+           <div class="xccx_object" id="xccx_one"></div>
+       </div>
+    </div>
+    </div>
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>banyee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Cloudflare配置将博客旧域名的请求重定向到新域名</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-30 23:07" pubdate>
+          2025年5月30日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Cloudflare配置将博客旧域名的请求重定向到新域名</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>在博客更换域名之后利用Cloudflare将向旧域名的请求重定向到新域名，并且保留请求的资源路径和查询字符串</p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近为博客更换了域名，原域名为<code>kznep19.blog</code>，因为续费费用过高而更换为现在的<code>kznleaf.top</code>。现在遇到了几个问题：</p>
+<ol>
+<li>原域名虽然不再使用了，但是一直到2026年1月才过期；</li>
+<li>Google 和必应搜索引擎仍在收录原域名下的文章页，如果马上废弃原域名，又要重新抓取一遍文章；</li>
+<li>有几篇博客在别的地方被引用了，我希望这些外链仍然能够生效</li>
+</ol>
+<p>综上考虑，我希望获得的效果是：将博客切换为新域名，同时为旧域名配置重定向，使得对旧域名下的资源的请求会被自动重定向到新域名下对于的资源路径。</p>
+<p>花了不少时间查资料，大部分的解决方案都是通过配置页面规则(Page Rules)配置的方式实现重定向，我经过尝试之后发现并没有效果。最后找到了这篇博客：</p>
+<p><a target="_blank" rel="noopener" href="https://appscross.com/blog/issues-resolved-during-cloudflares-configuration-site-redirection-process.html">Cloudflare配置站点重定向</a></p>
+<p>这个博客是把对旧域名下的任何资源的请求都重定向到一个固定的URL下，我在该博客的基础上做了一些补充，最后达到了理想的效果。</p>
+<h2 id="配置要点"><a href="#配置要点" class="headerlink" title="配置要点"></a>配置要点</h2><h3 id="配置重定向规则"><a href="#配置重定向规则" class="headerlink" title="配置重定向规则"></a>配置重定向规则</h3><p>先打开主页左侧的“规则”，然后点击右侧的创建规则——<strong>重定向规则</strong>。（注意不是最左边的页面规则，这两个不是一个东西，后面会说）</p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9F3fP.png" srcset="/img/loading.gif" lazyload alt="重定向规则"></p>
+<p>这里为我们提供了三个选项：</p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9FGSf.png" srcset="/img/loading.gif" lazyload></p>
+<p>应当选择<strong>重定向到其他域</strong>。<a target="_blank" rel="noopener" href="https://developers.cloudflare.com/rules/url-forwarding/examples/redirect-all-different-hostname/">官方文档</a>对它的描述为：</p>
+<div class="note note-secondary">
+            <p>创建重定向规则，将对<code>smallshop.example.com</code>的所有请求重定向到使用 HTTPS 的其他主机名，同时保留原始路径和查询字符串。</p>
+          </div>
+
+<p>使用通配符匹配模式，如果请求的URL为<code>http*://smallshop.example.com/*</code>，那么：</p>
+<ul>
+<li>目标URL：<code>https://globalstore.example.net/$&#123;2&#125;</code></li>
+<li>状态码：301</li>
+<li>保留查询字符串：启用</li>
+</ul>
+<p>请求URL中的<code>*</code>是对零个或者多个字符进行匹配，这里表示使用 HTTP 或 HTTPS 协议对<code>smallshop.example.com</code>下的任意资源的请求都将被匹配。</p>
+<p>目标URL即该请求将会被重定向到的URL，其中的<code>$&#123;2&#125;</code>是对通配符捕获的内容的引用，这里代表的是请求URL中的第二个<code>*</code>，所以用户最终访问的是新域名<code>globalstore.example.net</code>下的对应资源。</p>
+<p>从上面的描述可以看出这就是我们想要的东西。那接下来的配置就很简单了，按照刚才提到的三点：目标URL、状态码、启用保留查询字符串 配置即可。</p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9FO7d.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="使规则生效"><a href="#使规则生效" class="headerlink" title="使规则生效"></a>使规则生效</h3><p>光是配置规则是不够的，还要给这个域名添加DNS记录以使规则生效。创建一条A记录即可，IP地址可以随便写，我这里用的是保留IP地址<code>192.0.2.1</code>，写了两条</p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9kn3V.png" srcset="/img/loading.gif" lazyload></p>
+<p>关于这一部分，Cloudflare文档在Page Rules一节中是这样说的：</p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9kajO.png" srcset="/img/loading.gif" lazyload></p>
+<p><a target="_blank" rel="noopener" href="https://developers.cloudflare.com/rules/page-rules/">原文链接</a></p>
+<p>也就是说如果IP地址作为占位符的话，最好使用保留IP地址<code>192.0.2.*</code>，避免把流量发到什么奇怪的地方。</p>
+<h2 id="Page-Rules和Redirects的区别"><a href="#Page-Rules和Redirects的区别" class="headerlink" title="Page Rules和Redirects的区别"></a>Page Rules和Redirects的区别</h2><p>前面提到了，在搜索引擎中搜索“使用Cloudflare把旧域名重定向到新域名”，弹出来的结果大部分都是使用Page Rules的，但这其实不太合适。其实关键就是<strong>转发</strong>和<strong>重定向</strong>的区别。Page Rules中可以配置一个叫做<code>URL Forwarding(转发URL)</code>的东西：</p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9Alxf.png" srcset="/img/loading.gif" lazyload alt="页面规则中的转发URL"></p>
+<p>如果你配置了目标地址，那么：</p>
+<div class="note note-secondary">
+            <p>If you enter the address above in the forwarding box and select Add Rule, within a few seconds any requests that match the pattern you entered will automatically be forwarded with an HTTP 302 redirect status code to the new URL.</p>
+          </div>
+
+<p>即这样配置返回的状态码是<code>302</code>，而刚才的重定向状态码是301，至此熟悉计网的人应该清楚是怎么一回事了。不过还是再看看 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/HTTP%E7%8A%B6%E6%80%81%E7%A0%81">wiki</a> 对这两种状态码的表述：</p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9Amad.png" srcset="/img/loading.gif" lazyload alt="状态码301和302的区别"></p>
+<ul>
+<li>301用于永久重定向的情况，发起请求的客户端收到这个状态码之后，除了收到一个用于重定向的地址以外，还会被告知把以后的请求目标地址也改成这个地址，而且这个地址默认是会被缓存的。</li>
+<li>302用于临时重定向，而且这个响应不会被缓存，客户端以后继续向旧域名发送请求。</li>
+</ul>
+<p>所以在考虑是选择页面规则中的转发URL还是创建重定向规则的时候，应当根据以上内容进行考虑。像我这种为网站更换域名的情况当然是选择重定向了。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Cloudflare/" class="category-chain-item">Cloudflare</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="print-no-link">#折腾记录</a>
+      
+        <a href="/tags/Cloudflare/" class="print-no-link">#Cloudflare</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Cloudflare配置将博客旧域名的请求重定向到新域名</div>
+      <div>https://kznleaf.top/2025/05/30/Cloudflare重定向配置指南/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>banyee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/05/31/JVM-2.2-%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%9F%9F/" title="JVM：运行时数据区域简析">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JVM：运行时数据区域简析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/05/27/%E7%AC%AC%E4%B8%89%E6%AC%A1%E6%8A%98%E8%85%BE/" title="第三次博客折腾记录">
+                        <span class="hidden-mobile">第三次博客折腾记录</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'kznLeaf/kznLeaf.github.io');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'Comment');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/vvd_js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+<script src="/js/sign.js"></script>
+<script src="/js/backgroundize.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>

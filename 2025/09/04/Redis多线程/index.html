@@ -1,0 +1,761 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
+  <link rel="icon" href="/img/tree.png">
+  
+    <link rel="canonical" href="https://kznleaf.top/2025/09/04/Redis多线程/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="banyee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Redis 的核心是单线程处理客户端的 SET&#x2F;GET 请求，但现在大多数机器都是多核的。为了利用到多核，减少单线程成为瓶颈，AWS 为自己的 ElasticCache 做了很多改进，包括：（均已合并到Valkey 8.0）  2019年推出IO线程，承担一部分主线程的工作 2021年进一步优化IO线程，将开启 TLS 的集群加解密和连接处理操作从主线程移到 IO 线程 2023年推出增">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Valkey&#x2F;Redis 如何通过多线程达到单点 1M RPS?">
+<meta property="og:url" content="https://kznleaf.top/2025/09/04/Redis%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.html">
+<meta property="og:site_name" content="絆叶の片隅">
+<meta property="og:description" content="Redis 的核心是单线程处理客户端的 SET&#x2F;GET 请求，但现在大多数机器都是多核的。为了利用到多核，减少单线程成为瓶颈，AWS 为自己的 ElasticCache 做了很多改进，包括：（均已合并到Valkey 8.0）  2019年推出IO线程，承担一部分主线程的工作 2021年进一步优化IO线程，将开启 TLS 的集群加解密和连接处理操作从主线程移到 IO 线程 2023年推出增">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s21.ax1x.com/2025/08/22/pVDDgxg.png">
+<meta property="article:published_time" content="2025-09-04T14:37:06.000Z">
+<meta property="article:modified_time" content="2025-09-09T14:55:39.468Z">
+<meta property="article:author" content="banyee">
+<meta property="article:tag" content="中间件">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s21.ax1x.com/2025/08/22/pVDDgxg.png">
+  
+  
+  
+  <title>Valkey/Redis 如何通过多线程达到单点 1M RPS? - 絆叶の片隅</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/macBorder.css">
+<link rel="stylesheet" href="/css/sign.css">
+<link rel="stylesheet" href="/css/backgroundize.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"Rs1qykYBxQwdjhZkWVB3fq7t-MdYXbMMI","app_key":"i1fqxvrusqbCUHDrnC4iGszb","server_url":"https://rs1qykyb.api.lncldglobal.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+
+  <div id="Loadanimation" style="z-index:999999;">
+    <div id="Loadanimation-center">
+       <div id="Loadanimation-center-absolute">
+           <div class="xccx_object" id="xccx_four"></div>
+           <div class="xccx_object" id="xccx_three"></div>
+           <div class="xccx_object" id="xccx_two"></div>
+           <div class="xccx_object" id="xccx_one"></div>
+       </div>
+    </div>
+    </div>
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>banyee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Valkey/Redis 如何通过多线程达到单点 1M RPS?</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-09-04 22:37" pubdate>
+          2025年9月4日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Valkey/Redis 如何通过多线程达到单点 1M RPS?</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Redis 的核心是单线程处理客户端的 SET&#x2F;GET 请求，但现在大多数机器都是<strong>多核</strong>的。为了利用到多核，减少单线程成为瓶颈，AWS 为自己的 ElasticCache 做了很多改进，包括：（均已合并到Valkey 8.0）</p>
+<ul>
+<li>2019年推出IO线程，承担一部分主线程的工作</li>
+<li>2021年进一步优化IO线程，将开启 TLS 的集群加解密和连接处理操作从主线程移到 IO 线程</li>
+<li>2023年推出增强的IO多路复用</li>
+<li>2023年提出表示层卸载和内存访问摊销技术，实现单节点处理超过100万RPS。</li>
+</ul>
+<h2 id="增强I-O处理"><a href="#增强I-O处理" class="headerlink" title="增强I&#x2F;O处理"></a>增强I&#x2F;O处理</h2><p>增强的 I&#x2F;O 多路复用可显著改善大规模吞吐量和延迟。先看看以前的IO多路复用是怎么做的：</p>
+<p><img src="https://s21.ax1x.com/2025/08/22/pVDDBVI.png" srcset="/img/loading.gif" lazyload></p>
+<p>每个客户端都与单线程的处理引擎建立一个连接通道，因此引擎要单独为每一个客户端的建立网络连接、解析发来的请求、运行解析出来的命令。这样的架构有两个问题：</p>
+<ol>
+<li><strong>处理引擎必须亲自处理网络连接，必须亲自解析命令，不能专注于运行命令</strong></li>
+<li><strong>多余的CPU核心没有得到利用</strong></li>
+</ol>
+<p>为了解决这几个问题，增强型的IO多路复用使用以下架构：</p>
+<p><img src="https://s21.ax1x.com/2025/08/22/pVDDgxg.png" srcset="/img/loading.gif" lazyload></p>
+<p>其余可用的 CPU 核心用来分担主线程的压力，<strong>把处理网络IO的工作转移到 IO 线程上</strong>，主线程负责给IO线程分配任务。使用多路复用时，每个增强型 I&#x2F;O 线程不会为每个客户端打开一个通道（如上图所示），而是<strong>多个客户端共用一个IO线程</strong>，由IO线程把收集到的命令通过单个通道发送给主线程处理。</p>
+<p>这样做带来了哪些好处？具体来说：</p>
+<ol>
+<li>增强型 I&#x2F;O 多路复用将源自多个客户端（有时是数千个）的命令组合到少量通道中，在相同连接数下通道的数量更少，提高了吞吐量。</li>
+<li>通道数量的减少增加了<strong>访问局部性</strong>，从而提高了内存缓存的使用率。</li>
+<li>缓存的命中率提高，于是命令的平均执行时间减少，降低了延迟。</li>
+</ol>
+<h2 id="表示层卸载"><a href="#表示层卸载" class="headerlink" title="表示层卸载"></a>表示层卸载</h2><p>7.1 版本引入表示层卸载（Redis presentation layer offloading），指的是客户端命令的解析操作。增强型 IO 多路复用把网络IO的处理交给了单独的IO线程，而<strong>表示层卸载在此基础上更进一步，让 IO 线程顺便把客户端的命令解析为 Redis 二进制命令的格式，然后转发到主线程进行</strong>。这样有两个好处：</p>
+<ol>
+<li>多个CPU<strong>并行</strong>处理网络 IO 和解析命令的工作，充分利用到每一个CPU核心，大大提升执行效率</li>
+<li>主线程只需要专注于运行命令，提高了命令的执行效率</li>
+</ol>
+<p><img src="https://s21.ax1x.com/2025/08/22/pVDDTiV.png" srcset="/img/loading.gif" lazyload alt="表示层卸载"></p>
+<h2 id="内存访问摊销"><a href="#内存访问摊销" class="headerlink" title="内存访问摊销"></a>内存访问摊销</h2><p>内存访问摊销（Memory access amortization）是为了解决随机内存访问开销过大的问题，旨在降低内存访问成本，降低延迟。在7.1版本引入。</p>
+<p>Redis执行命令时经常需要通过字典去寻找key，对于需要查找多个key的情况，传统的做法是一个一个找，找完一个再重新访问内存寻找下一个，换句话说<strong>哈希表遍历将串行运行</strong>。而内存访问摊销采用的方式如下：</p>
+<p><img src="https://s21.ax1x.com/2025/08/22/pVDrv6g.png" srcset="/img/loading.gif" lazyload></p>
+<p>分析：</p>
+<ul>
+<li><strong>并行访问内存</strong>，通过 <strong>dictPrefetch</strong> 机制，将多个 IO 线程的读取请求合并到一起并行处理，并把结果放到主线程对应 CPU 核的 L1&#x2F;L2 私有缓存中，减少了 Redis 主线程针对每个命令都要进行内存调用的消耗，提高了性能。</li>
+</ul>
+<h2 id="主从复制优化"><a href="#主从复制优化" class="headerlink" title="主从复制优化"></a>主从复制优化</h2><p>在 Valkey&#x2F;Redis 进行主、从节点同步的时候，有时需要进行全量同步操作。比如有新的从节点加入，或者从节点和主节点复制延迟过大而主节点记录变更 buffer 没有全部更新数据时，都会触发新的全量同步操作。Valkey 8.0 通过<strong>双通道传输</strong>的机制，优化了全量同步，在某些情况下能降低 50% 全量同步的时间，并减少 60% 的复制数据内存。</p>
+<p>全量同步时，主节点会生成 RDB 文件，同时会将生成 RDB 过程中的【增量更改信息】存储在专门的 <strong>client output buffer</strong> 中。RDB 生成完毕后，主节点会将 RDB 文件传输给从节点，从节点拿到 RDB 文件并 apply 后，会继续从主节点读取 client output buffer 中的<strong>增量日志</strong>。Valkey 7.2&#x2F;Redis 在生成 RDB 文件过程中采用的 Copy-on-Write 的机制，即先 fork 一个进程，指向相同的内存空间。在生成 RDB 文件过程中，如果前端应用修改了部分数据，Valkey&#x2F;Redis 会对修改的数据页进行一个拷贝，并在拷贝上进行修改。因此，全量同步的时间会影响 Redis 主节点的性能。</p>
+<p>Valkey 8.0 提出了<strong>双通道复制机制</strong>来分别复制 RDB 和增量日志，同时将 client output buffer 放到从节点。这样的改进使得主节点在进行 RDB 文件生成的过程中，就可以将增量日志发送给从节点，<strong>将顺序传输的方式改成了并行传输</strong>，加快了同步速度。此外，从节点存放 client output buffer，能够释放写节点的资源，避免 buffer 过载，并使主节点更好地应对前端应用的负载。另外，同步速度加快，也能减少 buffer 自身的大小，同时减少主节点 COW 的时间，降低对前端应用的影响。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Redis/" class="category-chain-item">Redis</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="print-no-link">#中间件</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Valkey/Redis 如何通过多线程达到单点 1M RPS?</div>
+      <div>https://kznleaf.top/2025/09/04/Redis多线程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>banyee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年9月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/09/13/%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%94%A8%E6%88%B7%E7%B2%92%E5%BA%A6%E7%9A%84%E9%99%90%E6%B5%81%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F/" title="借助 Redis Hash 实现用户粒度的令牌桶限流">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">借助 Redis Hash 实现用户粒度的令牌桶限流</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/08/28/Linux-swappiness/" title="关于Linux的swap分区的广泛误解-swappiness参数">
+                        <span class="hidden-mobile">关于Linux的swap分区的广泛误解-swappiness参数</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'kznLeaf/kznLeaf.github.io');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'Comment');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/vvd_js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+<script src="/js/sign.js"></script>
+<script src="/js/backgroundize.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>

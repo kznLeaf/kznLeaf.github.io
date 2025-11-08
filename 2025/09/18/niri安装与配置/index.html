@@ -1,0 +1,879 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
+  <link rel="icon" href="/img/tree.png">
+  
+    <link rel="canonical" href="https://kznleaf.top/2025/09/18/niri安装与配置/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="banyee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="无限平铺窗口管理器——niri在 ArchLinux 上的安装与配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无限平铺窗口管理器——niri在 ArchLinux 上的安装与配置">
+<meta property="og:url" content="https://kznleaf.top/2025/09/18/niri%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="絆叶の片隅">
+<meta property="og:description" content="无限平铺窗口管理器——niri在 ArchLinux 上的安装与配置">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s21.ax1x.com/2025/09/18/pVhfYLD.png">
+<meta property="article:published_time" content="2025-09-18T14:05:01.000Z">
+<meta property="article:modified_time" content="2025-11-08T12:26:18.010Z">
+<meta property="article:author" content="banyee">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="折腾记录">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s21.ax1x.com/2025/09/18/pVhfYLD.png">
+  
+  
+  
+  <title>无限平铺窗口管理器——niri在 ArchLinux 上的安装与配置 - 絆叶の片隅</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/macBorder.css">
+<link rel="stylesheet" href="/css/sign.css">
+<link rel="stylesheet" href="/css/backgroundize.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"Rs1qykYBxQwdjhZkWVB3fq7t-MdYXbMMI","app_key":"i1fqxvrusqbCUHDrnC4iGszb","server_url":"https://rs1qykyb.api.lncldglobal.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+
+  <div id="Loadanimation" style="z-index:999999;">
+    <div id="Loadanimation-center">
+       <div id="Loadanimation-center-absolute">
+           <div class="xccx_object" id="xccx_four"></div>
+           <div class="xccx_object" id="xccx_three"></div>
+           <div class="xccx_object" id="xccx_two"></div>
+           <div class="xccx_object" id="xccx_one"></div>
+       </div>
+    </div>
+    </div>
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>banyee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">无限平铺窗口管理器——niri在 ArchLinux 上的安装与配置</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-09-18 22:05" pubdate>
+          2025年9月18日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">无限平铺窗口管理器——niri在 ArchLinux 上的安装与配置</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>无限平铺窗口管理器——niri在 ArchLinux 上的安装与配置</p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前我的 Arch 用的一直是 KDE Plasma，也在 Debian 上用过 xfce，但是 KDE 采用的是仿 Windows 的艺术风格，虽然也可以折腾得很美观，但是内存占用很大，开机占用基本保持在 3G 左右；xfce 作为一个最小可用的桌面环境，感觉有些过于精简了，系统设置的图形界面也不太好用。</p>
+<p>前两天冲浪的时候偶然看到有人展示自己的 <strong>niri</strong> 桌面环境，还有人说自己入了 niri 的坑之后马上抛弃 Hyprland 了，理由是 niri 在美观程度不输 Hyprland 的同时，提供了很多【开箱即用】的体验，用户需要自主配置的难度大大降低。于是我花了一整天的时间在 VMware 虚拟机里折腾 niri，最后配置出来了比较完整的桌面环境，等以后实习攒够钱组了台式机之后就按照这个流程装桌面环境好了。</p>
+<p>配置完毕的效果如下：</p>
+<p><img src="https://s21.ax1x.com/2025/09/18/pVhfYLD.png" srcset="/img/loading.gif" lazyload alt="最终效果"></p>
+<p>既比 KDE 轻量，也要美观得多。开机之后的内存占用基本上不会超过 1G，这大概是得益于 Rust 的高效率？（顺便一提，Hyperland 是基于 C++ 写的，现在大批用户涌入 niri 间接让 Rust 又赢了一波😋）</p>
+<p>niri 的官网在<a target="_blank" rel="noopener" href="https://yalter.github.io/niri/Getting-Started.html">这里</a>，还是挂在作者的 Github Pages 上的一个小网页，但是基本上把该讲的东西都讲清楚了，建议好好读一下。</p>
+<h2 id="基本安装"><a href="#基本安装" class="headerlink" title="基本安装"></a>基本安装</h2><p>先安装一个ArchLinux系统，可以参考Archlinux简明指南，不再赘述。</p>
+<p>如果是在 VMware 安装 Archlinux，参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/Thato/p/18311683">https://www.cnblogs.com/Thato/p/18311683</a>，关键点只有一个，就是在开始安装之前需要手动修改配置文件，确保启动方式是 UEFI。剩下的参考ArchLinux安装指南即可。</p>
+<p>系统安装完毕后，使用下面的命令安装必要的包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S --needed niri alacritty fuzzel swaylock swayidle waybar swaybg xwayland-satellite gdm mako<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>niri：平铺式窗口管理器</li>
+<li>alacritty：GPU加速的终端模拟器</li>
+<li>fuzzel：用于快速搜索应用</li>
+<li>swaylock：搭配swayidle，实现闲置一段时间后锁屏</li>
+<li>swayidle：闲置管理工具，可以设置超时后执行的动作</li>
+<li>waybar：高度可自定义的 Wayland 状态栏</li>
+<li>swaybg：Wayland 的桌面壁纸管理工具</li>
+<li>xwayland-satellite：用于运行 x11 应用的 Wayland 桥接工具</li>
+<li>gdm：登录管理器</li>
+<li>mako：通知管理器</li>
+</ul>
+<p>然后启用gdm：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl <span class="hljs-built_in">enable</span> gdm<br></code></pre></td></tr></table></figure>
+
+<p>之后重启，开机之后就会进入gdm界面。</p>
+<hr>
+<p><strong>vmware安装arch linux之后，画面的大小固定为1200x800，怎么解决?</strong></p>
+<p>在简中互联网翻了半天，全是互相复制粘贴的文章，没找到一个靠谱的方法，最后还是问 AI 解决的🤣</p>
+<p>先安装<strong>vmtools</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -Syu open-vm-tools<br></code></pre></td></tr></table></figure>
+
+<p>然后启动对应服务。第一个主要用来分辨率自动调整、剪贴板共享之类的问题，启动之后虚拟机窗口大小即可与屏幕自动适应；第二个负责实现拖放和复制粘贴文件的功能（不过启用之后还是没办法共享粘贴板，原因我没去深究）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now vmtoolsd.service<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> --now vmware-vmblock-fuse.service<br></code></pre></td></tr></table></figure>
+
+<p>搞定。</p>
+<h2 id="如何修改系统配置"><a href="#如何修改系统配置" class="headerlink" title="如何修改系统配置"></a>如何修改系统配置</h2><p>如果希望只修改当前用户的配置，应该修改<code>~/.config/niri/config.kdl</code>。<code>/etc/niri/config.kdl</code>的修改适用于所有用户。</p>
+<p><strong>配置文件的修改会在保存之后立刻生效</strong>。如果配置有误，可以调用<code>niri validate</code>查看详情。</p>
+<h2 id="虚拟机窗口的缩放比例"><a href="#虚拟机窗口的缩放比例" class="headerlink" title="虚拟机窗口的缩放比例"></a>虚拟机窗口的缩放比例</h2><p>默认情况下虚拟机窗口字体非常小，需要增大缩放比例。</p>
+<p>niri 的配置文件中可以为每一个显示器都编写一个<code>output</code>规则，这样的配置规则只对指定名称的显示器有效，每增加一个显示器就要增加一个配置规则。</p>
+<p>output 规则是根据显示器的名字进行匹配的，因此，首先应该确认自己的当前使用的显示器 output 的名字，使用<code>wlr-randr</code>可以查看（也可以直接<code>fastfetch</code>），运行结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs bash">myarch% wlr-randr<br>Virtual-1 <span class="hljs-string">&quot;Unknown - Unknown - Virtual-1&quot;</span><br>  Make: Unknown<br>  Model: Unknown<br>  Enabled: <span class="hljs-built_in">yes</span><br>  Modes:<br>    2878x1482 px, 59.999001 Hz (preferred, current)<br>    4096x2160 px, 60.000000 Hz<br>    4096x2160 px, 59.939999 Hz<br>    2560x1600 px, 59.987000 Hz<br>    2560x1600 px, 59.972000 Hz<br>    1920x1440 px, 60.000000 Hz<br>    1856x1392 px, 59.994999 Hz<br>    1792x1344 px, 60.000000 Hz<br>    2048x1152 px, 60.000000 Hz<br>    1920x1200 px, 59.884998 Hz<br>    1920x1200 px, 59.950001 Hz<br>    1920x1080 px, 60.000000 Hz<br>    1600x1200 px, 60.000000 Hz<br>    1680x1050 px, 59.953999 Hz<br>    1680x1050 px, 59.882999 Hz<br>    1400x1050 px, 59.978001 Hz<br>    1400x1050 px, 59.948002 Hz<br>    1600x900 px, 60.000000 Hz<br>    1280x1024 px, 60.020000 Hz<br>    1440x900 px, 59.887001 Hz<br>    1440x900 px, 59.901001 Hz<br>    1280x960 px, 60.000000 Hz<br>    1366x768 px, 59.790001 Hz<br>    1366x768 px, 60.000000 Hz<br>    1360x768 px, 60.014999 Hz<br>    1280x800 px, 59.810001 Hz<br>    1280x800 px, 59.910000 Hz<br>    1280x768 px, 59.869999 Hz<br>    1280x768 px, 59.994999 Hz<br>    1280x720 px, 60.000000 Hz<br>    1024x768 px, 60.004002 Hz<br>    800x600 px, 60.317001 Hz<br>    800x600 px, 56.250000 Hz<br>    848x480 px, 60.000000 Hz<br>    640x480 px, 59.939999 Hz<br>  Position: 0,0<br>  Transform: normal<br>  Scale: 1.500000<br>  Adaptive Sync: disabled<br></code></pre></td></tr></table></figure>
+
+<p>对于VMware虚拟机来说，它的显示器叫做<code>Virtual1</code>，添加对应的output规则即可：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">output</span> <span class="hljs-string">&quot;Virtual1&quot;</span> &#123;<br>    <span class="hljs-attribute">scale</span> <span class="hljs-number">1</span>.<span class="hljs-number">5</span><br>    mode <span class="hljs-string">&quot;2560x1440@60&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里将缩放比例改成1.5，效果如下：(这里已经调整过了终端的外观，具体看【终端配置】的内容)</p>
+<p><img src="https://s21.ax1x.com/2025/09/17/pVhM42D.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="安装字体"><a href="#安装字体" class="headerlink" title="安装字体"></a>安装字体</h2><p>安装字体，用于waybar：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S  noto-fonts-emoji  otf-font-awesome<br><br><span class="hljs-comment"># 搜索可用的 CaskaydiaCove 相关包，这是waybar配置文件中的首选字体</span><br>yay -Ss caskaydia<br>yay -Ss cascadia<br><br><span class="hljs-comment"># 安装找到的包</span><br>yay -S ttf-cascadia-code-nerd<br></code></pre></td></tr></table></figure>
+
+<p>终端字体：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S  ttf-fira-code<br></code></pre></td></tr></table></figure>
+
+<p>更新字体缓存</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">fc-cache -fv<br></code></pre></td></tr></table></figure>
+
+<h2 id="swaybg、mako、waybar、swayidle"><a href="#swaybg、mako、waybar、swayidle" class="headerlink" title="swaybg、mako、waybar、swayidle"></a>swaybg、mako、waybar、swayidle</h2><p>先执行下面的命令，把mako和waybar作为systemd服务运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl --user add-wants niri.service mako.service<br>systemctl --user add-wants niri.service waybar.service<br></code></pre></td></tr></table></figure>
+
+<hr>
+<p>waybar美化参考：<a target="_blank" rel="noopener" href="https://github.com/woioeow/hyprland-dotfiles">https://github.com/woioeow/hyprland-dotfiles</a></p>
+<p>把该项目<code>hypr_style1/waybar</code>下的四个文件放到自己的<code>~/.config/waybar/</code>下。mako也是一样的道理，注意这里的waybar是根据hyprland配置的，不能直接用于niri,可以参考我的<a target="_blank" rel="noopener" href="https://github.com/kznLeaf/dotfiles">dotfile</a>.效果如下：</p>
+<p><img src="https://s21.ax1x.com/2025/11/08/pZpvIMV.png" srcset="/img/loading.gif" lazyload></p>
+<hr>
+<p><code>swaybg</code>负责管理<strong>壁纸</strong>，这个需要先创建一个配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vim ~/.config/systemd/user/swaybg.service<br></code></pre></td></tr></table></figure>
+
+<p>加入以下内容：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[Unit]</span><br><span class="hljs-attr">PartOf</span>=graphical-session.target<br><span class="hljs-attr">After</span>=graphical-session.target<br><span class="hljs-attr">Requisite</span>=graphical-session.target<br><br><span class="hljs-section">[Service]</span><br><span class="hljs-attr">ExecStart</span>=/usr/bin/swaybg -m fill -i <span class="hljs-string">&quot;%h/Pictures/LakeSide.png&quot;</span><br><span class="hljs-attr">Restart</span>=<span class="hljs-literal">on</span>-failure<br></code></pre></td></tr></table></figure>
+
+<p>上面的配置的作用是让这个服务只有在图形会话启动时才运行，并且随着会话的生命周期管理。<code>%h</code>会被自动替换为<code>/home/用户名</code>，而且如果swaybg崩溃了，那么systemd会自动重启它。</p>
+<p>编辑<code>swaybg.service</code>后，可以运行<code>systemctl --user daemon-reload</code>以便 systemd 获取文件中的更改。</p>
+<p>最后执行下面的命令，把修改添加到 niri：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl --user add-wants niri.service swaybg.service<br></code></pre></td></tr></table></figure>
+
+<hr>
+<p><code>swayidle</code>配置如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vim ~/.config/systemd/user/swayidle.service<br></code></pre></td></tr></table></figure>
+
+<p>在配置文件加入以下内容</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[Unit]</span><br><span class="hljs-attr">PartOf</span>=graphical-session.target<br><span class="hljs-attr">After</span>=graphical-session.target<br><span class="hljs-attr">Requisite</span>=graphical-session.target<br><br><span class="hljs-section">[Service]</span><br><span class="hljs-attr">ExecStart</span>=/usr/bin/swayidle -w timeout <span class="hljs-number">601</span> <span class="hljs-string">&#x27;niri msg action power-off-monitors&#x27;</span> timeout <span class="hljs-number">600</span> <span class="hljs-string">&#x27;swaylock -f&#x27;</span> before-sleep <span class="hljs-string">&#x27;swaylock -f&#x27;</span><br><span class="hljs-attr">Restart</span>=<span class="hljs-literal">on</span>-failure<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意</strong>：在虚拟机中，没有真实显示器，<code>niri msg action power-off-monitors</code>命令会导致虚拟机显卡输出彻底挂掉，所以需要把这一个命令去掉，改成：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">ExecStart=/usr/bin/swayidle -w \<br>   <span class="hljs-built_in">timeout</span> 600 <span class="hljs-string">&#x27;swaylock -f&#x27;</span> \<br>   before-sleep <span class="hljs-string">&#x27;swaylock -f&#x27;</span><br><br></code></pre></td></tr></table></figure></blockquote>
+<p>最后添加到服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 把swayidle添加到niri</span><br>systemctl --user add-wants niri.service swayidle.service<br><span class="hljs-comment"># 重新启动某个服务</span><br>systemctl --user restart waybar.service<br></code></pre></td></tr></table></figure>
+
+<h2 id="Alacritty终端配置"><a href="#Alacritty终端配置" class="headerlink" title="Alacritty终端配置"></a>Alacritty终端配置</h2><h3 id="字体和间距"><a href="#字体和间距" class="headerlink" title="字体和间距"></a>字体和间距</h3><p>新建文件<code>~/.config/alacritty/alacritty.toml</code>，加入以下配置：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-section">[font]</span><br><span class="hljs-attr">size</span> = <span class="hljs-number">12.0</span><br><br><span class="hljs-section">[font.normal]</span><br><span class="hljs-attr">family</span> = <span class="hljs-string">&quot;FiraCode&quot;</span><br><span class="hljs-attr">style</span> = <span class="hljs-string">&quot;Regular&quot;</span><br><br><span class="hljs-section">[font.bold]</span><br><span class="hljs-attr">family</span> = <span class="hljs-string">&quot;FiraCode&quot;</span><br><span class="hljs-attr">style</span> = <span class="hljs-string">&quot;Bold&quot;</span><br><br><span class="hljs-section">[font.italic]</span><br><span class="hljs-attr">family</span> = <span class="hljs-string">&quot;FiraCode&quot;</span><br><span class="hljs-attr">style</span> = <span class="hljs-string">&quot;Italic&quot;</span><br><br><span class="hljs-section">[font.bold_italic]</span><br><span class="hljs-attr">family</span> = <span class="hljs-string">&quot;FiraCode&quot;</span><br><span class="hljs-attr">style</span> = <span class="hljs-string">&quot;Bold Italic&quot;</span><br><br><span class="hljs-section">[window.padding]</span><br><span class="hljs-attr">x</span> = <span class="hljs-number">15</span><br><span class="hljs-attr">y</span> = <span class="hljs-number">15</span><br><br><span class="hljs-section">[selection]</span><br><span class="hljs-attr">save_to_clipboard</span> = <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="外观设置"><a href="#外观设置" class="headerlink" title="外观设置"></a>外观设置</h3><p>可以通过配置窗口规则来修改透明度，这里只匹配了终端窗口，使得终端窗口具有透明效果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kdl">window-rule &#123;<br>    match app-id=&quot;Alacritty&quot;<br>    opacity 0.9<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>然后修改选中窗口时呈现的效果。niri官方文档是这样说的：</p>
+<blockquote>
+<p>默认情况下，<strong>焦点环</strong>和<strong>边框</strong>会渲染为窗口后面的实心矩形背景。也就是说，它们会透过半透明窗口显示出来。这是因为使用客户端装饰的窗口可以具有任意形状。</p>
+<p>如果您不喜欢这样，您应该取消注释配置顶层的 <strong>prefer-no-csd</strong> 设置。Niri 将在同意省略客户端装饰的窗口周围绘制焦点环和边框。</p>
+</blockquote>
+<p>按照描述取消注释<code>prefer-no-csd</code>，效果如下：</p>
+<p><img src="https://s21.ax1x.com/2025/09/17/pVhKD0I.png" srcset="/img/loading.gif" lazyload></p>
+<p>选中的窗口四周会出现一层蓝色方框。</p>
+<h2 id="锁屏设置"><a href="#锁屏设置" class="headerlink" title="锁屏设置"></a>锁屏设置</h2><p>swaylock的相关命令见<a target="_blank" rel="noopener" href="https://man.archlinux.org/man/extra/swaylock/swaylock.1.en">官方文档</a></p>
+<p>swaylock不会自动创建配置文件，而是先去按照优先级查找：</p>
+<ol>
+<li><code>$HOME/.swaylock/config</code></li>
+<li><code>$XDG_CONFIG_HOME/swaylock/config</code>（通常是 <code>$HOME/.config/swaylock/config</code>）</li>
+<li><code>·SYSCONFDIR/swaylock/config</code>（在 Arch 上就是 <code>/etc/swaylock/config</code>）</li>
+</ol>
+<p>而且，原版 swaylock 支持的效果是非常少的，想要使用 clock、blur 之类的特效的话需要安装插件：<a target="_blank" rel="noopener" href="https://github.com/mortie/swaylock-effects">https://github.com/mortie/swaylock-effects</a>，但是这个项目已经4年没有更新了，基本没法用，所以先用着原版吧，虽然简陋一点。</p>
+<p>这里使用<code>~/.config/swaylock/config</code>作为配置文件（需要自己创建该文件）。文档中提供的命令行参数都可以写入配置文件中，比如对于下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">swaylock --color=000000 --ignore-empty-password<br></code></pre></td></tr></table></figure>
+
+<p>在配置文件中的写法为</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">color</span><span class="hljs-operator">=</span><span class="hljs-number">000000</span><br>ignore-empty-password<br></code></pre></td></tr></table></figure>
+
+<p>具体的配置参数参考<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ptmiPG_V4u8">这个视频</a>。</p>
+<p>配置文件：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 背景设置</span><br><span class="hljs-attr">color</span>=<span class="hljs-number">000000</span><br><span class="hljs-attr">image</span>=~/Pictures/wallpaper.jpg<br><span class="hljs-attr">scaling</span>=fill<br><br><span class="hljs-comment"># 或者使用纯色背景</span><br><span class="hljs-comment"># color=1e1e2e</span><br><br><span class="hljs-comment"># 指示器设置</span><br><span class="hljs-attr">indicator-radius</span>=<span class="hljs-number">100</span><br><span class="hljs-attr">indicator-thickness</span>=<span class="hljs-number">7</span><br>indicator-caps-lock<br><br><span class="hljs-comment"># 环形指示器颜色</span><br><span class="hljs-attr">ring-color</span>=<span class="hljs-number">313244</span><br><span class="hljs-attr">ring-clear-color</span>=f5e0dc<br><span class="hljs-attr">ring-caps-lock-color</span>=fab387<br><span class="hljs-attr">ring-ver-color</span>=<span class="hljs-number">89</span>b4fa<br><span class="hljs-attr">ring-wrong-color</span>=f38ba8<br><br><span class="hljs-comment"># 内部圆圈颜色</span><br><span class="hljs-attr">inside-color</span>=<span class="hljs-number">1</span>e1e2e<br><span class="hljs-attr">inside-clear-color</span>=<span class="hljs-number">1</span>e1e2e<br><span class="hljs-attr">inside-caps-lock-color</span>=<span class="hljs-number">1</span>e1e2e<br><span class="hljs-attr">inside-ver-color</span>=<span class="hljs-number">1</span>e1e2e<br><span class="hljs-attr">inside-wrong-color</span>=<span class="hljs-number">1</span>e1e2e<br><br><span class="hljs-comment"># 分隔线颜色</span><br><span class="hljs-attr">separator-color</span>=<span class="hljs-number">00000000</span><br><br><span class="hljs-comment"># 文本颜色</span><br><span class="hljs-attr">text-color</span>=cdd6f4<br><span class="hljs-attr">text-clear-color</span>=f5e0dc<br><span class="hljs-attr">text-caps-lock-color</span>=fab387<br><span class="hljs-attr">text-ver-color</span>=<span class="hljs-number">89</span>b4fa<br><span class="hljs-attr">text-wrong-color</span>=f38ba8<br><br><span class="hljs-comment"># 按键反馈</span><br><span class="hljs-attr">bs-hl-color</span>=f38ba8<br><span class="hljs-attr">key-hl-color</span>=a6e3a1<br><br><span class="hljs-comment"># 布局</span><br><span class="hljs-attr">layout-text-color</span>=cdd6f4<br><span class="hljs-attr">layout-bg-color</span>=<span class="hljs-number">00000000</span><br><br><span class="hljs-comment"># 其他设置</span><br><span class="hljs-attr">font</span>=CaskaydiaCove Nerd Font<br><span class="hljs-attr">font-size</span>=<span class="hljs-number">24</span><br>line-uses-ring<br>disable-caps-lock-text<br>show-failed-attempts<br></code></pre></td></tr></table></figure>
+
+<p>另一种更简洁的风格：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">key-hl-color</span>=<span class="hljs-number">00000066</span><br><span class="hljs-attr">separator-color</span>=<span class="hljs-number">00000000</span><br><br><span class="hljs-attr">inside-color</span>=<span class="hljs-number">00000033</span><br><span class="hljs-attr">inside-clear-color</span>=ffffff00<br><span class="hljs-attr">inside-caps-lock-color</span>=ffffff00<br><span class="hljs-attr">inside-ver-color</span>=ffffff00<br><span class="hljs-attr">inside-wrong-color</span>=ffffff00<br><br><span class="hljs-attr">ring-color</span>=ffffff<br><span class="hljs-attr">ring-clear-color</span>=ffffff<br><span class="hljs-attr">ring-caps-lock-color</span>=ffffff<br><span class="hljs-attr">ring-ver-color</span>=ffffff<br><span class="hljs-attr">ring-wrong-color</span>=ffffff<br><br><span class="hljs-attr">line-color</span>=<span class="hljs-number">00000000</span><br><span class="hljs-attr">line-clear-color</span>=ffffffff<br><span class="hljs-attr">line-caps-lock-color</span>=ffffffff<br><span class="hljs-attr">line-ver-color</span>=ffffffff<br><span class="hljs-attr">line-wrong-color</span>=ffffffff<br><br><span class="hljs-attr">text-color</span>=ffffff<br><span class="hljs-attr">text-clear-color</span>=ffffff<br><span class="hljs-attr">text-ver-color</span>=ffffff<br><span class="hljs-attr">text-wrong-color</span>=ffffff<br><br><span class="hljs-attr">bs-hl-color</span>=ffffff<br><span class="hljs-attr">caps-lock-key-hl-color</span>=ffffffff<br><span class="hljs-attr">caps-lock-bs-hl-color</span>=ffffffff<br>disable-caps-lock-text<br><span class="hljs-attr">text-caps-lock-color</span>=ffffff<br></code></pre></td></tr></table></figure>
+
+<p>多显示器配置：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 所有显示器显示同样内容</span><br><span class="hljs-attr">image</span>=~/Pictures/wallpaper.jpg<br><br><span class="hljs-comment"># 或者为不同显示器设置不同壁纸</span><br><span class="hljs-comment"># image=DP-1:~/Pictures/monitor1.jpg</span><br><span class="hljs-comment"># image=HDMI-A-1:~/Pictures/monitor2.jpg</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="窗口圆角"><a href="#窗口圆角" class="headerlink" title="窗口圆角"></a>窗口圆角</h2><p><a target="_blank" rel="noopener" href="https://yalter.github.io/niri/Configuration%3A-Window-Rules.html#geometry-corner-radius">geometry-corner-radius</a></p>
+<p>添加下面的窗口规则：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kdl">window-rule &#123;<br>    geometry-corner-radius 12<br>    clip-to-geometry true<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><code>geometry-corner-radius</code>：把边框和对焦环设置为圆角，但是不影响内部的窗口</li>
+<li><code>clip-to-geometry</code>：把窗口的角裁剪到几何形状边界内，确保窗口的内容不会超出圆角边界</li>
+</ol>
+<p>最终效果：</p>
+<p><img src="https://s21.ax1x.com/2025/09/18/pVhfYLD.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="输入法"><a href="#输入法" class="headerlink" title="输入法"></a>输入法</h2><p>推荐使用fcitx5，安装输入法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S fcitx5-im <span class="hljs-comment"># 输入法基础包组</span><br><span class="hljs-built_in">sudo</span> pacman -S fcitx5-chinese-addons <span class="hljs-comment"># 官方中文输入引擎</span><br><span class="hljs-built_in">sudo</span> pacman -S fcitx5-anthy <span class="hljs-comment"># 日文输入引擎</span><br><span class="hljs-built_in">sudo</span> pacman -S fcitx5-pinyin-moegirl <span class="hljs-comment"># 萌娘百科词库。二刺猿必备（archlinuxcn）</span><br><span class="hljs-built_in">sudo</span> pacman -S fcitx5-material-color <span class="hljs-comment"># 输入法主题</span><br></code></pre></td></tr></table></figure>
+
+<p>配置环境变量：编辑<code>/etc/environment</code>文件，在文件末尾添加下面三行：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">GTK_IM_MODULE</span>=fcitx<br><span class="hljs-attr">QT_IM_MODULE</span>=fcitx<br><span class="hljs-attr">XMODIFIERS</span>=@im=fcitx<br></code></pre></td></tr></table></figure>
+
+<p>最后配置开机自启。编辑<code>~/.config/niri/config.kdl</code>，添加下面的命令：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">spawn-<span class="hljs-keyword">at</span>-startup <span class="hljs-string">&quot;fcitx5&quot;</span><br></code></pre></td></tr></table></figure>
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+        <a href="/tags/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="print-no-link">#折腾记录</a>
+      
+        <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="print-no-link">#操作系统</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>无限平铺窗口管理器——niri在 ArchLinux 上的安装与配置</div>
+      <div>https://kznleaf.top/2025/09/18/niri安装与配置/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>banyee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年9月18日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/10/04/niri%E8%BF%9B%E9%98%B6%E5%AE%89%E8%A3%85/" title="ArchLinux - niri 进阶安装&amp;问题汇总">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ArchLinux - niri 进阶安装&amp;问题汇总</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/09/13/%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%94%A8%E6%88%B7%E7%B2%92%E5%BA%A6%E7%9A%84%E9%99%90%E6%B5%81%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F/" title="借助 Redis Hash 实现用户粒度的令牌桶限流">
+                        <span class="hidden-mobile">借助 Redis Hash 实现用户粒度的令牌桶限流</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'kznLeaf/kznLeaf.github.io');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'Comment');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/vvd_js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+<script src="/js/sign.js"></script>
+<script src="/js/backgroundize.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>

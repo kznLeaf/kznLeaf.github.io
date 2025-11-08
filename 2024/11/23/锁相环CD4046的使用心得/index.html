@@ -1,0 +1,825 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
+  <link rel="icon" href="/img/tree.png">
+  
+    <link rel="canonical" href="https://kznleaf.top/2024/11/23/锁相环CD4046的使用心得/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="banyee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前言最近在忙着做校队招新的题目，要求是用锁相环CD4046B做一个倍频器，倍频系数为1，2，4，8，16，32，64。这个题最烦人的地方在于覆盖的频率范围很大，输入信号范围是1kHz~100kHz，这样来算输出最大要达到6.4MHz，然而以CD4046B来说这根本不可能，因为这款锁相环上集成的VCO的输出频率最大也就1MHz左右：  如你所见，输出最大频率的典型值为1.4MHz，这也基本符合我实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="锁相环CD4046使用心得">
+<meta property="og:url" content="https://kznleaf.top/2024/11/23/%E9%94%81%E7%9B%B8%E7%8E%AFCD4046%E7%9A%84%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/index.html">
+<meta property="og:site_name" content="絆叶の片隅">
+<meta property="og:description" content="前言最近在忙着做校队招新的题目，要求是用锁相环CD4046B做一个倍频器，倍频系数为1，2，4，8，16，32，64。这个题最烦人的地方在于覆盖的频率范围很大，输入信号范围是1kHz~100kHz，这样来算输出最大要达到6.4MHz，然而以CD4046B来说这根本不可能，因为这款锁相环上集成的VCO的输出频率最大也就1MHz左右：  如你所见，输出最大频率的典型值为1.4MHz，这也基本符合我实">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s21.ax1x.com/2025/05/27/pVpC14f.png">
+<meta property="article:published_time" content="2024-11-23T14:10:42.000Z">
+<meta property="article:modified_time" content="2025-07-02T15:27:36.593Z">
+<meta property="article:author" content="banyee">
+<meta property="article:tag" content="硬件">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s21.ax1x.com/2025/05/27/pVpC14f.png">
+  
+  
+  
+  <title>锁相环CD4046使用心得 - 絆叶の片隅</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/macBorder.css">
+<link rel="stylesheet" href="/css/sign.css">
+<link rel="stylesheet" href="/css/backgroundize.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"Rs1qykYBxQwdjhZkWVB3fq7t-MdYXbMMI","app_key":"i1fqxvrusqbCUHDrnC4iGszb","server_url":"https://rs1qykyb.api.lncldglobal.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+
+  <div id="Loadanimation" style="z-index:999999;">
+    <div id="Loadanimation-center">
+       <div id="Loadanimation-center-absolute">
+           <div class="xccx_object" id="xccx_four"></div>
+           <div class="xccx_object" id="xccx_three"></div>
+           <div class="xccx_object" id="xccx_two"></div>
+           <div class="xccx_object" id="xccx_one"></div>
+       </div>
+    </div>
+    </div>
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>banyee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">锁相环CD4046使用心得</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-11-23 22:10" pubdate>
+          2024年11月23日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">锁相环CD4046使用心得</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://i.imgur.com/ZpUo6qu.jpg" srcset="/img/loading.gif" lazyload alt="成品"></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在忙着做校队招新的题目，要求是用锁相环CD4046B做一个倍频器，倍频系数为1，2，4，8，16，32，64。这个题最烦人的地方在于覆盖的频率范围很大，输入信号范围是1kHz~100kHz，这样来算输出最大要达到6.4MHz，然而以CD4046B来说这根本不可能，因为这款锁相环上集成的VCO的输出频率最大也就1MHz左右：</p>
+<p><img src="https://i.imgur.com/51pBwa3.png" srcset="/img/loading.gif" lazyload></p>
+<p>如你所见，输出最大频率的典型值为<strong>1.4MHz</strong>，这也基本符合我实测的结果。总之这题做满100kHz的64倍频基本是没戏了，但是听说有个组做到了7MHz？搞不懂是什么情况。（再吐槽一句，TI的CD4046B的数据手册真的太古老了啊，赶紧更新一下吧）</p>
+<h1 id="引脚说明"><a href="#引脚说明" class="headerlink" title="引脚说明"></a>引脚说明</h1><p><img src="https://i.imgur.com/Z91APjn.png" srcset="/img/loading.gif" lazyload></p>
+<p>见上图。</p>
+<ul>
+<li>3；鉴相器输入</li>
+<li>4：VCO输出</li>
+<li>6、7之间的$C_1$是VCO的起振电容</li>
+<li>12脚$R_2$决定了输出频率是否叠加一个偏置。如果不接，那么输出无偏置，频率就可以达到比较低的范围；如果接上电阻，频率范围整体会往上移动。</li>
+<li>11脚$R_1$也影响了输出频率·范围，R1越小输出频率越大，我这里取的是10k欧。</li>
+<li>5脚禁止端，低电平使能器件。</li>
+<li>13，鉴相器2的输出，它接入环路滤波器的输入端。</li>
+<li>9，VCO的输入，这个输入电压应当尽可能平稳，这样VCO才会有稳定的输出。</li>
+</ul>
+<p>我这次在调试电路过程中动的最多的就是C1和引脚，4。通过调整C1的值来获得不同的频率输出范围；将3、4直接连接来测试锁相环的功能；确定锁相环能正常工作后再把3、4断开，接入分频器。</p>
+<h1 id="频率范围"><a href="#频率范围" class="headerlink" title="频率范围"></a>频率范围</h1><p>CD4046B的输出频率与供电电压有关，供电电压越大，能够输出的频率也越大，但是不能超过15V。根据我的测试，在5V供电，R2不接，R1&#x3D;10k欧，C1&#x3D;100pF的情况下，VCO的输出频率最多只有大约700kHZ。想达到1MHz以上的频率必须增大电压到10V，但是这又会产生一问题：锁相环是10V电平输入输出，而分频器是5V电平，两种电平并不互容，必须进行<strong>电平转换</strong>。这是我们组在昨天得到的结论，然后今天我自己花了半个上午的时间才总算是调好了。为了能够覆盖从1kHz~1MHz的频率范围，我切换了三个电容：</p>
+<table>
+<thead>
+<tr>
+<th>100pF</th>
+<th>4.7nF</th>
+<th>3.3nF</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>41k~1.2M</td>
+<td>2k~40k</td>
+<td>1k~29k</td>
+</tr>
+</tbody></table>
+<p>注意这里的频率应当是<strong>倍频后最终输出的频率</strong>。</p>
+<h1 id="电平转换"><a href="#电平转换" class="headerlink" title="电平转换"></a>电平转换</h1><p>这里的电平转换，具体来说：</p>
+<ul>
+<li>锁相环VCO输出的10V方波要被转换为5V方波</li>
+<li>分频器输出的5V方波要被转换为10V方波</li>
+</ul>
+<p>LTspice仿真结果如下：</p>
+<p><img src="https://i.imgur.com/3vQpjKX.png" srcset="/img/loading.gif" lazyload></p>
+<p>高电平转低电平用的是左边那个电路，其实就是一个反相器。需要注意的是上拉电阻R1不要取得太大，不然上升沿过于缓慢，适应不了1MHz。而且这个电路实际测试的时候输出在下降沿的振铃非常大，大概是杂散电容和寄生电感的影响（毕竟是焊接到洞洞板上的）。</p>
+<p>低电平转高电平用的是右边的电路，因为左边的电路这时候就不能用了。</p>
+<h1 id="环路滤波器"><a href="#环路滤波器" class="headerlink" title="环路滤波器"></a>环路滤波器</h1><p>这是锁相环相当重要的一环。环路滤波器的职责就是将鉴相器输出的高频分量尽可能地滤干净。网上关于环路滤波器的设计方法资料并不是很多，可以参见该博客：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/qm1412/p/18222379">锁相环学习—CD4046</a></p>
+<p>环路滤波器有专用的设计软件，但是非常古老，必须再下载一个XP系统的虚拟机，非常麻烦，所以我就直接使用博客里设计好的电路了：</p>
+<p><img src="https://i.imgur.com/yCQpeqy.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>LTspice仿真得到其幅频响应和相频响应如下：</p>
+<p><img src="https://i.imgur.com/LWBPZIo.png" srcset="/img/loading.gif" lazyload></p>
+<p>实测这个滤波器可以用于1kHz~1MHz的范围。</p>
+<h1 id="对VCO输出进行整形"><a href="#对VCO输出进行整形" class="headerlink" title="对VCO输出进行整形"></a>对VCO输出进行整形</h1><p>这一步其实并不是必要的，但是我还是使用告诉比较器把输出波形整成好看一点的方波，这主要是因为我所用的10V转5V的电平转换电路上升沿非常慢，以至于方波几乎已经变成锯齿波了，非常难受。</p>
+<p><img src="https://i.imgur.com/NrkVsnV.png" srcset="/img/loading.gif" lazyload></p>
+<p>注意我最终电路中VIN是经过电容之后才送入比较器，这样隔离直流分量，比较器容易产生正确的结果。另外R1可以稍微取得大一些，比如500欧，对噪声的抑制能力也会强一些。这个比较器的输出为3.3V、0V，可以直接送入单片机的外部时钟输入引脚用来测量频率。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>最后实现的效果如图（输入信号与输出信号稳定同频显示不漂移）只拍了N&#x3D;1的情况，N&#x3D;64也能非常稳</p>
+<p><img src="https://i.imgur.com/PvEWWA3.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>这次与锁相环有关的电路基本都是我负责的，焊接在一大块洞洞板上，焊锡丝的助焊剂快熏死我了。。。不过好在最后的成品表现非常不错，最大能锁定到1.2MHz的频率，已经接近CD4046B的极限了。另外队友也买了一大堆CD4046B，过几天我想用这些多余的芯片测试一下锁相环的FM解调功能。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%94%B5%E5%AD%90%E8%AE%BE%E8%AE%A1/" class="category-chain-item">电子设计</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%A1%AC%E4%BB%B6/" class="print-no-link">#硬件</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>锁相环CD4046使用心得</div>
+      <div>https://kznleaf.top/2024/11/23/锁相环CD4046的使用心得/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>banyee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年11月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/11/25/%E3%83%AC%E3%83%97%E3%83%AA%E3%82%AB%E3%83%B3%E3%83%88%20-%20%E3%83%A8%E3%83%AB%E3%82%B7%E3%82%AB/" title="レプリカント - ヨルシカ">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">レプリカント - ヨルシカ</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/11/14/%E6%9D%82%E8%B0%88/" title="杂谈">
+                        <span class="hidden-mobile">杂谈</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'kznLeaf/kznLeaf.github.io');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'Comment');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/vvd_js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+<script src="/js/sign.js"></script>
+<script src="/js/backgroundize.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>
