@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kznleaf.top/about/index.html</loc>
+    
+    <lastmod>2025-11-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://kznleaf.top/2025/09/18/niri%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/</loc>
     
     <lastmod>2025-11-08</lastmod>
@@ -48,15 +57,6 @@
   
   <url>
     <loc>https://kznleaf.top/2025/02/01/Cogecha/</loc>
-    
-    <lastmod>2025-10-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://kznleaf.top/about/index.html</loc>
     
     <lastmod>2025-10-21</lastmod>
     
