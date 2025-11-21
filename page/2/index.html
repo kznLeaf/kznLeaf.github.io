@@ -281,6 +281,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2025/08/12/MySQL%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B01/" target="_self">
+          《MySQL技术内幕》读书笔记1-锁
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/08/12/MySQL%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B01/" target="_self">
+        <div>
+          锁的类型InnoDB引擎有两种行级锁：  共享锁 S：允许事务读一行数据 排他锁 X: 允许事务删除或者更新一行数据。  除此之外还有意向锁，意向锁是为了告诉表在更细的粒度上加锁  意向共享锁：事务想要获得某几行的共享锁 意向排他锁：事务想要获得某一行的排他锁  读操作一致性非锁定读：  如果读取的行正在执行删除或者更新操作，这时不会去等待锁的释放，而是读取锁的一个快照数据。  一致性锁定读： 某
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-08-12 19:19" pubdate>
+              2025-08-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Database/" class="category-chain-item">Database</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">#数据库</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2025/08/10/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E4%B8%89%E4%B8%AA%E5%87%BD%E6%95%B0/" target="_self">
           IO多路复用-select, poll, epoll的区别
         </a>
@@ -725,67 +786,6 @@
             <i class="iconfont icon-date"></i>
             <time datetime="2025-07-17 21:18" pubdate>
               2025-07-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/JUC/" class="category-chain-item">JUC</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%B9%B6%E5%8F%91/">#并发</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/07/15/JUC-%E5%B9%B6%E5%8F%91%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E5%9F%BA%E7%A1%80API/" target="_self">
-          JUC-并发的概念和基础API
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/07/15/JUC-%E5%B9%B6%E5%8F%91%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E5%9F%BA%E7%A1%80API/" target="_self">
-        <div>
-          线程简单使用目标：创建线程对象、运行线程 方式一：只用Thread 1234567891011121314151617@Slf4j(topic = &quot;c.ThreadTest&quot;)public class ThreadTest &#123;    public static void main(String[] args) &#123;        Thread thread
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-07-15 22:50" pubdate>
-              2025-07-15
             </time>
           </div>
         
