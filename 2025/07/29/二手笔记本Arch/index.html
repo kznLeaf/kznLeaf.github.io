@@ -34,8 +34,8 @@
 <meta property="article:published_time" content="2025-07-29T15:20:02.000Z">
 <meta property="article:modified_time" content="2025-07-31T15:14:29.533Z">
 <meta property="article:author" content="banyee">
-<meta property="article:tag" content="折腾记录">
 <meta property="article:tag" content="Linux">
+<meta property="article:tag" content="折腾记录">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://s21.ax1x.com/2025/07/29/pVYRJVf.png">
   
@@ -336,12 +336,10 @@
             
               <div class="markdown-body">
                 
-                <p>I use arch btw</p>
+                <p>I use arch btw  </p>
 <span id="more"></span>
-<p>为什么要专门买一个破笔记本安装 GNU/Linux
-系统？一方面是因为最近在看《操作系统导论》，这本书是基于 UNIX
-系统讲解的，当然也完全适用于
-GNU/Linux，但是不知道为什么虚拟机上的linux输入延迟比较大，早就想装到实体机上体验一下了；另一方面，最近几个月没少被win11恶心，包括但不限于：</p>
+
+<p>为什么要专门买一个破笔记本安装 GNU&#x2F;Linux 系统？一方面是因为最近在看《操作系统导论》，这本书是基于 UNIX 系统讲解的，当然也完全适用于 GNU&#x2F;Linux，但是不知道为什么虚拟机上的linux输入延迟比较大，早就想装到实体机上体验一下了；另一方面，最近几个月没少被win11恶心，包括但不限于：</p>
 <ul>
 <li>强制启用hyper-v</li>
 <li>Alt+Tab打乱输入法</li>
@@ -349,55 +347,31 @@ GNU/Linux，但是不知道为什么虚拟机上的linux输入延迟比较大，
 <li>睡眠模式概率睡死且硬盘通电次数暴增</li>
 <li>越更新bug越多，在7月9日更新之后每次笔记本开机都有很大的概率蓝屏</li>
 </ul>
-<p>所以我考虑转向 GNU/Linux。</p>
-<h2 id="选型">选型</h2>
-<p>预算：1000￥以内，附加要求：能自由更换尽可能多的组件</p>
+<p>所以我考虑转向 GNU&#x2F;Linux。</p>
+<h2 id="选型"><a href="#选型" class="headerlink" title="选型"></a>选型</h2><p>预算：1000￥以内，附加要求：能自由更换尽可能多的组件</p>
 <p>去咸鱼上转了一大圈，能把价格压到1000以内的基本都是六七年以前的老笔记本，当然也有全新的但是我没捡到漏。最后盯上了两款：</p>
 <ul>
 <li>一个专门卖 ThinkPad 的贩子的 e470，880￥</li>
 <li>联想小新老型号，这个卖的人一大把，600￥</li>
 </ul>
-<p>最后本着便宜优先的原则拍下了联想小新2019丐款。拆开后盖马上就后悔了...不如换成更方便折腾的thinkpad</p>
-<p>今天看到了一个视频：<a
-target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=vtkQiLkNgOI">Building the ultimate
-ThinkPad!</a>，视频里给Think Pad
-T440P里里外外都换了一圈，包括键盘、内存、硬盘、BIOS、屏幕、甚至就连 CPU
-也是可拆卸的（插槽式CPU）😲</p>
+<p>最后本着便宜优先的原则拍下了联想小新2019丐款。拆开后盖马上就后悔了…不如换成更方便折腾的thinkpad</p>
+<p>今天看到了一个视频：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=vtkQiLkNgOI">Building the ultimate ThinkPad!</a>，视频里给Think Pad T440P里里外外都换了一圈，包括键盘、内存、硬盘、BIOS、屏幕、甚至就连 CPU 也是可拆卸的（插槽式CPU）😲</p>
 <p>然后去某宝看了一眼，700+就能拿下，早知道买这个了。等找到实习攒够了钱就搞一个回来玩玩</p>
-<h2 id="拆机">拆机</h2>
-<figure>
-<img src="https://s21.ax1x.com/2025/07/28/pVYu5DS.jpg" srcset="/img/loading.gif" lazyload alt="拆机" />
-<figcaption aria-hidden="true">拆机</figcaption>
-</figure>
+<h2 id="拆机"><a href="#拆机" class="headerlink" title="拆机"></a>拆机</h2><p><img src="https://s21.ax1x.com/2025/07/28/pVYu5DS.jpg" srcset="/img/loading.gif" lazyload alt="拆机"></p>
 <p>复古SATA固态，裸露的单热管，还有内存条的屏蔽罩跑哪儿去了😭算了能用就行。后盖上的防拆贴还在，从撬开后盖需要的力度来看这个笔记本不像是被拆过的，莫非是🐕‍🦺想在作妖</p>
 <p>然后把风扇取下来清了清灰，发现基本没什么灰可以清。另外内存和网卡都太烂了，所以马上下单了一根16G内存和AX210网卡，过两天一到货马上开始换。系统信息：</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/07/28/pVYKuUH.jpg" srcset="/img/loading.gif" lazyload
-alt="懒得截图了" />
-<figcaption aria-hidden="true">懒得截图了</figcaption>
-</figure>
-<h2 id="装系统">装系统</h2>
-<p>主要参考<a
-target="_blank" rel="noopener" href="https://arch.icekylin.online/">archlinux简明指南</a>和<a
-target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1L2gxzVEgs/?spm_id_from=333.337.search-card.all.click&amp;vd_source=918a6909c997fbaf818d1fbc55d65ca9">这个视频</a>。说一下分盘思路：</p>
+<p><img src="https://s21.ax1x.com/2025/07/28/pVYKuUH.jpg" srcset="/img/loading.gif" lazyload alt="懒得截图了"></p>
+<h2 id="装系统"><a href="#装系统" class="headerlink" title="装系统"></a>装系统</h2><p>主要参考<a target="_blank" rel="noopener" href="https://arch.icekylin.online/">archlinux简明指南</a>和<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1L2gxzVEgs/?spm_id_from=333.337.search-card.all.click&vd_source=918a6909c997fbaf818d1fbc55d65ca9">这个视频</a>。说一下分盘思路：</p>
 <figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs tap">NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS<br>sda      8:0   <span class="hljs-number"> 0 </span>238.5G <span class="hljs-number"> 0 </span>disk <br>├─sda1   8:1   <span class="hljs-number"> 0 </span>    1G <span class="hljs-number"> 0 </span>part /boot/efi<br>└─sda2   8:2   <span class="hljs-number"> 0 </span>237.5G <span class="hljs-number"> 0 </span>part /swap<br>                                 /home<br>                                 /<br></code></pre></td></tr></table></figure>
-<p>一共256G的硬盘，给 UEFI
-分了1G，剩下的都用做根目录。没有为swap创建分区，因为用的是swap文件。文件系统使用
-btrfs，方便快照和回滚。</p>
-<h2 id="升级内存网卡">升级内存&amp;网卡</h2>
-<p>这个笔记本自带的内存是焊死的 4G 和一根可更换的DDR4 4G，一共
-8G，实际工作频率是2400MHz。不过自带的内存条上写的是2666，估计是被压下去了。</p>
-<p>8G内存感觉还是小了，因为还要给 GPU 分过去 2G。所以去pdd捡了根16G
-2666MHz：</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/07/28/pVYuJAJ.jpg" srcset="/img/loading.gif" lazyload alt="内存" />
-<figcaption aria-hidden="true">内存</figcaption>
-</figure>
+
+<p>一共256G的硬盘，给 UEFI 分了1G，剩下的都用做根目录。没有为swap创建分区，因为用的是swap文件。文件系统使用 btrfs，方便快照和回滚。</p>
+<h2 id="升级内存-网卡"><a href="#升级内存-网卡" class="headerlink" title="升级内存&amp;网卡"></a>升级内存&amp;网卡</h2><p>这个笔记本自带的内存是焊死的 4G 和一根可更换的DDR4 4G，一共 8G，实际工作频率是2400MHz。不过自带的内存条上写的是2666，估计是被压下去了。</p>
+<p>8G内存感觉还是小了，因为还要给 GPU 分过去 2G。所以去pdd捡了根16G 2666MHz：</p>
+<p><img src="https://s21.ax1x.com/2025/07/28/pVYuJAJ.jpg" srcset="/img/loading.gif" lazyload alt="内存"></p>
 <p>是不是真货不知道，反正用着没毛病</p>
-<hr />
+<hr>
 <p>自带的网卡是 QCA9377，有点太老了，换成AX210，简单比较一下：</p>
 <table>
-
 <thead>
 <tr>
 <th>参数</th>
@@ -405,8 +379,7 @@ btrfs，方便快照和回滚。</p>
 <th><strong>Qualcomm Atheros QCA9377</strong></th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>🆔 芯片代号</td>
 <td>Typhoon Peak</td>
 <td>Sparrow</td>
@@ -456,100 +429,63 @@ btrfs，方便快照和回滚。</p>
 <td>高端笔记本、桌面、Wi-Fi 6E路由器</td>
 <td>老旧笔电、Chromebook、便携设备</td>
 </tr>
-</tbody>
-</table>
-<p>Linux内核已经内置了大量主流网卡的驱动，包括 AX210
-在内，所以换上网卡之后什么也不用干就可以直接开始用了。（蓝牙鼠标要重新配对）</p>
-<p>换完网卡感觉不仅网速变快，而且蓝牙鼠标的连接速度和灵敏度也快多了=w=</p>
+</tbody></table>
+<p>Linux内核已经内置了大量主流网卡的驱动，包括 AX210 在内，所以换上网卡之后什么也不用干就可以直接开始用了。（蓝牙鼠标要重新配对）</p>
+<p>换完网卡感觉不仅网速变快，而且蓝牙鼠标的连接速度和灵敏度也快多了&#x3D;w&#x3D;</p>
 <p>使用下面的命令可以查看当前的网卡信息：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">lspci | grep -i net<br></code></pre></td></tr></table></figure>
+
 <ul>
 <li><code>lspci</code>：列出所有 PCI 总线上的设备</li>
 <li><code>| grep -i net</code>对输出结果进行筛选，只保留包含<code>net</code>的行</li>
 </ul>
 <p>输出：</p>
 <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs 1c">╭─ <span class="hljs-symbol">~                                                                          10</span>:<span class="hljs-number">45</span><span class="hljs-punctuation">:</span><span class="hljs-number">12</span><br>╰─❯ lspci <span class="hljs-string">| grep -i net</span><br><span class="hljs-number">01</span><span class="hljs-punctuation">:</span><span class="hljs-number">00.0</span> Network controller<span class="hljs-punctuation">:</span> Intel Corporation Wi<span class="hljs-punctuation">-</span>Fi <span class="hljs-number">6</span>E<span class="hljs-punctuation">(</span><span class="hljs-number">802.11</span>ax<span class="hljs-punctuation">)</span> AX210/AX1675* <span class="hljs-number">2</span>x2 [Typhoon Peak] <span class="hljs-punctuation">(</span>rev <span class="hljs-number">1</span>a<span class="hljs-punctuation">)</span><br></code></pre></td></tr></table></figure>
-<p>也可以使用<code>lsmod | grep iwlwifi</code>查看 wifi
-驱动加载情况。等以后组了台式机可以再把这张网卡换上，想想就爽</p>
-<h2 id="实用工具">实用工具</h2>
-<h3 id="代理">代理</h3>
-<p>目前使用<a
-target="_blank" rel="noopener" href="https://v2raya.org/">v2raya</a>，速度尚可，使用方法参见<a
-target="_blank" rel="noopener" href="https://pengtech.net/network/v2rayA_install.html#3-1-%E9%85%8D%E7%BD%AE-v2rayA">这篇博客</a>。</p>
-<h3 id="图像查看">图像查看</h3>
-<p>一开始用的是<code>gwenview</code>，感觉卡卡的，尝试好几种图像查看器之后发现<code>Okular</code>也可以用来看图像，而且流畅得多
-=w=</p>
-<h3 id="硬盘测速">硬盘测速</h3>
-<p>安装<code>hdparm</code></p>
+
+<p>也可以使用<code>lsmod | grep iwlwifi</code>查看 wifi 驱动加载情况。等以后组了台式机可以再把这张网卡换上，想想就爽</p>
+<h2 id="实用工具"><a href="#实用工具" class="headerlink" title="实用工具"></a>实用工具</h2><h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h3><p>目前使用<a target="_blank" rel="noopener" href="https://v2raya.org/">v2raya</a>，速度尚可，使用方法参见<a target="_blank" rel="noopener" href="https://pengtech.net/network/v2rayA_install.html#3-1-%E9%85%8D%E7%BD%AE-v2rayA">这篇博客</a>。</p>
+<h3 id="图像查看"><a href="#图像查看" class="headerlink" title="图像查看"></a>图像查看</h3><p>一开始用的是<code>gwenview</code>，感觉卡卡的，尝试好几种图像查看器之后发现<code>Okular</code>也可以用来看图像，而且流畅得多 &#x3D;w&#x3D;</p>
+<h3 id="硬盘测速"><a href="#硬盘测速" class="headerlink" title="硬盘测速"></a>硬盘测速</h3><p>安装<code>hdparm</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S hdparm<br></code></pre></td></tr></table></figure>
+
 <p>测试读取速度</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> hdparm -Tt /dev/sdX<br></code></pre></td></tr></table></figure>
+
 <p>结果：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">╰─❯ <span class="hljs-built_in">sudo</span> hdparm -Tt /dev/sda<br><br>/dev/sda:<br> Timing cached reads:   19300 MB <span class="hljs-keyword">in</span>  1.98 seconds = 9725.01 MB/sec<br> Timing buffered disk reads: 1328 MB <span class="hljs-keyword">in</span>  3.01 seconds = 441.80 MB/sec<br></code></pre></td></tr></table></figure>
+
 <p>第一行是CPU缓存测试，第二行是顺序读速度。</p>
-<h3 id="文件互传">文件互传</h3>
-<p>LocalSend 是一款跨平台的文件传输工具，可以直接从AUR安装：</p>
+<h3 id="文件互传"><a href="#文件互传" class="headerlink" title="文件互传"></a>文件互传</h3><p>LocalSend 是一款跨平台的文件传输工具，可以直接从AUR安装：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yay -S localsend<br></code></pre></td></tr></table></figure>
+
 <p>windows、安卓、Linux，只要在同一个网络下，都可以非常方便地互传文件，强推</p>
-<h3 id="监视系统信息">监视系统信息</h3>
-<p>btop，<del>装b神器</del></p>
-<p><img src="https://s21.ax1x.com/2025/07/29/pVYTngS.png" srcset="/img/loading.gif" lazyload /></p>
-<h3 id="截图">截图</h3>
-<p>Windows系统下最好用的截图工具无疑是
-Snipaste，但是迟迟没有推出Linux版本。</p>
+<h3 id="监视系统信息"><a href="#监视系统信息" class="headerlink" title="监视系统信息"></a>监视系统信息</h3><p>btop，<del>装b神器</del></p>
+<p><img src="https://s21.ax1x.com/2025/07/29/pVYTngS.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="截图"><a href="#截图" class="headerlink" title="截图"></a>截图</h3><p>Windows系统下最好用的截图工具无疑是 Snipaste，但是迟迟没有推出Linux版本。</p>
 <p><code>Spectacle</code>可以一用，虽然比不上Snipaste，但也够用了。</p>
-<h2 id="美化">美化</h2>
-<ul>
-<li>主题美化参考<a
-target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1WsGmzRECp/?spm_id_from=333.337.search-card.all.click&amp;vd_source=918a6909c997fbaf818d1fbc55d65ca9">这个视频</a>，使用
-Nordic 主题，直接解决了毛玻璃效果无法使用的问题。</li>
-<li>Konsole 使用 zsh + <a
-target="_blank" rel="noopener" href="https://github.com/romkatv/powerlevel10k">powerlevel10k</a>
-美化</li>
+<h2 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h2><ul>
+<li>主题美化参考<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1WsGmzRECp/?spm_id_from=333.337.search-card.all.click&vd_source=918a6909c997fbaf818d1fbc55d65ca9">这个视频</a>，使用 Nordic 主题，直接解决了毛玻璃效果无法使用的问题。</li>
+<li>Konsole 使用 zsh + <a target="_blank" rel="noopener" href="https://github.com/romkatv/powerlevel10k">powerlevel10k</a> 美化</li>
 </ul>
 <p>效果图：</p>
-<p><img src="https://s21.ax1x.com/2025/07/29/pVYRJVf.png" srcset="/img/loading.gif" lazyload /></p>
-<h2 id="遇到的问题">遇到的问题</h2>
-<h3 id="锁屏动画失效问题">锁屏动画失效问题</h3>
-<p>和 <a
-target="_blank" rel="noopener" href="https://bugs.kde.org/show_bug.cgi?id=499377&amp;utm_source=chatgpt.com">Bug
-499377</a> 反映的问题完全相同，同样的 error 日志也出现在<a
-target="_blank" rel="noopener" href="https://bugs.kde.org/show_bug.cgi?id=478601">Bug
-478601</a>，表现为每次切换至锁屏界面的时候显示器都会变成左半边纯绿色、右半边纯黑，动画结束之后又会恢复正常。</p>
+<p><img src="https://s21.ax1x.com/2025/07/29/pVYRJVf.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><h3 id="锁屏动画失效问题"><a href="#锁屏动画失效问题" class="headerlink" title="锁屏动画失效问题"></a>锁屏动画失效问题</h3><p>和 <a target="_blank" rel="noopener" href="https://bugs.kde.org/show_bug.cgi?id=499377&utm_source=chatgpt.com">Bug 499377</a> 反映的问题完全相同，同样的 error 日志也出现在<a target="_blank" rel="noopener" href="https://bugs.kde.org/show_bug.cgi?id=478601">Bug 478601</a>，表现为每次切换至锁屏界面的时候显示器都会变成左半边纯绿色、右半边纯黑，动画结束之后又会恢复正常。</p>
 <p>先调用<code>journalctl -r</code>查看最近日志，定位锁屏出错信息</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">7</span>月 <span class="hljs-number">26</span> <span class="hljs-number">12</span>:<span class="hljs-number">10</span>:<span class="hljs-number">03</span> Arch kscreenlocker_greet[<span class="hljs-number">3176</span>]: Fai<br><span class="hljs-attribute">led</span> to write to the pipe: 错误的文件描述符.<br><span class="hljs-attribute">7</span>月 <span class="hljs-number">26</span> <span class="hljs-number">12</span>:<span class="hljs-number">10</span>:<span class="hljs-number">03</span> Arch kscreenlocker_greet[<span class="hljs-number">3176</span>]: qt.<br><span class="hljs-attribute">qpa</span>.wayland: Could not create EGL surface (EGL error <span class="hljs-number">0</span>x3000)<br></code></pre></td></tr></table></figure>
-<p><code>kscreenlocker_greet</code>：负责锁屏界面渲染，说明是锁屏界面在渲染
-EGL 时失败，临时显示异常。上述日志的解释：</p>
+
+<p><code>kscreenlocker_greet</code>：负责锁屏界面渲染，说明是锁屏界面在渲染 EGL 时失败，临时显示异常。上述日志的解释：</p>
 <blockquote>
-<p>这是 Plasma 6 在 Wayland 锁屏程序 kscreenlocker_greet
-里留下的已确认 bug（KDE Bug 478601/499377）。日志里 0x3000 实际代表
-EGL_SUCCESS，但 Qt
-仍把它当作警告打印出来。目前上游尚未合并修复补丁，很多用户都会在解锁或显示器重新点亮时看到同样的两行信息。</p>
+<p>这是 Plasma 6 在 Wayland 锁屏程序 kscreenlocker_greet 里留下的已确认 bug（KDE Bug 478601&#x2F;499377）。日志里 0x3000 实际代表 EGL_SUCCESS，但 Qt 仍把它当作警告打印出来。目前上游尚未合并修复补丁，很多用户都会在解锁或显示器重新点亮时看到同样的两行信息。</p>
 </blockquote>
-<p>所以说这应该是目前 Wayland 的一个待修复
-bug。于是我尝试切换为X11，发现<code>/usr/share/xsessions/</code>为空，后来才知道
-X11
-会话文件被拆成了独立的包<code>plasma‑x11‑session</code>提供，所以需要先单独安装这个软件包：</p>
+<p>所以说这应该是目前 Wayland 的一个待修复 bug。于是我尝试切换为X11，发现<code>/usr/share/xsessions/</code>为空，后来才知道 X11 会话文件被拆成了独立的包<code>plasma‑x11‑session</code>提供，所以需要先单独安装这个软件包：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> -S plasma‑x11‑session<br></code></pre></td></tr></table></figure>
-<p>切换为X11后，需要重新设定屏幕缩放比例和鼠标灵敏度，其中屏幕缩放比例必须注销重新登录后才能生效；而且
-x1
-1情况下某些应用程序的动效变得十分卡顿？另外，锁屏动画也是不存在的，而是从原本的画面生硬地切换到锁屏画面，跟我预期的不一样。考虑到：</p>
-<p><img src="https://s21.ax1x.com/2025/07/26/pVJ5nzQ.png" srcset="/img/loading.gif" lazyload /></p>
-<p>所以最后还是换回 Wayland 了QAQ
-暂时的应对方案就是直接禁用掉自动锁屏（反正我也没什么锁屏的需求）</p>
-<h3 id="minecraft启动失败">Minecraft启动失败</h3>
-<p>见<a
-href="/2025/07/25/ArchLinux%E5%90%AF%E5%8A%A8mc%E5%B4%A9%E6%BA%83/">/2025/07/25/ArchLinux%E5%90%AF%E5%8A%A8mc%E5%B4%A9%E6%BA%83/</a></p>
-<h2 id="总结">总结</h2>
-<p>高考完的暑假买了个联想拯救者
-R7000P，作为一个游戏本对我来说性能有些冗余了，因为平时基本不打游戏，而且四五斤的重量和不存在的续航没少折磨我:(。
-如果能回到那个暑假，我估计会买一个性能好点的轻薄本和一个thinkpad，一个用来糊弄课内毫无意义的课程，一个装上
-Arch
-用来折腾，当然最重要的是劝自己报考软件专业，别踏马盯着你那物理了。</p>
-<p>刚才看到了<a
-target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=m_QAvGlh-Pg">这个视频</a>，真正的
-CS 大佬只需要花费300$，包括一个装了 Ubuntu 的
-ThinkPad，刷了纯净系统的老式索尼收集，和几个电子阅读器(Kindle，NOOK)就足以满足日常学习需求。相比之下那群天天嫌弃自己的设备太垃圾（其实只是游戏打得不够爽罢了）互相攀比的大学生有够可笑的:)</p>
+
+<p>切换为X11后，需要重新设定屏幕缩放比例和鼠标灵敏度，其中屏幕缩放比例必须注销重新登录后才能生效；而且 x1 1情况下某些应用程序的动效变得十分卡顿？另外，锁屏动画也是不存在的，而是从原本的画面生硬地切换到锁屏画面，跟我预期的不一样。考虑到：</p>
+<p><img src="https://s21.ax1x.com/2025/07/26/pVJ5nzQ.png" srcset="/img/loading.gif" lazyload></p>
+<p>所以最后还是换回 Wayland 了QAQ 暂时的应对方案就是直接禁用掉自动锁屏（反正我也没什么锁屏的需求）</p>
+<h3 id="Minecraft启动失败"><a href="#Minecraft启动失败" class="headerlink" title="Minecraft启动失败"></a>Minecraft启动失败</h3><p>见<a href="/2025/07/25/ArchLinux%E5%90%AF%E5%8A%A8mc%E5%B4%A9%E6%BA%83/">&#x2F;2025&#x2F;07&#x2F;25&#x2F;ArchLinux%E5%90%AF%E5%8A%A8mc%E5%B4%A9%E6%BA%83&#x2F;</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>高考完的暑假买了个联想拯救者 R7000P，作为一个游戏本对我来说性能有些冗余了，因为平时基本不打游戏，而且四五斤的重量和不存在的续航没少折磨我:(。 如果能回到那个暑假，我估计会买一个性能好点的轻薄本和一个thinkpad，一个用来糊弄课内毫无意义的课程，一个装上 Arch 用来折腾，当然最重要的是劝自己报考软件专业，别踏马盯着你那物理了。</p>
+<p>刚才看到了<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=m_QAvGlh-Pg">这个视频</a>，真正的 CS 大佬只需要花费300$，包括一个装了 Ubuntu 的 ThinkPad，刷了纯净系统的老式索尼收集，和几个电子阅读器(Kindle，NOOK)就足以满足日常学习需求。相比之下那群天天嫌弃自己的设备太垃圾（其实只是游戏打得不够爽罢了）互相攀比的大学生有够可笑的:)</p>
 
                 
               </div>
@@ -583,9 +519,9 @@ ThinkPad，刷了纯净系统的老式索尼收集，和几个电子阅读器(Ki
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="print-no-link">#折腾记录</a>
-      
         <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+        <a href="/tags/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="print-no-link">#折腾记录</a>
       
     </div>
   

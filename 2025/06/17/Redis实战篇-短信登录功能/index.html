@@ -23,12 +23,12 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="总览    项目架构  短信登录 回顾：cookie&amp;session基础 cookie是一种客户端会话技术, cookie 由服务端产生,它是服务器存放在浏览器的一小份数据,浏览器以后每次访问该服务器的时候都会将这小份数据携带到服务器去。  服务端创建cookie,将cookie放入响应对象中,Tomcat容器将cookie转化为set-cookie响应头,响">
+    <meta name="description" content="短信登录回顾：cookie&amp;session基础cookie是一种客户端会话技术, cookie 由服务端产生,它是服务器存放在浏览器的一小份数据,浏览器以后每次访问该服务器的时候都会将这小份数据携带到服务器去。  服务端创建cookie,将cookie放入响应对象中,Tomcat容器将cookie转化为set-cookie响应头,响应给客户端 客户端在收到服务端发来的cookie的响应">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis-短信登录功能">
 <meta property="og:url" content="https://kznleaf.top/2025/06/17/Redis%E5%AE%9E%E6%88%98%E7%AF%87-%E7%9F%AD%E4%BF%A1%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
-<meta property="og:description" content="总览    项目架构  短信登录 回顾：cookie&amp;session基础 cookie是一种客户端会话技术, cookie 由服务端产生,它是服务器存放在浏览器的一小份数据,浏览器以后每次访问该服务器的时候都会将这小份数据携带到服务器去。  服务端创建cookie,将cookie放入响应对象中,Tomcat容器将cookie转化为set-cookie响应头,响">
+<meta property="og:description" content="短信登录回顾：cookie&amp;session基础cookie是一种客户端会话技术, cookie 由服务端产生,它是服务器存放在浏览器的一小份数据,浏览器以后每次访问该服务器的时候都会将这小份数据携带到服务器去。  服务端创建cookie,将cookie放入响应对象中,Tomcat容器将cookie转化为set-cookie响应头,响应给客户端 客户端在收到服务端发来的cookie的响应">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s21.ax1x.com/2025/06/15/pVAvgPI.png">
 <meta property="og:image" content="https://s21.ax1x.com/2025/06/15/pVAxkz6.png">
@@ -286,7 +286,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.7k 字
+          4.6k 字
         
       </span>
     
@@ -348,142 +348,93 @@
             
               <div class="markdown-body">
                 
-                <figure>
-<img src="https://s21.ax1x.com/2025/06/15/pVAvgPI.png" srcset="/img/loading.gif" lazyload alt="总览" />
-<figcaption aria-hidden="true">总览</figcaption>
-</figure>
-<figure>
-<img src="https://s21.ax1x.com/2025/06/15/pVAxkz6.png" srcset="/img/loading.gif" lazyload alt="项目架构" />
-<figcaption aria-hidden="true">项目架构</figcaption>
-</figure>
-<h1 id="短信登录">短信登录</h1>
-<h2 id="回顾cookiesession基础">回顾：cookie&amp;session基础</h2>
-<p><code>cookie</code>是一种客户端会话技术, cookie
-由服务端产生,它是服务器存放在浏览器的一小份数据,浏览器以后每次访问该服务器的时候都会将这小份数据携带到服务器去。</p>
+                <p><img src="https://s21.ax1x.com/2025/06/15/pVAvgPI.png" srcset="/img/loading.gif" lazyload alt="总览"></p>
+<p><img src="https://s21.ax1x.com/2025/06/15/pVAxkz6.png" srcset="/img/loading.gif" lazyload alt="项目架构"></p>
+<h1 id="短信登录"><a href="#短信登录" class="headerlink" title="短信登录"></a>短信登录</h1><h2 id="回顾：cookie-session基础"><a href="#回顾：cookie-session基础" class="headerlink" title="回顾：cookie&amp;session基础"></a>回顾：cookie&amp;session基础</h2><p><code>cookie</code>是一种客户端会话技术, cookie 由服务端产生,它是服务器存放在浏览器的一小份数据,浏览器以后每次访问该服务器的时候都会将这小份数据携带到服务器去。</p>
 <ul>
 <li><strong>服务端</strong>创建cookie,将cookie放入响应对象中,Tomcat容器将cookie转化为set-cookie响应头,响应给客户端</li>
 <li><strong>客户端</strong>在收到服务端发来的cookie的响应头后,在以后每次请求该服务的资源时,会以cookie请求头的形式携带之前收到的Cookie</li>
-<li>cookie是一种<strong>键值对</strong>格式的数据,从 tomcat8.5
-开始可以保存中文,但是不推荐</li>
+<li>cookie是一种<strong>键值对</strong>格式的数据,从 tomcat8.5 开始可以保存中文,但是不推荐</li>
 <li>由于cookie是存储于客户端的数据,比较容易暴露,<strong>一般不存储一些敏感或者影响安全的数据</strong></li>
 </ul>
-<figure>
-<img src="https://s21.ax1x.com/2025/05/13/pEX78OA.png" srcset="/img/loading.gif" lazyload alt="原理图" />
-<figcaption aria-hidden="true">原理图</figcaption>
-</figure>
-<p><code>HttpSession</code>是一种保留更多信息在服务端的一种技术,服务器会为每一个客户端开辟一块内存空间,即session对象.
-客户端在发送请求时,都可以使用自己的session.
-这样服务端就可以通过session来记录某个客户端的状态了。</p>
+<p><img src="https://s21.ax1x.com/2025/05/13/pEX78OA.png" srcset="/img/loading.gif" lazyload alt="原理图"></p>
+<p><code>HttpSession</code>是一种保留更多信息在服务端的一种技术,服务器会为每一个客户端开辟一块内存空间,即session对象. 客户端在发送请求时,都可以使用自己的session. 这样服务端就可以通过session来记录某个客户端的状态了。</p>
 <ul>
 <li>Session 依赖 Cookie 来实现识别用户身份。</li>
-<li>通常，服务器在创建一个 Session 时，会生成一个唯一的 Session
-ID。</li>
-<li>这个 Session ID 会通过 Set-Cookie
-响应头被发送到客户端，客户端会把这个 ID 保存在 Cookie 中。</li>
-<li>后续客户端的请求会自动携带这个 Session ID 的
-Cookie，服务器就可以用这个 ID 找回之前保存的 Session
-数据，从而识别用户状态。</li>
+<li>通常，服务器在创建一个 Session 时，会生成一个唯一的 Session ID。</li>
+<li>这个 Session ID 会通过 Set-Cookie 响应头被发送到客户端，客户端会把这个 ID 保存在 Cookie 中。</li>
+<li>后续客户端的请求会自动携带这个 Session ID 的 Cookie，服务器就可以用这个 ID 找回之前保存的 Session 数据，从而识别用户状态。</li>
 </ul>
-<figure>
-<img src="https://s21.ax1x.com/2025/05/14/pEjl0Cn.png" srcset="/img/loading.gif" lazyload
-alt="Session的原理图" />
-<figcaption aria-hidden="true">Session的原理图</figcaption>
-</figure>
-<p><strong>示例</strong>：假如有一个表单name属性为<code>username</code>，现在使用
-ServeletA 将表单提交的用户名存入Session：</p>
+<p><img src="https://s21.ax1x.com/2025/05/14/pEjl0Cn.png" srcset="/img/loading.gif" lazyload alt="Session的原理图"></p>
+<p><strong>示例</strong>：假如有一个表单name属性为<code>username</code>，现在使用 ServeletA 将表单提交的用户名存入Session：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@WebServlet(&quot;/servletA&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ServletA</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">HttpServlet</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">service</span><span class="hljs-params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="hljs-keyword">throws</span> ServletException, IOException &#123;<br>        <span class="hljs-comment">// 获取请求中的参数</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">username</span> <span class="hljs-operator">=</span> req.getParameter(<span class="hljs-string">&quot;username&quot;</span>);<br>        <span class="hljs-comment">// 获取session对象</span><br>        <span class="hljs-type">HttpSession</span> <span class="hljs-variable">session</span> <span class="hljs-operator">=</span> req.getSession();<br>         <span class="hljs-comment">// 获取Session的ID</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">jSessionId</span> <span class="hljs-operator">=</span> session.getId();<br>        System.out.println(jSessionId);<br>        <span class="hljs-comment">// 判断session是不是新创建的session</span><br>        <span class="hljs-type">boolean</span> <span class="hljs-variable">isNew</span> <span class="hljs-operator">=</span> session.isNew();<br>        System.out.println(isNew);<br>        <span class="hljs-comment">// 向session对象中存入数据</span><br>        session.setAttribute(<span class="hljs-string">&quot;username&quot;</span>,username);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>上面的代码调用了<code>getSession()</code>方法，使用<code>getSession()</code>方法可以<strong>获取当前会话的实例</strong>，同时为会话创建一个新的<code>cookie</code>，获取的逻辑如下：</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/05/14/pEjluAH.png" srcset="/img/loading.gif" lazyload
-alt="getSession方法的操作逻辑" />
-<figcaption aria-hidden="true">getSession方法的操作逻辑</figcaption>
-</figure>
-<p>于是， ServletA
-执行以后，返回给客户端的响应中会包含一个键为<code>JSESSIONID</code>的cookie。以后客户端向服务器发出的请求头都会包含该cookie。</p>
+<p><img src="https://s21.ax1x.com/2025/05/14/pEjluAH.png" srcset="/img/loading.gif" lazyload alt="getSession方法的操作逻辑"></p>
+<p>于是， ServletA 执行以后，返回给客户端的响应中会包含一个键为<code>JSESSIONID</code>的cookie。以后客户端向服务器发出的请求头都会包含该cookie。</p>
 <p>然后在另一个ServletB中就可以取出用户名：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@WebServlet(&quot;/servletB&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ServletB</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">HttpServlet</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">service</span><span class="hljs-params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="hljs-keyword">throws</span> ServletException, IOException &#123;<br>        <span class="hljs-comment">// 获取session对象</span><br>        <span class="hljs-type">HttpSession</span> <span class="hljs-variable">session</span> <span class="hljs-operator">=</span> req.getSession();<br>         <span class="hljs-comment">// 获取Session的ID</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">jSessionId</span> <span class="hljs-operator">=</span> session.getId();<br>        System.out.println(jSessionId);<br>        <span class="hljs-comment">// 判断session是不是新创建的session</span><br>        <span class="hljs-type">boolean</span> <span class="hljs-variable">isNew</span> <span class="hljs-operator">=</span> session.isNew();<br>        System.out.println(isNew);<br>        <span class="hljs-comment">// 从session中取出数据</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">username</span> <span class="hljs-operator">=</span> (String)session.getAttribute(<span class="hljs-string">&quot;username&quot;</span>);<br>        System.out.println(username);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="系统框图">系统框图</h2>
-<figure>
-<img src="https://s21.ax1x.com/2025/06/16/pVEAkAf.png" srcset="/img/loading.gif" lazyload alt="系统框图" />
-<figcaption aria-hidden="true">系统框图</figcaption>
-</figure>
-<h2 id="发送短信验证码">发送短信验证码</h2>
-<p>业务逻辑：</p>
-<ol type="1">
+
+<h2 id="系统框图"><a href="#系统框图" class="headerlink" title="系统框图"></a>系统框图</h2><p><img src="https://s21.ax1x.com/2025/06/16/pVEAkAf.png" srcset="/img/loading.gif" lazyload alt="系统框图"></p>
+<h2 id="发送短信验证码"><a href="#发送短信验证码" class="headerlink" title="发送短信验证码"></a>发送短信验证码</h2><p>业务逻辑：</p>
+<ol>
 <li>用户提交手机号，后端的<code>UserController</code>接收该手机号和用户所在的会话</li>
-<li>在服务层中做出如下判断：
-<ol type="1">
+<li>在服务层中做出如下判断：<ol>
 <li>校验手机号是否合法</li>
 <li>如果手机号不存在，返回错误信息</li>
 <li>如果手机号存在，生成验证码</li>
 <li>保存验证码到当前会话</li>
 <li>向用户发送验证码</li>
-</ol></li>
+</ol>
+</li>
 </ol>
 <p>控制层代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 发送手机验证码</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@PostMapping(&quot;code&quot;)</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">sendCode</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam(&quot;phone&quot;)</span> String phone, HttpSession session)</span> &#123;<br>    <span class="hljs-comment">// TODO 发送短信验证码并保存验证码</span><br>    <span class="hljs-keyword">return</span> userService.sendCode(phone, session);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>这里调用了服务层的<code>sendCode</code>方法，如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserServiceImpl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">ServiceImpl</span>&lt;UserMapper, User&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title class_">IUserService</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result <span class="hljs-title function_">sendCode</span><span class="hljs-params">(String phone, HttpSession session)</span> &#123;<br>        <span class="hljs-comment">// 校验手机号</span><br>        <span class="hljs-keyword">if</span> (RegexUtils.isPhoneInvalid(phone)) &#123;<br>            <span class="hljs-comment">// 如果手机号不合法，返回错误信息</span><br>            <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;手机号错误&quot;</span>);<br>        &#125;<br>        <span class="hljs-comment">// 手机号合法，生成验证码</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">code</span> <span class="hljs-operator">=</span> RandomUtil.randomNumbers(<span class="hljs-number">6</span>);<span class="hljs-comment">// 生成6位随机数</span><br><br>        <span class="hljs-comment">// 保存验证码到 session</span><br>        session.setAttribute(<span class="hljs-string">&quot;code&quot;</span>, code);<br><br>        <span class="hljs-comment">// 发送验证码</span><br>        log.debug(<span class="hljs-string">&quot;发送短信验证码成功，验证码：&#123;&#125;&quot;</span>, code);<br>        <span class="hljs-keyword">return</span> Result.ok();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>使用<code>log.debug</code>代替实际的发送验证码功能（因为要花钱）</p>
-<h2 id="基于session实现登录">基于Session实现登录</h2>
-<p>这一块将登录和注册合二为一。</p>
+<h2 id="基于Session实现登录"><a href="#基于Session实现登录" class="headerlink" title="基于Session实现登录"></a>基于Session实现登录</h2><p>这一块将登录和注册合二为一。</p>
 <p>控制层：接收登录参数，包含手机号、验证码；或者手机号、密码。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 登录功能</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> loginForm 登录参数，包含手机号、验证码；或者手机号、密码</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@PostMapping(&quot;/login&quot;)</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">login</span><span class="hljs-params">(<span class="hljs-meta">@RequestBody</span> LoginFormDTO loginForm, HttpSession session)</span>&#123;<br>    <span class="hljs-comment">// TODO 实现登录功能</span><br>    <span class="hljs-keyword">return</span> userService.login(loginForm, session);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>服务层的代码使用<strong>反向嵌套</strong>，防止嵌套越嵌越深。具体如下：（UserServiceImpl）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">login</span><span class="hljs-params">(LoginFormDTO loginForm, HttpSession session)</span> &#123;<br>    <span class="hljs-comment">// 校验手机号</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">phone</span> <span class="hljs-operator">=</span> loginForm.getPhone();<br>    <span class="hljs-keyword">if</span> (RegexUtils.isPhoneInvalid(phone)) &#123;<br>        <span class="hljs-comment">// 如果手机号不合法，返回错误信息</span><br>        <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;手机号错误&quot;</span>);<br>    &#125;<br>    <span class="hljs-comment">// 校验验证码</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">correctCode</span> <span class="hljs-operator">=</span> (String) session.getAttribute(<span class="hljs-string">&quot;code&quot;</span>); <span class="hljs-comment">// 会话保存的验证码</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">userCode</span> <span class="hljs-operator">=</span> loginForm.getCode(); <span class="hljs-comment">// 用户提交的验证码</span><br>    <span class="hljs-keyword">if</span> (correctCode == <span class="hljs-literal">null</span> || !correctCode.equals(userCode)) &#123;<br>        <span class="hljs-comment">// 验证码不一致</span><br>        <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;验证码错误&quot;</span>);<br>    &#125;<br>    <span class="hljs-comment">// 通过验证，根据手机号查询用户</span><br>    <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> query().eq(<span class="hljs-string">&quot;phone&quot;</span>, phone).one();<br><br>    <span class="hljs-comment">// 用户不存在，创建新用户</span><br>    <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) &#123;<br>        user = createUserWithPhone(phone);<br>    &#125;<br>    <span class="hljs-comment">// 这样确保user一定有值</span><br><br>    <span class="hljs-comment">// 保存用户信息到session</span><br>    session.setAttribute(<span class="hljs-string">&quot;user&quot;</span>, user);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>&#125;<br><br><span class="hljs-keyword">private</span> User <span class="hljs-title function_">createUserWithPhone</span><span class="hljs-params">(String phone)</span> &#123;<br>    <span class="hljs-comment">// 创建用户</span><br>    <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">User</span>();<br>    user.setPhone(phone);<br>    user.setNickName(USER_NICK_NAME_PREFIX + RandomUtil.randomString(<span class="hljs-number">10</span>));<br>    save(user); <span class="hljs-comment">// mybatisPlus 提供的save方法</span><br>    <span class="hljs-keyword">return</span> user;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>如前所述，访问服务器的时候，服务器返回给客户端的响应头中包含键为
-Session ID 的cookie 字段，后续客户端的请求会自动携带这个 Session ID 的
-Cookie，服务器就可以用这个 ID 找回之前保存的 Session
-数据，从而识别用户状态。所以这里<strong>不需要</strong>JWT令牌。</p>
+
+<p>如前所述，访问服务器的时候，服务器返回给客户端的响应头中包含键为 Session ID 的cookie 字段，后续客户端的请求会自动携带这个 Session ID 的 Cookie，服务器就可以用这个 ID 找回之前保存的 Session 数据，从而识别用户状态。所以这里<strong>不需要</strong>JWT令牌。</p>
 <ul>
 <li>在服务层，仍然要先校验手机号是否合法，然后再校验验证码。</li>
-<li>手机号+验证码校验通过之后：
-<ul>
+<li>手机号+验证码校验通过之后：  <ul>
 <li>如果数据库中能查到这个手机号用户，就赋值给<code>user</code>对象</li>
 <li>如果没有，就INSERT新用户，然后赋值给<code>user</code>对象</li>
-</ul></li>
+</ul>
+</li>
 <li>到这里<code>user</code>对象必定不为空，保存到会话中。</li>
 </ul>
-<hr />
+<hr>
 <p>发送验证码——填写验证码——按下登录按钮后，后台打印部分日志：</p>
 <figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs haml">HikariPool-1 - Starting...<br>HikariPool-1 - Start completed.<br>=<span class="language-ruby">=&gt;  <span class="hljs-title class_">Preparing</span>: <span class="hljs-variable constant_">SELECT</span> id,phone,password,nick_name,icon,create_time,update_time <span class="hljs-variable constant_">FROM</span> tb_user <span class="hljs-variable constant_">WHERE</span> (phone = <span class="hljs-string">?)</span></span><br>=<span class="language-ruby">=&gt; <span class="hljs-title class_">Parameters</span>: xxxxxxxxx(<span class="hljs-title class_">String</span>)</span><br>&lt;==      Total: 0<br>=<span class="language-ruby">=&gt;  <span class="hljs-title class_">Preparing</span>: <span class="hljs-variable constant_">INSERT</span> <span class="hljs-variable constant_">INTO</span> tb_user ( phone, nick_name, icon ) <span class="hljs-variable constant_">VALUES</span> ( <span class="hljs-string">?,</span> <span class="hljs-string">?,</span> ? )</span><br>=<span class="language-ruby">=&gt; <span class="hljs-title class_">Parameters</span>: xxxxxxxxx(<span class="hljs-title class_">String</span>), user_dvz2bph7ax(<span class="hljs-title class_">String</span>), (<span class="hljs-title class_">String</span>)</span><br>&lt;==    Updates: 1<br></code></pre></td></tr></table></figure>
+
 <p>一共对数据库进行两次操作：<code>SELECT</code>查询用户是否存在，和<code>INSERT</code>添加新用户。</p>
-<p>这里用到了<code>HikariCP</code>连接池，这是 Java
-中速度最快的连接池的实现，是 SpringBoot
-的默认连接池。连接池是用来复用数据库连接的一种机制，创建和关闭数据库连接是很昂贵的操作，连接池提前维护好一组可用连接，供应用程序重复使用。</p>
-<h2
-id="基于sessionthreadlocal的登录验证">基于Session+ThreadLocal的登录验证</h2>
-<h3 id="处理思路">处理思路</h3>
-<p>登录成功后，用户的每一次请求都会带上包含 session id
-的cookie，服务端从这里识别用户状态。考虑到后续每个功能都需要识别用户状态之后才能执行，所以这里要配置一个拦截器，通过验证才放行。</p>
+<p>这里用到了<code>HikariCP</code>连接池，这是 Java 中速度最快的连接池的实现，是 SpringBoot 的默认连接池。连接池是用来复用数据库连接的一种机制，创建和关闭数据库连接是很昂贵的操作，连接池提前维护好一组可用连接，供应用程序重复使用。</p>
+<h2 id="基于Session-ThreadLocal的登录验证"><a href="#基于Session-ThreadLocal的登录验证" class="headerlink" title="基于Session+ThreadLocal的登录验证"></a>基于Session+ThreadLocal的登录验证</h2><h3 id="处理思路"><a href="#处理思路" class="headerlink" title="处理思路"></a>处理思路</h3><p>登录成功后，用户的每一次请求都会带上包含 session id 的cookie，服务端从这里识别用户状态。考虑到后续每个功能都需要识别用户状态之后才能执行，所以这里要配置一个拦截器，通过验证才放行。</p>
 <blockquote>
 <p>过滤器是tomcat实现的，拦截器是springmvc实现的，过滤器的功能拦截器也能做到，且拦截器的功能更全，一般都是用拦截器。</p>
 </blockquote>
-<figure>
-<img src="https://s21.ax1x.com/2025/06/16/pVEV3pF.png" srcset="/img/loading.gif" lazyload alt="拦截器" />
-<figcaption aria-hidden="true">拦截器</figcaption>
-</figure>
+<p><img src="https://s21.ax1x.com/2025/06/16/pVEV3pF.png" srcset="/img/loading.gif" lazyload alt="拦截器"></p>
 <p>还有一个问题：拦截器是能完成用户校验不假，但是在后续的业务中其他的模块也需要用到用户信息，所以需要把拦截得到的用户信息向后传递，同时保证线程安全，使用<code>ThreadLocal</code>可以做到这一点。</p>
-<p><code>ThreadLocal</code>具体介绍详见<a
-href="https://kznleaf.top/2025/06/07/ThreadLocal%E5%89%96%E6%9E%90/">https://kznleaf.top/2025/06/07/ThreadLocal%E5%89%96%E6%9E%90/</a></p>
+<p><code>ThreadLocal</code>具体介绍详见<a href="https://kznleaf.top/2025/06/07/ThreadLocal%E5%89%96%E6%9E%90/">https://kznleaf.top/2025/06/07/ThreadLocal%E5%89%96%E6%9E%90/</a></p>
 <p>有了 ThreadLocal ，校验登录状态的流程图如下：</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/06/16/pVEVs6H.png" srcset="/img/loading.gif" lazyload
-alt="校验登录状态" />
-<figcaption aria-hidden="true">校验登录状态</figcaption>
-</figure>
-<h3 id="threadlocal工具类">ThreadLocal工具类</h3>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserHolder</span> &#123;<br>    <span class="hljs-comment">// ThreadLocal&lt;T&gt; 此处 T 即 UserDTO 实体类，</span><br>    <span class="hljs-comment">// 即 ThreadLocalMap 的键值对的 value 的类型为 UserDTO</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> ThreadLocal&lt;UserDTO&gt; tl = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ThreadLocal</span>&lt;&gt;();<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">saveUser</span><span class="hljs-params">(UserDTO user)</span>&#123;<br>        tl.set(user);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> UserDTO <span class="hljs-title function_">getUser</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> tl.get();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">removeUser</span><span class="hljs-params">()</span>&#123;<br>        tl.remove();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><img src="https://s21.ax1x.com/2025/06/16/pVEVs6H.png" srcset="/img/loading.gif" lazyload alt="校验登录状态"></p>
+<h3 id="ThreadLocal工具类"><a href="#ThreadLocal工具类" class="headerlink" title="ThreadLocal工具类"></a>ThreadLocal工具类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserHolder</span> &#123;<br>    <span class="hljs-comment">// ThreadLocal&lt;T&gt; 此处 T 即 UserDTO 实体类，</span><br>    <span class="hljs-comment">// 即 ThreadLocalMap 的键值对的 value 的类型为 UserDTO</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> ThreadLocal&lt;UserDTO&gt; tl = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ThreadLocal</span>&lt;&gt;();<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">saveUser</span><span class="hljs-params">(UserDTO user)</span>&#123;<br>        tl.set(user);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> UserDTO <span class="hljs-title function_">getUser</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> tl.get();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">removeUser</span><span class="hljs-params">()</span>&#123;<br>        tl.remove();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p><code>tl</code>全局唯一，并且随类对象的加载一起被加载。</p>
-<h3 id="entity与dto">Entity与DTO</h3>
-<p>Entity，<strong>实体类</strong>，它的字段与数据库中的列一一对应，用于数据库操作；</p>
-<p>DTO，Data Transfer Object，即<strong>数据传输对象</strong>，是 Java
-编程中很常见的设计模式。</p>
-<p>DTO 用来在不同系统或模块之间传递数据的对象。在实际开发中，尤其是 Web
-项目里，我们常常要在控制器、服务层、数据库层之间传递数据。为了避免直接暴露数据库实体（如
-UserEntity），我们会用 DTO 来进行封装。</p>
+<h3 id="Entity与DTO"><a href="#Entity与DTO" class="headerlink" title="Entity与DTO"></a>Entity与DTO</h3><p>Entity，<strong>实体类</strong>，它的字段与数据库中的列一一对应，用于数据库操作；</p>
+<p>DTO，Data Transfer Object，即<strong>数据传输对象</strong>，是 Java 编程中很常见的设计模式。</p>
+<p>DTO 用来在不同系统或模块之间传递数据的对象。在实际开发中，尤其是 Web 项目里，我们常常要在控制器、服务层、数据库层之间传递数据。为了避免直接暴露数据库实体（如 UserEntity），我们会用 DTO 来进行封装。</p>
 <p>总之，之所以专门再封装一遍，有两个主要原因：</p>
-<ol type="1">
+<ol>
 <li>数据库实体可能包含像用户密码这样的敏感信息，这类信息应当被隐藏</li>
 <li>很多情况下我们只需要用到一部分实体类的信息，那么就只把有用的信息记录下来，只传输封装后的对象，这样可以减轻数据传输的压力</li>
 </ol>
@@ -496,128 +447,110 @@ UserEntity），我们会用 DTO 来进行封装。</p>
 </ul>
 <p><code>User</code>实体类的其他字段在这里都不重要。所以不妨再定义一个专门用于数据传输的实体类<code>UserDTO</code>：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.hmdp.dto;<br><br><span class="hljs-keyword">import</span> lombok.Data;<br><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserDTO</span> &#123;<br>    <span class="hljs-keyword">private</span> Long id;<br>    <span class="hljs-keyword">private</span> String nickName;<br>    <span class="hljs-keyword">private</span> String icon;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>其实上面的<code>ThreadLocal</code>保存的也是这里的<code>UserDTO</code>对象。</p>
-<p>在服务层或控制器层，需要把实体类对象转化为对应的 DTO 对象，幸运的是
-Spring
-已经准备好了对应的工具类：<code>BeanUtils</code>，它包含以下方法：</p>
+<p>在服务层或控制器层，需要把实体类对象转化为对应的 DTO 对象，幸运的是 Spring 已经准备好了对应的工具类：<code>BeanUtils</code>，它包含以下方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">copyProperties</span><span class="hljs-params">(Object source, Object target)</span> <span class="hljs-keyword">throws</span> BeansException &#123;<br>    copyProperties(source, target, (Class)<span class="hljs-literal">null</span>, (String[])<span class="hljs-literal">null</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>第一个参数是实体类，第二个参数是
-DTO。这样就可以把实体类中的字段复制到 DTO 对象的相应字段上。</p>
-<h3 id="登录验证实现">登录验证实现</h3>
-<p>手续需要修改登录的服务层方法，将<code>UserDTO</code>对象存入 session
-而不是 User：</p>
+
+<p>第一个参数是实体类，第二个参数是 DTO。这样就可以把实体类中的字段复制到 DTO 对象的相应字段上。</p>
+<h3 id="登录验证实现"><a href="#登录验证实现" class="headerlink" title="登录验证实现"></a>登录验证实现</h3><p>手续需要修改登录的服务层方法，将<code>UserDTO</code>对象存入 session 而不是 User：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">UserDTO</span> <span class="hljs-variable">userDTO</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UserDTO</span>();<br>BeanUtils.copyProperties(user, userDTO);<br><span class="hljs-comment">// 保存用户信息到session</span><br>session.setAttribute(<span class="hljs-string">&quot;user&quot;</span>, userDTO);<br><br><span class="hljs-keyword">return</span> Result.ok(); <span class="hljs-comment">// 别返回null！</span><br></code></pre></td></tr></table></figure>
+
 <p>然后配置拦截器，尝试获取当前会话中的用户，如果获取失败就拦截并返回401，获取成功就把DTO对象放入ThreadLocal：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoginInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">HandlerInterceptor</span> &#123;<br>    <span class="hljs-comment">// 前置拦截</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">preHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 1. 获取session</span><br>        <span class="hljs-type">HttpSession</span> <span class="hljs-variable">session</span> <span class="hljs-operator">=</span> request.getSession();<br>        <span class="hljs-comment">// 2. 获取用户</span><br>        <span class="hljs-type">UserDTO</span> <span class="hljs-variable">userDTO</span> <span class="hljs-operator">=</span> (UserDTO) session.getAttribute(<span class="hljs-string">&quot;user&quot;</span>);<br>        <span class="hljs-comment">// 3. 不存在，拦截</span><br>        <span class="hljs-keyword">if</span> (userDTO == <span class="hljs-literal">null</span>) &#123;<br>            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); <span class="hljs-comment">// 401</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-comment">// 4. 保存到 ThreadLocal</span><br>        UserHolder.saveUser(userDTO); <span class="hljs-comment">// 保存用户信息</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>; <span class="hljs-comment">// 放行</span><br>    &#125;<br><br>    <span class="hljs-comment">// Spring DispatcherServlet 在完成一次 HTTP 请求的整个处理流程后，</span><br>    <span class="hljs-comment">// 自动调用 afterCompletion</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">afterCompletion</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        UserHolder.removeUser();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>使用自动装配的方式注册拦截器：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MVCconfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">WebMvcConfigurer</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> LoginInterceptor loginInterceptor;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addInterceptors</span><span class="hljs-params">(InterceptorRegistry registry)</span> &#123;<br>        registry.addInterceptor(loginInterceptor)<br>                .excludePathPatterns(<br>                        <span class="hljs-string">&quot;/user/login&quot;</span>,<br>                        <span class="hljs-string">&quot;/user/code&quot;</span>,<br>                        <span class="hljs-string">&quot;/blog/hot&quot;</span>, <span class="hljs-string">&quot;/shop/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/shop-type/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/voucher/*&quot;</span><br>                );<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="集群的session共享问题">集群的session共享问题</h2>
-<p>前面提到过，<code>HttpSession</code>是一种保留更多信息在服务端的一种技术,服务器会为每一个客户端开辟一块内存空间,即session对象。客户端在发送请求时,都可以使用自己的session.
-这样服务端就可以通过session来记录某个客户端的状态了。</p>
+
+<h2 id="集群的session共享问题"><a href="#集群的session共享问题" class="headerlink" title="集群的session共享问题"></a>集群的session共享问题</h2><p>前面提到过，<code>HttpSession</code>是一种保留更多信息在服务端的一种技术,服务器会为每一个客户端开辟一块内存空间,即session对象。客户端在发送请求时,都可以使用自己的session. 这样服务端就可以通过session来记录某个客户端的状态了。</p>
 <p>但是，多台Tomcat服务器并不共享session存储空间，当用户请求切换到不同服务器的时候会导致数据丢失。</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/06/16/pVEn68f.png" srcset="/img/loading.gif" lazyload alt="集群" />
-<figcaption aria-hidden="true">集群</figcaption>
-</figure>
+<p><img src="https://s21.ax1x.com/2025/06/16/pVEn68f.png" srcset="/img/loading.gif" lazyload alt="集群"></p>
 <p>解决方案：<strong>Redis</strong></p>
 <p>Redis是如何解决这三个问题的？</p>
-<ol type="1">
+<ol>
 <li>数据共享：所有的tomcat都可以访问Redis，所以Redis的数据是被共享的；</li>
 <li>内存存储：Redis就是在内存中运行的；</li>
 <li>key-value结构：天然符合。</li>
 </ol>
-<figure>
-<img src="https://s21.ax1x.com/2025/06/16/pVEnfbj.png" srcset="/img/loading.gif" lazyload alt="Redis" />
-<figcaption aria-hidden="true">Redis</figcaption>
-</figure>
-<h2 id="基于redis实现共享session登录">基于Redis实现共享session登录</h2>
-<h3 id="方案">方案</h3>
-<p>Redis代替SESSION要考虑的问题：</p>
-<ol type="1">
-<li>选择合适的数据结构
-<ol type="1">
+<p><img src="https://s21.ax1x.com/2025/06/16/pVEnfbj.png" srcset="/img/loading.gif" lazyload alt="Redis"></p>
+<h2 id="基于Redis实现共享session登录"><a href="#基于Redis实现共享session登录" class="headerlink" title="基于Redis实现共享session登录"></a>基于Redis实现共享session登录</h2><h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p>Redis代替SESSION要考虑的问题：</p>
+<ol>
+<li>选择合适的数据结构<ol>
 <li><code>key-String</code>，后者是用户对象的 JSON 字符串</li>
 <li><code>key-&#123;field=value&#125;</code>，Hash结构，一个<code>key</code>可以有多个<code>field=value</code>键值对；内存占用更少</li>
-</ol></li>
+</ol>
+</li>
 <li>选择合适的key：唯一性，以及需要用的时候能不能快速找到</li>
 <li>选择合适的存储粒度，很多时候没必要存储完整的用户信息</li>
 </ol>
 <p>采用 Hash 的方案：</p>
-<p><img src="https://s21.ax1x.com/2025/06/16/pVEnzI1.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img src="https://s21.ax1x.com/2025/06/16/pVEnzI1.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>发送验证码之前，把验证码以<strong>特定前缀+手机号</strong>为key存储到Redis（防止与其他业务冲突）；</li>
 <li>用户使用验证码登录注册，根据用户输入的手机号为key从Redis读取验证码，比较读取的验证码和输入的验证码是否匹配；</li>
 <li>如果匹配成功，把用户DTO对象以<strong>随机token</strong>为key存储到Redis</li>
 </ul>
 <p>还有一个问题：如何确保前端能拿到登录凭证？解决方法是每次把用户DTO对象存储到Redis后，把存储用的token<strong>返回给前端</strong>，这样前端每次发来请求的时候都可以拿着这个token进行登录校验。流程如下图：</p>
-<p><img src="https://s21.ax1x.com/2025/06/16/pVEuCRK.png" srcset="/img/loading.gif" lazyload /></p>
-<p>前端收到token以后会直接把它保存到浏览器，所以这里的 token
-不能用手机号，会有泄露的风险。校验工作还是后端做的，，以 HTTP
-请求中保存的 token 为 key 从 Redis 获取用户 DTO
-对象，找到对应用户的话就保存一份到 ThreadLocal，然后放行。</p>
+<p><img src="https://s21.ax1x.com/2025/06/16/pVEuCRK.png" srcset="/img/loading.gif" lazyload></p>
+<p>前端收到token以后会直接把它保存到浏览器，所以这里的 token 不能用手机号，会有泄露的风险。校验工作还是后端做的，，以 HTTP 请求中保存的 token 为 key 从 Redis 获取用户 DTO 对象，找到对应用户的话就保存一份到 ThreadLocal，然后放行。</p>
 <p>下面基于以上方案重写功能。</p>
-<h3 id="发送短信">发送短信</h3>
-<p>以前把验证码保存在session中，现在把验证码保存到Redis。</p>
+<h3 id="发送短信"><a href="#发送短信" class="headerlink" title="发送短信"></a>发送短信</h3><p>以前把验证码保存在session中，现在把验证码保存到Redis。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">sendCode</span><span class="hljs-params">(String phone, HttpSession session)</span> &#123;<br>    <span class="hljs-comment">// 校验手机号</span><br>    <span class="hljs-keyword">if</span> (RegexUtils.isPhoneInvalid(phone)) &#123;<br>        <span class="hljs-comment">// 如果手机号不合法，返回错误信息</span><br>        <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;手机号错误&quot;</span>);<br>    &#125;<br>    <span class="hljs-comment">// 手机号合法，生成验证码</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">code</span> <span class="hljs-operator">=</span> RandomUtil.randomNumbers(<span class="hljs-number">6</span>);<span class="hljs-comment">// 生成6位随机数</span><br><br>    <span class="hljs-comment">// 保存验证码到 Redis  |  SET key value ex</span><br>    stringRedisTemplate.opsForValue().set(LOGIN_CODE_KEY + phone, code, LOGIN_CODE_TTL, TimeUnit.MINUTES);<br><br>    <span class="hljs-comment">// 发送验证码</span><br>    log.debug(<span class="hljs-string">&quot;发送短信验证码成功，验证码：&#123;&#125;&quot;</span>, code);<br>    <span class="hljs-keyword">return</span> Result.ok();<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>核心是这一句</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 保存验证码到 Redis  |  SET key value ex</span><br>stringRedisTemplate.opsForValue().set(LOGIN_CODE_KEY + phone, code, LOGIN_CODE_TTL, TimeUnit.MINUTES);<br></code></pre></td></tr></table></figure>
+
 <p>保存到Redis，key的格式类似于<code>login:code:手机号</code>，值就是验证码，有效时间为2min。</p>
 <p>发送短信的过程不需要查询Redis，只检查手机号是否合法，然后把验证码存起来用于登录。</p>
-<h3 id="登录">登录</h3>
-<p>业务逻辑：</p>
+<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><p>业务逻辑：</p>
 <ul>
-<li>用户发来登录用的手机号和验证码，服务器从 Redis
-获取正确的验证码和用户提交的<code>loginForm</code>里的验证码比较，匹配则进行下一步</li>
-<li>查询数据库是否存在这个手机号，如果存在就直接把用户 DTO 对象存到
-Redis，不存在则向数据库插入数据之后再把 DTO 存到 Redis，存储的 key
-的格式类似<code>login:token:e64c7c4b-af46-428b-896b-26d0d18e6d6c</code>，value为
-field value 键值对。</li>
-<li>初次登陆会为 Redis 里的 token
-设置一个有效期30分钟，如果三十分钟内用户没有进行操作则登录过期。在拦截器里更新过期时间，每当用户操作就刷新有效期。</li>
-<li>login 控制器结束的时候为前端返回
-token，以后前端每次发请求都会包含这个 token。</li>
+<li>用户发来登录用的手机号和验证码，服务器从 Redis 获取正确的验证码和用户提交的<code>loginForm</code>里的验证码比较，匹配则进行下一步</li>
+<li>查询数据库是否存在这个手机号，如果存在就直接把用户 DTO 对象存到 Redis，不存在则向数据库插入数据之后再把 DTO 存到 Redis，存储的 key 的格式类似<code>login:token:e64c7c4b-af46-428b-896b-26d0d18e6d6c</code>，value为 field value 键值对。</li>
+<li>初次登陆会为 Redis 里的 token 设置一个有效期30分钟，如果三十分钟内用户没有进行操作则登录过期。在拦截器里更新过期时间，每当用户操作就刷新有效期。</li>
+<li>login 控制器结束的时候为前端返回 token，以后前端每次发请求都会包含这个 token。</li>
 </ul>
 <p>具体代码就不贴了，这里比较重要的有：</p>
 <p>生成随机token：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">uuid</span> <span class="hljs-operator">=</span> UUID.randomUUID().toString();<br></code></pre></td></tr></table></figure>
+
 <p>把一个DTO对象以Hash类型存储到Redis里面：<code>StringRedisTemplate</code>包含下面的方法，可以一次插入包含多个键值对的Hash类型数据：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">void</span> <span class="hljs-title function_">putAll</span><span class="hljs-params">(H key, Map&lt;? extends HK, ? extends HV&gt; m)</span>;<br></code></pre></td></tr></table></figure>
+
 <p>key不必多说，Map的话可以单独定义一个方法，将UserDTO的字段放入一个哈希表中，再调用putAll。</p>
 <p>先自动装配StringRedisTemplate：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Autowired</span><br><span class="hljs-keyword">private</span> StringRedisTemplate stringRedisTemplate;<br></code></pre></td></tr></table></figure>
-<p>考虑到放入、取出 UserDTO
-对象的方法都会被用到，所以写两个工具方法：</p>
+
+<p>考虑到放入、取出 UserDTO 对象的方法都会被用到，所以写两个工具方法：</p>
 <ul>
 <li><code>saveUserToRedis</code>：将<code>userDTO</code>对象的所有字段格式化为哈希表，然后以Hash类型存入Redis</li>
 <li><code>getUserFromRedis</code>：根据请求头中的<code>token</code>从Redis中尝试获取对应的用户，如果获取到了就返回用户的DTO对象，如果没有获取到就返回<code>null</code></li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 存储用户信息到Redis</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">saveUserToRedis</span><span class="hljs-params">(String token, UserDTO userDTO)</span> &#123;<br>    Map&lt;String, String&gt; userMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>    userMap.put(<span class="hljs-string">&quot;id&quot;</span>, userDTO.getId().toString());<br>    userMap.put(<span class="hljs-string">&quot;nickName&quot;</span>, userDTO.getNickName());<br>    userMap.put(<span class="hljs-string">&quot;icon&quot;</span>, userDTO.getIcon());<br>    <br>    <span class="hljs-type">String</span> <span class="hljs-variable">tokenKey</span> <span class="hljs-operator">=</span> LOGIN_USER_KEY + token;<br>    stringRedisTemplate.opsForHash().putAll(tokenKey, userMap);<br>    stringRedisTemplate.expire(tokenKey, LOGIN_USER_TTL, TimeUnit.MINUTES);<br>&#125;<br><br><span class="hljs-comment">// 从Redis读取用户信息</span><br><span class="hljs-keyword">private</span> UserDTO <span class="hljs-title function_">getUserFromRedis</span><span class="hljs-params">(String token)</span> &#123;<br>    <span class="hljs-type">String</span> <span class="hljs-variable">tokenKey</span> <span class="hljs-operator">=</span> LOGIN_USER_KEY + token;<br>    Map&lt;Object, Object&gt; userMap = stringRedisTemplate.opsForHash().entries(tokenKey);<br>    <br>    <span class="hljs-keyword">if</span> (userMap.isEmpty()) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;<br>    <br>    <span class="hljs-type">UserDTO</span> <span class="hljs-variable">userDTO</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UserDTO</span>();<br>    userDTO.setId(Long.parseLong((String) userMap.get(<span class="hljs-string">&quot;id&quot;</span>)));<br>    userDTO.setNickName((String) userMap.get(<span class="hljs-string">&quot;nickName&quot;</span>));<br>    userDTO.setIcon((String) userMap.get(<span class="hljs-string">&quot;icon&quot;</span>));<br>    <br>    <span class="hljs-keyword">return</span> userDTO;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>登录用的是<code>saveUserToRedis</code>。</p>
-<h3 id="拦截器">拦截器</h3>
-<p>这个拦截器只拦截需要登录的路径。</p>
+<h3 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h3><p>这个拦截器只拦截需要登录的路径。</p>
 <p><code>preHandle</code>里一共做四件事：</p>
-<ol type="1">
-<li>获取请求头中的
-token，获取失败则拦截，可以使用<code>StringUtils.hasLength(token)</code>判断</li>
+<ol>
+<li>获取请求头中的 token，获取失败则拦截，可以使用<code>StringUtils.hasLength(token)</code>判断</li>
 <li>调用<code>getUserFromRedis</code>查询Redis保存的用户信息</li>
 <li>如果获取为null则继续拦截，不为null就保存到ThreadLocal</li>
 <li>刷新token的有效期</li>
 <li>放行</li>
 </ol>
 <p><code>afterCompletion</code>只做一件事：清除ThraedLocal绑定的局部变量，防止内存泄漏。</p>
-<h3 id="登录状态刷新-双拦截器">登录状态刷新-双拦截器</h3>
-<p>之前的拦截器只拦截了需要登录的路径，只有用户访问了这些页面才会刷新token有效时间。如果用户在登录后一直在不被它拦截的页面停留，token还会过期，不合理。</p>
+<h3 id="登录状态刷新-双拦截器"><a href="#登录状态刷新-双拦截器" class="headerlink" title="登录状态刷新-双拦截器"></a>登录状态刷新-双拦截器</h3><p>之前的拦截器只拦截了需要登录的路径，只有用户访问了这些页面才会刷新token有效时间。如果用户在登录后一直在不被它拦截的页面停留，token还会过期，不合理。</p>
 <p>所以在原来的拦截器的前面再加上一个拦截器，拦截一切路径。</p>
 <p>用户请求先经过第一个拦截器，拦截所有路径，但是全部放行；第二个拦截器只拦截登录后才能查看的页面，然后查询ThreadLocal的用户，查不到就拦截。</p>
-<p><img src="https://s21.ax1x.com/2025/06/17/pVEGm2n.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img src="https://s21.ax1x.com/2025/06/17/pVEGm2n.png" srcset="/img/loading.gif" lazyload></p>
 <p><code>order</code>设置拦截器的执行顺序，越小先执行，默认都是0.按照添加顺序执行。</p>
 <p>第一个拦截器：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">preInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">HandlerInterceptor</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> StringRedisTemplate stringRedisTemplate;<br><br>    <span class="hljs-comment">// 前置拦截</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">preHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// TODO 1. 获取请求头中的 token(uuid)</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">token</span> <span class="hljs-operator">=</span> request.getHeader(<span class="hljs-string">&quot;authorization&quot;</span>);<br>        <span class="hljs-keyword">if</span> (!StringUtils.hasLength(token)) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>; <span class="hljs-comment">// 没有获取到 token ，放行</span><br>        &#125;<br>        <span class="hljs-comment">// TODO 2. 从 Redis 利用 token 获取用户信息</span><br>        <span class="hljs-type">UserDTO</span> <span class="hljs-variable">userDTO</span> <span class="hljs-operator">=</span> getUserFromRedis(token);<br><br>        <span class="hljs-comment">// 3. 用户不存在，放行</span><br>        <span class="hljs-keyword">if</span> (userDTO == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br><br>        <span class="hljs-comment">// 4. 保存到 ThreadLocal</span><br>        UserHolder.saveUser(userDTO); <span class="hljs-comment">// 保存用户信息</span><br><br>        <span class="hljs-comment">// TODO 刷新 token 的有效期</span><br>        stringRedisTemplate.expire(LOGIN_USER_KEY + token, LOGIN_USER_TTL, TimeUnit.MINUTES);<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>; <span class="hljs-comment">// 放行</span><br>    &#125;<br><br>    <span class="hljs-comment">// Spring DispatcherServlet 在完成一次 HTTP 请求的整个处理流程后，</span><br>    <span class="hljs-comment">// 自动调用 afterCompletion</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">afterCompletion</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        UserHolder.removeUser();<br>    &#125;<br><br>    <span class="hljs-comment">// TODO 从Redis读取用户信息</span><br>    <span class="hljs-keyword">private</span> UserDTO <span class="hljs-title function_">getUserFromRedis</span><span class="hljs-params">(String token)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">tokenKey</span> <span class="hljs-operator">=</span> LOGIN_USER_KEY + token;<br>        Map&lt;Object, Object&gt; userMap = stringRedisTemplate.opsForHash().entries(tokenKey);<br><br>        <span class="hljs-keyword">if</span> (userMap.isEmpty()) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>; <span class="hljs-comment">// 获取失败</span><br>        &#125;<br><br>        <span class="hljs-type">UserDTO</span> <span class="hljs-variable">userDTO</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UserDTO</span>(); <span class="hljs-comment">// 创建 UserDTO 对象</span><br>        userDTO.setId(Long.parseLong((String) userMap.get(<span class="hljs-string">&quot;id&quot;</span>)));<br>        userDTO.setNickName((String) userMap.get(<span class="hljs-string">&quot;nickName&quot;</span>));<br>        userDTO.setIcon((String) userMap.get(<span class="hljs-string">&quot;icon&quot;</span>));<br><br>        <span class="hljs-keyword">return</span> userDTO; <span class="hljs-comment">// 返回获取的 UserDTO对象</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>第二个拦截器：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoginInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">HandlerInterceptor</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">preHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-type">UserDTO</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> UserHolder.getUser();<br>        <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) &#123;<br>            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>注册两个拦截器，设置<code>order</code>分别为0和1：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MVCconfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">WebMvcConfigurer</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> LoginInterceptor loginInterceptor;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> preInterceptor preInterceptor;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addInterceptors</span><span class="hljs-params">(InterceptorRegistry registry)</span> &#123;<br>        registry.addInterceptor(loginInterceptor)<br>                .excludePathPatterns(<br>                        <span class="hljs-string">&quot;/user/login&quot;</span>,<br>                        <span class="hljs-string">&quot;/user/code&quot;</span>,<br>                        <span class="hljs-string">&quot;/blog/hot&quot;</span>, <span class="hljs-string">&quot;/shop/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/shop-type/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/voucher/*&quot;</span><br>                ).order(<span class="hljs-number">1</span>);<br>        registry.addInterceptor(preInterceptor).addPathPatterns(<span class="hljs-string">&quot;/**&quot;</span>).order(<span class="hljs-number">0</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
                 
               </div>
             

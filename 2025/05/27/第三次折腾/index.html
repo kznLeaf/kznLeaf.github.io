@@ -23,12 +23,12 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="最近又折腾了一下博客，第一次折腾应该是年初的时候绑定域名，第二次是一个月之前，这回应该是近期的最后一次了。 主要内容：  把博客的域名换成了kznleaf.top，因为觉得原来的域名不好听。续费的话大约一年30rmb，还算实惠，以后没有特殊情况的话应该不会再改了 DNS解析服务由 DNSPod 换成 Cloudflare，因为不想用腾讯的产品 移除毛玻璃效果 移除关于页的 GitHub">
+    <meta name="description" content="最近又折腾了一下博客，第一次折腾应该是年初的时候绑定域名，第二次是一个月之前，这回应该是近期的最后一次了。 主要内容：  把博客的域名换成了kznleaf.top，因为觉得原来的域名不好听。续费的话大约一年30rmb，还算实惠，以后没有特殊情况的话应该不会再改了 DNS解析服务由 DNSPod 换成 Cloudflare，因为不想用腾讯的产品 移除毛玻璃效果 移除关于页的 GitHub 事件统计和">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第三次博客折腾记录">
 <meta property="og:url" content="https://kznleaf.top/2025/05/27/%E7%AC%AC%E4%B8%89%E6%AC%A1%E6%8A%98%E8%85%BE/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
-<meta property="og:description" content="最近又折腾了一下博客，第一次折腾应该是年初的时候绑定域名，第二次是一个月之前，这回应该是近期的最后一次了。 主要内容：  把博客的域名换成了kznleaf.top，因为觉得原来的域名不好听。续费的话大约一年30rmb，还算实惠，以后没有特殊情况的话应该不会再改了 DNS解析服务由 DNSPod 换成 Cloudflare，因为不想用腾讯的产品 移除毛玻璃效果 移除关于页的 GitHub">
+<meta property="og:description" content="最近又折腾了一下博客，第一次折腾应该是年初的时候绑定域名，第二次是一个月之前，这回应该是近期的最后一次了。 主要内容：  把博客的域名换成了kznleaf.top，因为觉得原来的域名不好听。续费的话大约一年30rmb，还算实惠，以后没有特殊情况的话应该不会再改了 DNS解析服务由 DNSPod 换成 Cloudflare，因为不想用腾讯的产品 移除毛玻璃效果 移除关于页的 GitHub 事件统计和">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s21.ax1x.com/2025/05/27/pVSLhpn.png">
 <meta property="article:published_time" content="2025-05-27T15:15:16.000Z">
@@ -275,7 +275,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          452 字
+          451 字
         
       </span>
     
@@ -339,31 +339,26 @@
                 
                 <p>最近又折腾了一下博客，第一次折腾应该是年初的时候绑定域名，第二次是一个月之前，这回应该是近期的最后一次了。</p>
 <p>主要内容：</p>
-<ol type="1">
+<ol>
 <li>把博客的域名换成了<code>kznleaf.top</code>，因为觉得原来的域名不好听。续费的话大约一年30rmb，还算实惠，以后没有特殊情况的话应该不会再改了</li>
 <li>DNS解析服务由 DNSPod 换成 Cloudflare，因为不想用腾讯的产品</li>
 <li>移除毛玻璃效果</li>
 <li>移除关于页的 GitHub 事件统计和 contribution graph</li>
 </ol>
 <p>最后一条为什么要关闭这两个呢，因为今天测试网站功能的时候，关掉代理，F12关闭缓存，发现关于页的加载速度极其缓慢，查看网络：</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/05/27/pVSLhpn.png" srcset="/img/loading.gif" lazyload alt="乐" />
-<figcaption aria-hidden="true">乐</figcaption>
-</figure>
-<p>这里用到的两个项目：GitHub事件统计 和 Contribution Graph
-都被大陆墙了</p>
+<p><img src="https://s21.ax1x.com/2025/05/27/pVSLhpn.png" srcset="/img/loading.gif" lazyload alt="乐"></p>
+<p>这里用到的两个项目：GitHub事件统计 和 Contribution Graph 都被大陆墙了</p>
 <p>因为我之前设置了预加载功能，并且规定</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"> $(<span class="hljs-variable language_">window</span>).<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;load&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>  $(<span class="hljs-string">&quot;#Loadanimation&quot;</span>).<span class="hljs-title function_">fadeOut</span>(<span class="hljs-number">500</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
 <p>即整个页面的资源都加载完毕后再退出动画，所以这两个无法访问项目会使访问者长时间卡在预加载动画出不来，直到达到超时时间放弃加载。</p>
 <p>ChatGPT:</p>
 <blockquote>
-<p>Contribution Graph的服务部署在 vercel.app 域名上，大陆对 vercel.app
-屏蔽严重，所以无法访问。</p>
+<p>Contribution Graph的服务部署在 vercel.app 域名上，大陆对 vercel.app 屏蔽严重，所以无法访问。</p>
 </blockquote>
-<p>我现在也没精力去想解决方案...干脆删掉好了</p>
+<p>我现在也没精力去想解决方案…干脆删掉好了</p>
 <p><span class="heimu" title="你知道的太多了">GFW你赢了</span></p>
-<p>之前我在某电子信息强校（大嘘）的电子实验室的古董电脑上尝试访问过自己的博客，已经发现了关于页无法加载的问题，而且由于最早发布的十几篇博客的封面图是托管在
-imgur 上的，所以博客的前两页的内容全都无法加载。</p>
+<p>之前我在某电子信息强校（大嘘）的电子实验室的古董电脑上尝试访问过自己的博客，已经发现了关于页无法加载的问题，而且由于最早发布的十几篇博客的封面图是托管在 imgur 上的，所以博客的前两页的内容全都无法加载。</p>
 
                 
               </div>

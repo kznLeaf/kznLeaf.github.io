@@ -23,12 +23,12 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="参考：Java中的流、并行流 本博文为视频内容的简单梳理。 目录 引入 已知一个列表 1234567List&lt;Person&gt; people &#x3D; List.of(        new Person(&quot;Neo&quot;, 1, &quot;USA&quot;),        new Person(&quot;Blu&quot;, 12, &quot;China&amp;q">
+    <meta name="description" content="参考：Java中的流、并行流 本博文为视频内容的简单梳理。 目录引入已知一个列表 1234567List&lt;Person&gt; people &#x3D; List.of(        new Person(&quot;Neo&quot;, 1, &quot;USA&quot;),        new Person(&quot;Blu&quot;, 12, &quot;China&quot;),">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java SE-Stream API详解">
 <meta property="og:url" content="https://kznleaf.top/2025/04/18/java11/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
-<meta property="og:description" content="参考：Java中的流、并行流 本博文为视频内容的简单梳理。 目录 引入 已知一个列表 1234567List&lt;Person&gt; people &#x3D; List.of(        new Person(&quot;Neo&quot;, 1, &quot;USA&quot;),        new Person(&quot;Blu&quot;, 12, &quot;China&amp;q">
+<meta property="og:description" content="参考：Java中的流、并行流 本博文为视频内容的简单梳理。 目录引入已知一个列表 1234567List&lt;Person&gt; people &#x3D; List.of(        new Person(&quot;Neo&quot;, 1, &quot;USA&quot;),        new Person(&quot;Blu&quot;, 12, &quot;China&quot;),">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.imgur.com/Yk5xhTe.png">
 <meta property="article:published_time" content="2025-04-18T10:08:36.000Z">
@@ -335,198 +335,187 @@
             
               <div class="markdown-body">
                 
-                <p>参考：<a
-target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Vi421C73n/?spm_id_from=333.1387.list.card_archive.click&amp;vd_source=918a6909c997fbaf818d1fbc55d65ca9">Java中的流、并行流</a></p>
+                <p>参考：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Vi421C73n/?spm_id_from=333.1387.list.card_archive.click&vd_source=918a6909c997fbaf818d1fbc55d65ca9">Java中的流、并行流</a></p>
 <p>本博文为视频内容的简单梳理。</p>
-<h1 id="目录">目录</h1>
-<h1 id="引入">引入</h1>
-<p>已知一个列表</p>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><h1 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h1><p>已知一个列表</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Person&gt; people = List.of(<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Neo&quot;</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&quot;USA&quot;</span>),<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Blu&quot;</span>, <span class="hljs-number">12</span>, <span class="hljs-string">&quot;China&quot;</span>),<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Alex&quot;</span>, <span class="hljs-number">29</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">25</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-number">18</span>, <span class="hljs-string">&quot;Japan&quot;</span>)<br>);<br></code></pre></td></tr></table></figure>
+
 <p>检查所有人的信息，找出年龄大于18岁的人。</p>
 <p><strong>命令式编程</strong>，使用for循环依次检查每一个人的信息，将年龄超过十八岁的人添加到新的名单中，</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test</span><span class="hljs-params">()</span> &#123;<br>    List&lt;Person&gt; people = List.of(<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Neo&quot;</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&quot;USA&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Blu&quot;</span>, <span class="hljs-number">12</span>, <span class="hljs-string">&quot;China&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Alex&quot;</span>, <span class="hljs-number">29</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">25</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-number">18</span>, <span class="hljs-string">&quot;Japan&quot;</span>)<br>    );<br>    <span class="hljs-comment">//创建新的列表用来存放结果</span><br>    List&lt;Person&gt; adults = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>    <span class="hljs-keyword">for</span>(Person p : people) &#123;<br>        <span class="hljs-keyword">if</span>(p.getAge() &gt; <span class="hljs-number">18</span>) &#123;<br>            adults.add(p);<br>        &#125;<br>    &#125;<br>    System.out.println(adults);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>使用<strong>Stream API</strong>可以实现相同的功能：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test2</span><span class="hljs-params">()</span> &#123;<br>    List&lt;Person&gt; people = List.of(<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Neo&quot;</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&quot;USA&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Blu&quot;</span>, <span class="hljs-number">12</span>, <span class="hljs-string">&quot;China&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Alex&quot;</span>, <span class="hljs-number">29</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">25</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-number">18</span>, <span class="hljs-string">&quot;Japan&quot;</span>)<br>    );<br>    List&lt;Person&gt; adults = people.stream()<br>            .filter(person -&gt; person.getAge() &gt; <span class="hljs-number">18</span>)<br>            .toList();<span class="hljs-comment">//或者.collect(Collectors.toList());</span><br>    System.out.println(adults);<br><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>代码更加简洁。</p>
 <p>Stream本身并不是数据结构，不会处理数据或改变数据源，它仅定义处理方式。不仅能够支持顺序处理，还能进行并行处理。</p>
-<p><strong>Java的Stream只能使用一次</strong>，一旦你调用了终结操作（比如
-.forEach()、.collect() 等），这个流就被“消费掉”了，不能再用。</p>
+<p><strong>Java的Stream只能使用一次</strong>，一旦你调用了终结操作（比如 .forEach()、.collect() 等），这个流就被“消费掉”了，不能再用。</p>
 <p><strong>三个步骤</strong>：</p>
 <ul>
 <li><strong>创建流</strong> Stream Creation</li>
-<li><strong>中间操作</strong> Intermediate Operations
-<ul>
+<li><strong>中间操作</strong> Intermediate Operations<ul>
 <li>中间操作是惰性执行的，只有遇到终端操作才会实际执行。</li>
-</ul></li>
-<li><strong>终端操作</strong> Terminal Operations
-<ul>
-<li>整个流的实际处理部分，他会触发之前所有定义中的中间操作，生成最终结果。</li>
-</ul></li>
 </ul>
-<p><img src="https://i.imgur.com/Pxty23E.png" srcset="/img/loading.gif" lazyload /></p>
+</li>
+<li><strong>终端操作</strong> Terminal Operations<ul>
+<li>整个流的实际处理部分，他会触发之前所有定义中的中间操作，生成最终结果。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/Pxty23E.png" srcset="/img/loading.gif" lazyload></p>
 <p>下面从这三个方面进行分析。</p>
-<h1 id="创建流">创建流</h1>
-<p>对于任何实现了<code>Collection</code>接口的集合，可以通过<code>stream()</code>方法直接创建流：</p>
+<h1 id="创建流"><a href="#创建流" class="headerlink" title="创建流"></a>创建流</h1><p>对于任何实现了<code>Collection</code>接口的集合，可以通过<code>stream()</code>方法直接创建流：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java">String[] array = &#123;<span class="hljs-string">&quot;a&quot;</span>,<span class="hljs-string">&quot;b&quot;</span>,<span class="hljs-string">&quot;c&quot;</span>,<span class="hljs-string">&quot;d&quot;</span>,<span class="hljs-string">&quot;e&quot;</span>,<span class="hljs-string">&quot;f&quot;</span>&#125;;<br>Stream&lt;String&gt; stream = Arrays.stream(array);<br><br>stream.forEach(System.out::println);<br><br>List&lt;String&gt; list = List.of(<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>);<br>Stream&lt;String&gt; myStream = list.stream();<br>myStream.forEach(System.out::println);<br><br><span class="hljs-comment">//更直接的方法</span><br>Stream&lt;String&gt; stream1 = Stream.of(<span class="hljs-string">&quot;a&quot;</span>,<span class="hljs-string">&quot;b&quot;</span>,<span class="hljs-string">&quot;c&quot;</span>);<br></code></pre></td></tr></table></figure>
-<hr />
+
+<hr>
 <p>采用上述方法创建的stream对象自诞生之初就是写死的，无法修改。想要<strong>动态创建流</strong>，需要使用<code>Stream.Builder</code>:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//创建对象</span><br>Stream.Builder&lt;String&gt; builder = Stream.builder();<br><span class="hljs-comment">//添加元素</span><br><span class="hljs-comment">//添加后无法删除</span><br>builder.add(<span class="hljs-string">&quot;a&quot;</span>);<br>builder.add(<span class="hljs-string">&quot;b&quot;</span>);<br><span class="hljs-comment">//也可根据条件动态添加</span><br><span class="hljs-keyword">if</span>(Math.random()&lt;<span class="hljs-number">0.5</span>)&#123;<br>    builder.add(<span class="hljs-string">&quot;c&quot;</span>);<br>&#125;<br><span class="hljs-comment">//通过build方法来创建stream对象</span><br>Stream&lt;String&gt; stream = builder.build();<br><span class="hljs-comment">//一旦调用了build就不能再添加元素，否则执行时报错</span><br>stream.forEach(System.out::println);<br></code></pre></td></tr></table></figure>
-<hr />
+
+<hr>
 <p>使用Stream也可<strong>从文件创建流</strong>。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test3</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">Path</span> <span class="hljs-variable">path</span> <span class="hljs-operator">=</span> Paths.get(<span class="hljs-string">&quot;D:\\develop\\code\\Practice\\chapter0\\hello_copy.txt&quot;</span>);<br>    <span class="hljs-keyword">try</span>(Stream&lt;String&gt; lines = Files.lines(path))&#123;<br>        lines.forEach(System.out::println);<span class="hljs-comment">//输出到控制台</span><br>    &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>        e.printStackTrace();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>其中：</p>
 <ul>
-<li><code>Files.lines(path, StandardCharsets.UTF_8)</code>返回一个惰性读取的
-Stream，可以逐行读取文本文件内容。</li>
+<li><code>Files.lines(path, StandardCharsets.UTF_8)</code>返回一个惰性读取的 Stream，可以逐行读取文本文件内容。</li>
 <li><code>try-with-resources</code>保证资源及时关闭</li>
 </ul>
-<hr />
+<hr>
 <p>StreamAPI也提供了<code>IntStream</code>等类用来方便地创建<strong>基本数据类型的流</strong>。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">IntStream</span> <span class="hljs-variable">intStream</span> <span class="hljs-operator">=</span> IntStream.range(<span class="hljs-number">1</span>,<span class="hljs-number">6</span>);<br><span class="hljs-type">IntStream</span> <span class="hljs-variable">intStream</span> <span class="hljs-operator">=</span> IntStream.of(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>);<br><span class="hljs-comment">//通过boxed可以把基本数据类型的流转换为对象流：</span><br>Stream&lt;Integer&gt; integerStream = intStream.boxed();<br></code></pre></td></tr></table></figure>
-<hr />
+
+<hr>
 <p>Stream.iterate可生成<strong>无限流</strong>（通常用limit限制生成的个数）：</p>
 <p><strong>语法</strong>：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span>&lt;T&gt; Stream&lt;T&gt; <span class="hljs-title function_">iterate</span><span class="hljs-params">(<span class="hljs-keyword">final</span> T seed, <span class="hljs-keyword">final</span> UnaryOperator&lt;T&gt; f)</span><br></code></pre></td></tr></table></figure>
+
 <ul>
 <li><code>seed</code>:初始值</li>
 <li><code>f</code>：作用于初始值的函数</li>
 <li>返回值：一个新的Stream类型的序列</li>
 </ul>
-<p>增强型：<code>public static&lt;T&gt; Stream&lt;T&gt; iterate(T seed, Predicate&lt;? super T&gt; hasNext, UnaryOperator&lt;T&gt; next)</code>，其中<code>hasNext</code>是终止条件</p>
+<p>增强型：<code>public static&lt;T&gt; Stream&lt;T&gt; iterate(T seed, Predicate&lt;? super T&gt; hasNext, UnaryOperator&lt;T&gt; next) </code>，其中<code>hasNext</code>是终止条件</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//生成一个等差数列</span><br>   Stream.iterate(<span class="hljs-number">0</span>, i -&gt; i + <span class="hljs-number">1</span>).limit(<span class="hljs-number">5</span>).forEach(System.out::println);<br></code></pre></td></tr></table></figure>
-<hr />
+
+<hr>
 <p><strong>并行流</strong>：把数据分成多个部分，并“同时”用多个线程来处理，从而加快处理速度。</p>
 <ul>
-<li>对于集合，调用<code>list.parallelStraem()</code>可以直接得到一个并行流。例如<code>List.of("a", "b", "c", "d", "e", "f").parallelStream().forEach(System.out::println);</code>，输出是<strong>乱序</strong>的</li>
+<li>对于集合，调用<code>list.parallelStraem()</code>可以直接得到一个并行流。例如<code>List.of(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;).parallelStream().forEach(System.out::println);</code>，输出是<strong>乱序</strong>的</li>
 <li>对于已有的Stream，可以调用<code>.parallel()</code>得到并行流</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test5</span><span class="hljs-params">()</span> &#123;<br>    Stream&lt;Integer&gt; iterateStream = Stream.iterate(<span class="hljs-number">0</span>, n -&gt; n + <span class="hljs-number">1</span>).limit(<span class="hljs-number">5</span>);<br>    iterateStream.parallel();<br>    iterateStream.forEach(System.out::println);<br>    <span class="hljs-comment">//这时的打印顺序也是乱的，因为forEach是并发的。</span><br>    <span class="hljs-comment">//forEachOrdered可以保证顺序。</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<h1 id="中间操作">中间操作</h1>
-<p>中间操作用于对流中的元素进行处理，如筛选、排序等等。根据操作的性质可以分为以下几个类别：</p>
+
+<h1 id="中间操作"><a href="#中间操作" class="headerlink" title="中间操作"></a>中间操作</h1><p>中间操作用于对流中的元素进行处理，如筛选、排序等等。根据操作的性质可以分为以下几个类别：</p>
 <ul>
-<li><strong>筛选和切片</strong>(Filtering and
-Slicing):过滤或缩减流中的元素的数量</li>
+<li><strong>筛选和切片</strong>(Filtering and Slicing):过滤或缩减流中的元素的数量</li>
 <li><strong>映射</strong>(Mapping):转换流中的元素或提取元素的特定属性</li>
 <li><strong>排序</strong>(Sorting)</li>
 </ul>
-<figure>
-<img src="https://i.imgur.com/naZpiDN.png" srcset="/img/loading.gif" lazyload alt="中间操作图解" />
-<figcaption aria-hidden="true">中间操作图解</figcaption>
-</figure>
-<h2 id="筛选和切片">筛选和切片</h2>
-<p>例如开头处提到的</p>
+<p><img src="https://i.imgur.com/naZpiDN.png" srcset="/img/loading.gif" lazyload alt="中间操作图解"></p>
+<h2 id="筛选和切片"><a href="#筛选和切片" class="headerlink" title="筛选和切片"></a>筛选和切片</h2><p>例如开头处提到的</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Person&gt; adults = people.stream()<br>        .filter(myperson -&gt; myperson.getAge() &gt; <span class="hljs-number">18</span>)<br>        .toList();<span class="hljs-comment">//或者.collect(Collectors.toList());</span><br></code></pre></td></tr></table></figure>
+
 <p><strong>过滤器定义</strong>:</p>
 <p><code>Stream&lt;T&gt; filter(Predicate&lt;? super T&gt; predicate);</code></p>
-<p>Predicate即<strong>判断条件函数</strong>，用lambda写出，返回布尔值。意思是:<em>给我一个叫
-myperson 的参数，判断这个人年龄是否大于 18，返回一个 true/false
-结果</em>。<code>myperson</code>的类型由前文自动推断出，所以省略。</p>
+<p>Predicate即<strong>判断条件函数</strong>，用lambda写出，返回布尔值。意思是:<em>给我一个叫 myperson 的参数，判断这个人年龄是否大于 18，返回一个 true&#x2F;false 结果</em>。<code>myperson</code>的类型由前文自动推断出，所以省略。</p>
 <p>这里等价于用更简洁的形式实现了<code>Predicate</code>接口的抽象方法<code>boolean test(T t);</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java">Predicate&lt;Person&gt; predicate = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Predicate</span>&lt;Person&gt;() &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">test</span><span class="hljs-params">(Person person)</span> &#123;<br>        <span class="hljs-keyword">return</span> person.getAge() &gt; <span class="hljs-number">18</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<hr />
+
+<hr>
 <p>可以用<code>.distinct()</code>为流中的元素<strong>去重</strong>，底层通过维护一个HashSet实现。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test3</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">//</span><br>    Stream.of(<span class="hljs-string">&quot;Origami&quot;</span>, <span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-string">&quot;Kurumi&quot;</span>)<br>            .distinct()<br>            .forEach(System.out::println);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>如果是自定义的类的对象，需要确保正确地重写了<code>equals()``HashCode</code>方法，因为HashSet就是通过这两个方法判断元素是否相等。</p>
-<hr />
+<hr>
 <p>Stream类中定义的<code>Stream&lt;T&gt; limit(long maxSize);</code>方法返回由此流的元素组成的截断长度不超过maxSize的流。</p>
 <p>同样，<code>Stream&lt;T&gt; skip(long n);</code>跳过前n个元素。</p>
-<p>limit和skip在有序的并行流中使用时可能会使性能变差，此时可以用
-<code>.unordered()</code> 提高效率；如果顺序必须保留，那最好使用顺序流
-<code>.sequential()</code>。</p>
+<p>limit和skip在有序的并行流中使用时可能会使性能变差，此时可以用 <code>.unordered()</code> 提高效率；如果顺序必须保留，那最好使用顺序流 <code>.sequential()</code>。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test4</span><span class="hljs-params">()</span> &#123;<br>    Stream&lt;Integer&gt; s1 = Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>);<br>    s1.limit(<span class="hljs-number">5</span>).forEach(System.out::print);<br><br>    Stream&lt;Integer&gt; s2 = Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>);<br>    s2.skip(<span class="hljs-number">5</span>).forEach(System.out::print);<br>    <span class="hljs-comment">//打印结果：12345678910</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="映射">映射</h2>
-<p>映射本质上是一个数据转换的过程</p>
+
+<h2 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h2><p>映射本质上是一个数据转换的过程</p>
 <p><strong>定义</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;R&gt; Stream&lt;R&gt; <span class="hljs-title function_">map</span><span class="hljs-params">(Function&lt;? <span class="hljs-built_in">super</span> T, ? extends R&gt; mapper)</span>;<br></code></pre></td></tr></table></figure>
+
 <p><code>T</code>是Stream中元素的类型，<code>R</code>新的流的元素类型</p>
 <p>map能够通过提供的函数<code>Function</code>将流中的每个元素转换成新的元素，最后生成一个新元素构成的流。</p>
 <p>map接受的是一个<strong>函数式接口</strong>。</p>
-<figure>
-<img src="https://i.imgur.com/Yk5xhTe.png" srcset="/img/loading.gif" lazyload
-alt="利用映射层层提取数据的过程" />
-<figcaption aria-hidden="true">利用映射层层提取数据的过程</figcaption>
-</figure>
+<p><img src="https://i.imgur.com/Yk5xhTe.png" srcset="/img/loading.gif" lazyload alt="利用映射层层提取数据的过程"></p>
 <p>示例：利用映射获得Person列表中所有人的name</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test6</span><span class="hljs-params">()</span> &#123;<br>    List&lt;Person&gt; people = List.of(<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Neo&quot;</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&quot;USA&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Blu&quot;</span>, <span class="hljs-number">12</span>, <span class="hljs-string">&quot;China&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Alex&quot;</span>, <span class="hljs-number">29</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">25</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-number">18</span>, <span class="hljs-string">&quot;Japan&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-number">18</span>, <span class="hljs-string">&quot;Japan&quot;</span>)<br>    );<br><br>    Stream&lt;Person&gt; peopleStream = people.stream();<br>    <span class="hljs-comment">//peopleStream.map(myperson -&gt; myperson.getName()).forEach(System.out::println);</span><br>    <span class="hljs-comment">//方法引用的格式：类名或对象名::方法名</span><br>    peopleStream.map(Person::getName).forEach(System.out::println);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>打印结果：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">Neo<br>Blu<br>Alex<br>Bob<br>Kurumi<br>Kurumi<br></code></pre></td></tr></table></figure>
-<hr />
+
+<hr>
 <p><code>map</code>结构适用于<strong>单层结构</strong>的流，进行元素<strong>一对一</strong>的转换。</p>
 <p>对于嵌套的集合，数组等等，适合使用<code>flatMap</code>。</p>
-<p><img src="https://i.imgur.com/sq8UWmE.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img src="https://i.imgur.com/sq8UWmE.png" srcset="/img/loading.gif" lazyload></p>
 <p><strong>定义</strong>：<code>Stream.java</code>中</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;R&gt; Stream&lt;R&gt; <span class="hljs-title function_">flatMap</span><span class="hljs-params">(Function&lt;? <span class="hljs-built_in">super</span> T, ? extends Stream&lt;? extends R&gt;&gt; mapper)</span>;<br></code></pre></td></tr></table></figure>
+
 <p>示例：将嵌套List转换成的流扁平化为单层流打印出来</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test7</span><span class="hljs-params">()</span> &#123;<br>    List&lt;List&lt;Person&gt;&gt; peopleGroups = List.of(<br>            List.of(<br>                    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;neo&quot;</span>, <span class="hljs-number">45</span>, <span class="hljs-string">&quot;USA&quot;</span>),<br>                    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Stan&quot;</span>, <span class="hljs-number">10</span>, <span class="hljs-string">&quot;USA&quot;</span>)<br>            ),<br>            List.of(<br>                    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Grace&quot;</span>, <span class="hljs-number">16</span>, <span class="hljs-string">&quot;UK&quot;</span>),<br>                    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Alex&quot;</span>, <span class="hljs-number">17</span>, <span class="hljs-string">&quot;UK&quot;</span>)<br>            ),<br>            List.of(<br>                    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Sebastian&quot;</span>, <span class="hljs-number">40</span>, <span class="hljs-string">&quot;FR&quot;</span>)<br>            )<br>    );<br><br>    Stream&lt;List&lt;Person&gt;&gt; peopleGroupStream = peopleGroups.stream();<br>    <span class="hljs-comment">//转换成单层流  扁平化  单一化</span><br>    Stream&lt;Person&gt; personStream = peopleGroupStream.flatMap(people -&gt; people.stream());<br>    personStream.forEach(System.out::println);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>流操作返回的是一个新的流，原始流在第一次操作后就会被标记为已操作，不能再次进行操作。实际应用中通常会采用<strong>链式操作</strong>:</p>
-<p><img src="https://i.imgur.com/lZ0Yc3R.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img src="https://i.imgur.com/lZ0Yc3R.png" srcset="/img/loading.gif" lazyload></p>
 <p>嵌套流 -&gt; 单层流 -&gt; 提取name属性 -&gt; 打印</p>
-<hr />
+<hr>
 <p><code>mapToInt</code>可以将对象流转换为基础类型的流<code>IntStream</code>。</p>
-<hr />
-<h2 id="排序">排序</h2>
-<p>当流中的元素类型实现了<code>Comparable</code>接口时（自然排序），可直接调用<code>sorted()</code>。</p>
+<hr>
+<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><p>当流中的元素类型实现了<code>Comparable</code>接口时（自然排序），可直接调用<code>sorted()</code>。</p>
 <p>定制排序：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test10</span><span class="hljs-params">()</span> &#123;<br>    Stream.of(<span class="hljs-string">&quot;blueberry&quot;</span>, <span class="hljs-string">&quot;greenberry&quot;</span>, <span class="hljs-string">&quot;redberry&quot;</span>, <span class="hljs-string">&quot;pear&quot;</span>, <span class="hljs-string">&quot;apple&quot;</span>, <span class="hljs-string">&quot;orange&quot;</span>)<br>            .sorted(Comparator.comparingInt(String::length).reversed())<br>            .forEach(System.out::println);<br>            <span class="hljs-comment">//年龄降序</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>关于<code>Comparator.comparingInt(String::length).reversed()</code>:</p>
 <ul>
 <li><code>comparingInt</code>是Comparator的一个方法</li>
 <li>相当于<code>Comparator.comparingInt(p -&gt; p.getAge())</code>，将Age作为排序的标准</li>
 <li><code>comparingInt</code>和<code>reversed()</code>并列定义，但是前者返回的仍然是一个<code>Comparator&lt;T&gt;</code>对象，后者是一个Comparator的默认方法，只要是<code>Comparator&lt;T&gt;</code>的对象就可以调用它。</li>
 </ul>
-<hr />
+<hr>
 <p>中间操作只是定义了操作的规则，并不会立即执行，常常用变量保存和传递。</p>
 <p>综合练习：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test1</span><span class="hljs-params">()</span> &#123;<br>    List&lt;List&lt;Person&gt;&gt; peopleGroups = List.of(<br>            List.of(<br>                    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;neo&quot;</span>, <span class="hljs-number">45</span>, <span class="hljs-string">&quot;USA&quot;</span>),<br>                    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Stan&quot;</span>, <span class="hljs-number">10</span>, <span class="hljs-string">&quot;USA&quot;</span>)<br>            ),<br>            List.of(<br>                    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Grace&quot;</span>, <span class="hljs-number">16</span>, <span class="hljs-string">&quot;UK&quot;</span>),<br>                    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Alex&quot;</span>, <span class="hljs-number">19</span>, <span class="hljs-string">&quot;UK&quot;</span>)<br>            ),<br>            List.of(<br>                    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Sebastian&quot;</span>, <span class="hljs-number">40</span>, <span class="hljs-string">&quot;FR&quot;</span>),<br>                    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Sebastian&quot;</span>, <span class="hljs-number">40</span>, <span class="hljs-string">&quot;FR&quot;</span>)<br>            )<br>    );<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 扁平化、去重、年龄大于18、映射到name、按照名字的长度排序</span><br><span class="hljs-comment">     */</span><br>    Stream&lt;String&gt; s= peopleGroups.stream()<br>            .flatMap(List::stream)<br>            .distinct()<br>            .filter(person -&gt; person.getAge() &gt; <span class="hljs-number">18</span>)<span class="hljs-comment">//筛选</span><br>            .map(Person::getName)<br>            .sorted(Comparator.comparing(String::length));<span class="hljs-comment">//映射为字符串类型的名字之后再按照字符串的长度排序;</span><br>    <br>    <span class="hljs-comment">//触发执行操作</span><br>    s.forEach(System.out::println);<br>&#125;<br></code></pre></td></tr></table></figure>
-<h1 id="终端操作">终端操作</h1>
-<p>终端操作是流处理的最终步骤，实弹发生，流中的元素被消费，流不能再被使用。</p>
+
+<h1 id="终端操作"><a href="#终端操作" class="headerlink" title="终端操作"></a>终端操作</h1><p>终端操作是流处理的最终步骤，实弹发生，流中的元素被消费，流不能再被使用。</p>
 <p>终端操作包括查找与匹配、聚合操作、归约操作、收集操作、迭代操作。</p>
-<p><img src="https://i.imgur.com/mg7OIu4.png" srcset="/img/loading.gif" lazyload /></p>
-<h2 id="查找与匹配">查找与匹配</h2>
-<p>属于短路操作(Short-circuiting
-Operations),也就是说这些操作在找到所需的元素后会立即返回结果,不会遍历整个流.</p>
+<p><img src="https://i.imgur.com/mg7OIu4.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="查找与匹配"><a href="#查找与匹配" class="headerlink" title="查找与匹配"></a>查找与匹配</h2><p>属于短路操作(Short-circuiting Operations),也就是说这些操作在找到所需的元素后会立即返回结果,不会遍历整个流.</p>
 <ul>
 <li><code>anyMatch</code>:如果流中任意元素满足给定的条件则返回true</li>
 <li><code>noneMatch</code>:与前者相反</li>
 <li><code>allMatch</code>:所有的都满足才会返回true</li>
 </ul>
-<hr />
+<hr>
 <ul>
 <li><code>Optional&lt;T&gt; findFirst();</code>找到流中的第一个元素,类型为<code>Optional</code>.因为返回的元素可能为空,这样做的话更加安全.</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test2</span><span class="hljs-params">()</span> &#123;<br>    List&lt;Person&gt; people = List.of(<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Neo&quot;</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&quot;USA&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Blu&quot;</span>, <span class="hljs-number">12</span>, <span class="hljs-string">&quot;China&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Alex&quot;</span>, <span class="hljs-number">29</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">25</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-number">18</span>, <span class="hljs-string">&quot;Japan&quot;</span>)<br>    );<br>    Optional&lt;Person&gt; optionalPerson = people.stream().findFirst();<br>    <span class="hljs-comment">//ifPresent:如果值存在，就执行括号里的操作，否则什么也不做.</span><br>    optionalPerson.ifPresent(System.out::println);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>打印结果:</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">Person&#123;name=&#x27;Neo&#x27;, age=1, country=&#x27;USA&#x27;&#125;<br></code></pre></td></tr></table></figure>
+
 <ul>
 <li><code>findAny</code>:返回任意一个元素</li>
 </ul>
-<h2 id="聚合操作">聚合操作</h2>
-<ul>
+<h2 id="聚合操作"><a href="#聚合操作" class="headerlink" title="聚合操作"></a>聚合操作</h2><ul>
 <li><code>long count();</code>:计算元素的数量</li>
 <li><code>Optional&lt;T&gt; max(Comparator&lt;? super T&gt; comparator);</code>:返回流中的最大元素,需要提供一个比较器.</li>
 <li>同理还有<code>min</code></li>
 </ul>
-<hr />
+<hr>
 <ul>
 <li><code>sum()</code>用于求和,只能处理基本数据类型的流,所以使用之前要进行流类型的转换.</li>
 <li><code>average</code>同上</li>
 </ul>
 <p>本质上聚合操作是归约操作的一种特殊形式,适合快速简单的统计任务.归约操作reduce更加通用.</p>
-<h2 id="归约操作">归约操作</h2>
-<p>整型的reduce定义如下:</p>
+<h2 id="归约操作"><a href="#归约操作" class="headerlink" title="归约操作"></a>归约操作</h2><p>整型的reduce定义如下:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">int</span> <span class="hljs-title function_">reduce</span><span class="hljs-params">(<span class="hljs-type">int</span> identity, IntBinaryOperator op)</span>;<br></code></pre></td></tr></table></figure>
+
 <p>Java提供的注解:</p>
 <blockquote>
-<p>对该流的元素执行归约操作，使用提供的标识值（identity）和一个关联的累积函数（accumulation
-function），并返回归约后的结果。其等价于以下代码： <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">int</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> identity;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> element : <span class="hljs-built_in">this</span> stream)<br>    result = accumulator.applyAsInt(result, element)<br><span class="hljs-keyword">return</span> result;<br></code></pre></td></tr></table></figure>
-即,先把 identity
-的值赋给结果,然后再使用累计函数对结果和流中的元素进行运算.<br />
-这种归约不一定按顺序执行（即它可以并行处理）。<br />
-identity
-必须是一个<strong>恒等元</strong>,也就是说累计函数作用在它身上之后的结果仍然等于它本身.例如:<br />
-加法的恒等元是0,因为 0 + x = x<br />
-乘法的恒等元是1,因为1 * x = x<br />
-此外，累积函数必须是<strong>可结合的</strong>（associative）函数,也就是符合结合律,计算顺序不影响结果.</p>
+<p>对该流的元素执行归约操作，使用提供的标识值（identity）和一个关联的累积函数（accumulation function），并返回归约后的结果。其等价于以下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">int</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> identity;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> element : <span class="hljs-built_in">this</span> stream)<br>    result = accumulator.applyAsInt(result, element)<br><span class="hljs-keyword">return</span> result;<br></code></pre></td></tr></table></figure>
+<p>即,先把 identity 的值赋给结果,然后再使用累计函数对结果和流中的元素进行运算.<br>这种归约不一定按顺序执行（即它可以并行处理）。<br>identity 必须是一个<strong>恒等元</strong>,也就是说累计函数作用在它身上之后的结果仍然等于它本身.例如:<br>加法的恒等元是0,因为 0 + x &#x3D; x<br>乘法的恒等元是1,因为1 * x &#x3D; x<br>此外，累积函数必须是<strong>可结合的</strong>（associative）函数,也就是符合结合律,计算顺序不影响结果.</p>
 </blockquote>
 <p><strong>形参</strong>:</p>
 <ul>
@@ -534,40 +523,39 @@ identity
 <li><code>op</code>:一个可结合的,无副作用(函数在处理值时不应该修改外部状态)的,无状态的函数</li>
 </ul>
 <p><strong>返回值</strong>:归约的结果</p>
-<p>对一个流中的所有元素求和,可以写为<code>int sum = integers.reduce(0, (a, b) -&gt; a+b);</code><br />
-或者更简洁一点<code>int sum = integers.reduce(0, Integer::sum);</code></p>
-<p>虽然相比于在循环中直接修改一个运行中的总和变量，这种方式看起来有些绕远路，但归约（reduction）操作在并行化时表现得更加优雅，
-无需额外的同步（synchronization），并且大大降低了数据竞争（data
-races）的风险。</p>
-<hr />
+<p>对一个流中的所有元素求和,可以写为<code>int sum = integers.reduce(0, (a, b) -&gt; a+b);</code><br>或者更简洁一点<code>int sum = integers.reduce(0, Integer::sum);</code></p>
+<p>虽然相比于在循环中直接修改一个运行中的总和变量，这种方式看起来有些绕远路，但归约（reduction）操作在并行化时表现得更加优雅，<br>无需额外的同步（synchronization），并且大大降低了数据竞争（data races）的风险。</p>
+<hr>
 <p>例:对流的所有元素的年龄求和,然后输出所有人名字的串接字符串</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test3</span><span class="hljs-params">()</span> &#123;<br>    List&lt;Person&gt; people = List.of(<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Neo&quot;</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&quot;USA&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Blu&quot;</span>, <span class="hljs-number">13</span>, <span class="hljs-string">&quot;China&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Alex&quot;</span>, <span class="hljs-number">29</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">25</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-number">18</span>, <span class="hljs-string">&quot;Japan&quot;</span>)<br>    );<br>    <span class="hljs-comment">//计算年龄的和</span><br>    <span class="hljs-type">IntStream</span> <span class="hljs-variable">doubleStream</span> <span class="hljs-operator">=</span> people.stream().mapToInt(Person::getAge);<br>    <span class="hljs-type">int</span> <span class="hljs-variable">sum</span> <span class="hljs-operator">=</span> doubleStream.reduce(<span class="hljs-number">0</span>, (a,b) -&gt; (a + b));<br>    System.out.println(sum);<br><br>    <span class="hljs-comment">//将所有人的名字串接起来</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">joinedName</span> <span class="hljs-operator">=</span> people.stream()<br>            .map(Person::getName)<br>            .reduce(<span class="hljs-string">&quot;&quot;</span>, (a, b) -&gt; a + b);<br>    System.out.println(joinedName);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>打印结果</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">86<br>NeoBluAlexBobKurumi<br></code></pre></td></tr></table></figure>
-<h2 id="收集操作">收集操作</h2>
-<p>把流处理后的元素汇集到新的数据结构中, 比如列表, map, 集合等等.</p>
+
+<h2 id="收集操作"><a href="#收集操作" class="headerlink" title="收集操作"></a>收集操作</h2><p>把流处理后的元素汇集到新的数据结构中, 比如列表, map, 集合等等.</p>
 <p><strong>定义</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;R, A&gt; R <span class="hljs-title function_">collect</span><span class="hljs-params">(Collector&lt;? <span class="hljs-built_in">super</span> T, A, R&gt; collector)</span>;<br></code></pre></td></tr></table></figure>
-<p><code>Collectors.java</code>中提供了丰富的<strong>静态方法</strong>用作collector参数.
-如<code>toList</code>,<code>toMap</code>.</p>
+
+<p><code>Collectors.java</code>中提供了丰富的<strong>静态方法</strong>用作collector参数. 如<code>toList</code>,<code>toMap</code>.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//收集年龄大于18岁的人</span><br><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test4</span><span class="hljs-params">()</span> &#123;<br>    List&lt;Person&gt; people = List.of(<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Neo&quot;</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&quot;USA&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Blu&quot;</span>, <span class="hljs-number">13</span>, <span class="hljs-string">&quot;China&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Alex&quot;</span>, <span class="hljs-number">29</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">25</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-number">18</span>, <span class="hljs-string">&quot;Japan&quot;</span>)<br>    );<br>    List&lt;Person&gt; adults = people.stream()<br>            .filter(person -&gt; person.getAge() &gt; <span class="hljs-number">18</span>)<br>            .collect(Collectors.toList());<span class="hljs-comment">//使用Collectors提供的方法</span><br>    System.out.println(adults);<br>&#125;<br></code></pre></td></tr></table></figure>
-<hr />
+
+<hr>
 <p><strong>分组</strong>:<code>Collectors</code>类提供的静态方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, K&gt; Collector&lt;T, ?, Map&lt;K, List&lt;T&gt;&gt;&gt;<br> groupingBy(Function&lt;? <span class="hljs-built_in">super</span> T, ? <span class="hljs-keyword">extends</span> <span class="hljs-title class_">K</span>&gt; classifier) &#123;<br>     <span class="hljs-keyword">return</span> groupingBy(classifier, toList());<br> &#125;<br></code></pre></td></tr></table></figure>
+
 <ul>
 <li><code>T</code>:流中元素的类型,例如<code>Person</code></li>
 <li><code>K</code>:用于分组的键的类型</li>
-<li><strong>形参</strong>:<code>classifier</code>,
-将输入元素映射到键的分类器函数</li>
-<li><strong>返回值</strong>:实现分组操作的收集器,
-将<code>Stream&lt;T&gt;</code>收集成一个<code>Map&lt;K, List&lt;T&gt;&gt;</code>.
-<ul>
+<li><strong>形参</strong>:<code>classifier</code>, 将输入元素映射到键的分类器函数</li>
+<li><strong>返回值</strong>:实现分组操作的收集器, 将<code>Stream&lt;T&gt;</code>收集成一个<code>Map&lt;K, List&lt;T&gt;&gt;</code>.<ul>
 <li>key:由classifier生成</li>
 <li>value:分到该组的<code>T</code>元素组成的列表</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <p>示例:根据国家分组</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test6</span><span class="hljs-params">()</span> &#123;<br>    List&lt;Person&gt; people = List.of(<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Neo&quot;</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&quot;USA&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Blu&quot;</span>, <span class="hljs-number">13</span>, <span class="hljs-string">&quot;China&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Alex&quot;</span>, <span class="hljs-number">29</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">25</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-number">18</span>, <span class="hljs-string">&quot;Japan&quot;</span>)<br>    );<br>    Map&lt;String, List&lt;Person&gt;&gt; collect = people.stream()<br>            .collect(Collectors.groupingBy(Person::getCountry));<br>    collect.forEach((k, v) -&gt; System.out.println(k + <span class="hljs-string">&quot; = &quot;</span> + v));<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <ul>
 <li><code>T</code>在这里即<code>Person</code></li>
 <li>这里的分类器是<code>(Person::getCountry)</code>,所以键的类型是<code>String</code></li>
@@ -575,111 +563,86 @@ races）的风险。</p>
 </ul>
 <p>打印结果</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">USA = [Person&#123;name=&#x27;Neo&#x27;, age=1, country=&#x27;USA&#x27;&#125;]<br>Japan = [Person&#123;name=&#x27;Kurumi&#x27;, age=18, country=&#x27;Japan&#x27;&#125;]<br>China = [Person&#123;name=&#x27;Blu&#x27;, age=13, country=&#x27;China&#x27;&#125;]<br>Germany = [Person&#123;name=&#x27;Alex&#x27;, age=29, country=&#x27;Germany&#x27;&#125;, Person&#123;name=&#x27;Bob&#x27;, age=25, country=&#x27;Germany&#x27;&#125;]<br></code></pre></td></tr></table></figure>
-<hr />
-<p><strong>分区</strong>功能同理,
-调用<code>Collectors.partitioningBy</code>即可,
-不过这时传入的是一个条件判断式, map的第一个参数也变成了boolean变量.</p>
+
+<hr>
+<p><strong>分区</strong>功能同理, 调用<code>Collectors.partitioningBy</code>即可, 不过这时传入的是一个条件判断式, map的第一个参数也变成了boolean变量.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">Map&lt;Boolean, List&lt;Person&gt;&gt; agePartition = people.stream()<br>                .collect(Collectors.partitioningBy(person -&gt; person.getAge() &gt; <span class="hljs-number">18</span>));<br>        agePartition.forEach((k, v) -&gt; System.out.println(k + <span class="hljs-string">&quot; = &quot;</span> + v));<br></code></pre></td></tr></table></figure>
-<hr />
+
+<hr>
 <p><code>Collectors</code>也提供了拼接字符串的方法<code>joining</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">joinedName</span> <span class="hljs-operator">=</span> people.stream()<br>        .map(Person::getName)<br>        .collect(Collectors.joining(<span class="hljs-string">&quot;,&quot;</span>));<br>System.out.println(joinedName);<br></code></pre></td></tr></table></figure>
+
 <p>打印结果</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">Neo,Blu,Alex,Bob,Kurumi<br></code></pre></td></tr></table></figure>
+
 <p>也可以用<code>Collectors.joining</code>连接字符串.</p>
-<hr />
-<p>使用<code>Collectors.summarizingInt</code>可以<strong>汇总</strong>指定的数据,
-返回类型为<code>IntSummaryStatistics</code>,
-使用<code>IntSummaryStatistics</code>的<code>get</code>方法可以快速获取最大值,
-最小值, 平均值等等.</p>
+<hr>
+<p>使用<code>Collectors.summarizingInt</code>可以<strong>汇总</strong>指定的数据, 返回类型为<code>IntSummaryStatistics</code>, 使用<code>IntSummaryStatistics</code>的<code>get</code>方法可以快速获取最大值, 最小值, 平均值等等.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test7</span><span class="hljs-params">()</span> &#123;<br>    List&lt;Person&gt; people = List.of(<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Neo&quot;</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&quot;USA&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Blu&quot;</span>, <span class="hljs-number">13</span>, <span class="hljs-string">&quot;China&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Alex&quot;</span>, <span class="hljs-number">29</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">25</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-number">18</span>, <span class="hljs-string">&quot;Japan&quot;</span>)<br>    );<br>    <span class="hljs-type">String</span> <span class="hljs-variable">joinedName</span> <span class="hljs-operator">=</span> people.stream()<br>            .map(Person::getName)<br>            .collect(Collectors.joining(<span class="hljs-string">&quot;,&quot;</span>));<span class="hljs-comment">//输出合并的字符串</span><br>    System.out.println(joinedName);<br><br>    <span class="hljs-type">IntSummaryStatistics</span> <span class="hljs-variable">collect</span> <span class="hljs-operator">=</span> people.stream()<br>            .collect(Collectors.summarizingInt(Person::getAge));<br>    <span class="hljs-comment">//打印collect的所有属性(数量,和,最小值,平均值,最大值)</span><br>    System.out.println(collect);<br>    <span class="hljs-comment">//指定获取最大值</span><br>    System.out.println(collect.getMax());<br>    <span class="hljs-comment">//指定获取最小值</span><br>    System.out.println(collect.getMin());<br>&#125;<br></code></pre></td></tr></table></figure>
-<hr />
+
+<hr>
 <p><strong>自定义收集器</strong></p>
 <p><code>Collector.of(...)</code>的五个参数结构</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java">Collector.of(<br>    Supplier&lt;R&gt; supplier,                         <span class="hljs-comment">// 创建中间结果容器</span><br>    BiConsumer&lt;R, T&gt; accumulator,                <span class="hljs-comment">// 如何添加元素</span><br>    BinaryOperator&lt;R&gt; combiner,                  <span class="hljs-comment">// 合并两个部分结果</span><br>    Function&lt;R, R&gt; finisher,                     <span class="hljs-comment">// 最终变换结果（可选）</span><br>    Collector.Characteristics... characteristics <span class="hljs-comment">// 特征标记</span><br>)<br></code></pre></td></tr></table></figure>
+
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">customTest</span><span class="hljs-params">()</span> &#123;<br>    List&lt;Person&gt; people = List.of(<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Neo&quot;</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&quot;USA&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Blu&quot;</span>, <span class="hljs-number">13</span>, <span class="hljs-string">&quot;China&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Alex&quot;</span>, <span class="hljs-number">29</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">25</span>, <span class="hljs-string">&quot;Germany&quot;</span>),<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;Kurumi&quot;</span>, <span class="hljs-number">18</span>, <span class="hljs-string">&quot;Japan&quot;</span>)<br>    );<br>    ArrayList&lt;Person&gt; collect = people.stream()<span class="hljs-comment">//.parallel()</span><br>            .collect(Collector.of(<br>                    () -&gt; <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(), <span class="hljs-comment">//创建空容器</span><br>                    (list, person) -&gt; &#123;      <span class="hljs-comment">//累加器逻辑把一个 person 添加到当前线程维护的 list 里</span><br>                        System.out.println(<span class="hljs-string">&quot;Accumulator: &quot;</span> + person);<br>                        list.add(person);<br>                    &#125;,<br>                    (left, right) -&gt; &#123;       <span class="hljs-comment">//合并多个线程的中间结果,只在并行流起作用</span><br>                        System.out.println(<span class="hljs-string">&quot;Combiner: &quot;</span> + left);<br>                        left.addAll(right);<br>                        <span class="hljs-keyword">return</span> left;<br>                    &#125;,<br>                    Collector.Characteristics.IDENTITY_FINISH<span class="hljs-comment">//表示不需要变换,中间操作的结果就是最终结果</span><br>            ));<br>    System.out.println(collect);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>打印结果</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">Accumulator: Person&#123;name=&#x27;Neo&#x27;, age=1, country=&#x27;USA&#x27;&#125;<br>Accumulator: Person&#123;name=&#x27;Blu&#x27;, age=13, country=&#x27;China&#x27;&#125;<br>Accumulator: Person&#123;name=&#x27;Alex&#x27;, age=29, country=&#x27;Germany&#x27;&#125;<br>Accumulator: Person&#123;name=&#x27;Bob&#x27;, age=25, country=&#x27;Germany&#x27;&#125;<br>Accumulator: Person&#123;name=&#x27;Kurumi&#x27;, age=18, country=&#x27;Japan&#x27;&#125;<br>[Person&#123;name=&#x27;Neo&#x27;, age=1, country=&#x27;USA&#x27;&#125;, Person&#123;name=&#x27;Blu&#x27;, age=13, country=&#x27;China&#x27;&#125;, Person&#123;name=&#x27;Alex&#x27;, age=29, country=&#x27;Germany&#x27;&#125;, Person&#123;name=&#x27;Bob&#x27;, age=25, country=&#x27;Germany&#x27;&#125;, Person&#123;name=&#x27;Kurumi&#x27;, age=18, country=&#x27;Japan&#x27;&#125;]<br><br></code></pre></td></tr></table></figure>
+
 <p>（这一块没看太懂，先放到这里以后再来看）</p>
-<h1 id="并行流">并行流</h1>
-<p>Parallel Streams</p>
-<p>能够借助<strong>多核处理器</strong>的<strong>并行计算能力</strong>加速数据处理,
-特别适合大型数据集或计算密集型任务.</p>
-<h2 id="工作原理">工作原理</h2>
-<ul>
-<li>并行流在开始时, Spliterator分割迭代器将数据分割成多个片段,
-分割过程通常采用递归的方式动态进行, 以此平衡子任务的工作负载,
-提高资源利用率.</li>
-<li>然后Fork/Join框架将这些数据片段分配到多个线程和处理器核心上进行并行处理.</li>
-<li>处理完成后, 结果将会被汇总合并,
-其核心是[任务的分解Fork]和[结果的合并Join]</li>
-<li>无论是并行流还是顺序流.二者都提供相同的中间操作和终端操作,
-也就是说我们可以采用几乎相同的方式进行数据处理和结果收集</li>
+<h1 id="并行流"><a href="#并行流" class="headerlink" title="并行流"></a>并行流</h1><p>Parallel Streams</p>
+<p>能够借助<strong>多核处理器</strong>的<strong>并行计算能力</strong>加速数据处理, 特别适合大型数据集或计算密集型任务.</p>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><ul>
+<li>并行流在开始时, Spliterator分割迭代器将数据分割成多个片段, 分割过程通常采用递归的方式动态进行, 以此平衡子任务的工作负载, 提高资源利用率.</li>
+<li>然后Fork&#x2F;Join框架将这些数据片段分配到多个线程和处理器核心上进行并行处理.</li>
+<li>处理完成后, 结果将会被汇总合并, 其核心是[任务的分解Fork]和[结果的合并Join]</li>
+<li>无论是并行流还是顺序流.二者都提供相同的中间操作和终端操作, 也就是说我们可以采用几乎相同的方式进行数据处理和结果收集</li>
 </ul>
-<figure>
-<img src="https://i.imgur.com/MMyKgBt.png" srcset="/img/loading.gif" lazyload alt="并行流的工作原理" />
-<figcaption aria-hidden="true">并行流的工作原理</figcaption>
-</figure>
-<h2 id="foreach-foreachordered">forEach &amp; forEachOrdered</h2>
-<p>demo</p>
+<p><img src="https://i.imgur.com/MMyKgBt.png" srcset="/img/loading.gif" lazyload alt="并行流的工作原理"></p>
+<h2 id="forEach-forEachOrdered"><a href="#forEach-forEachOrdered" class="headerlink" title="forEach &amp; forEachOrdered"></a>forEach &amp; forEachOrdered</h2><p>demo</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test1</span><span class="hljs-params">()</span> &#123;<br>    List&lt;String&gt; Example = List.of(<span class="hljs-string">&quot;A&quot;</span>, <span class="hljs-string">&quot;B&quot;</span>, <span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-string">&quot;D&quot;</span>, <span class="hljs-string">&quot;E&quot;</span>, <span class="hljs-string">&quot;F&quot;</span>, <span class="hljs-string">&quot;G&quot;</span>);<br>    Example.parallelStream()  <span class="hljs-comment">//并行流</span><br>            .map(String::toLowerCase)  <span class="hljs-comment">//转换为小写</span><br>            .forEach(System.out::println);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>打印出的字母是乱序的, 而且每次都不一样.</p>
-<p>不像顺序流的执行是单线程的, 并行流采用多线程并发处理,
-不保证元素的处理顺序.用<code>forEachOrdered</code>可以保证元素的出现顺序,
-这归功于Spliterator和Fork/Join框架的协作:</p>
+<p>不像顺序流的执行是单线程的, 并行流采用多线程并发处理, 不保证元素的处理顺序.用<code>forEachOrdered</code>可以保证元素的出现顺序, 这归功于Spliterator和Fork&#x2F;Join框架的协作:</p>
 <ul>
-<li><p>在处理并行流时, 对于有序的数据源,
-Spliterator会对数据源进行递归分割, 通过划分数据源的索引范围来实现.
-每次分割都会产生一个新的Spliterator实例,
-其内部维护了指向原数据的索引范围,
-这种分割机制可以让数据的出现顺序得以保持.</p></li>
-<li><p>然后, Fork/Join框架接手, 将分配后的数据块分配给不同的子任务执行.
-对于forEachOrdered操作,
-框架依据Spliterator维护的顺序信息来调度方法的执行顺序. 所以,
-就算某个子任务提前完成了, 如果跟它关联的顺序还没到来, 系统将缓存该顺序,
-并暂停执行该方法, 直到所有前序的任务都已经完成.</p></li>
-<li><p>上述机制确保了即使是并行处理也能保证原始的出现顺序,
-代价是牺牲了一些并行执行的效率.</p></li>
-<li><p>对于<code>forEach</code>,
-Fork/Join会<strong>忽略顺序的信息</strong>, 能够提高执行效率.</p></li>
-<li><p>forEach会在不同的线程上独立进行, 所以如果操作的是共享资源,
-必须确保这些操作是<strong>线程安全</strong>的(同步).
-所以<code>forEach</code>更适合执行无状态操作或资源独立的场景.</p></li>
+<li><p>在处理并行流时, 对于有序的数据源, Spliterator会对数据源进行递归分割, 通过划分数据源的索引范围来实现. 每次分割都会产生一个新的Spliterator实例, 其内部维护了指向原数据的索引范围, 这种分割机制可以让数据的出现顺序得以保持. </p>
+</li>
+<li><p>然后, Fork&#x2F;Join框架接手, 将分配后的数据块分配给不同的子任务执行. 对于forEachOrdered操作, 框架依据Spliterator维护的顺序信息来调度方法的执行顺序. 所以, 就算某个子任务提前完成了, 如果跟它关联的顺序还没到来, 系统将缓存该顺序, 并暂停执行该方法, 直到所有前序的任务都已经完成. </p>
+</li>
+<li><p>上述机制确保了即使是并行处理也能保证原始的出现顺序, 代价是牺牲了一些并行执行的效率.</p>
+</li>
+<li><p>对于<code>forEach</code>, Fork&#x2F;Join会<strong>忽略顺序的信息</strong>, 能够提高执行效率.</p>
+</li>
+<li><p>forEach会在不同的线程上独立进行, 所以如果操作的是共享资源, 必须确保这些操作是<strong>线程安全</strong>的(同步). 所以<code>forEach</code>更适合执行无状态操作或资源独立的场景.</p>
+</li>
 </ul>
 <p>一个关于多线程的测试:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">  * 并行流的多线程</span><br><span class="hljs-comment">  */</span><br> <span class="hljs-meta">@Test</span><br> <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test2</span><span class="hljs-params">()</span> &#123;<br>     List&lt;String&gt; Example = List.of(<span class="hljs-string">&quot;A&quot;</span>, <span class="hljs-string">&quot;B&quot;</span>, <span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-string">&quot;D&quot;</span>, <span class="hljs-string">&quot;E&quot;</span>, <span class="hljs-string">&quot;F&quot;</span>, <span class="hljs-string">&quot;G&quot;</span>);<br>     Example.parallelStream().forEach(item -&gt; &#123;<br>         <span class="hljs-comment">//打印正在处理的元素和对应的线程</span><br>         System.out.println(<span class="hljs-string">&quot;Item: &quot;</span> + item + <span class="hljs-string">&quot;-&gt;&quot;</span> + <span class="hljs-string">&quot;Thread: &quot;</span> + Thread.currentThread().getName());<br>     &#125;);<br> &#125;<br></code></pre></td></tr></table></figure>
+
 <p>打印结果</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">Item: E-&gt;Thread: main<br>Item: D-&gt;Thread: main<br>Item: G-&gt;Thread: main<br>Item: A-&gt;Thread: main<br>Item: F-&gt;Thread: ForkJoinPool.commonPool-worker-2<br>Item: B-&gt;Thread: ForkJoinPool.commonPool-worker-1<br>Item: C-&gt;Thread: ForkJoinPool.commonPool-worker-2<br></code></pre></td></tr></table></figure>
+
 <ul>
 <li><code>main</code>:主线程</li>
 <li><code>ForkJoinPool.commonPool-worker-x</code>:后台线程池中的工作线程</li>
 </ul>
-<h2 id="collect收集">collect收集</h2>
-<p>List使用<code>collect</code><strong>收集</strong>输出结果,
-最终合并得到的列表仍为<strong>有序</strong>(与第一个demo不同)</p>
+<h2 id="collect收集"><a href="#collect收集" class="headerlink" title="collect收集"></a>collect收集</h2><p>List使用<code>collect</code><strong>收集</strong>输出结果, 最终合并得到的列表仍为<strong>有序</strong>(与第一个demo不同)</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * List并行流为有序</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test3</span><span class="hljs-params">()</span> &#123;<br>    List&lt;String&gt; collect = List.of(<span class="hljs-string">&quot;A&quot;</span>, <span class="hljs-string">&quot;B&quot;</span>, <span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-string">&quot;D&quot;</span>, <span class="hljs-string">&quot;E&quot;</span>, <span class="hljs-string">&quot;F&quot;</span>, <span class="hljs-string">&quot;G&quot;</span>).parallelStream()<br>            .map(String::toLowerCase)     <span class="hljs-comment">//转换为小写</span><br>            .collect(Collectors.toList());<span class="hljs-comment">//收集不同线程的结果,合并为列表</span><br>    System.out.println();<br>    System.out.println(collect);<span class="hljs-comment">//输出为[a, b, c, d, e, f, g]</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>使用<strong>自定义收集器</strong>演示有序列表<code>List</code>在并行流的情况下合并后仍有序输出的过程:</p>
-<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test4</span><span class="hljs-params">()</span> &#123;<br>    List&lt;String&gt; collect = List.of(<span class="hljs-string">&quot;A&quot;</span>, <span class="hljs-string">&quot;B&quot;</span>, <span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-string">&quot;D&quot;</span>, <span class="hljs-string">&quot;E&quot;</span>).parallelStream()<br>            .map(String::toLowerCase)<br>            .collect(Collector.of(<br>                    () -&gt; &#123;<br>                        System.out.println(<span class="hljs-string">&quot;Supplier: new ArrayList&quot;</span> + <span class="hljs-string">&quot;Thread: &quot;</span> + Thread.currentThread().getName());<br>                        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>                    &#125;,<br>                    (list,item) -&gt; &#123;<br>                        System.out.println(<span class="hljs-string">&quot;Accumulator: &quot;</span> + item + <span class="hljs-string">&quot; Thread: &quot;</span> + Thread.currentThread().getName());<br>                        list.add(item);<br>                    &#125;,<br>                    (left, right) -&gt; &#123;<span class="hljs-comment">//并行流需要有效地合并不同线程的处理结果</span><br>                        System.out.println(<span class="hljs-string">&quot;Combiner: &quot;</span> + left + <span class="hljs-string">&quot; &quot;</span> + right + <span class="hljs-string">&quot; Thread: &quot;</span> + Thread.currentThread().getName());<br>                        left.addAll(right);<br>                        <span class="hljs-keyword">return</span> left;<br>                    &#125;,<br>                    Collector.Characteristics.IDENTITY_FINISH<br>            ));<br>    System.out.println(collect);<br><br>&#125;<br></code></pre></td></tr></table></figure></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test4</span><span class="hljs-params">()</span> &#123;<br>    List&lt;String&gt; collect = List.of(<span class="hljs-string">&quot;A&quot;</span>, <span class="hljs-string">&quot;B&quot;</span>, <span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-string">&quot;D&quot;</span>, <span class="hljs-string">&quot;E&quot;</span>).parallelStream()<br>            .map(String::toLowerCase)<br>            .collect(Collector.of(<br>                    () -&gt; &#123;<br>                        System.out.println(<span class="hljs-string">&quot;Supplier: new ArrayList&quot;</span> + <span class="hljs-string">&quot;Thread: &quot;</span> + Thread.currentThread().getName());<br>                        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>                    &#125;,<br>                    (list,item) -&gt; &#123;<br>                        System.out.println(<span class="hljs-string">&quot;Accumulator: &quot;</span> + item + <span class="hljs-string">&quot; Thread: &quot;</span> + Thread.currentThread().getName());<br>                        list.add(item);<br>                    &#125;,<br>                    (left, right) -&gt; &#123;<span class="hljs-comment">//并行流需要有效地合并不同线程的处理结果</span><br>                        System.out.println(<span class="hljs-string">&quot;Combiner: &quot;</span> + left + <span class="hljs-string">&quot; &quot;</span> + right + <span class="hljs-string">&quot; Thread: &quot;</span> + Thread.currentThread().getName());<br>                        left.addAll(right);<br>                        <span class="hljs-keyword">return</span> left;<br>                    &#125;,<br>                    Collector.Characteristics.IDENTITY_FINISH<br>            ));<br>    System.out.println(collect);<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>打印内容:</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs text">Supplier: new ArrayListThread: main<br>Accumulator: c Thread: main<br>Supplier: new ArrayListThread: ForkJoinPool.commonPool-worker-1<br>Accumulator: b Thread: ForkJoinPool.commonPool-worker-1<br>Supplier: new ArrayListThread: ForkJoinPool.commonPool-worker-2<br>Supplier: new ArrayListThread: ForkJoinPool.commonPool-worker-1<br>Accumulator: e Thread: ForkJoinPool.commonPool-worker-2<br>Accumulator: d Thread: ForkJoinPool.commonPool-worker-1<br>Supplier: new ArrayListThread: main<br>Accumulator: a Thread: main<br>Combiner: [d] [e] Thread: ForkJoinPool.commonPool-worker-1<br>Combiner: [a] [b] Thread: main<br>Combiner: [c] [d, e] Thread: ForkJoinPool.commonPool-worker-1<br>Combiner: [a, b] [c, d, e] Thread: ForkJoinPool.commonPool-worker-1<br>[a, b, c, d, e]<br></code></pre></td></tr></table></figure>
-<p>如果使用<code>Set</code>, 则结果仍然是无序的,
-这是由<strong>数据结构本身</strong>的特点决定的,
-Spliterator和Fork/Join框架的分割合并策略并没有什么不同.</p>
-<h2 id="unordered-concurrent">UNORDERED &amp; CONCURRENT</h2>
-<p><strong>UNORDERED</strong></p>
-<p>即便Colector被标记为<code>UNORDERED</code>,
-如果数据源或流操作本身是有序的,
-系统的执行策略通常仍会保持这些元素的出现顺序.
-只有在特定场景下系统才会针对那些被标记为<code>UNORDERED</code>的流进行优化从而打破顺序的约束.</p>
+
+<p>如果使用<code>Set</code>, 则结果仍然是无序的, 这是由<strong>数据结构本身</strong>的特点决定的, Spliterator和Fork&#x2F;Join框架的分割合并策略并没有什么不同.</p>
+<h2 id="UNORDERED-CONCURRENT"><a href="#UNORDERED-CONCURRENT" class="headerlink" title="UNORDERED &amp; CONCURRENT"></a>UNORDERED &amp; CONCURRENT</h2><p><strong>UNORDERED</strong></p>
+<p>即便Colector被标记为<code>UNORDERED</code>, 如果数据源或流操作本身是有序的, 系统的执行策略通常仍会保持这些元素的出现顺序. 只有在特定场景下系统才会针对那些被标记为<code>UNORDERED</code>的流进行优化从而打破顺序的约束.</p>
 <p><strong>CONCURRENT</strong></p>
 <ul>
-<li>在标准的并行流处理中, 每个线程处理数据的一个子集,
-维护自己的局部结果容器. 在所有的数据处理完成后,
-这些局部结果会通过Combiner函数合并成一个最终的结果.</li>
-<li>使用CONCURRENT特性后, 所有线程将<strong>共享同一个结果容器</strong>,
-而不是维护独立的局部结果, 从而减少了合并的需要.
-这通常会带来性能上的提升, 特别是合并操作较为复杂时.
-这时只有一个结果容器,
-这个容器必须是线程安全的(例如ConcurrentHashMap).</li>
+<li>在标准的并行流处理中, 每个线程处理数据的一个子集, 维护自己的局部结果容器. 在所有的数据处理完成后, 这些局部结果会通过Combiner函数合并成一个最终的结果. </li>
+<li>使用CONCURRENT特性后, 所有线程将<strong>共享同一个结果容器</strong>, 而不是维护独立的局部结果, 从而减少了合并的需要. 这通常会带来性能上的提升, 特别是合并操作较为复杂时. 这时只有一个结果容器, 这个容器必须是线程安全的(例如ConcurrentHashMap).</li>
 </ul>
 
                 

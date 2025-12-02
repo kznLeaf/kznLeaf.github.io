@@ -34,8 +34,8 @@
 <meta property="article:published_time" content="2025-05-30T15:07:40.000Z">
 <meta property="article:modified_time" content="2025-07-02T15:25:37.830Z">
 <meta property="article:author" content="banyee">
-<meta property="article:tag" content="Cloudflare">
 <meta property="article:tag" content="折腾记录">
+<meta property="article:tag" content="Cloudflare">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://s21.ax1x.com/2025/05/30/pV9ZSaQ.jpg">
   
@@ -285,7 +285,7 @@
         
         
         
-          11 分钟
+          10 分钟
         
       </span>
     
@@ -338,78 +338,51 @@
                 
                 <p>在博客更换域名之后利用Cloudflare将向旧域名的请求重定向到新域名，并且保留请求的资源路径和查询字符串</p>
 <span id="more"></span>
-<h2 id="前言">前言</h2>
-<p>最近为博客更换了域名，原域名为<code>kznep19.blog</code>，因为续费费用过高而更换为现在的<code>kznleaf.top</code>。现在遇到了几个问题：</p>
-<ol type="1">
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近为博客更换了域名，原域名为<code>kznep19.blog</code>，因为续费费用过高而更换为现在的<code>kznleaf.top</code>。现在遇到了几个问题：</p>
+<ol>
 <li>原域名虽然不再使用了，但是一直到2026年1月才过期；</li>
-<li>Google
-和必应搜索引擎仍在收录原域名下的文章页，如果马上废弃原域名，又要重新抓取一遍文章；</li>
+<li>Google 和必应搜索引擎仍在收录原域名下的文章页，如果马上废弃原域名，又要重新抓取一遍文章；</li>
 <li>有几篇博客在别的地方被引用了，我希望这些外链仍然能够生效</li>
 </ol>
 <p>综上考虑，我希望获得的效果是：将博客切换为新域名，同时为旧域名配置重定向，使得对旧域名下的资源的请求会被自动重定向到新域名下对于的资源路径。</p>
-<p>花了不少时间查资料，大部分的解决方案都是通过配置页面规则(Page
-Rules)配置的方式实现重定向，我经过尝试之后发现并没有效果。最后找到了这篇博客：</p>
-<p><a
-target="_blank" rel="noopener" href="https://appscross.com/blog/issues-resolved-during-cloudflares-configuration-site-redirection-process.html">Cloudflare配置站点重定向</a></p>
+<p>花了不少时间查资料，大部分的解决方案都是通过配置页面规则(Page Rules)配置的方式实现重定向，我经过尝试之后发现并没有效果。最后找到了这篇博客：</p>
+<p><a target="_blank" rel="noopener" href="https://appscross.com/blog/issues-resolved-during-cloudflares-configuration-site-redirection-process.html">Cloudflare配置站点重定向</a></p>
 <p>这个博客是把对旧域名下的任何资源的请求都重定向到一个固定的URL下，我在该博客的基础上做了一些补充，最后达到了理想的效果。</p>
-<h2 id="配置要点">配置要点</h2>
-<h3 id="配置重定向规则">配置重定向规则</h3>
-<p>先打开主页左侧的“规则”，然后点击右侧的创建规则——<strong>重定向规则</strong>。（注意不是最左边的页面规则，这两个不是一个东西，后面会说）</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/05/30/pV9F3fP.png" srcset="/img/loading.gif" lazyload
-alt="重定向规则" />
-<figcaption aria-hidden="true">重定向规则</figcaption>
-</figure>
+<h2 id="配置要点"><a href="#配置要点" class="headerlink" title="配置要点"></a>配置要点</h2><h3 id="配置重定向规则"><a href="#配置重定向规则" class="headerlink" title="配置重定向规则"></a>配置重定向规则</h3><p>先打开主页左侧的“规则”，然后点击右侧的创建规则——<strong>重定向规则</strong>。（注意不是最左边的页面规则，这两个不是一个东西，后面会说）</p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9F3fP.png" srcset="/img/loading.gif" lazyload alt="重定向规则"></p>
 <p>这里为我们提供了三个选项：</p>
-<p><img src="https://s21.ax1x.com/2025/05/30/pV9FGSf.png" srcset="/img/loading.gif" lazyload /></p>
-<p>应当选择<strong>重定向到其他域</strong>。<a
-target="_blank" rel="noopener" href="https://developers.cloudflare.com/rules/url-forwarding/examples/redirect-all-different-hostname/">官方文档</a>对它的描述为：</p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9FGSf.png" srcset="/img/loading.gif" lazyload></p>
+<p>应当选择<strong>重定向到其他域</strong>。<a target="_blank" rel="noopener" href="https://developers.cloudflare.com/rules/url-forwarding/examples/redirect-all-different-hostname/">官方文档</a>对它的描述为：</p>
 <div class="note note-secondary">
-            <p>创建重定向规则，将对<code>smallshop.example.com</code>的所有请求重定向到使用HTTPS 的其他主机名，同时保留原始路径和查询字符串。</p>
+            <p>创建重定向规则，将对<code>smallshop.example.com</code>的所有请求重定向到使用 HTTPS 的其他主机名，同时保留原始路径和查询字符串。</p>
           </div>
+
 <p>使用通配符匹配模式，如果请求的URL为<code>http*://smallshop.example.com/*</code>，那么：</p>
 <ul>
 <li>目标URL：<code>https://globalstore.example.net/$&#123;2&#125;</code></li>
 <li>状态码：301</li>
 <li>保留查询字符串：启用</li>
 </ul>
-<p>请求URL中的<code>*</code>是对零个或者多个字符进行匹配，这里表示使用
-HTTP 或 HTTPS
-协议对<code>smallshop.example.com</code>下的任意资源的请求都将被匹配。</p>
+<p>请求URL中的<code>*</code>是对零个或者多个字符进行匹配，这里表示使用 HTTP 或 HTTPS 协议对<code>smallshop.example.com</code>下的任意资源的请求都将被匹配。</p>
 <p>目标URL即该请求将会被重定向到的URL，其中的<code>$&#123;2&#125;</code>是对通配符捕获的内容的引用，这里代表的是请求URL中的第二个<code>*</code>，所以用户最终访问的是新域名<code>globalstore.example.net</code>下的对应资源。</p>
-<p>从上面的描述可以看出这就是我们想要的东西。那接下来的配置就很简单了，按照刚才提到的三点：目标URL、状态码、启用保留查询字符串
-配置即可。</p>
-<p><img src="https://s21.ax1x.com/2025/05/30/pV9FO7d.png" srcset="/img/loading.gif" lazyload /></p>
-<h3 id="使规则生效">使规则生效</h3>
-<p>光是配置规则是不够的，还要给这个域名添加DNS记录以使规则生效。创建一条A记录即可，IP地址可以随便写，我这里用的是保留IP地址<code>192.0.2.1</code>，写了两条</p>
-<p><img src="https://s21.ax1x.com/2025/05/30/pV9kn3V.png" srcset="/img/loading.gif" lazyload /></p>
+<p>从上面的描述可以看出这就是我们想要的东西。那接下来的配置就很简单了，按照刚才提到的三点：目标URL、状态码、启用保留查询字符串 配置即可。</p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9FO7d.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="使规则生效"><a href="#使规则生效" class="headerlink" title="使规则生效"></a>使规则生效</h3><p>光是配置规则是不够的，还要给这个域名添加DNS记录以使规则生效。创建一条A记录即可，IP地址可以随便写，我这里用的是保留IP地址<code>192.0.2.1</code>，写了两条</p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9kn3V.png" srcset="/img/loading.gif" lazyload></p>
 <p>关于这一部分，Cloudflare文档在Page Rules一节中是这样说的：</p>
-<p><img src="https://s21.ax1x.com/2025/05/30/pV9kajO.png" srcset="/img/loading.gif" lazyload /></p>
-<p><a
-target="_blank" rel="noopener" href="https://developers.cloudflare.com/rules/page-rules/">原文链接</a></p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9kajO.png" srcset="/img/loading.gif" lazyload></p>
+<p><a target="_blank" rel="noopener" href="https://developers.cloudflare.com/rules/page-rules/">原文链接</a></p>
 <p>也就是说如果IP地址作为占位符的话，最好使用保留IP地址<code>192.0.2.*</code>，避免把流量发到什么奇怪的地方。</p>
-<h2 id="page-rules和redirects的区别">Page Rules和Redirects的区别</h2>
-<p>前面提到了，在搜索引擎中搜索“使用Cloudflare把旧域名重定向到新域名”，弹出来的结果大部分都是使用Page
-Rules的，但这其实不太合适。其实关键就是<strong>转发</strong>和<strong>重定向</strong>的区别。Page
-Rules中可以配置一个叫做<code>URL Forwarding(转发URL)</code>的东西：</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/05/30/pV9Alxf.png" srcset="/img/loading.gif" lazyload
-alt="页面规则中的转发URL" />
-<figcaption aria-hidden="true">页面规则中的转发URL</figcaption>
-</figure>
+<h2 id="Page-Rules和Redirects的区别"><a href="#Page-Rules和Redirects的区别" class="headerlink" title="Page Rules和Redirects的区别"></a>Page Rules和Redirects的区别</h2><p>前面提到了，在搜索引擎中搜索“使用Cloudflare把旧域名重定向到新域名”，弹出来的结果大部分都是使用Page Rules的，但这其实不太合适。其实关键就是<strong>转发</strong>和<strong>重定向</strong>的区别。Page Rules中可以配置一个叫做<code>URL Forwarding(转发URL)</code>的东西：</p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9Alxf.png" srcset="/img/loading.gif" lazyload alt="页面规则中的转发URL"></p>
 <p>如果你配置了目标地址，那么：</p>
 <div class="note note-secondary">
-            <p>If you enter the address above in the forwarding box and select AddRule, within a few seconds any requests that match the pattern youentered will automatically be forwarded with an HTTP 302 redirect statuscode to the new URL.</p>
+            <p>If you enter the address above in the forwarding box and select Add Rule, within a few seconds any requests that match the pattern you entered will automatically be forwarded with an HTTP 302 redirect status code to the new URL.</p>
           </div>
-<p>即这样配置返回的状态码是<code>302</code>，而刚才的重定向状态码是301，至此熟悉计网的人应该清楚是怎么一回事了。不过还是再看看
-<a
-target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/HTTP%E7%8A%B6%E6%80%81%E7%A0%81">wiki</a>
-对这两种状态码的表述：</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/05/30/pV9Amad.png" srcset="/img/loading.gif" lazyload
-alt="状态码301和302的区别" />
-<figcaption aria-hidden="true">状态码301和302的区别</figcaption>
-</figure>
+
+<p>即这样配置返回的状态码是<code>302</code>，而刚才的重定向状态码是301，至此熟悉计网的人应该清楚是怎么一回事了。不过还是再看看 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/HTTP%E7%8A%B6%E6%80%81%E7%A0%81">wiki</a> 对这两种状态码的表述：</p>
+<p><img src="https://s21.ax1x.com/2025/05/30/pV9Amad.png" srcset="/img/loading.gif" lazyload alt="状态码301和302的区别"></p>
 <ul>
 <li>301用于永久重定向的情况，发起请求的客户端收到这个状态码之后，除了收到一个用于重定向的地址以外，还会被告知把以后的请求目标地址也改成这个地址，而且这个地址默认是会被缓存的。</li>
 <li>302用于临时重定向，而且这个响应不会被缓存，客户端以后继续向旧域名发送请求。</li>
@@ -448,9 +421,9 @@ alt="状态码301和302的区别" />
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Cloudflare/" class="print-no-link">#Cloudflare</a>
-      
         <a href="/tags/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" class="print-no-link">#折腾记录</a>
+      
+        <a href="/tags/Cloudflare/" class="print-no-link">#Cloudflare</a>
       
     </div>
   

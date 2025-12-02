@@ -23,12 +23,12 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Unix风格文件系统总结，本文的所有命令均在Linux上运行过。 最近学到这一块的时候找不到质量很高的相关文章，干脆自己总结一下好了。  目录（directory）  简介 存储位置  文件的元数据 文件描述符  什么是文件描述符 如何分配？ 通过终端查看文件描述符  ⭐inode⭐  什么是inode 什么是inode number inode和数据块的关系">
+    <meta name="description" content="Unix风格文件系统总结，本文的所有命令均在Linux上运行过。 最近学到这一块的时候找不到质量很高的相关文章，干脆自己总结一下好了。   目录（directory） 简介 存储位置   文件的元数据 文件描述符 什么是文件描述符 如何分配？ 通过终端查看文件描述符   ⭐inode⭐ 什么是inode 什么是inode number inode和数据块的关系 inode节点的大小 inode编号">
 <meta property="og:type" content="article">
 <meta property="og:title" content="操作系统-Unix风格文件系统知识梳理">
 <meta property="og:url" content="https://kznleaf.top/2025/07/31/Unix%E9%A3%8E%E6%A0%BC%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
-<meta property="og:description" content="Unix风格文件系统总结，本文的所有命令均在Linux上运行过。 最近学到这一块的时候找不到质量很高的相关文章，干脆自己总结一下好了。  目录（directory）  简介 存储位置  文件的元数据 文件描述符  什么是文件描述符 如何分配？ 通过终端查看文件描述符  ⭐inode⭐  什么是inode 什么是inode number inode和数据块的关系">
+<meta property="og:description" content="Unix风格文件系统总结，本文的所有命令均在Linux上运行过。 最近学到这一块的时候找不到质量很高的相关文章，干脆自己总结一下好了。   目录（directory） 简介 存储位置   文件的元数据 文件描述符 什么是文件描述符 如何分配？ 通过终端查看文件描述符   ⭐inode⭐ 什么是inode 什么是inode number inode和数据块的关系 inode节点的大小 inode编号">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s21.ax1x.com/2025/07/28/pVYdwvD.png">
 <meta property="article:published_time" content="2025-07-31T14:56:21.000Z">
@@ -336,98 +336,78 @@
               <div class="markdown-body">
                 
                 <p>Unix风格文件系统总结，本文的所有命令均在Linux上运行过。</p>
-<p>最近学到这一块的时候找不到质量很高的相关文章，干脆自己总结一下好了。</p>
-<ol type="1">
-<li><a href="#目录directory">目录（directory）</a>
-<ol type="1">
-<li><a href="#简介">简介</a></li>
-<li><a href="#存储位置">存储位置</a></li>
-</ol></li>
-<li><a href="#文件的元数据">文件的元数据</a></li>
-<li><a href="#文件描述符">文件描述符</a>
-<ol type="1">
-<li><a href="#什么是文件描述符">什么是文件描述符</a></li>
-<li><a href="#如何分配">如何分配？</a></li>
-<li><a href="#通过终端查看文件描述符">通过终端查看文件描述符</a></li>
-</ol></li>
-<li><a href="#inode">⭐inode⭐</a>
-<ol type="1">
-<li><a href="#什么是inode">什么是inode</a></li>
-<li><a href="#什么是inode-number">什么是inode number</a></li>
-<li><a href="#inode和数据块的关系">inode和数据块的关系</a></li>
-<li><a href="#inode节点的大小">inode节点的大小</a></li>
-<li><a href="#inode编号和文件名的关系">inode编号和文件名的关系</a></li>
-</ol></li>
-<li><a href="#创建文件-link">创建文件-link</a>
-<ol type="1">
-<li><a href="#硬链接">硬链接</a></li>
-<li><a href="#软链接">软链接</a></li>
-</ol></li>
-<li><a
-href="#文件描述符文件表和inode表的关系">文件描述符、文件表和inode表的关系</a></li>
-<li><a href="#读写磁盘">读写磁盘</a>
-<ol type="1">
-<li><a href="#读取文件无缓存">读取文件（无缓存）</a></li>
-<li><a href="#写入文件无缓冲">写入文件（无缓冲）</a></li>
-<li><a href="#cahe-and-buffering">cahe and buffering</a></li>
-</ol></li>
-<li><a href="#崩溃一致性">崩溃一致性</a>
-<ol type="1">
-<li><a href="#问题提出">问题提出</a></li>
-<li><a href="#解决方法">解决方法</a></li>
-</ol></li>
-<li><a href="#参考链接">参考链接</a></li>
+<p>最近学到这一块的时候找不到质量很高的相关文章，干脆自己总结一下好了。 </p>
+<ol>
+<li><a href="#%E7%9B%AE%E5%BD%95directory">目录（directory）</a><ol>
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#%E5%AD%98%E5%82%A8%E4%BD%8D%E7%BD%AE">存储位置</a></li>
 </ol>
-<h2 id="目录directory">目录（directory）</h2>
-<h3 id="简介">简介</h3>
-<p>目录是用于描述文件系统信息的数据结构。目录文件的结构非常简单，就是一系列目录项的列表。每个目录项，由两部分组成：<code>文件名 -&gt; inode number</code>。</p>
+</li>
+<li><a href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%85%83%E6%95%B0%E6%8D%AE">文件的元数据</a></li>
+<li><a href="#%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6">文件描述符</a><ol>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6">什么是文件描述符</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E5%88%86%E9%85%8D">如何分配？</a></li>
+<li><a href="#%E9%80%9A%E8%BF%87%E7%BB%88%E7%AB%AF%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6">通过终端查看文件描述符</a></li>
+</ol>
+</li>
+<li><a href="#inode">⭐inode⭐</a><ol>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFinode">什么是inode</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFinode-number">什么是inode number</a></li>
+<li><a href="#inode%E5%92%8C%E6%95%B0%E6%8D%AE%E5%9D%97%E7%9A%84%E5%85%B3%E7%B3%BB">inode和数据块的关系</a></li>
+<li><a href="#inode%E8%8A%82%E7%82%B9%E7%9A%84%E5%A4%A7%E5%B0%8F">inode节点的大小</a></li>
+<li><a href="#inode%E7%BC%96%E5%8F%B7%E5%92%8C%E6%96%87%E4%BB%B6%E5%90%8D%E7%9A%84%E5%85%B3%E7%B3%BB">inode编号和文件名的关系</a></li>
+</ol>
+</li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6-link">创建文件-link</a><ol>
+<li><a href="#%E7%A1%AC%E9%93%BE%E6%8E%A5">硬链接</a></li>
+<li><a href="#%E8%BD%AF%E9%93%BE%E6%8E%A5">软链接</a></li>
+</ol>
+</li>
+<li><a href="#%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E6%96%87%E4%BB%B6%E8%A1%A8%E5%92%8Cinode%E8%A1%A8%E7%9A%84%E5%85%B3%E7%B3%BB">文件描述符、文件表和inode表的关系</a></li>
+<li><a href="#%E8%AF%BB%E5%86%99%E7%A3%81%E7%9B%98">读写磁盘</a><ol>
+<li><a href="#%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E6%97%A0%E7%BC%93%E5%AD%98">读取文件（无缓存）</a></li>
+<li><a href="#%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6%E6%97%A0%E7%BC%93%E5%86%B2">写入文件（无缓冲）</a></li>
+<li><a href="#cahe-and-buffering">cahe and buffering</a></li>
+</ol>
+</li>
+<li><a href="#%E5%B4%A9%E6%BA%83%E4%B8%80%E8%87%B4%E6%80%A7">崩溃一致性</a><ol>
+<li><a href="#%E9%97%AE%E9%A2%98%E6%8F%90%E5%87%BA">问题提出</a></li>
+<li><a href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95">解决方法</a></li>
+</ol>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5">参考链接</a></li>
+</ol>
+<h2 id="目录（directory）"><a href="#目录（directory）" class="headerlink" title="目录（directory）"></a>目录（directory）</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>目录是用于描述文件系统信息的数据结构。目录文件的结构非常简单，就是一系列目录项的列表。每个目录项，由两部分组成：<code>文件名 -&gt; inode number</code>。</p>
 <p><strong>只有拿到目录的<code>inode</code>节点，才能访问它的目录项</strong>。（后面会说inode）</p>
 <p>每个目录都有两个固有的隐藏的条目：<code>.</code>和<code>..</code>，前者指向自己，后者指向上一级目录。使用<code>ll -a</code>可以查看隐藏目录，例如：</p>
 <figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs tap">╭─ ~/Desktop/c-dev                   <br>╰─❯ ll -a<br>总计 56K<br>drwxr-xr-x<span class="hljs-number"> 1 </span>kznleaf kznleaf <span class="hljs-number"> 278 </span> 7月30日 11:12 .<br>drwxr-xr-x<span class="hljs-number"> 1 </span>kznleaf kznleaf <span class="hljs-number"> 262 </span> 7月25日 19:56 ..<br>drwxr-xr-x<span class="hljs-number"> 1 </span>kznleaf kznleaf <span class="hljs-number"> 128 </span> 7月28日 22:43 Lock<br>drwxr-xr-x<span class="hljs-number"> 1 </span>kznleaf kznleaf <span class="hljs-number"> 110 </span> 7月27日 12:03 .vscode<br>-rw-r--r--<span class="hljs-number"> 1 </span>kznleaf kznleaf  <span class="hljs-number"> 20 </span> 7月23日 17:48 .clang-format<br>-rw-r--r--<span class="hljs-number"> 1 </span>kznleaf kznleaf <span class="hljs-number"> 778 </span> 7月23日 19:09 home1.c<br>-rw-r--r--<span class="hljs-number"> 1 </span>kznleaf kznleaf  <span class="hljs-number"> 79 </span> 7月23日 19:19 home2.c<br></code></pre></td></tr></table></figure>
-<p>其中<code>.</code> <code>..</code>
-<code>.vscode</code>都属于隐藏目录。</p>
-<h3 id="存储位置">存储位置</h3>
-<p><strong>目录可以被视为一种特殊的文件类型</strong>，只不过保存的不是字节数组，而是一系列目录项。因此存储位置和一般的文件没有区别（从上面命令的输出结果也可以看出来，目录和文件的地位是相同的）。字母<code>d</code>代表目录类型，例如<code>drwxr-xr-x</code>；其余两种文件类型分别是<code>-</code>（普通文件）和<code>l</code>（符号链接）。</p>
-<h2 id="文件的元数据">文件的元数据</h2>
-<p>描述文件本身的信息被称为<strong>元数据</strong>，在Linux系统下使用<code>stat</code>可以获取文件的元数据：</p>
+
+<p>其中<code>.</code> <code>..</code> <code>.vscode</code>都属于隐藏目录。</p>
+<h3 id="存储位置"><a href="#存储位置" class="headerlink" title="存储位置"></a>存储位置</h3><p><strong>目录可以被视为一种特殊的文件类型</strong>，只不过保存的不是字节数组，而是一系列目录项。因此存储位置和一般的文件没有区别（从上面命令的输出结果也可以看出来，目录和文件的地位是相同的）。字母<code>d</code>代表目录类型，例如<code>drwxr-xr-x</code>；其余两种文件类型分别是<code>-</code>（普通文件）和<code>l</code>（符号链接）。</p>
+<h2 id="文件的元数据"><a href="#文件的元数据" class="headerlink" title="文件的元数据"></a>文件的元数据</h2><p>描述文件本身的信息被称为<strong>元数据</strong>，在Linux系统下使用<code>stat</code>可以获取文件的元数据：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">╰─❯ <span class="hljs-built_in">stat</span> test.lua               <br>  文件：test.lua<br>  大小：20              块：8          IO 块大小：4096   一般文件<br>设备：0,37      Inode: 111926      硬链接：1<br>权限：(0644/-rw-r--r--)  Uid: ( 1000/ kznleaf)   Gid: ( 1000/ kznleaf)<br>访问时间：2025-07-30 11:06:21.136822528 +0800<br>修改时间：2025-07-27 12:02:15.742179634 +0800<br>变更时间：2025-07-27 12:02:15.742179634 +0800<br>创建时间：2025-07-27 12:01:52.866903170 +0800<br></code></pre></td></tr></table></figure>
-<h2 id="文件描述符">文件描述符</h2>
-<h3 id="什么是文件描述符">什么是文件描述符</h3>
-<p>以程序发起 IO 系统调用为例来说明：</p>
-<p>IO 操作往往需要获取系统权限，比如硬盘 IO
-操作，必须发起系统调用、交给内核，让内核负责完成能保证安全（如果直接交给进程去干的话，恶意程序就可以清空你的硬盘而不会受到任何阻拦）。那么内核怎么知道进程想要访问的是哪个文件？靠的就是文件描述符。每一个文件描述符都相当于一个系统调用的“权限”，或者说“句柄”，拿到这个句柄就可以执行相应的操作了。</p>
+
+<h2 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h2><h3 id="什么是文件描述符"><a href="#什么是文件描述符" class="headerlink" title="什么是文件描述符"></a>什么是文件描述符</h3><p>以程序发起 IO 系统调用为例来说明：</p>
+<p>IO 操作往往需要获取系统权限，比如硬盘 IO 操作，必须发起系统调用、交给内核，让内核负责完成能保证安全（如果直接交给进程去干的话，恶意程序就可以清空你的硬盘而不会受到任何阻拦）。那么内核怎么知道进程想要访问的是哪个文件？靠的就是文件描述符。每一个文件描述符都相当于一个系统调用的“权限”，或者说“句柄”，拿到这个句柄就可以执行相应的操作了。</p>
 <p>更具体的信息：</p>
 <ul>
-<li>英文：file descriptor (<strong>FD</strong>, less frequently fildes)
-译名：文件描述符</li>
-<li>取值范围：有效的FD是一个非负整数，负数一般表示不存在或者
-error。</li>
-<li>文件描述符 是 POSIX API 的一部分。除了守护进程之外的每个 Unix
-进程都默认打开三个标准 POSIX
-文件描述符：标准输入(0)、标准输出(1)、标准错误(2)。</li>
+<li>英文：file descriptor (<strong>FD</strong>, less frequently fildes) 译名：文件描述符</li>
+<li>取值范围：有效的FD是一个非负整数，负数一般表示不存在或者 error。</li>
+<li>文件描述符 是 POSIX API 的一部分。除了守护进程之外的每个 Unix 进程都默认打开三个标准 POSIX 文件描述符：标准输入(0)、标准输出(1)、标准错误(2)。</li>
 </ul>
-<h3 id="如何分配">如何分配？</h3>
-<p>每次执行<strong>IO操作</strong>，操作系统会<strong>从当前进程的文件描述符表中找最小的可用描述符编号</strong>作为返回值，例如下面的代码：</p>
+<h3 id="如何分配？"><a href="#如何分配？" class="headerlink" title="如何分配？"></a>如何分配？</h3><p>每次执行<strong>IO操作</strong>，操作系统会<strong>从当前进程的文件描述符表中找最小的可用描述符编号</strong>作为返回值，例如下面的代码：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> fd1 = open(<span class="hljs-string">&quot;test.txt&quot;</span>, O_RDONLY);<br>    <span class="hljs-type">int</span> fd2 = open(<span class="hljs-string">&quot;test.txt&quot;</span>, O_RDONLY);<br>    <span class="hljs-type">int</span> fd3 = open(<span class="hljs-string">&quot;test.txt&quot;</span>, O_RDONLY);<br><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;文件描述符: %d, %d, %d\n&quot;</span>, fd1, fd2, fd3); <br>    <span class="hljs-comment">//close(fd);</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>在Linux下运行，每一次的输出都是<code>文件描述符：3, 4, 5</code>，之所以从
-3 开始是因为
-0、1、2被三个默认的文件描述符占用了。后续每次调用<code>open</code>，都会分配一个描述符。</p>
+
+<p>在Linux下运行，每一次的输出都是<code>文件描述符：3, 4, 5</code>，之所以从 3 开始是因为 0、1、2被三个默认的文件描述符占用了。后续每次调用<code>open</code>，都会分配一个描述符。</p>
 <p>值得一提的是，一旦某个系统调用被关闭，那么它占用的文件描述符也会被一并归还。测试代码：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fcntl.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">int</span> fd1 = open(<span class="hljs-string">&quot;test.txt&quot;</span>, O_RDONLY);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;first: %d\n&quot;</span>, fd1);<br>    close(fd1);<br>    <span class="hljs-type">int</span> fd2 = open(<span class="hljs-string">&quot;test.txt&quot;</span>, O_RDONLY);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;second: %d\n&quot;</span>, fd2);<br>    close(fd2);<br>    <span class="hljs-type">int</span> fd3 = open(<span class="hljs-string">&quot;test.txt&quot;</span>, O_RDONLY);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;third: %d\n&quot;</span>, fd3);<br>    close(fd3);<br><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;文件描述符: %d, %d, %d\n&quot;</span>, fd1, fd2, fd3);<br>    <span class="hljs-comment">// close(fd);</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;pid: %d\n&quot;</span>, getpid());<br>    <span class="hljs-comment">// sleep(10);</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>运行结果：</p>
 <figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dts">╭─ ~/Desktop<span class="hljs-keyword">/c-dev/</span>Lock                          <br>╰─❯ ./main                     <br><span class="hljs-symbol">first:</span> <span class="hljs-number">3</span><br><span class="hljs-symbol">second:</span> <span class="hljs-number">3</span><br><span class="hljs-symbol">third:</span> <span class="hljs-number">3</span><br>文件描述符: <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span><br><span class="hljs-symbol">pid:</span> <span class="hljs-number">5323</span><br></code></pre></td></tr></table></figure>
-<p>三个<code>open</code>调用的文件描述符都是
-3，因为每个调用发起之后，在第二个调用发起之前就被关闭了，占用的文件描述符
-3 也被一并归还。</p>
-<h3 id="通过终端查看文件描述符">通过终端查看文件描述符</h3>
-<blockquote>
-<p>在 Linux
-上，一个进程的文件描述符的集合可以直接通过路径<code>/proc/PID/fd/</code>访问，其中PID是进程标识符。<code>/proc/PID/fd/0</code>是
-stdin，<code>/proc/PID/fd/1</code>是
-stdout，<code>/proc/PID/fd/2</code>是
-stderr。任何运行中的进程也可以通过<code>/prec/self/fd</code>和<code>/dev/fd</code>访问自己的文件描述符。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="https://en.wikipedia.org/wiki/File_descriptor">[1]</span></a></sup></p>
+
+<p>三个<code>open</code>调用的文件描述符都是 3，因为每个调用发起之后，在第二个调用发起之前就被关闭了，占用的文件描述符 3 也被一并归还。</p>
+<h3 id="通过终端查看文件描述符"><a href="#通过终端查看文件描述符" class="headerlink" title="通过终端查看文件描述符"></a>通过终端查看文件描述符</h3><blockquote>
+<p>在 Linux 上，一个进程的文件描述符的集合可以直接通过路径<code>/proc/PID/fd/</code>访问，其中PID是进程标识符。<code>/proc/PID/fd/0</code>是 stdin，<code>/proc/PID/fd/1</code>是 stdout，<code>/proc/PID/fd/2</code>是 stderr。任何运行中的进程也可以通过<code>/prec/self/fd</code>和<code>/dev/fd</code>访问自己的文件描述符。<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://en.wikipedia.org/wiki/File_descriptor">[1]</span></a></sup></p>
 </blockquote>
 <p>可以得到如下信息：</p>
 <ul>
@@ -437,23 +417,22 @@ aria-label="https://en.wikipedia.org/wiki/File_descriptor">[1]</span></a></sup><
 </ul>
 <p>继续用最开始的的代码进行测试，不过这次在<code>return 0</code>之前加上<code>sleep</code>语句，为我们在终端敲命令预留时间。先运行运行测试代码，返回PID12551，所以在终端输入<code>ll /proc/12551/fd</code>返回如下：</p>
 <figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs tap">╭─ ~                                                                       <br>╰─❯ ll /proc/12551/fd<br>总计 0<br>lrwx------<span class="hljs-number"> 1 </span>kznleaf kznleaf<span class="hljs-number"> 64 </span> 7月28日 22:45<span class="hljs-number"> 0 </span>-&gt; /dev/pts/1<br>lrwx------<span class="hljs-number"> 1 </span>kznleaf kznleaf<span class="hljs-number"> 64 </span> 7月28日 22:45<span class="hljs-number"> 1 </span>-&gt; /dev/pts/1<br>lrwx------<span class="hljs-number"> 1 </span>kznleaf kznleaf<span class="hljs-number"> 64 </span> 7月28日 22:45<span class="hljs-number"> 2 </span>-&gt; /dev/pts/1<br>lr-x------<span class="hljs-number"> 1 </span>kznleaf kznleaf<span class="hljs-number"> 64 </span> 7月28日 22:45<span class="hljs-number"> 3 </span>-&gt; /home/kznleaf/Desktop/c-dev/Lock/test.txt<br>lr-x------<span class="hljs-number"> 1 </span>kznleaf kznleaf<span class="hljs-number"> 64 </span> 7月28日 22:45<span class="hljs-number"> 4 </span>-&gt; /home/kznleaf/Desktop/c-dev/Lock/test.txt<br>lr-x------<span class="hljs-number"> 1 </span>kznleaf kznleaf<span class="hljs-number"> 64 </span> 7月28日 22:45<span class="hljs-number"> 5 </span>-&gt; /home/kznleaf/Desktop/c-dev/Lock/test.txt<br></code></pre></td></tr></table></figure>
+
 <p>这里有几个有趣的点：</p>
 <ul>
 <li>0~5就是文件描述符，没什么可说的</li>
-<li><code>lr-x------</code>是什么？
-<ul>
+<li><code>lr-x------</code>是什么？<ul>
 <li><code>l</code>指的是这是一个符号链接文件</li>
 <li><code>r-x</code>指该文件的所有者（user）有读和执行的权限，这很好理解，毕竟我们调用的open操作不会写入任何信息</li>
 <li><code>------</code>不是连接线，而是指同组用户和其他用户都没有任何权限。<strong>这也印证了文件描述符是进程私有的</strong>。</li>
-</ul></li>
+</ul>
+</li>
 <li>对于open调用，每个调用产生的文件描述符（<code>/proc/&lt;pid&gt;/fd/文件描述符编号</code>）都是一个符号链接，指向的都是<code>test.txt</code>这个文件。</li>
 </ul>
 <p>总结：系统调用<code>open</code>会被分配文件描述符，同时产生一个进程私有的符号链接文件，这个文件指向的就是要打开的目标文件。</p>
-<h2 id="inode">⭐inode⭐</h2>
-<p>比较重要的内容</p>
-<h3 id="什么是inode">什么是inode</h3>
-<p>inode是 index node 的缩写，也就是“索引节点”。什么的索引？</p>
-<p>文件数据都储存在"块(Block)"中。除此之外，我们还必须储存文件的元信息，比如文件的创建者、文件的创建日期、文件的大小等等。这些到元信息是由系统创建的，为方便系统使用而生，不属于文件数据的一部分，所以我们得另外再找一个地方储存它们。</p>
+<h2 id="⭐inode⭐"><a href="#⭐inode⭐" class="headerlink" title="⭐inode⭐"></a>⭐inode⭐</h2><p>比较重要的内容</p>
+<h3 id="什么是inode"><a href="#什么是inode" class="headerlink" title="什么是inode"></a>什么是inode</h3><p>inode是 index node 的缩写，也就是“索引节点”。什么的索引？</p>
+<p>文件数据都储存在”块(Block)”中。除此之外，我们还必须储存文件的元信息，比如文件的创建者、文件的创建日期、文件的大小等等。这些到元信息是由系统创建的，为方便系统使用而生，不属于文件数据的一部分，所以我们得另外再找一个地方储存它们。</p>
 <p>文件系统通常使用<code>inode</code>结构来储存这些数据块的元信息。Linux系统下，保存的元信息包括但不限于：</p>
 <ul>
 <li>文件名</li>
@@ -463,51 +442,36 @@ aria-label="https://en.wikipedia.org/wiki/File_descriptor">[1]</span></a></sup><
 <li>访问、修改、变更、创建时间</li>
 <li>inode还保存了指向文件数据块的一个或多个指针，用于访问文件数据</li>
 </ul>
-<h3 id="什么是inode-number">什么是inode number</h3>
-<p>inode number，或者“inode编号”“inode号码”，说的都是一个东西。</p>
-<p>每个文件都与一个 inode 相关联，许多个inode就构成了<strong>inode
-表</strong>，inode表是系统级别的、<strong>所有进程共享的结构</strong>，位于内存中，由内核统一维护和管理，记录了被使用的inode信息。<strong>为了快速访问inode表中记录的inode信息，就需要为这个表加一个索引，也就是inode编号</strong>。</p>
+<h3 id="什么是inode-number"><a href="#什么是inode-number" class="headerlink" title="什么是inode number"></a>什么是inode number</h3><p>inode number，或者“inode编号”“inode号码”，说的都是一个东西。</p>
+<p>每个文件都与一个 inode 相关联，许多个inode就构成了<strong>inode 表</strong>，inode表是系统级别的、<strong>所有进程共享的结构</strong>，位于内存中，由内核统一维护和管理，记录了被使用的inode信息。<strong>为了快速访问inode表中记录的inode信息，就需要为这个表加一个索引，也就是inode编号</strong>。</p>
 <p>既然inode表是由内核维护和管理了，那么有了这个索引，内核的文件系统驱动程序就可以通过inode编号快速访问inode信息。</p>
-<h3 id="inode和数据块的关系">inode和数据块的关系</h3>
-<p>每个文件都有一个对应的inode。</p>
+<h3 id="inode和数据块的关系"><a href="#inode和数据块的关系" class="headerlink" title="inode和数据块的关系"></a>inode和数据块的关系</h3><p>每个文件都有一个对应的inode。</p>
 <p>访问磁盘中的文件之前，必须先找到这个文件的inode，才能访问文件所在数据块的具体信息。</p>
 <p><strong>那么，inode是怎么记录数据块的位置的</strong>？</p>
-<p>一种简单的情形是在 inode
-中有一个或多个直接指针（代表磁盘地址）。每个指针指向属于该文件的一个磁盘块。所以，拿到inode也就是拿到了文件的磁盘地址。</p>
+<p>一种简单的情形是在 inode 中有一个或多个直接指针（代表磁盘地址）。每个指针指向属于该文件的一个磁盘块。所以，拿到inode也就是拿到了文件的磁盘地址。</p>
 <p>然而，这种方法有局限：例如，如果你想要一个非常大的文件（例如，大于块的大小乘以直接指针数），那就不走运了，这时就需要在inode引入新的结构——多级索引。</p>
 <p><strong>多级索引</strong></p>
 <p>inode中不仅由直接指向数据块的<strong>直接指针</strong>，还有指向间接块的<strong>间接指针</strong>。所谓“间接块”，指的就是磁盘中专门存储指针的块，间接块的每个指针指向数据块的地址。</p>
 <p>如果文件的大小超过了直接指针能处理的范畴，那么文件系统就会分配一个间接块，并且设置间接指针指向它。间接指针的访问顺序是：<code>间接指针 -&gt; 间接块 -&gt; 许多数据块</code></p>
-<p>如果想进一步扩容，可以引入<strong>双重间接指针</strong>：<code>双重间接指针 -&gt; 许多间接块 -&gt; 更多的数据块</code>。假如一个数据块是4KB，一个指针占用4个字节，那么一个间接块可以保存1024个指针，<strong>仅仅一个双重间接指针就可以带来额外
-4GB 的寻址空间</strong>，非常强大。</p>
-<h3 id="inode节点的大小">inode节点的大小</h3>
-<h3 id="inode编号和文件名的关系">inode编号和文件名的关系</h3>
-<p>前面提到过，在目录中的每一个目录项都是<code>文件名 - inode编号</code>的一堆数据，那么文件名和inode的关系是什么？</p>
+<p>如果想进一步扩容，可以引入<strong>双重间接指针</strong>：<code>双重间接指针 -&gt; 许多间接块 -&gt; 更多的数据块</code>。假如一个数据块是4KB，一个指针占用4个字节，那么一个间接块可以保存1024个指针，<strong>仅仅一个双重间接指针就可以带来额外 4GB 的寻址空间</strong>，非常强大。</p>
+<h3 id="inode节点的大小"><a href="#inode节点的大小" class="headerlink" title="inode节点的大小"></a>inode节点的大小</h3><h3 id="inode编号和文件名的关系"><a href="#inode编号和文件名的关系" class="headerlink" title="inode编号和文件名的关系"></a>inode编号和文件名的关系</h3><p>前面提到过，在目录中的每一个目录项都是<code>文件名 - inode编号</code>的一堆数据，那么文件名和inode的关系是什么？</p>
 <blockquote>
-<p>通常情况下，无法将打开的文件映射到用于打开该文件的文件名。<strong>当程序打开文件时，操作系统会将文件名转换为
-inode 编号，然后丢弃该文件名</strong>。</p>
-<p>一些操作系统会维护一些额外的信息，以加快此操作的运行速度。例如，在Linux虚拟文件系统(VFS)
-中，目录项缓存（也称为 dentry 或
-dcache）是内核用来加速文件系统操作的缓存条目，它们将目录链接的信息存储在RAM中。<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span
-class="hint--top hint--rounded"
-aria-label="https://en.wikipedia.org/wiki/Inode">[2]</span></a></sup></p>
+<p>通常情况下，无法将打开的文件映射到用于打开该文件的文件名。<strong>当程序打开文件时，操作系统会将文件名转换为 inode 编号，然后丢弃该文件名</strong>。</p>
+<p>一些操作系统会维护一些额外的信息，以加快此操作的运行速度。例如，在Linux虚拟文件系统(VFS) 中，目录项缓存（也称为 dentry 或 dcache）是内核用来加速文件系统操作的缓存条目，它们将目录链接的信息存储在RAM中。<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://en.wikipedia.org/wiki/Inode">[2]</span></a></sup></p>
 </blockquote>
 <p>inode的这一特性允许我们走到不关闭进程的情况下对进程使用的文件进行更新。更新会创建新的inode，并且把原来的文件名对应的inode重定向到新的inode，此后新的进程会使用新的文件，而运行中的进程使用的仍然是原来的inode，实现对进程透明的替换操作。当旧的inode没有被任何进程使用，并且引用计数降为0时，就会自动被系统回收。这也是Linux系统的一大优势。</p>
-<h2 id="创建文件-link">创建文件-link</h2>
-<p>说完inode旧很好理解链接了。</p>
-<h3 id="硬链接">硬链接</h3>
-<p>创建一个文件时，实际上做了两件事:</p>
+<h2 id="创建文件-link"><a href="#创建文件-link" class="headerlink" title="创建文件-link"></a>创建文件-link</h2><p>说完inode旧很好理解链接了。</p>
+<h3 id="硬链接"><a href="#硬链接" class="headerlink" title="硬链接"></a>硬链接</h3><p>创建一个文件时，实际上做了两件事:</p>
 <ul>
 <li>首先，要构建一个结构（inode），它将跟踪几乎所有关于文件的信息，包括其大小、文件块在磁盘上的位置等等。</li>
 <li>其次，将人类可读的文件名链接到该文件，并将该链接放入目录中。</li>
 </ul>
 <p>在创建文件的硬链接之后，在文件系统中，原有文件名（file）和新创建的文件名（file2）之间没有区别。实际上，<strong>它们都只是指向文件底层元数据的链接</strong>，可以在<strong>同一个inode编号</strong>中找到。</p>
-<p>引用计数（有时称为链接计数，link
-count）允许文件系统跟踪有多少不同的文件名已硬链接到这个inode。如果引用计数为0，文件系统才会释放inode和相关的数据。真正删除该文件。</p>
-<h3 id="软链接">软链接</h3>
-<p>符号链接 symbolic link</p>
+<p>引用计数（有时称为链接计数，link count）允许文件系统跟踪有多少不同的文件名已硬链接到这个inode。如果引用计数为0，文件系统才会释放inode和相关的数据。真正删除该文件。</p>
+<h3 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h3><p>符号链接 symbolic link</p>
 <p>硬链接只适用于文件，不能用于目录。因此人们又发明了软链接</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ln</span> -s &lt;原名称&gt; &lt;符号链接名称&gt;<br></code></pre></td></tr></table></figure>
+
 <p>符号链接和硬链接完全不同，它是文件系统继文件、目录之后的第三种类型。在<code>ls -l</code>的信息中：</p>
 <ul>
 <li><code>-</code>代表文件</li>
@@ -516,91 +480,65 @@ count）允许文件系统跟踪有多少不同的文件名已硬链接到这个
 </ul>
 <p>软链接指向文件的路径名，路径名越长，链接文件越大。</p>
 <p><strong>悬空引用</strong>：删除原始文件会导致软链接指向不存在的路径名。</p>
-<h2
-id="文件描述符文件表和inode表的关系">文件描述符、文件表和inode表的关系</h2>
-<p>下面这张图来自
-wiki，描述了<strong>单个进程</strong>的文件描述符、文件表和inode表的关系</p>
-<p><img src="https://s21.ax1x.com/2025/07/28/pVYdwvD.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="文件描述符、文件表和inode表的关系"><a href="#文件描述符、文件表和inode表的关系" class="headerlink" title="文件描述符、文件表和inode表的关系"></a>文件描述符、文件表和inode表的关系</h2><p>下面这张图来自 wiki，描述了<strong>单个进程</strong>的文件描述符、文件表和inode表的关系</p>
+<p><img src="https://s21.ax1x.com/2025/07/28/pVYdwvD.png" srcset="/img/loading.gif" lazyload></p>
 <p>文件描述符 3 没有指向任何条目，表示它已经被关闭了。</p>
-<h2 id="读写磁盘">读写磁盘</h2>
-<h3 id="读取文件无缓存">读取文件（无缓存）</h3>
-<p>有了前面的一大堆铺垫，终于可以把这个问题说清楚了。</p>
+<h2 id="读写磁盘"><a href="#读写磁盘" class="headerlink" title="读写磁盘"></a>读写磁盘</h2><h3 id="读取文件（无缓存）"><a href="#读取文件（无缓存）" class="headerlink" title="读取文件（无缓存）"></a>读取文件（无缓存）</h3><p>有了前面的一大堆铺垫，终于可以把这个问题说清楚了。</p>
 <p>举个例子，加入我们要访问<code>/home/file.txt</code>这个文件。时刻记住：<strong>只有拿到目录的<code>inode</code>节点，才能访问它的目录项</strong>。</p>
-<ol type="1">
+<ol>
 <li>根目录<code>/</code>的inode编号是实现清楚的，一般固定为2，所以系统可以直接拿到根目录的inode</li>
 <li>读取<code>/</code>的数据块，也就是读取目录项，根据文件名找到<code>home</code>，进而得到inode编号</li>
 <li>读取<code>/home/</code>路径下的目录项，找到<code>file.txt</code>的inode编号，至此终于拿到目标文件的inode！</li>
 <li>inode中记录了<code>file.txt</code>这个文件在磁盘中的地址指针，所以可以定位磁盘的具体位置，开始读取数据块内容了。</li>
 <li>读取操作也会更新inode的信息，比如最后一次访问时间</li>
 </ol>
-<h3 id="写入文件无缓冲">写入文件（无缓冲）</h3>
-<p>创建文件涉及到一起列操作：读取inode的bitmap（bitmap记录了数据块的占用情况），更新bitmap，更新该文件的inode，更新文件所在的目录，更新文件所在的目录的inode。创建和写入文件的时间线：</p>
-<p><img src="https://s21.ax1x.com/2025/07/31/pVtNKSS.png" srcset="/img/loading.gif" lazyload /></p>
-<h3 id="cahe-and-buffering">cahe and buffering</h3>
-<p><strong>cache：缓存</strong>，这里主要指目录项缓存<code>dentry</code></p>
+<h3 id="写入文件（无缓冲）"><a href="#写入文件（无缓冲）" class="headerlink" title="写入文件（无缓冲）"></a>写入文件（无缓冲）</h3><p>创建文件涉及到一起列操作：读取inode的bitmap（bitmap记录了数据块的占用情况），更新bitmap，更新该文件的inode，更新文件所在的目录，更新文件所在的目录的inode。创建和写入文件的时间线：</p>
+<p><img src="https://s21.ax1x.com/2025/07/31/pVtNKSS.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="cahe-and-buffering"><a href="#cahe-and-buffering" class="headerlink" title="cahe and buffering"></a>cahe and buffering</h3><p><strong>cache：缓存</strong>，这里主要指目录项缓存<code>dentry</code></p>
 <p>如上面的例子所示，读取和写入文件的成本是非常大的，而且路径越长，检索文件的开销就越大。为了提高性能，大部分的文件系统都会使用DRAM，将<code>路径 -&gt; inode</code>的映射缓存在内存中，这样下次访问就不需要从根目录一层一层往下找了。</p>
 <p>目录项缓存对读取操作的提升是非常明显的，甚至shell的自动补全功能也受益于dentry。</p>
 <p><strong>buffering：缓冲</strong>，讨论一下写缓冲</p>
-<p>Write buffering
-是指写入操作时，数据先写入内存中的缓存区域（而不是直接写入磁盘），延迟执行，以提高性能，减少
-I/O
-次数。通过延迟写入，文件系统可以积攒一批写入操作，同时执行，还可以避免无效操作，比如如果一个文件的inode位图被更新了两次，那么只会执行最后那一次。</p>
+<p>Write buffering 是指写入操作时，数据先写入内存中的缓存区域（而不是直接写入磁盘），延迟执行，以提高性能，减少 I&#x2F;O 次数。通过延迟写入，文件系统可以积攒一批写入操作，同时执行，还可以避免无效操作，比如如果一个文件的inode位图被更新了两次，那么只会执行最后那一次。</p>
 <p>当然写入缓冲也会带来一些问题，像数据库这种程序，为了避免数据意外丢失，要求立即写入。用C语言来说，这时可以在<code>write</code>命令后紧跟一条<code>fsync</code>，立即写入磁盘，不经过缓存。</p>
-<h2 id="崩溃一致性">崩溃一致性</h2>
-<h3 id="问题提出">问题提出</h3>
-<p>如果出现断电或者系统崩溃，如何更新磁盘？</p>
+<h2 id="崩溃一致性"><a href="#崩溃一致性" class="headerlink" title="崩溃一致性"></a>崩溃一致性</h2><h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>如果出现断电或者系统崩溃，如何更新磁盘？</p>
 <p>先假定一种简单的文件系统结构：</p>
-<p><img src="https://s21.ax1x.com/2025/07/31/pVtdSJ0.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img src="https://s21.ax1x.com/2025/07/31/pVtdSJ0.png" srcset="/img/loading.gif" lazyload></p>
 <p>然后解释一下位图、inode和数据块各自的作用：</p>
 <table>
-
 <thead>
 <tr>
 <th>名词</th>
 <th>含义</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td><strong>数据块（Data Block）</strong></td>
 <td>用于实际存储文件内容的磁盘块</td>
 </tr>
 <tr>
 <td><strong>数据位图（Block Bitmap，B[v2]）</strong></td>
-<td>一个位图，记录哪些数据块是“被使用”的（即 0 代表空闲，1
-代表已占用）</td>
+<td>一个位图，记录哪些数据块是“被使用”的（即 0 代表空闲，1 代表已占用）</td>
 </tr>
 <tr>
 <td><strong>inode（I[v2]）</strong></td>
 <td>包含文件的元信息（文件大小、权限、时间戳）和<strong>指向数据块的地址</strong></td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>完整的写入数据过程需要把数据块、位图和inode都更新一遍。但是这三步不是原子的，如果更新过程中系统崩溃、断电，会出现故障，举一个例子：</p>
 <p>如果位图和数据块都被写入了，但是inode没被写入，那么相当于某个车位被占用了，但是没有记录谁停了这个车。这种inode没写入但是位图已经写入的块被称为<strong>孤儿块</strong>，会造成磁盘空间的永久浪费。</p>
-<h3 id="解决方法">解决方法</h3>
-<ol type="1">
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><ol>
 <li><strong>文件系统检查程序</strong></li>
 </ol>
-<p>代表：<code>fsck</code>命令。fsck（file system consistency check）是
-Unix 和类 Unix
-系统上用于检查文件系统完整性的工具[1]。它类似于Windows和MS-DOS上的CHKDSK。适用于ext2/3/4文件系统，对于
-Btrfs
-这种写时复制系统来说不需要这个命令，因为系统本身已经保证了一致性。</p>
-<p><code>fsck</code>（和类似的方法）有一个更大的、也许更根本的问题：它们太慢了。对于非常大的磁盘卷，扫描整个磁盘，以查找所有已分配的块并读取整个目录树，可能需要几分钟或几小时。随着磁盘容量的增长和RAID的普及，fsck
-的性能变得令人望而却步。</p>
-<hr />
-<ol start="2" type="1">
+<p>代表：<code>fsck</code>命令。fsck（file system consistency check）是 Unix 和类 Unix 系统上用于检查文件系统完整性的工具[1]。它类似于Windows和MS-DOS上的CHKDSK。适用于ext2&#x2F;3&#x2F;4文件系统，对于 Btrfs 这种写时复制系统来说不需要这个命令，因为系统本身已经保证了一致性。</p>
+<p><code>fsck</code>（和类似的方法）有一个更大的、也许更根本的问题：它们太慢了。对于非常大的磁盘卷，扫描整个磁盘，以查找所有已分配的块并读取整个目录树，可能需要几分钟或几小时。随着磁盘容量的增长和RAID的普及，fsck 的性能变得令人望而却步。</p>
+<hr>
+<ol start="2">
 <li><strong>数据日志</strong></li>
 </ol>
-<figure>
-<img src="https://s21.ax1x.com/2025/07/31/pVtwYB4.png" srcset="/img/loading.gif" lazyload
-alt="数据日志示意图" />
-<figcaption aria-hidden="true">数据日志示意图</figcaption>
-</figure>
+<p><img src="https://s21.ax1x.com/2025/07/31/pVtwYB4.png" srcset="/img/loading.gif" lazyload alt="数据日志示意图"></p>
 <p>在更新磁盘内容之前，把要做的事情写入磁盘，也就是日志。这样系统在崩溃后就能准确知道要修复的信息。先写日志，再覆写磁盘。</p>
 <p>首先应该了解磁盘提供的原子性保证：磁盘保证任何512字节的写入都会发生或不发生。<strong>ext3</strong>文件系统的日志工作流程如下：</p>
-<ol type="1">
+<ol>
 <li><strong>日志写入</strong>：将事务的内容（开始块、数据块。元数据块（inode，位图））写入日志，<strong>等待</strong>写入完成。其中事务开始（TxB）告诉我们有关此更新的信息，包括对文件系统即将进行的更新的相关信息</li>
 <li><strong>日志提交</strong>：将事务提交块写入日志，<strong>等待</strong>写入完成，完成则被视为事务已经提交</li>
 <li><strong>加检查点</strong>：将数据和元数据写入磁盘。</li>
@@ -608,54 +546,32 @@ alt="数据日志示意图" />
 <p>在ext4中，整个事务可以一次性写入日志，无需等待，这是因为开始块和结束块中加入了日志内容的校验和，如果校验和不匹配就会丢弃事务。</p>
 <p><strong>日志的空间占用</strong></p>
 <p>日志的大小有限，日志满时，通过重用空间的方式来解决。一旦事务被加检查点，文件系统应释放它在日志中占用的空间，允许重用日志空间。改进后的步骤：</p>
-<ol type="1">
-<li>日志写入：将事务的内容（包括TxB和更新内容）写入日志，等待这些写入完成。</li>
-<li>日志提交：将事务提交块（包括TxE）写入日志，等待写完成，事务被认为已提交（committed）。</li>
-<li>加检查点：将更新内容写入其最终的磁盘位置。</li>
+<ol>
+<li>日志写入：将事务的内容（包括TxB和更新内容）写入日志，等待这些写入完成。 </li>
+<li>日志提交：将事务提交块（包括TxE）写入日志，等待写完成，事务被认为已提交（committed）。 </li>
+<li>加检查点：将更新内容写入其最终的磁盘位置。 </li>
 <li>释放：一段时间后，通过更新日志超级块，在日志中标记该事务为空闲。</li>
 </ol>
-<hr />
-<ol start="3" type="1">
+<hr>
+<ol start="3">
 <li><strong>有序日志</strong></li>
 </ol>
-<figure>
-<img src="https://s21.ax1x.com/2025/07/31/pVtwIv8.png" srcset="/img/loading.gif" lazyload alt="有序日志" />
-<figcaption aria-hidden="true">有序日志</figcaption>
-</figure>
-<p>上面的日志将数据块也写入日志了，同一个数据块要被写入两次，性能比较差。<strong>有序日志</strong>或者<strong>元数据日志</strong>没有把用户数据也写入日志，而是先把数据块写入最终位置，然后再记录日志。
-（目录也属于元数据，会被保存到这里）</p>
+<p><img src="https://s21.ax1x.com/2025/07/31/pVtwIv8.png" srcset="/img/loading.gif" lazyload alt="有序日志"></p>
+<p>上面的日志将数据块也写入日志了，同一个数据块要被写入两次，性能比较差。<strong>有序日志</strong>或者<strong>元数据日志</strong>没有把用户数据也写入日志，而是先把数据块写入最终位置，然后再记录日志。<br>（目录也属于元数据，会被保存到这里）</p>
 <p>Linux ext3的有序日志：</p>
-<ol type="1">
-<li>数据写入：将数据写入最终位置，等待完成（等待是可选的，详见下文）。</li>
-<li>日志元数据写入：将开始块和元数据写入日志，等待写入完成。</li>
-<li>日志提交：将事务提交块（包括<code>TxE</code>）写入日志，等待写完成，现在认为事务（包
-括数据）已提交（<code>committed</code>）。</li>
-<li>加检查点元数据：将元数据更新的内容写入文件系统中的最终位置。</li>
+<ol>
+<li>数据写入：将数据写入最终位置，等待完成（等待是可选的，详见下文）。 </li>
+<li>日志元数据写入：将开始块和元数据写入日志，等待写入完成。 </li>
+<li>日志提交：将事务提交块（包括<code>TxE</code>）写入日志，等待写完成，现在认为事务（包<br>括数据）已提交（<code>committed</code>）。 </li>
+<li>加检查点元数据：将元数据更新的内容写入文件系统中的最终位置。 </li>
 <li>释放：稍后，在日志超级块中将事务标记为空闲。</li>
 </ol>
 <p>（只要保证提交事务之前完成步骤一和步骤二即可，不一定非要等步骤一完成之后才开始写入日志）</p>
 <p>有序日志的核心思想：<strong>先写入被指对象，再写入指针对象</strong></p>
 <p>除了以上几种解决方案之外，现代文件系统还有基于写时复制之类的更高级的思路，这里先不说了。</p>
-<h2 id="参考链接">参考链接</h2>
-<section class="footnotes">
-<div class="footnote-list">
-<ol>
-<li>
-<span id="fn:1"
-class="footnote-text"><span>https://en.wikipedia.org/wiki/File_descriptor
-<a href="#fnref:1" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
-</li>
-<li>
-<span id="fn:2"
-class="footnote-text"><span>https://en.wikipedia.org/wiki/Inode
-<a href="#fnref:2" rev="footnote" class="footnote-backref">
-↩︎</a></span></span>
-</li>
-</ol>
-</div>
-</section>
-
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/File_descriptor">https://en.wikipedia.org/wiki/File_descriptor</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Inode">https://en.wikipedia.org/wiki/Inode</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
                 
               </div>
             

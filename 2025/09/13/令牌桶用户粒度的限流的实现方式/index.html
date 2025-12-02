@@ -340,8 +340,8 @@
                 
                 <p>复盘一下面试中遇到的场景题，给出从方案设计到压测的完整解决方案。</p>
 <span id="more"></span>
-<h2 id="前言">前言</h2>
-<p>昨天面试遇到场景题：</p>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>昨天面试遇到场景题：</p>
 <blockquote>
 <p>Q：用户中可能混入很多机器人，向服务器发送大量请求。怎么在用户层面进行限流？</p>
 </blockquote>
@@ -352,43 +352,39 @@
 <p>Q：具体怎么实现这样的令牌桶？详细说一下。</p>
 </blockquote>
 <p>当时没答上来，现在复盘一下，给出一个从设计到测试的完整解决方案。</p>
-<h2 id="令牌桶的状态">令牌桶的状态</h2>
-<ul>
+<h2 id="令牌桶的状态"><a href="#令牌桶的状态" class="headerlink" title="令牌桶的状态"></a>令牌桶的状态</h2><ul>
 <li><code>capacity</code><strong>桶的最大容量</strong>：用来限制令牌桶对并发的容忍度，容量越大代表允许的并发越大。</li>
 <li><code>rate</code><strong>令牌生成速率</strong>：每毫秒生成多少个令牌，后面结合时间戳可以实现访问时新增令牌的目的。</li>
 <li><code>tokens</code><strong>当前令牌数</strong>：当前令牌桶中还剩下多少令牌。</li>
 <li><code>last_refill_timestamp</code><strong>上次刷新时间</strong>：上一次为桶里添加令牌时的时间戳，非常重要，借助这个参数就可以实现自动补充令牌。</li>
 </ul>
-<h2 id="思路">思路</h2>
-<h3 id="令牌桶">令牌桶？</h3>
-<p>一般来说可以用下面这张图来描述令牌桶：</p>
-<p><img src="https://s21.ax1x.com/2025/09/13/pVWR10A.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="令牌桶？"><a href="#令牌桶？" class="headerlink" title="令牌桶？"></a>令牌桶？</h3><p>一般来说可以用下面这张图来描述令牌桶：</p>
+<p><img src="https://s21.ax1x.com/2025/09/13/pVWR10A.png" srcset="/img/loading.gif" lazyload></p>
 <p>这张图确实很形象，令牌恒定流入令牌桶，而输入请求只有拿到令牌之后才能输出，否则丢弃，但是容易让人产生误解：令牌必须由第三方输入吗？如果是针对全系统所有请求的限流的话，那很简单，系统开一个后台线程只管输入就行了。但是如果精确到<strong>用户层面</strong>呢？有一种更好的解决方法，就是为每个用户都维护一个令牌桶，而这个令牌桶内的令牌数量的更新采用了类似滑动窗口的处理思路：每次用户请求到达时自行刷新令牌数，然后再判断够不够用，而<strong>不需要引入第三方来刷新令牌数量</strong>。</p>
-<h3 id="细节">细节</h3>
-<p>一方面，使用Redis的<strong>Hash</strong>结构维护用户的令牌桶的状态：</p>
+<h3 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h3><p>一方面，使用Redis的<strong>Hash</strong>结构维护用户的令牌桶的状态：</p>
 <ul>
 <li>Key：包含用户ID的字符串，比如<code>rate_limit:&#123;userId&#125;</code></li>
-<li>字段：
-<ul>
+<li>字段：<ul>
 <li><code>tokens</code>：当前令牌数</li>
 <li><code>last_refill_timestamp</code>：上次刷新的时间</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <p>当服务器接受到请求时，先去redis检查该用户令牌桶，根据这次访问和上一次访问的时间间隔计算出来新增的令牌数量，然后再判断更新后的令牌数量够不够用，如果够用，就返回1，如果不够用就返回0。</p>
 <p>另一方面，【读-判断-刷新】这三个操作不是原子的，应该使用<strong>Lua脚本</strong>，让令牌桶的刷新逻辑在脚本中原子性完成。Lua脚本中用到的几个命令：</p>
 <ul>
-<li><code>HGETALL key</code>
-<ul>
+<li><code>HGETALL key</code> <ul>
 <li>返回一个hash的所有字段及键值</li>
-</ul></li>
-<li><code>HSET key field value [ field value ... ]</code>
-<ul>
-<li>创建/修改Hash的内容</li>
-</ul></li>
-<li><code>expire</code>
-<ul>
+</ul>
+</li>
+<li><code>HSET key field value [ field value ... ]</code><ul>
+<li>创建&#x2F;修改Hash的内容</li>
+</ul>
+</li>
+<li><code>expire</code><ul>
 <li>设置过期时间</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <p>Lua脚本执行流程如下：</p>
 
@@ -408,35 +404,39 @@ graph TD
     H --> J["结束"]
     I --> J
 </code>
-</pre>
+</pre> 
+
 <p>根据流程图编码：</p>
 <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-comment">-- TokenBucket.lua</span><br><br><span class="hljs-comment">-- KEYS[1]: 令牌桶的key, 例如 &quot;rate_limit:user123&quot;</span><br><span class="hljs-comment">-- ARGV[1]: 令牌桶容量 (capacity)</span><br><span class="hljs-comment">-- ARGV[2]: 令牌生成速率 (rate, 个/毫秒)</span><br><span class="hljs-comment">-- ARGV[3]: 当前时间戳 (now, 毫秒)</span><br><span class="hljs-comment">-- ARGV[4]: 本次请求需要消费的令牌数 (通常是1)</span><br><br><span class="hljs-keyword">local</span> capacity = <span class="hljs-built_in">tonumber</span>(ARGV[<span class="hljs-number">1</span>])<br><span class="hljs-keyword">local</span> rate = <span class="hljs-built_in">tonumber</span>(ARGV[<span class="hljs-number">2</span>])<br><span class="hljs-keyword">local</span> now = <span class="hljs-built_in">tonumber</span>(ARGV[<span class="hljs-number">3</span>])<br><span class="hljs-keyword">local</span> requested = <span class="hljs-built_in">tonumber</span>(ARGV[<span class="hljs-number">4</span>])<br><br><span class="hljs-keyword">local</span> bucket = redis.call(<span class="hljs-string">&#x27;hgetall&#x27;</span>, KEYS[<span class="hljs-number">1</span>])<br><span class="hljs-keyword">local</span> last_tokens<br><span class="hljs-keyword">local</span> last_refill_timestamp<br><br><span class="hljs-comment">-- 如果桶不存在，则初始化。#用于读取长度</span><br><span class="hljs-keyword">if</span> #bucket == <span class="hljs-number">0</span> <span class="hljs-keyword">then</span><br>    last_tokens = capacity<br>    last_refill_timestamp = now<br><span class="hljs-keyword">else</span><br>    <span class="hljs-comment">-- Redis返回的hgetall是[key1, val1, key2, val2...]</span><br>    <span class="hljs-comment">-- 需要手动解析</span><br>    <span class="hljs-keyword">for</span> i = <span class="hljs-number">1</span>, #bucket, <span class="hljs-number">2</span> <span class="hljs-keyword">do</span><br>        <span class="hljs-keyword">if</span> bucket[i] == <span class="hljs-string">&#x27;tokens&#x27;</span> <span class="hljs-keyword">then</span><br>            last_tokens = <span class="hljs-built_in">tonumber</span>(bucket[i+<span class="hljs-number">1</span>])<br>        <span class="hljs-keyword">elseif</span> bucket[i] == <span class="hljs-string">&#x27;timestamp&#x27;</span> <span class="hljs-keyword">then</span><br>            last_refill_timestamp = <span class="hljs-built_in">tonumber</span>(bucket[i+<span class="hljs-number">1</span>])<br>        <span class="hljs-keyword">end</span><br>    <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment">-- 计算需要补充的令牌</span><br><span class="hljs-keyword">local</span> delta_time = <span class="hljs-built_in">math</span>.<span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>, now - last_refill_timestamp)<br><span class="hljs-keyword">local</span> new_tokens = delta_time * rate<br><span class="hljs-keyword">local</span> current_tokens = <span class="hljs-built_in">math</span>.<span class="hljs-built_in">min</span>(capacity, last_tokens + new_tokens)<br><br><span class="hljs-comment">-- 判断令牌是否充足</span><br><span class="hljs-keyword">if</span> current_tokens &gt;= requested <span class="hljs-keyword">then</span><br>    current_tokens = current_tokens - requested<br>    <span class="hljs-comment">-- 更新桶的状态</span><br>    redis.call(<span class="hljs-string">&#x27;hset&#x27;</span>, KEYS[<span class="hljs-number">1</span>], <span class="hljs-string">&#x27;tokens&#x27;</span>, current_tokens, <span class="hljs-string">&#x27;timestamp&#x27;</span>, now)<br>    <span class="hljs-comment">-- 设置一个过期时间，自动清理不活跃用户的key</span><br>    redis.call(<span class="hljs-string">&#x27;expire&#x27;</span>, KEYS[<span class="hljs-number">1</span>], <span class="hljs-number">120</span>) <span class="hljs-comment">-- 例如2分钟后过期</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> <span class="hljs-comment">-- 1表示成功</span><br><span class="hljs-keyword">else</span><br>    <span class="hljs-comment">-- 即使令牌不足，也要更新状态，否则令牌会一直不刷新</span><br>    redis.call(<span class="hljs-string">&#x27;hset&#x27;</span>, KEYS[<span class="hljs-number">1</span>], <span class="hljs-string">&#x27;tokens&#x27;</span>, current_tokens, <span class="hljs-string">&#x27;timestamp&#x27;</span>, now)<br>    redis.call(<span class="hljs-string">&#x27;expire&#x27;</span>, KEYS[<span class="hljs-number">1</span>], <span class="hljs-number">120</span>)<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span> <span class="hljs-comment">-- 0表示失败</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-<h2 id="java代码实现">Java代码实现</h2>
-<p>先在虚拟机启动一个docker valkey容器：</p>
+
+<h2 id="Java代码实现"><a href="#Java代码实现" class="headerlink" title="Java代码实现"></a>Java代码实现</h2><p>先在虚拟机启动一个docker valkey容器：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -d \<br>--name valkey \<br>--network leaf \<br>-p 6379:6379 \<br>valkey/valkey valkey-server --save 60 1 --loglevel warning<br></code></pre></td></tr></table></figure>
+
 <p>向springboot工程引入redis依赖：（valkey也可以用redis的依赖）</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
 <p>配置文件：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8080</span><br><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">datasource:</span><br>    <span class="hljs-attr">url:</span> <span class="hljs-string">jdbc:mysql://192.168.199.131:3306/hm-cart?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;serverTimezone=Asia/Shanghai</span><br>    <span class="hljs-attr">driver-class-name:</span> <span class="hljs-string">com.mysql.cj.jdbc.Driver</span><br>    <span class="hljs-attr">username:</span> <span class="hljs-string">root</span><br>    <span class="hljs-attr">password:</span> <span class="hljs-string">xxx</span><br>  <span class="hljs-attr">data:</span><br>    <span class="hljs-attr">redis:</span><br>      <span class="hljs-attr">port:</span> <span class="hljs-number">6379</span><br>      <span class="hljs-attr">host:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.199</span><span class="hljs-number">.131</span><br></code></pre></td></tr></table></figure>
+
+
 <p>编写单元测试，确认valkey连接无误。然后将Lua脚本加载进工程，考虑到代码的复用性，可以把这一部分抽取成一个Bean：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TokenBucketConfig</span> &#123;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> DefaultRedisScript&lt;Long&gt; <span class="hljs-title function_">tokenBucketLuaScript</span><span class="hljs-params">()</span> &#123;<br>        DefaultRedisScript&lt;Long&gt; luaScript = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DefaultRedisScript</span>&lt;&gt;();<br>        luaScript.setLocation(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassPathResource</span>(<span class="hljs-string">&quot;TokenBucket.lua&quot;</span>));<br>        luaScript.setResultType(Long.class);<br>        <span class="hljs-keyword">return</span> luaScript;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">bucketPrefix</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;rate_limit:&quot;</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">double</span> <span class="hljs-variable">capacity</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">double</span> <span class="hljs-variable">ratePerMillisecond</span> <span class="hljs-operator">=</span> <span class="hljs-number">10.0</span> / (<span class="hljs-number">1000.0</span>); <span class="hljs-comment">// 每秒钟十次请求</span><br><br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>然后在Controller注入该bean，调用<code>stringRedisTemplate</code>执行即可。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@RequestMapping(&quot;/web&quot;)</span><br><span class="hljs-meta">@RequiredArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebController</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> UserMapper userMapper;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> StringRedisTemplate stringRedisTemplate;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> DefaultRedisScript&lt;Long&gt; tokenBucketLuaScript;<br><br>    <span class="hljs-meta">@GetMapping(&quot;/token/&#123;userId&#125;&quot;)</span><br>    <span class="hljs-keyword">public</span> ResponseEntity&lt;String&gt; <span class="hljs-title function_">isAllowed</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable(name = &quot;userId&quot;)</span> String userId)</span> &#123;<br>        <span class="hljs-type">long</span> <span class="hljs-variable">now</span> <span class="hljs-operator">=</span> System.currentTimeMillis(); <span class="hljs-comment">// 当前时间戳</span><br>        <span class="hljs-type">Long</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> stringRedisTemplate.execute(<br>                tokenBucketLuaScript,<br>                List.of(bucketPrefix + userId), <span class="hljs-comment">// KEYS</span><br>                String.valueOf(capacity),       <span class="hljs-comment">// 容量</span><br>                String.valueOf(ratePerMillisecond), <span class="hljs-comment">// 令牌增长速率</span><br>                String.valueOf(now),               <span class="hljs-comment">// 当前时间戳</span><br>                String.valueOf(<span class="hljs-number">1</span>)                  <span class="hljs-comment">// 请求数量</span><br>        );<br><br>        <span class="hljs-keyword">if</span> (result == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> ResponseEntity.status(<span class="hljs-number">200</span>).body(<span class="hljs-string">&quot;OK&quot;</span>);<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> ResponseEntity.status(<span class="hljs-number">429</span>).body(<span class="hljs-string">&quot;错误&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="压测">压测</h2>
-<p>设定令牌生成速率为10个/秒；</p>
+
+<h2 id="压测"><a href="#压测" class="headerlink" title="压测"></a>压测</h2><p>设定令牌生成速率为10个&#x2F;秒；</p>
 <p>jmeter配置：</p>
 <ul>
 <li>Thread Group 线程数设置为 40，预热时间 1s；</li>
-<li>Constant Throught Timer
-将目标吞吐量设置为<code>1200.0</code>每分钟（也就是
-20/sec），所以有一半的请求会被限流服务拒绝；</li>
+<li>Constant Throught Timer 将目标吞吐量设置为<code>1200.0</code>每分钟（也就是 20&#x2F;sec），所以有一半的请求会被限流服务拒绝；</li>
 <li>HTTP 为 GET 请求，发往 8080 端口；</li>
 </ul>
-<p>共发送一万次请求，结果如下，全程吞吐量稳定在20/sec，错误率为50%，符合预期。</p>
-<p><img src="https://s21.ax1x.com/2025/09/13/pVWhU1K.png" srcset="/img/loading.gif" lazyload /></p>
+<p>共发送一万次请求，结果如下，全程吞吐量稳定在20&#x2F;sec，错误率为50%，符合预期。</p>
+<p><img src="https://s21.ax1x.com/2025/09/13/pVWhU1K.png" srcset="/img/loading.gif" lazyload></p>
 <p>如果在运行期间查看hash的字段值，会看到：</p>
-<p><img src="https://s21.ax1x.com/2025/09/13/pVWhjuF.png" srcset="/img/loading.gif" lazyload /></p>
-<p>令牌数一直处于被榨干的状态...</p>
+<p><img src="https://s21.ax1x.com/2025/09/13/pVWhjuF.png" srcset="/img/loading.gif" lazyload></p>
+<p>令牌数一直处于被榨干的状态…</p>
 
                 
               </div>

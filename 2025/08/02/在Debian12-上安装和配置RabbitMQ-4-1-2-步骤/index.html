@@ -23,12 +23,12 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="透明代理 rabbitmq.com在国内的访问速度较慢，为了保证后续的安装能够顺利进行，建议先配置透明代理（全局代理）。一开始我安装的是 Clash-Verge，但是不知道为什么在 Clash 内开启系统代理之后，系统的流量并不会经过Clash，所以后来换成了v2ray。 curl 下一步要用curl直接拉取安装脚本，所以要确保curl已经安装完成 12sudo apt updates">
+    <meta name="description" content="透明代理rabbitmq.com在国内的访问速度较慢，为了保证后续的安装能够顺利进行，建议先配置透明代理（全局代理）。一开始我安装的是 Clash-Verge，但是不知道为什么在 Clash 内开启系统代理之后，系统的流量并不会经过Clash，所以后来换成了v2ray。 curl下一步要用curl直接拉取安装脚本，所以要确保curl已经安装完成 12sudo apt updatesudo apt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Debian12 虚拟机安装 RabbitMQ 4.1.2 详细步骤">
 <meta property="og:url" content="https://kznleaf.top/2025/08/02/%E5%9C%A8Debian12-%E4%B8%8A%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AERabbitMQ-4-1-2-%E6%AD%A5%E9%AA%A4/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
-<meta property="og:description" content="透明代理 rabbitmq.com在国内的访问速度较慢，为了保证后续的安装能够顺利进行，建议先配置透明代理（全局代理）。一开始我安装的是 Clash-Verge，但是不知道为什么在 Clash 内开启系统代理之后，系统的流量并不会经过Clash，所以后来换成了v2ray。 curl 下一步要用curl直接拉取安装脚本，所以要确保curl已经安装完成 12sudo apt updates">
+<meta property="og:description" content="透明代理rabbitmq.com在国内的访问速度较慢，为了保证后续的安装能够顺利进行，建议先配置透明代理（全局代理）。一开始我安装的是 Clash-Verge，但是不知道为什么在 Clash 内开启系统代理之后，系统的流量并不会经过Clash，所以后来换成了v2ray。 curl下一步要用curl直接拉取安装脚本，所以要确保curl已经安装完成 12sudo apt updatesudo apt">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s21.ax1x.com/2025/08/02/pVNybTO.png">
 <meta property="article:published_time" content="2025-08-02T11:44:27.000Z">
@@ -274,7 +274,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          942 字
+          938 字
         
       </span>
     
@@ -336,59 +336,45 @@
             
               <div class="markdown-body">
                 
-                <h2 id="透明代理">透明代理</h2>
-<p><code>rabbitmq.com</code>在国内的访问速度较慢，为了保证后续的安装能够顺利进行，建议先配置透明代理（全局代理）。一开始我安装的是
-Clash-Verge，但是不知道为什么在 Clash
-内开启系统代理之后，系统的流量并不会经过Clash，所以后来换成了v2ray。</p>
-<h3 id="curl">curl</h3>
-<p>下一步要用curl直接拉取安装脚本，所以要确保curl已经安装完成</p>
+                <h2 id="透明代理"><a href="#透明代理" class="headerlink" title="透明代理"></a>透明代理</h2><p><code>rabbitmq.com</code>在国内的访问速度较慢，为了保证后续的安装能够顺利进行，建议先配置透明代理（全局代理）。一开始我安装的是 Clash-Verge，但是不知道为什么在 Clash 内开启系统代理之后，系统的流量并不会经过Clash，所以后来换成了v2ray。</p>
+<h3 id="curl"><a href="#curl" class="headerlink" title="curl"></a>curl</h3><p>下一步要用curl直接拉取安装脚本，所以要确保curl已经安装完成</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install curl -y<br></code></pre></td></tr></table></figure>
-<h3 id="v2ray">v2ray</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> -i<br>bash &lt;(curl -Ls https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)<br></code></pre></td></tr></table></figure>
-<h3 id="v2raya">v2rayA</h3>
-<p>先用能够访问 github 的宿主机在<a
-target="_blank" rel="noopener" href="https://github.com/v2rayA/v2rayA/releases">这里</a>下载<code>installer_debian_x64_2.2.6.7.deb</code>，然后拖到虚拟机内的目录下执行</p>
+
+<h3 id="v2ray"><a href="#v2ray" class="headerlink" title="v2ray"></a>v2ray</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> -i<br>bash &lt;(curl -Ls https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)<br></code></pre></td></tr></table></figure>
+
+<h3 id="v2rayA"><a href="#v2rayA" class="headerlink" title="v2rayA"></a>v2rayA</h3><p>先用能够访问 github 的宿主机在<a target="_blank" rel="noopener" href="https://github.com/v2rayA/v2rayA/releases">这里</a>下载<code>installer_debian_x64_2.2.6.7.deb</code>，然后拖到虚拟机内的目录下执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt install ./installer_debian_x64_2.2.6.7.deb<br></code></pre></td></tr></table></figure>
+
 <p>安装完毕后启用服务</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> v2raya<br><span class="hljs-built_in">sudo</span> systemctl start v2raya<br></code></pre></td></tr></table></figure>
+
 <p>因为 v2rayA 的透明代理功能依赖 iptables，所以还需要下载</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install iptables<br></code></pre></td></tr></table></figure>
+
 <blockquote>
-<p>iptables 是 Linux 系统中的一个用户空间工具，用于配置 Linux 内核中的
-netfilter
-防火墙子系统。它主要用于设置和管理网络数据包的过滤规则，比如防火墙策略、NAT
-转发等。简而言之，iptables
-决定了哪些网络流量允许通过、哪些要被阻止。</p>
+<p>iptables 是 Linux 系统中的一个用户空间工具，用于配置 Linux 内核中的 netfilter 防火墙子系统。它主要用于设置和管理网络数据包的过滤规则，比如防火墙策略、NAT 转发等。简而言之，iptables 决定了哪些网络流量允许通过、哪些要被阻止。</p>
 </blockquote>
 <p>然后重启v2rayA：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl restart v2raya<br></code></pre></td></tr></table></figure>
+
 <p>现在可以使用代理了。</p>
-<h2 id="rabbitmq-4.1.2">RabbitMQ 4.1.2</h2>
-<p>参考官方安装指南： https://www.rabbitmq.com/docs/install-debian</p>
+<h2 id="RabbitMQ-4-1-2"><a href="#RabbitMQ-4-1-2" class="headerlink" title="RabbitMQ 4.1.2"></a>RabbitMQ 4.1.2</h2><p>参考官方安装指南： <a target="_blank" rel="noopener" href="https://www.rabbitmq.com/docs/install-debian">https://www.rabbitmq.com/docs/install-debian</a></p>
 <p>将下面的所有命令运行一遍即可：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/sh</span><br><br><span class="hljs-built_in">sudo</span> apt-get install curl gnupg apt-transport-https -y<br><br><span class="hljs-comment">## 下载签名密钥，验证软件包的合法性</span><br>curl -1sLf <span class="hljs-string">&quot;https://keys.openpgp.org/vks/v1/by-fingerprint/0A9AF2115F4687BD29803A206B73A36E6026DFCA&quot;</span> | <span class="hljs-built_in">sudo</span> gpg --dearmor | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /usr/share/keyrings/com.rabbitmq.team.gpg &gt; /dev/null<br><br><span class="hljs-comment">## 添加 RabbitMQ 官方 APT 源</span><br><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /etc/apt/sources.list.d/rabbitmq.list &lt;&lt;<span class="hljs-string">EOF</span><br><span class="hljs-string">## Modern Erlang/OTP releases</span><br><span class="hljs-string">##</span><br><span class="hljs-string">deb [arch=amd64 signed-by=/usr/share/keyrings/com.rabbitmq.team.gpg] https://deb1.rabbitmq.com/rabbitmq-erlang/debian/bookworm bookworm main</span><br><span class="hljs-string">deb [arch=amd64 signed-by=/usr/share/keyrings/com.rabbitmq.team.gpg] https://deb2.rabbitmq.com/rabbitmq-erlang/debian/bookworm bookworm main</span><br><span class="hljs-string"></span><br><span class="hljs-string">## Latest RabbitMQ releases</span><br><span class="hljs-string">##</span><br><span class="hljs-string">deb [arch=amd64 signed-by=/usr/share/keyrings/com.rabbitmq.team.gpg] https://deb1.rabbitmq.com/rabbitmq-server/debian/bookworm bookworm main</span><br><span class="hljs-string">deb [arch=amd64 signed-by=/usr/share/keyrings/com.rabbitmq.team.gpg] https://deb2.rabbitmq.com/rabbitmq-server/debian/bookworm bookworm main</span><br><span class="hljs-string">EOF</span><br><br><span class="hljs-comment">## 更新软件包索引</span><br><span class="hljs-built_in">sudo</span> apt-get update -y<br><br><span class="hljs-comment">## 安装 Erlang 软件包，这一步需要代理</span><br><span class="hljs-built_in">sudo</span> apt-get install -y erlang-base \<br>                        erlang-asn1 erlang-crypto erlang-eldap erlang-ftp erlang-inets \<br>                        erlang-mnesia erlang-os-mon erlang-parsetools erlang-public-key \<br>                        erlang-runtime-tools erlang-snmp erlang-ssl \<br>                        erlang-syntax-tools erlang-tftp erlang-tools erlang-xmerl<br><br><span class="hljs-comment">## rabbitmq-server 及其依赖</span><br><span class="hljs-built_in">sudo</span> apt-get install rabbitmq-server -y --fix-missing<br></code></pre></td></tr></table></figure>
+
 <p>至此成功安装rabbitMQ。启动服务：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl start rabbitmq-server<br></code></pre></td></tr></table></figure>
+
 <p>启用管理插件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> rabbitmq-plugins <span class="hljs-built_in">enable</span> rabbitmq_management<br></code></pre></td></tr></table></figure>
-<p>这个插件提供了 HTTP API，可以使用 Web 浏览器访问管理 UI
-界面<code>http://localhost:15672/</code>，默认账号密码都是<code>guest</code>，登录成功看到以下界面</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/08/02/pVNUSaR.png" srcset="/img/loading.gif" lazyload
-alt="RabbitMQ登录界面" />
-<figcaption aria-hidden="true">RabbitMQ登录界面</figcaption>
-</figure>
-<h2 id="注意事项">注意事项</h2>
-<h3 id="配置端口转发">配置端口转发</h3>
-<p>如果虚拟机网络用的是 NAT 模式，虚拟机的 IP
-地址是虚拟网卡分配的一个私有
-IP，<strong>通常宿主机是无法直接访问虚拟机的服务</strong>，除非做了端口映射（port
-forwarding）。下面逐步说明：</p>
+
+<p>这个插件提供了 HTTP API，可以使用 Web 浏览器访问管理 UI 界面<code>http://localhost:15672/</code>，默认账号密码都是<code>guest</code>，登录成功看到以下界面</p>
+<p><img src="https://s21.ax1x.com/2025/08/02/pVNUSaR.png" srcset="/img/loading.gif" lazyload alt="RabbitMQ登录界面"></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="配置端口转发"><a href="#配置端口转发" class="headerlink" title="配置端口转发"></a>配置端口转发</h3><p>如果虚拟机网络用的是 NAT 模式，虚拟机的 IP 地址是虚拟网卡分配的一个私有 IP，<strong>通常宿主机是无法直接访问虚拟机的服务</strong>，除非做了端口映射（port forwarding）。下面逐步说明：</p>
 <p>使用命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ip addr<br></code></pre></td></tr></table></figure>
-<p>查看NAT模式下的ip地址。然后在虚拟机设置中配置端口转发：编辑（Edit）
-&gt; 虚拟网络编辑器（Virtual Network Editor）-&gt;
-VMnet8，添加端口转发规则（<code>192.168.x.y</code>换成自己虚拟机的ip地址）</p>
+
+<p>查看NAT模式下的ip地址。然后在虚拟机设置中配置端口转发：编辑（Edit） &gt; 虚拟网络编辑器（Virtual Network Editor）-&gt; VMnet8，添加端口转发规则（<code>192.168.x.y</code>换成自己虚拟机的ip地址）</p>
 <table>
 <thead>
 <tr>
@@ -399,8 +385,7 @@ VMnet8，添加端口转发规则（<code>192.168.x.y</code>换成自己虚拟�
 <th>虚拟机端口</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>RabbitMQ</td>
 <td>TCP</td>
 <td>5672</td>
@@ -414,19 +399,15 @@ VMnet8，添加端口转发规则（<code>192.168.x.y</code>换成自己虚拟�
 <td>192.168.<strong>x</strong>.y</td>
 <td>15672</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>然后就可以在宿主机的浏览器访问UI界面了✌️</p>
 <div class="note note-primary">
-            <p>如果仍然无法访问，检查虚拟机是否开启了<code>firewalld</code>，在开启的状态下防火墙会拦截外部请求。</p>
-          </div>
-<h3 id="其他问题">其他问题</h3>
-<ul>
-<li>rabbitmq的日志位于<code>/var/log/rabbitmq</code>（需要切换到 root
-用户访问），出什么问题都可以去看一眼日志。</li>
-<li>rabbitmq Web初始可以用 guest 登录，但是<strong>guest 只能通过
-localhost
-访问</strong>，就算配置了端口转发也不能在其他机器上登录，所以最好先创建一个新用户。</li>
+            <p>如果仍然无法访问，检查虚拟机是否开启了<code>firewalld</code>，在开启的状态下防火墙会拦截外部请求。  </p>
+          </div> 
+
+<h3 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h3><ul>
+<li>rabbitmq的日志位于<code>/var/log/rabbitmq</code>（需要切换到 root 用户访问），出什么问题都可以去看一眼日志。</li>
+<li>rabbitmq Web初始可以用 guest 登录，但是<strong>guest 只能通过 localhost 访问</strong>，就算配置了端口转发也不能在其他机器上登录，所以最好先创建一个新用户。</li>
 <li>rabbitmq的虚拟主机只能由创建者访问，同样地新创建的队列只能加入到有访问权限的虚拟主机中。</li>
 </ul>
 

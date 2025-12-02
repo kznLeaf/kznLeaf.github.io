@@ -23,12 +23,12 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="最近在上一门叫电子设计基础的课。课上要设计一个简易温度传感器，然而老师给出的方案真心不怎么样，所以自己重新设计了一个  用二极管做温度传感器，STM32F103C8T6采集电压数据换算成温度，最后用数码管显示出来。供电采用3.7V锂电池，还配备有Type-C插口用来充电。 原理图如下：  这里最复杂的应该是供电部分。供电部分的方案用的是了TT在射频功率计的设计里使用的方案，锂电池输入经过">
+    <meta name="description" content="最近在上一门叫电子设计基础的课。课上要设计一个简易温度传感器，然而老师给出的方案真心不怎么样，所以自己重新设计了一个    用二极管做温度传感器，STM32F103C8T6采集电压数据换算成温度，最后用数码管显示出来。供电采用3.7V锂电池，还配备有Type-C插口用来充电。 原理图如下：   这里最复杂的应该是供电部分。供电部分的方案用的是了TT在射频功率计的设计里使用的方案，锂电池输入经过TP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="简易温度传感器设计">
 <meta property="og:url" content="https://kznleaf.top/2024/09/19/%E6%B8%A9%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
-<meta property="og:description" content="最近在上一门叫电子设计基础的课。课上要设计一个简易温度传感器，然而老师给出的方案真心不怎么样，所以自己重新设计了一个  用二极管做温度传感器，STM32F103C8T6采集电压数据换算成温度，最后用数码管显示出来。供电采用3.7V锂电池，还配备有Type-C插口用来充电。 原理图如下：  这里最复杂的应该是供电部分。供电部分的方案用的是了TT在射频功率计的设计里使用的方案，锂电池输入经过">
+<meta property="og:description" content="最近在上一门叫电子设计基础的课。课上要设计一个简易温度传感器，然而老师给出的方案真心不怎么样，所以自己重新设计了一个    用二极管做温度传感器，STM32F103C8T6采集电压数据换算成温度，最后用数码管显示出来。供电采用3.7V锂电池，还配备有Type-C插口用来充电。 原理图如下：   这里最复杂的应该是供电部分。供电部分的方案用的是了TT在射频功率计的设计里使用的方案，锂电池输入经过TP">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://github.com/banyee19/blog_images/blob/main/%E6%B8%A9%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8%E5%AE%9E%E7%89%A9.jpg?raw=true">
 <meta property="article:published_time" content="2024-09-19T01:15:43.000Z">
@@ -272,7 +272,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          400 字
+          401 字
         
       </span>
     
@@ -334,15 +334,13 @@
             
               <div class="markdown-body">
                 
-                <p>最近在上一门叫电子设计基础的课。课上要设计一个简易温度传感器，然而老师给出的方案真心不怎么样，所以自己重新设计了一个</p>
-<p><img
-src="https://github.com/banyee19/blog_images/blob/main/%E6%B8%A9%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8%E5%AE%9E%E7%89%A9.jpg?raw=true" srcset="/img/loading.gif" lazyload /></p>
+                <p>最近在上一门叫电子设计基础的课。课上要设计一个简易温度传感器，然而老师给出的方案真心不怎么样，所以自己重新设计了一个  </p>
+<p><img src="https://github.com/banyee19/blog_images/blob/main/%E6%B8%A9%E5%BA%A6%E4%BC%A0%E6%84%9F%E5%99%A8%E5%AE%9E%E7%89%A9.jpg?raw=true" srcset="/img/loading.gif" lazyload></p>
 <p>用二极管做温度传感器，STM32F103C8T6采集电压数据换算成温度，最后用数码管显示出来。供电采用3.7V锂电池，还配备有Type-C插口用来充电。</p>
-<p>原理图如下：</p>
-<p><img
-src="https://github.com/banyee19/blog_images/blob/main/%E6%B8%A9%E5%BA%A6%E8%AE%A1%E5%8E%9F%E7%90%86%E5%9B%BE.jpg?raw=true" srcset="/img/loading.gif" lazyload /></p>
+<p>原理图如下： </p>
+<p><img src="https://github.com/banyee19/blog_images/blob/main/%E6%B8%A9%E5%BA%A6%E8%AE%A1%E5%8E%9F%E7%90%86%E5%9B%BE.jpg?raw=true" srcset="/img/loading.gif" lazyload></p>
 <p>这里最复杂的应该是供电部分。供电部分的方案用的是了TT在射频功率计的设计里使用的方案，锂电池输入经过TPS63070升压到6.3V，再经SPX3819和RT9013分别降压到5V和3.3V。锂电池充电管理使用IP2312。数码管驱动用的是74HC595，用单片机的三个IO口就能同时控制数码管的8个脚，余下两个LED的阴极则与三极管开关相连，没有直接接单片机IO口主要是考虑到单片机吸收电流的能力有限，因此间接使用IO口控制三极管的通断。在同一时刻，数码管只能显示一个数字，为了达到同时显示的效果需要利用视觉暂留，我设定两个数字的闪烁频率为100Hz。</p>
-<p>二极管的导通压降与温度的关系大约是-2mV/摄氏度，此处运放反向放大30倍，这样能覆盖大约55摄氏度的范围。单片机同时读取运放的输出电压和电池电量，电量过低时指示灯亮起。</p>
+<p>二极管的导通压降与温度的关系大约是-2mV&#x2F;摄氏度，此处运放反向放大30倍，这样能覆盖大约55摄氏度的范围。单片机同时读取运放的输出电压和电池电量，电量过低时指示灯亮起。</p>
 
                 
               </div>

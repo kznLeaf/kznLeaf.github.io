@@ -23,12 +23,12 @@
   <meta name="author" content="banyee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="雪花算法&amp;全局ID生成器 雪花算法（Snowflake） 是一种由 Twitter 提出的分布式唯一 ID 生成算法，用来在高并发、分布式系统中快速生成全局唯一、趋势递增的 64 位整数 ID。 雪花算法的结构：long类型，64位 10 | 41位时间戳 | 10位机器信息 | 12位序列号  序列号：同一毫秒内的自增序列号，比如同一毫秒内的第12个请求的序列号就是12，最">
+    <meta name="description" content="雪花算法&amp;全局ID生成器雪花算法（Snowflake） 是一种由 Twitter 提出的分布式唯一 ID 生成算法，用来在高并发、分布式系统中快速生成全局唯一、趋势递增的 64 位整数 ID。 雪花算法的结构：long类型，64位 10 | 41位时间戳 | 10位机器信息 | 12位序列号   序列号：同一毫秒内的自增序列号，比如同一毫秒内的第12个请求的序列号就是12，最多4096个序">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis实战篇-秒杀">
 <meta property="og:url" content="https://kznleaf.top/2025/06/30/Redis%E5%AE%9E%E6%88%98%E7%AF%87-%E7%A7%92%E6%9D%80/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
-<meta property="og:description" content="雪花算法&amp;全局ID生成器 雪花算法（Snowflake） 是一种由 Twitter 提出的分布式唯一 ID 生成算法，用来在高并发、分布式系统中快速生成全局唯一、趋势递增的 64 位整数 ID。 雪花算法的结构：long类型，64位 10 | 41位时间戳 | 10位机器信息 | 12位序列号  序列号：同一毫秒内的自增序列号，比如同一毫秒内的第12个请求的序列号就是12，最">
+<meta property="og:description" content="雪花算法&amp;全局ID生成器雪花算法（Snowflake） 是一种由 Twitter 提出的分布式唯一 ID 生成算法，用来在高并发、分布式系统中快速生成全局唯一、趋势递增的 64 位整数 ID。 雪花算法的结构：long类型，64位 10 | 41位时间戳 | 10位机器信息 | 12位序列号   序列号：同一毫秒内的自增序列号，比如同一毫秒内的第12个请求的序列号就是12，最多4096个序">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s21.ax1x.com/2025/06/28/pVnnElt.png">
 <meta property="og:image" content="https://s21.ax1x.com/2025/06/29/pVn0iN9.png">
@@ -276,7 +276,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k 字
+          2k 字
         
       </span>
     
@@ -338,12 +338,10 @@
             
               <div class="markdown-body">
                 
-                <h2 id="雪花算法全局id生成器">雪花算法&amp;全局ID生成器</h2>
-<p>雪花算法（Snowflake） 是一种由 Twitter 提出的<strong>分布式唯一 ID
-生成算法</strong>，用来在<strong>高并发、分布式</strong>系统中快速生成<strong>全局唯一、趋势递增的
-64 位整数 ID</strong>。</p>
+                <h2 id="雪花算法-全局ID生成器"><a href="#雪花算法-全局ID生成器" class="headerlink" title="雪花算法&amp;全局ID生成器"></a>雪花算法&amp;全局ID生成器</h2><p>雪花算法（Snowflake） 是一种由 Twitter 提出的<strong>分布式唯一 ID 生成算法</strong>，用来在<strong>高并发、分布式</strong>系统中快速生成<strong>全局唯一、趋势递增的 64 位整数 ID</strong>。</p>
 <p>雪花算法的结构：<code>long</code>类型，64位</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">0 </span>| <span class="hljs-number">41</span>位时间戳 | <span class="hljs-number">10</span>位机器信息 | <span class="hljs-number">12</span>位序列号<br></code></pre></td></tr></table></figure>
+
 <ul>
 <li>序列号：同一毫秒内的自增序列号，比如同一毫秒内的第<code>12</code>个请求的序列号就是<code>12</code>，最多4096个序列号</li>
 </ul>
@@ -354,50 +352,41 @@
 <li>替代UUID</li>
 </ul>
 <p>本项目用到的算法和雪花算法类似，如下：</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/06/28/pVnnElt.png" srcset="/img/loading.gif" lazyload
-alt="全局ID生成器" />
-<figcaption aria-hidden="true">全局ID生成器</figcaption>
-</figure>
+<p><img src="https://s21.ax1x.com/2025/06/28/pVnnElt.png" srcset="/img/loading.gif" lazyload alt="全局ID生成器"></p>
 <p>完成的工具类：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RedisIdWorker</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">long</span> <span class="hljs-variable">BEGIN_TIMESTAMP</span> <span class="hljs-operator">=</span> <span class="hljs-number">1640995200L</span>;<br>    <span class="hljs-keyword">private</span> StringRedisTemplate stringRedisTemplate;<br><br>    <span class="hljs-comment">// 形参用于区分不同的业务</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">long</span> <span class="hljs-title function_">nextId</span><span class="hljs-params">(String keyPrefix)</span> &#123;<br>        <span class="hljs-type">LocalDateTime</span> <span class="hljs-variable">now</span> <span class="hljs-operator">=</span> LocalDateTime.now();<br>        <span class="hljs-type">long</span> <span class="hljs-variable">nowSecond</span> <span class="hljs-operator">=</span> now.toEpochSecond(ZoneOffset.UTC);<br>        <span class="hljs-type">long</span> <span class="hljs-variable">timestamp</span> <span class="hljs-operator">=</span> nowSecond - BEGIN_TIMESTAMP;<br><br>        <span class="hljs-comment">// 生成序列号</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">date</span> <span class="hljs-operator">=</span> now.format(DateTimeFormatter.ofPattern(<span class="hljs-string">&quot;yyyy:MM:dd&quot;</span>));<br>        <span class="hljs-comment">// 每次调用都会让 icr:keyPrefix:date 这个键的值加一，然后利用获取到的数字作为唯一 ID 的一部分</span><br>        <span class="hljs-type">long</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> stringRedisTemplate.opsForValue().increment(<span class="hljs-string">&quot;icr:&quot;</span> + keyPrefix + <span class="hljs-string">&quot;:&quot;</span> + date);<br><br>        <span class="hljs-comment">// 移位 + 拼接</span><br>        <span class="hljs-keyword">return</span> timestamp &lt;&lt; <span class="hljs-number">32</span> | count;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>上面的算法还有一个好处：全局 ID 的<code>key</code>是包含日期的，根据
-key 就能统计每一天的总订单量。</p>
-<h2 id="优惠券秒杀下单">优惠券秒杀下单</h2>
-<h3 id="初步思路">初步思路</h3>
-<p>优惠券分为两类：</p>
+
+<p>上面的算法还有一个好处：全局 ID 的<code>key</code>是包含日期的，根据 key 就能统计每一天的总订单量。</p>
+<h2 id="优惠券秒杀下单"><a href="#优惠券秒杀下单" class="headerlink" title="优惠券秒杀下单"></a>优惠券秒杀下单</h2><h3 id="初步思路"><a href="#初步思路" class="headerlink" title="初步思路"></a>初步思路</h3><p>优惠券分为两类：</p>
 <ul>
 <li>平价券：可以任意抢购</li>
 <li>特价券：限时秒杀</li>
 </ul>
 <p>添加秒杀券的接口：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 新增秒杀券</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> voucher 优惠券信息，包含秒杀信息</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> 优惠券id</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@PostMapping(&quot;seckill&quot;)</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">addSeckillVoucher</span><span class="hljs-params">(<span class="hljs-meta">@RequestBody</span> Voucher voucher)</span> &#123;<br>    voucherService.addSeckillVoucher(voucher);<br>    <span class="hljs-keyword">return</span> Result.ok(voucher.getId());<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>需要注意两点：</p>
 <ul>
 <li>秒杀是否开始或者结束</li>
 <li>剩余库存是否充足</li>
 </ul>
-<figure>
-<img src="https://s21.ax1x.com/2025/06/29/pVn0iN9.png" srcset="/img/loading.gif" lazyload alt="流程图" />
-<figcaption aria-hidden="true">流程图</figcaption>
-</figure>
+<p><img src="https://s21.ax1x.com/2025/06/29/pVn0iN9.png" srcset="/img/loading.gif" lazyload alt="流程图"></p>
 <p><strong>几个技巧</strong>：</p>
-<ol type="1">
+<ol>
 <li>扣减库存：</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 扣减库存</span><br><span class="hljs-type">boolean</span> <span class="hljs-variable">success</span> <span class="hljs-operator">=</span> seckillVoucherService.update()<br>        .setSql(<span class="hljs-string">&quot;stock = stock - 1&quot;</span>)<br>        .eq(<span class="hljs-string">&quot;voucher_id&quot;</span>, voucherId).update();<br></code></pre></td></tr></table></figure>
+
 <p>等价于：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">UPDATE</span> seckill_voucher<br><span class="hljs-keyword">SET</span> stock <span class="hljs-operator">=</span> stock <span class="hljs-operator">-</span> <span class="hljs-number">1</span><br><span class="hljs-keyword">WHERE</span> voucher_id <span class="hljs-operator">=</span> ?;<br></code></pre></td></tr></table></figure>
+
 <p>这样写常常用于高并发库存的场景，直接在数据库层面<code>stock = stock - 1</code><strong>一次性</strong>完成读取旧值、计算新值、写入新值的操作，没有读取、修改、写入的空隙。</p>
 <p>完整的查询秒杀券信息、更新秒杀券库存、创建订单并将订单写入库存的操作如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">VoucherOrderServiceImpl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">ServiceImpl</span>&lt;VoucherOrderMapper, VoucherOrder&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title class_">IVoucherOrderService</span> &#123;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> ISeckillVoucherService seckillVoucherService;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> RedisIdWorker redisIdWorker;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-meta">@Transactional(rollbackFor = Exception.class)</span><br>    <span class="hljs-keyword">public</span> Result <span class="hljs-title function_">secKillVoucher</span><span class="hljs-params">(Long voucherId)</span> &#123;<br>        <span class="hljs-comment">// 查询基本信息</span><br>        <span class="hljs-type">SeckillVoucher</span> <span class="hljs-variable">voucherSeckill</span> <span class="hljs-operator">=</span> seckillVoucherService.getById(voucherId);<br>        <span class="hljs-comment">// 检查开始时间</span><br>        <span class="hljs-keyword">if</span> (voucherSeckill.getBeginTime().isAfter(LocalDateTime.now())) &#123;<br>            <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;秒杀还没开始&quot;</span>);<br>        &#125;<br>        <span class="hljs-comment">// 检查结束时间</span><br>        <span class="hljs-keyword">if</span> (voucherSeckill.getEndTime().isBefore(LocalDateTime.now())) &#123;<br>            <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;秒杀已经结束&quot;</span>);<br>        &#125;<br>        <span class="hljs-comment">// 判断库存是否充足</span><br>        <span class="hljs-keyword">if</span>(voucherSeckill.getStock() &lt; <span class="hljs-number">1</span>) &#123;<br>            <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;库存不够&quot;</span>);<br>        &#125;<br>        <span class="hljs-comment">// 扣减库存</span><br>        <span class="hljs-type">boolean</span> <span class="hljs-variable">success</span> <span class="hljs-operator">=</span> seckillVoucherService.update()<br>                .setSql(<span class="hljs-string">&quot;stock = stock - 1&quot;</span>)<br>                .eq(<span class="hljs-string">&quot;voucher_id&quot;</span>, voucherId).update();<br>        <span class="hljs-keyword">if</span>(!success) &#123;<br>            <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;库存又不足&quot;</span>);<br>        &#125;<br>        <span class="hljs-comment">// 创建订单</span><br>        <span class="hljs-type">VoucherOrder</span> <span class="hljs-variable">voucher</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">VoucherOrder</span>();<br>        <span class="hljs-type">long</span> <span class="hljs-variable">OrderId</span> <span class="hljs-operator">=</span> redisIdWorker.nextId(<span class="hljs-string">&quot;order&quot;</span>);<br>        voucher.setId(OrderId);<br>        <span class="hljs-type">Long</span> <span class="hljs-variable">userId</span> <span class="hljs-operator">=</span> UserHolder.getUser().getId();<br>        voucher.setUserId(userId);<br>        voucher.setVoucherId(voucherId);<br>        <span class="hljs-comment">// 写入数据库</span><br>        save(voucher);<br>        <span class="hljs-comment">// 返回订单 ID</span><br>        <span class="hljs-keyword">return</span> Result.ok(OrderId);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>因为这里涉及两个对数据库的直接改动操作（修改库存、增加订单），所以加上一个事务注解。</p>
-<h3 id="解决高并发问题">解决高并发问题</h3>
-<p>以上代码存在<strong>超卖</strong>现象，原理如下：</p>
-<figure>
-<img src="https://s21.ax1x.com/2025/06/29/pVnByid.png" srcset="/img/loading.gif" lazyload alt="超卖" />
-<figcaption aria-hidden="true">超卖</figcaption>
-</figure>
+<h3 id="解决高并发问题"><a href="#解决高并发问题" class="headerlink" title="解决高并发问题"></a>解决高并发问题</h3><p>以上代码存在<strong>超卖</strong>现象，原理如下：</p>
+<p><img src="https://s21.ax1x.com/2025/06/29/pVnByid.png" srcset="/img/loading.gif" lazyload alt="超卖"></p>
 <p>某一时刻只剩下了一张券，此时并发的三个线程1、2、3同时查询库存，都发现仍有剩余，于是三个线程都去做减库存的操作，导致超卖。这属于并发安全问题。</p>
 <p>解决方案：<strong>加锁</strong>。</p>
 <p>锁分为两种：</p>
@@ -409,53 +398,55 @@ key 就能统计每一天的总订单量。</p>
 <p><strong>版本号法</strong>，思路是定义一个版本号，每当发生修改操作的时候就把版本号加一。在查询的时候不但查库存量还要查出来版本号，紧接着修改操作前再检查一下版本号和先前查出来的是否一致，不一致则说明有人趁这个空隙把数据库修改了，重新再来。更进一步的，我们其实连版本号都不需要，直接把库存量当成版本号来用，前后查两次库存用于比较就行了，如果一致就说明可以放心修改。</p>
 <p>对应到代码中：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 扣减库存</span><br><span class="hljs-type">boolean</span> <span class="hljs-variable">success</span> <span class="hljs-operator">=</span> seckillVoucherService.update()<br>        .setSql(<span class="hljs-string">&quot;stock = stock - 1&quot;</span>) <span class="hljs-comment">// set stock = stock - 1</span><br>        .eq(<span class="hljs-string">&quot;voucher_id&quot;</span>, voucherId).gt(<span class="hljs-string">&quot;stock&quot;</span>, <span class="hljs-number">0</span>) <span class="hljs-comment">// 再次检查，只要满足剩余的数量大于零即可</span><br>        .update();<br></code></pre></td></tr></table></figure>
-<h2 id="一人一单">一人一单</h2>
-<p>需求：修改秒杀业务，要求每个人对于同一种券只能下一单</p>
-<h3 id="检测是否重复下单">检测是否重复下单</h3>
-<p>思路：查询<code>voucher_order</code>表中是否存在当前用户<code>user_id</code>当前券对应的<code>voucher_id</code>（即：<code>user_id</code>代表的用户是不是已经下单过了<code>voucher_id</code>代表的产品），如下：</p>
+
+<h2 id="一人一单"><a href="#一人一单" class="headerlink" title="一人一单"></a>一人一单</h2><p>需求：修改秒杀业务，要求每个人对于同一种券只能下一单</p>
+<h3 id="检测是否重复下单"><a href="#检测是否重复下单" class="headerlink" title="检测是否重复下单"></a>检测是否重复下单</h3><p>思路：查询<code>voucher_order</code>表中是否存在当前用户<code>user_id</code>当前券对应的<code>voucher_id </code>（即：<code>user_id</code>代表的用户是不是已经下单过了<code>voucher_id</code>代表的产品），如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 一人一单功能</span><br><span class="hljs-type">Long</span> <span class="hljs-variable">userId</span> <span class="hljs-operator">=</span> UserHolder.getUser().getId();<br><span class="hljs-comment">// 查询订单</span><br><span class="hljs-type">int</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> query().eq(<span class="hljs-string">&quot;user_id&quot;</span>, userId).eq(<span class="hljs-string">&quot;voucher_id&quot;</span>, voucherId).count();<br><span class="hljs-keyword">if</span> (count &gt; <span class="hljs-number">0</span>) &#123;<br>    <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;用户已经购买过了&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>等价的SQL语句</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <br><span class="hljs-keyword">FROM</span> voucher_order <br><span class="hljs-keyword">WHERE</span> user_id <span class="hljs-operator">=</span> ? <span class="hljs-keyword">AND</span> voucher_id <span class="hljs-operator">=</span> ?;<br></code></pre></td></tr></table></figure>
-<h3 id="按用户id加锁">按用户ID加锁</h3>
-<ol type="1">
+
+<h3 id="按用户ID加锁"><a href="#按用户ID加锁" class="headerlink" title="按用户ID加锁"></a>按用户ID加锁</h3><ol>
 <li><strong>按用户ID为用户加锁</strong>（考虑到网络延迟，如果第一次请求还没返回就发出第二个请求，在不加锁的情况下会导致重复下单），<strong>同一个用户的请求串行执行，不同的用户请求并发执行</strong>，这样就提升了性能。</li>
-<li>把同步锁放到整个函数的外面，确保事务提交之后再释放锁，这是为了<strong>防止
-Spring 事务失效</strong>（这里使用的处理思路不是特拨号，因此存在 Spring
-事务失效的问题）</li>
+<li>把同步锁放到整个函数的外面，确保事务提交之后再释放锁，这是为了<strong>防止 Spring 事务失效</strong>（这里使用的处理思路不是特拨号，因此存在 Spring 事务失效的问题）</li>
 </ol>
 <p>Spring 事务失效的原因如下。</p>
-<h3 id="spring事务失效">Spring事务失效</h3>
-<p>Spring
-的<code>@Transactional</code>是通过<strong>代理</strong>实现的: Spring
-通过代理拦截方法调用，在方法执行前开启事务，执行后根据结果提交或回滚。</p>
+<h3 id="Spring事务失效"><a href="#Spring事务失效" class="headerlink" title="Spring事务失效"></a>Spring事务失效</h3><p>Spring 的<code>@Transactional</code>是通过<strong>代理</strong>实现的: Spring 通过代理拦截方法调用，在方法执行前开启事务，执行后根据结果提交或回滚。</p>
 <figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs aspectj">调用业务方法<br>    │<br>    ▼<br>是否有 <span class="hljs-meta">@Transactional</span> 注解？<br>    │是<br>    ▼<br>代理对象开始事务（获取连接、设置隔离级别等）<br>    │<br>执行目标方法<br>    │<br>是否抛出异常？<br> ┌──────────┬────────────┐<br> │ 否       │ 是         │<br> ▼         ▼<br>提交事务   回滚事务<br>    │<br>方法返回或抛出异常<br></code></pre></td></tr></table></figure>
+
 <p>举个例子：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// Spring 会为你的 Service 创建一个代理对象</span><br><span class="hljs-type">VoucherOrderServiceImpl</span> <span class="hljs-variable">originalObject</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">VoucherOrderServiceImpl</span>();<br><span class="hljs-type">VoucherOrderServiceImpl</span> <span class="hljs-variable">proxyObject</span> <span class="hljs-operator">=</span> createProxy(originalObject); <span class="hljs-comment">// 代理对象</span><br><br><span class="hljs-comment">// 代理对象的方法调用流程：</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">createVoucherOrder</span><span class="hljs-params">(Long voucherId)</span> &#123;<br>    <span class="hljs-comment">// 1. 开启事务</span><br>    TransactionManager.begin();<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-comment">// 2. 调用原始对象的方法</span><br>        <span class="hljs-type">Result</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> originalObject.createVoucherOrder(voucherId);<br>        <span class="hljs-comment">// 3. 提交事务</span><br>        TransactionManager.commit();<br>        <span class="hljs-keyword">return</span> result;<br>    &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>        <span class="hljs-comment">// 4. 回滚事务</span><br>        TransactionManager.rollback();<br>        <span class="hljs-keyword">throw</span> e;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>更一般地说，对于如下方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Transactional</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">transfer</span><span class="hljs-params">()</span> &#123;<br>    updateA();  <span class="hljs-comment">// 扣钱</span><br>    updateB();  <span class="hljs-comment">// 加钱</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>调用时 Spring 实际做了这些事：</p>
-<ol type="1">
+<ol>
 <li>生成代理对象，调用该方法时进入拦截器</li>
 <li>拦截器通过事务管理器开启事务</li>
 <li>依次执行内部的方法A和方法B</li>
 <li>如果正常结束没有抛出异常，则提交事务</li>
 <li>如果抛出异常，则回滚事务</li>
 </ol>
-<hr />
+<hr>
 <p>下面是一个事务失效的例子：在一个类里面定义两个方法A和B，方法A直接调用方法B，则方法B的事务不生效</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserService</span> &#123;<br>    <span class="hljs-meta">@Transactional</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">methodA</span><span class="hljs-params">()</span> &#123;<br>        methodB(); <span class="hljs-comment">// 调用自己类的另一个事务方法</span><br>    &#125;<br><br>    <span class="hljs-meta">@Transactional</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">methodB</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">// 不生效 ❌（没有代理）</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>这是因为自调用时不会经过代理对象，导致事务注解失效。</p>
 <p>解决方法有两种：</p>
-<ol type="1">
+<ol>
 <li>把方法B拆分到另一个<code>@Service</code>标识的类中</li>
 <li>如果不拆分，可以使用<code>AopContext.currentProxy()</code>强行调用代理（不推荐用于复杂逻辑）</li>
 </ol>
 <p>第一种解决方案示例：创建一个新的类<code>SubUserService</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SubUserService</span> &#123;<br><br>    <span class="hljs-meta">@Transactional</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">methodB</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">// 写入数据库、更新、回滚等</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>向原来的类注入<code>SubUserService</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserService</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> SubUserService subUserService;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">methodA</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">// ✅ 通过代理调用 methodB，事务才会生效</span><br>        subUserService.methodB();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>第二种解决方案示例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">((UserService) AopContext.currentProxy()).methodB();<br></code></pre></td></tr></table></figure>
+
 <p>如果条件允许的话。第一种方案应该会比较好。第二种方案的代码有点复杂了。</p>
 
                 
