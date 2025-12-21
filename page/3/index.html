@@ -281,6 +281,128 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2025/07/18/JUC-%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_self">
+          JUC-线程池部分源码&amp;API总结
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/07/18/JUC-%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_self">
+        <div>
+          线程池简介Java中的线程池是运用场景最多的并发框架，几乎所有需要异步或者并发执行任务的程序都可以使用线程池。 Java线程池按照以下步骤处理任务：  优先使用核心线程 核心线程满了使用工作队列 工作队列满了使用非核心线程 都满了执行拒绝策略   线程池在系统中的应用：  Web服务器处理HTTP请求 数据库连接和IO操作，例如查询和插入数据库、文件读写操作、Netty实用线程池处理网络事件 异步
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-07-18 19:20" pubdate>
+              2025-07-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/JUC/" class="category-chain-item">JUC</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%B9%B6%E5%8F%91/">#并发</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/07/17/JUC-synchronized/" target="_self">
+          JUC-synchronized关键字
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/07/17/JUC-synchronized/" target="_self">
+        <div>
+          共享问题 多个线程访问共享资源，进行读写操作时发生指令的交错就会发生问题。 一段代码块内如果存在对共享资源的读写操作，称这段代码块为临界区。 多个代码在临界区内运行，由于代码的执行序列不同而导致结果无法预测，称之发生了竞态条件。  如何避免临界区的互斥条件的发生？两种方法：  阻塞式的解决方法：synchronized Lock 非阻塞式的：原子变量  synchronizedsynchroniz
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-07-17 21:18" pubdate>
+              2025-07-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/JUC/" class="category-chain-item">JUC</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%B9%B6%E5%8F%91/">#并发</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2025/07/15/JUC-%E5%B9%B6%E5%8F%91%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E5%9F%BA%E7%A1%80API/" target="_self">
           JUC-并发的概念和基础API
         </a>
@@ -778,138 +900,6 @@
               <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">#多线程</a>
             
               <a href="/tags/%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">#源码剖析</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2025/06/02/JVM-3-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/" target="_self">
-          <img src="https://s21.ax1x.com/2025/06/11/pVkddYD.webp" srcset="/img/loading.gif" lazyload alt="JVM-3.2-垃圾回收算法">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/06/02/JVM-3-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/" target="_self">
-          JVM-3.2-垃圾回收算法
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt " href="/2025/06/02/JVM-3-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/" target="_self">
-        <div>
-          《深入理解Java虚拟机》读书笔记(3)
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-06-02 23:50" pubdate>
-              2025-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/JVM/" class="category-chain-item">JVM</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Java/">#Java</a>
-            
-              <a href="/tags/JVM/">#JVM</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/06/01/JVM-2-3-%E5%AF%B9%E8%B1%A1%E6%8F%AD%E7%A7%98/" target="_self">
-          JVM-Java虚拟机中的对象
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/06/01/JVM-2-3-%E5%AF%B9%E8%B1%A1%E6%8F%AD%E7%A7%98/" target="_self">
-        <div>
-          《深入理解Java虚拟机》读书笔记(2)
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-06-01 23:27" pubdate>
-              2025-06-01
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/JVM/" class="category-chain-item">JVM</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Java/">#Java</a>
-            
-              <a href="/tags/JVM/">#JVM</a>
             
           </div>
         
