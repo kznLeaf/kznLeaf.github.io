@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>我的Linux实用软件清单</title>
+    <link href="/2026/01/07/Linux%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/"/>
+    <url>/2026/01/07/Linux%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/</url>
+    
+    <content type="html"><![CDATA[<h2 id="办公"><a href="#办公" class="headerlink" title="办公"></a>办公</h2><p>LibreOffice</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S libreoffice-still libreoffice-still-zh-cn<br></code></pre></td></tr></table></figure><p><img src="https://s41.ax1x.com/2026/01/07/pZdxZlR.png"></p><p>可以查看和编辑 microsoft office 创建的各种文件，而且能自动加载windows上常用的微软雅黑等字体，这一点比mac强（mac每次都会提醒字体缺失）</p><h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><ul><li>终端：KDE自带终端 konsole 功能很多，但是大部分我都用不上，所以我用<code>alacritty</code>，一个用Rust写的终端，特点是极简+启动速度极快，所有个性化配置都通过一个配置文件定义，非常方便</li></ul><p><img src="https://s41.ax1x.com/2026/01/07/pZdxvND.png"></p><ul><li>vscode: <code>yay -S visual-studio-code-bin</code> vscode有多个打包版本，某些扩展只能在这个官方闭源版本中使用</li><li>jetbrains全家桶：先装这个<code>yay -S jetbrains-toolbox</code>，然后在toolbox里安装IDE</li></ul><h2 id="图像查看"><a href="#图像查看" class="headerlink" title="图像查看"></a>图像查看</h2><p>KDE自带的Gwenview体验很一般，我选择<code>Loupe</code>:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S loupe<br></code></pre></td></tr></table></figure><p>比Gwenview更简洁，更丝滑</p><h2 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h2><p>QEMU&#x2F;KVM + virt-manager，我会装一个win10虚拟机，那些一坨狗屎又不得不用的<strong>国产流氓软件</strong>（微信，QQ，百毒网盘啊嗯）通通丢到虚拟机里，一方面是因为国产软件普遍对Linux的支持极差，但是更重要的原因是我压根不想让这些毒瘤污染我的系统😃直接物理隔离得了</p><h2 id="影音"><a href="#影音" class="headerlink" title="影音"></a>影音</h2><ul><li><code>aegisub</code>：字幕编辑器</li><li><code>Kdenlive</code>：KDE社区开发的视频编辑工具</li><li><code>mpv</code>：简洁的视频播放器，可以自动识别并加载ass外挂字幕</li><li><code>obs-studio</code>：开源跨平台的直播、屏幕录制软件</li><li><code>spotify</code>：跨平台的音乐软件，不管是网页还是客户端都很好用，多语言支持和软件交互体验也比apple music更好。缺点是个人版premium太贵</li></ul><h2 id="网络相关"><a href="#网络相关" class="headerlink" title="网络相关"></a>网络相关</h2><ul><li>代理：<code>yay -S clash-verge-rev-bin</code></li><li>内网穿透：<code>tailscale</code>，可玩性非常高，最早是由几个从谷歌离职的工程师开发的，我平时用来内网穿透，在mac上配合<code>yazi</code>远程操作我的Linux主机。<a href="https://github.com/tailscale/tailscale">github地址</a></li><li><code>syncthing</code>：多设备实时同步文件，这是一个已经维护了十年的开源项目，可靠性很高。<a href="https://github.com/syncthing/syncthing">项目地址</a>，这里的同步主要借助社区维护的中继节点完成，在中国大陆也有几十个中继节点，可以免梯子使用</li><li><code>localsend</code>：用于在同一局域网内的设备之间互传文件</li></ul><h2 id="游戏"><a href="#游戏" class="headerlink" title="游戏"></a>游戏</h2><p>我玩的这几款游戏本来就原生支持Linux，而且在Linux上运行帧数更高，所以游戏体验比辣鸡windows更好，不存在兼容性问题</p><p><img src="https://s41.ax1x.com/2026/01/07/pZdzJ5F.png"></p><p>对于osu,可以再安装一个低延迟数位板驱动</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">yay -S opentabletdriver<br><span class="hljs-built_in">sudo</span> usermod -aG input <span class="hljs-variable">$USER</span><br></code></pre></td></tr></table></figure><p>然后在游戏内设置数位板映射。</p><h2 id="密码管理"><a href="#密码管理" class="headerlink" title="密码管理"></a>密码管理</h2><ul><li><code>keepassxc</code>：跨平台的密码管理器，用于在本地离线保存各种网站的账号及密码</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Linux</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>microservices-demo项目本地部署翻墙攻略</title>
     <link href="/2025/12/22/%E9%A1%B9%E7%9B%AE%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E7%BF%BB%E5%A2%99%E6%94%BB%E7%95%A5/"/>
     <url>/2025/12/22/%E9%A1%B9%E7%9B%AE%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E7%BF%BB%E5%A2%99%E6%94%BB%E7%95%A5/</url>
@@ -104,9 +129,9 @@
     
     <tags>
       
-      <tag>Linux</tag>
-      
       <tag>折腾记录</tag>
+      
+      <tag>Linux</tag>
       
       <tag>操作系统</tag>
       
@@ -133,9 +158,9 @@
     
     <tags>
       
-      <tag>Linux</tag>
-      
       <tag>折腾记录</tag>
+      
+      <tag>Linux</tag>
       
       <tag>操作系统</tag>
       
@@ -417,9 +442,9 @@
     
     <tags>
       
-      <tag>Linux</tag>
-      
       <tag>折腾记录</tag>
+      
+      <tag>Linux</tag>
       
     </tags>
     
@@ -444,9 +469,9 @@
     
     <tags>
       
-      <tag>Linux</tag>
-      
       <tag>折腾记录</tag>
+      
+      <tag>Linux</tag>
       
     </tags>
     
@@ -596,9 +621,9 @@
     
     <tags>
       
-      <tag>Linux</tag>
-      
       <tag>折腾记录</tag>
+      
+      <tag>Linux</tag>
       
     </tags>
     
