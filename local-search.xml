@@ -8,7 +8,7 @@
     <link href="/2026/01/07/Linux%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/"/>
     <url>/2026/01/07/Linux%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/</url>
     
-    <content type="html"><![CDATA[<h2 id="办公"><a href="#办公" class="headerlink" title="办公"></a>办公</h2><p>LibreOffice</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S libreoffice-still libreoffice-still-zh-cn<br></code></pre></td></tr></table></figure><p><img src="https://s41.ax1x.com/2026/01/07/pZdxZlR.png"></p><p>可以查看和编辑 microsoft office 创建的各种文件，而且能自动加载windows上常用的微软雅黑等字体，这一点比mac强（mac每次都会提醒字体缺失）</p><h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><ul><li>终端：KDE自带终端 konsole 功能很多，但是大部分我都用不上，所以我用<code>alacritty</code>，一个用Rust写的终端，特点是极简+启动速度极快，所有个性化配置都通过一个配置文件定义，非常方便</li></ul><p><img src="https://s41.ax1x.com/2026/01/07/pZdxvND.png"></p><ul><li>vscode: <code>yay -S visual-studio-code-bin</code> vscode有多个打包版本，某些扩展只能在这个官方闭源版本中使用</li><li>jetbrains全家桶：先装这个<code>yay -S jetbrains-toolbox</code>，然后在toolbox里安装IDE</li></ul><h2 id="图像查看"><a href="#图像查看" class="headerlink" title="图像查看"></a>图像查看</h2><p>KDE自带的Gwenview体验很一般，我选择<code>Loupe</code>:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S loupe<br></code></pre></td></tr></table></figure><p>比Gwenview更简洁，更丝滑</p><h2 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h2><p>QEMU&#x2F;KVM + virt-manager，我会装一个win10虚拟机，那些一坨狗屎又不得不用的<strong>国产流氓软件</strong>（微信，QQ，百毒网盘啊嗯）通通丢到虚拟机里，一方面是因为国产软件普遍对Linux的支持极差，但是更重要的原因是我压根不想让这些毒瘤污染我的系统😃直接物理隔离得了</p><h2 id="影音"><a href="#影音" class="headerlink" title="影音"></a>影音</h2><ul><li><code>aegisub</code>：字幕编辑器</li><li><code>Kdenlive</code>：KDE社区开发的视频编辑工具</li><li><code>mpv</code>：简洁的视频播放器，可以自动识别并加载ass外挂字幕</li><li><code>obs-studio</code>：开源跨平台的直播、屏幕录制软件</li><li><code>spotify</code>：跨平台的音乐软件，不管是网页还是客户端都很好用，多语言支持和软件交互体验也比apple music更好。缺点是个人版premium太贵</li></ul><h2 id="网络相关"><a href="#网络相关" class="headerlink" title="网络相关"></a>网络相关</h2><ul><li>代理：<code>yay -S clash-verge-rev-bin</code></li><li>内网穿透：<code>tailscale</code>，可玩性非常高，最早是由几个从谷歌离职的工程师开发的，我平时用来内网穿透，在mac上配合<code>yazi</code>远程操作我的Linux主机。<a href="https://github.com/tailscale/tailscale">github地址</a></li><li><code>syncthing</code>：多设备实时同步文件，这是一个已经维护了十年的开源项目，可靠性很高。<a href="https://github.com/syncthing/syncthing">项目地址</a>，这里的同步主要借助社区维护的中继节点完成，在中国大陆也有几十个中继节点，可以免梯子使用</li><li><code>localsend</code>：用于在同一局域网内的设备之间互传文件</li></ul><h2 id="游戏"><a href="#游戏" class="headerlink" title="游戏"></a>游戏</h2><p>我玩的这几款游戏本来就原生支持Linux，而且在Linux上运行帧数更高，所以游戏体验比辣鸡windows更好，不存在兼容性问题</p><p><img src="https://s41.ax1x.com/2026/01/07/pZdzJ5F.png"></p><p>对于osu,可以再安装一个低延迟数位板驱动</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">yay -S opentabletdriver<br><span class="hljs-built_in">sudo</span> usermod -aG input <span class="hljs-variable">$USER</span><br></code></pre></td></tr></table></figure><p>然后在游戏内设置数位板映射。</p><h2 id="密码管理"><a href="#密码管理" class="headerlink" title="密码管理"></a>密码管理</h2><ul><li><code>keepassxc</code>：跨平台的密码管理器，用于在本地离线保存各种网站的账号及密码</li></ul>]]></content>
+    <content type="html"><![CDATA[<p>把Linux当作主力机使用了三个月，这里总结一下常用软件</p><span id="more"></span><h2 id="办公"><a href="#办公" class="headerlink" title="办公"></a>办公</h2><p>LibreOffice</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S libreoffice-still libreoffice-still-zh-cn<br></code></pre></td></tr></table></figure><p><img src="https://s41.ax1x.com/2026/01/07/pZdxZlR.png"></p><p>可以查看和编辑 microsoft office 创建的各种文件，而且能自动加载windows上常用的微软雅黑等字体，这一点比mac强（mac每次都会提醒字体缺失）</p><h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><ul><li>终端：KDE自带终端 konsole 功能很多，但是大部分我都用不上，所以我用<code>alacritty</code>，一个用Rust写的终端，特点是极简+启动速度极快，所有个性化配置都通过一个配置文件定义，非常方便</li></ul><p><img src="https://s41.ax1x.com/2026/01/07/pZdxvND.png"></p><ul><li>vscode: <code>yay -S visual-studio-code-bin</code> vscode有多个打包版本，某些扩展只能在这个官方闭源版本中使用</li><li>jetbrains全家桶：先装这个<code>yay -S jetbrains-toolbox</code>，然后在toolbox里安装IDE</li></ul><h2 id="图像查看"><a href="#图像查看" class="headerlink" title="图像查看"></a>图像查看</h2><p>KDE自带的Gwenview体验很一般，我选择<code>Loupe</code>:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S loupe<br></code></pre></td></tr></table></figure><p>比Gwenview更简洁，更丝滑</p><h2 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h2><p>QEMU&#x2F;KVM + virt-manager，我会装一个win10虚拟机，那些一坨狗屎又不得不用的<strong>国产流氓软件</strong>（微信，QQ，百毒网盘啊嗯）通通丢到虚拟机里，一方面是因为国产软件普遍对Linux的支持极差，但是更重要的原因是我压根不想让这些毒瘤污染我的系统😃直接物理隔离得了</p><h2 id="影音"><a href="#影音" class="headerlink" title="影音"></a>影音</h2><ul><li><code>aegisub</code>：字幕编辑器</li><li><code>Kdenlive</code>：KDE社区开发的视频编辑工具</li><li><code>mpv</code>：简洁的视频播放器，可以自动识别并加载ass外挂字幕</li><li><code>obs-studio</code>：开源跨平台的直播、屏幕录制软件</li><li><code>spotify</code>：跨平台的音乐软件，不管是网页还是客户端都很好用，多语言支持和软件交互体验也比apple music更好。缺点是个人版premium太贵</li></ul><h2 id="网络相关"><a href="#网络相关" class="headerlink" title="网络相关"></a>网络相关</h2><ul><li>代理：<code>yay -S clash-verge-rev-bin</code></li><li>内网穿透：<code>tailscale</code>，可玩性非常高，最早是由几个从谷歌离职的工程师开发的，我平时用来内网穿透，在mac上配合<code>yazi</code>远程操作我的Linux主机。<a href="https://github.com/tailscale/tailscale">github地址</a></li><li><code>syncthing</code>：多设备实时同步文件，这是一个已经维护了十年的开源项目，可靠性很高。<a href="https://github.com/syncthing/syncthing">项目地址</a>，这里的同步主要借助社区维护的中继节点完成，在中国大陆也有几十个中继节点，可以免梯子使用</li><li><code>localsend</code>：用于在同一局域网内的设备之间互传文件</li></ul><h2 id="游戏"><a href="#游戏" class="headerlink" title="游戏"></a>游戏</h2><p>我玩的这几款游戏本来就原生支持Linux，而且在Linux上运行帧数更高，所以游戏体验比辣鸡windows更好，不存在兼容性问题</p><p><img src="https://s41.ax1x.com/2026/01/07/pZdzJ5F.png"></p><p>对于osu,可以再安装一个低延迟数位板驱动</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">yay -S opentabletdriver<br><span class="hljs-built_in">sudo</span> usermod -aG input <span class="hljs-variable">$USER</span><br></code></pre></td></tr></table></figure><p>然后在游戏内设置数位板映射。</p><h2 id="密码管理"><a href="#密码管理" class="headerlink" title="密码管理"></a>密码管理</h2><ul><li><code>keepassxc</code>：跨平台的密码管理器，用于在本地离线保存各种网站的账号及密码</li></ul>]]></content>
     
     
     <categories>
@@ -54,7 +54,7 @@
     <link href="/2025/12/09/%E9%A6%99%E6%B8%AF%E6%B8%B8%E8%AE%B02/"/>
     <url>/2025/12/09/%E9%A6%99%E6%B8%AF%E6%B8%B8%E8%AE%B02/</url>
     
-    <content type="html"><![CDATA[<h2 id="行程规划"><a href="#行程规划" class="headerlink" title="行程规划"></a>行程规划</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><ul><li>化物语全套</li><li>伊藤润二漩涡</li><li>浅野一二零SOLANIN</li><li>剑风画集</li><li>约战</li></ul><h3 id="海关"><a href="#海关" class="headerlink" title="海关"></a>海关</h3><p>8u:</p><ul><li>深圳湾口岸非常松，福田罗湖也可，全看运气。不过我买的这些书在某宝基本都能买到，所以不用担心</li><li>关闸❌</li><li>下午六点左右是高峰期，这时过海关不容易被注意到</li></ul><p>为了方便起见直接走罗湖口岸</p><h3 id="书店"><a href="#书店" class="headerlink" title="书店"></a>书店</h3><ul><li><strong>漫画王</strong>（<strong>可支付宝</strong>，旧书为主，老板人好）<strong>旺角永利工业大厦2楼</strong>。出电梯门右拐</li><li><strong>纸本分格</strong>小而精的实体店，周三到周五下午三点，周末下午两点开始营业。位置：觀塘敬業街敬運工業大厦65-67號11A室</li><li><strong>阿林书屋</strong>（二手，种类齐全，白菜价，超级多老东西，可支付宝，fb看开店信息，老板社交恐怖分子）开放时间：周一五六日，12:30~19.30，位置比较偏</li><li>123漫画店，老爷爷热情会说普通话推荐书。</li><li><strong>漫批(漫画批发市场有限公司)</strong>，港版首选，也有热门的台办，买书总价打九折还抹零。跟货物一起走货梯，<strong>业广工商大厦7A</strong>，6点下班，<strong>可线上支付</strong>，有伊藤润二的书。营业时间周一到周六，周六只到14:00</li><li><strong>信和中心</strong>，<ul><li>包含四家店：至goal club、雲起、一代匯集（包含兩家，夾著雲起），雲起老板态度很差！</li><li>十一点半还没开门，<strong>可支付宝</strong>，<strong>新书多</strong>。</li><li>信和中心位于旺角和油麻地地铁站之间，做扶手电梯上到顶楼</li><li>主要卖<strong>台版漫画小说</strong>，云起有少量本子。</li><li>一两家二手书店，主要卖老的漫画有台版港版。信和中心店铺在12后陆续开门。</li><li>信和四楼有卖CD的</li></ul></li><li>屯门书轩<ul><li>建议路线：地铁屯麻线到屯门，然后坐轻轨到屯门泳池站，步行一百米到达大厦。这个和YOHO MALL顺路，等什么时候再去那边看电影的时候再去吧</li><li>老板态度好，前台小姐姐有问必答女店员态度不好</li></ul></li></ul><p>根据8u的信息，买全套的话推荐屯门书轩、<strong>漫画王</strong>，而且因为前段时间化物语再版了，所以估计<strong>信和</strong>也有。</p><h2 id="路线规划"><a href="#路线规划" class="headerlink" title="路线规划"></a>路线规划</h2><p>1号线——罗湖站——罗湖口岸——东铁线（金钟方向）——九龙塘站换乘——观塘线——旺角，共计2小时</p><p>先去信和（主要是一代汇集），再去漫画王</p><p><img src="https://i.imgur.com/z66iPm8.png"></p><p>从旺角地铁站A口出来，按导航走，有个路口要上一个天桥，找到绿色的大楼就是业广工业大厦。</p><p>回去的时候原路返回就好</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="行程规划"><a href="#行程规划" class="headerlink" title="行程规划"></a>行程规划</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><ul><li>化物语全套</li><li>伊藤润二漩涡</li><li>浅野一二零SOLANIN</li><li>剑风画集</li><li>约战</li></ul><h3 id="海关"><a href="#海关" class="headerlink" title="海关"></a>海关</h3><p>8u:</p><ul><li>深圳湾口岸非常松，福田罗湖也可，全看运气。不过我买的这些书在某宝基本都能买到，所以不用担心</li><li>关闸❌</li><li>下午六点左右是高峰期，这时过海关不容易被注意到</li></ul><p>为了方便起见直接走罗湖口岸</p><h3 id="书店"><a href="#书店" class="headerlink" title="书店"></a>书店</h3><ul><li><strong>漫画王</strong>（<strong>可支付宝</strong>，旧书为主，老板人好）<strong>旺角永利工业大厦2楼</strong>。出电梯门右拐</li><li><strong>纸本分格</strong>小而精的实体店，周三到周五下午三点，周末下午两点开始营业。位置：觀塘敬業街敬運工業大厦65-67號11A室</li><li><strong>阿林书屋</strong>（二手，种类齐全，白菜价，超级多老东西，可支付宝，fb看开店信息，老板社交恐怖分子）开放时间：周一五六日，12:30~19.30，位置比较偏</li><li>123漫画店，老爷爷热情会说普通话推荐书。</li><li><strong>漫批(漫画批发市场有限公司)</strong>，港版首选，也有热门的台办，买书总价打九折还抹零。跟货物一起走货梯，<strong>业广工商大厦7A</strong>，6点下班，<strong>可线上支付</strong>，有伊藤润二的书。营业时间周一到周六，周六只到14:00</li><li><strong>信和中心</strong>，<ul><li>包含四家店：至goal club、雲起、一代匯集（包含兩家，夾著雲起），雲起老板态度很差！</li><li>十一点半还没开门，<strong>可支付宝</strong>，<strong>新书多</strong>。</li><li>信和中心位于旺角和油麻地地铁站之间，做扶手电梯上到顶楼</li><li>主要卖<strong>台版漫画小说</strong>，云起有少量本子。</li><li>一两家二手书店，主要卖老的漫画有台版港版。信和中心店铺在12后陆续开门。</li><li>信和四楼有卖CD的</li></ul></li><li>屯门书轩<ul><li>建议路线：地铁屯麻线到屯门，然后坐轻轨到屯门泳池站，步行一百米到达大厦。这个和YOHO MALL顺路，等什么时候再去那边看电影的时候再去吧</li><li>老板态度好，前台小姐姐有问必答女店员态度不好</li></ul></li></ul><p>根据8u的信息，买全套的话推荐屯门书轩、<strong>漫画王</strong>，而且因为前段时间化物语再版了，所以估计<strong>信和</strong>也有。</p><h2 id="路线规划"><a href="#路线规划" class="headerlink" title="路线规划"></a>路线规划</h2><p>1号线——罗湖站——罗湖口岸——东铁线（金钟方向）——九龙塘站换乘——观塘线——旺角，共计2小时</p><p>先去信和（主要是一代汇集），再去漫画王</p><p><img src="https://i.imgur.com/z66iPm8.png"></p><p>从旺角地铁站A口出来，按导航走，有个路口要上一个天桥，找到绿色的大楼就是业广工业大厦。</p><p>回去的时候原路返回就好</p><h2 id="实际路线"><a href="#实际路线" class="headerlink" title="实际路线"></a>实际路线</h2><p>出发当天下雨了，惨（明明已经一个月都没下过雨了啊）。结果坐地铁到上水站线上开了众安和中银香港的银行账户之后就回去了😇</p>]]></content>
     
     
     
@@ -129,9 +129,9 @@
     
     <tags>
       
-      <tag>折腾记录</tag>
-      
       <tag>Linux</tag>
+      
+      <tag>折腾记录</tag>
       
       <tag>操作系统</tag>
       
@@ -158,9 +158,9 @@
     
     <tags>
       
-      <tag>折腾记录</tag>
-      
       <tag>Linux</tag>
+      
+      <tag>折腾记录</tag>
       
       <tag>操作系统</tag>
       
@@ -442,9 +442,9 @@
     
     <tags>
       
-      <tag>折腾记录</tag>
-      
       <tag>Linux</tag>
+      
+      <tag>折腾记录</tag>
       
     </tags>
     
@@ -469,9 +469,9 @@
     
     <tags>
       
-      <tag>折腾记录</tag>
-      
       <tag>Linux</tag>
+      
+      <tag>折腾记录</tag>
       
     </tags>
     
@@ -621,9 +621,9 @@
     
     <tags>
       
-      <tag>折腾记录</tag>
-      
       <tag>Linux</tag>
+      
+      <tag>折腾记录</tag>
       
     </tags>
     
