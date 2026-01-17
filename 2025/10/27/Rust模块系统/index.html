@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="en" data-default-color-scheme=auto>
 
 
 
@@ -20,7 +20,7 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="banyee">
+  <meta name="author" content="kznLeaf">
   <meta name="keywords" content="">
   
     <meta name="description" content="Rust模块系统总览Rust的模块系统包括：  Packages: Cargo的一个功能，允许你 build test share crate Crates： 单元包&#x2F;程序包，由一棵模块树组成，可以生成库（library）或可执行文件 Modules and use：模块和use关键字，可以控制路径的组织方式，作用域和可见性 Paths：一种命名事物的方式，例如结构体，函数或者模块  c">
@@ -29,10 +29,10 @@
 <meta property="og:url" content="https://kznleaf.top/2025/10/27/Rust%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="Rust模块系统总览Rust的模块系统包括：  Packages: Cargo的一个功能，允许你 build test share crate Crates： 单元包&#x2F;程序包，由一棵模块树组成，可以生成库（library）或可执行文件 Modules and use：模块和use关键字，可以控制路径的组织方式，作用域和可见性 Paths：一种命名事物的方式，例如结构体，函数或者模块  c">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-10-26T16:43:32.000Z">
 <meta property="article:modified_time" content="2025-10-26T16:45:17.343Z">
-<meta property="article:author" content="banyee">
+<meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="Rust">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -154,7 +154,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
+                <span>Home</span>
               </a>
             </li>
           
@@ -166,7 +166,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
+                <span>Archives</span>
               </a>
             </li>
           
@@ -178,7 +178,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
+                <span>Categories</span>
               </a>
             </li>
           
@@ -190,7 +190,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
+                <span>Tags</span>
               </a>
             </li>
           
@@ -202,7 +202,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
+                <span>About</span>
               </a>
             </li>
           
@@ -214,7 +214,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/links/" target="_self">
                 <i class="iconfont icon-link-fill"></i>
-                <span>友链</span>
+                <span>Links</span>
               </a>
             </li>
           
@@ -260,7 +260,7 @@
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
         <time datetime="2025-10-27 00:43" pubdate>
-          2025年10月27日 凌晨
+          October 27, 2025 am
         </time>
       </span>
     
@@ -271,7 +271,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k 字
+          2.3k words
         
       </span>
     
@@ -282,7 +282,7 @@
         
         
         
-          20 分钟
+          20 mins
         
       </span>
     
@@ -292,7 +292,7 @@
       
         <span id="leancloud-page-views-container" class="post-meta" style="display: none">
           <i class="iconfont icon-eye" aria-hidden="true"></i>
-          <span id="leancloud-page-views"></span> 次
+          <span id="leancloud-page-views"></span> views
         </span>
         
       
@@ -509,26 +509,26 @@
     <div class="license-meta">
       
         <div class="license-meta-item">
-          <div>作者</div>
-          <div>banyee</div>
+          <div>Author</div>
+          <div>kznLeaf</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2025年10月27日</div>
+          <div>Posted on</div>
+          <div>October 27, 2025</div>
         </div>
       
       
       
         <div class="license-meta-item">
-          <div>许可协议</div>
+          <div>Licensed under</div>
           <div>
             
               
               
                 <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
                     <i class="iconfont icon-cc-by"></i>
                   </span>
                 </a>
@@ -551,7 +551,7 @@
                       <a href="/2025/11/21/%E9%A6%99%E6%B8%AF%E6%B8%B8%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" title="香港游记（一）">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">香港游记（一）</span>
-                        <span class="visible-mobile">上一篇</span>
+                        <span class="visible-mobile">Previous</span>
                       </a>
                     
                   </article>
@@ -560,7 +560,7 @@
                     
                       <a href="/2025/10/04/niri%E8%BF%9B%E9%98%B6%E5%AE%89%E8%A3%85/" title="ArchLinux - niri 进阶安装&amp;问题汇总">
                         <span class="hidden-mobile">ArchLinux - niri 进阶安装&amp;问题汇总</span>
-                        <span class="visible-mobile">下一篇</span>
+                        <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
@@ -616,7 +616,7 @@
     <div id="toc">
   <p class="toc-header">
     <i class="iconfont icon-list"></i>
-    <span>目录</span>
+    <span>Table of Contents</span>
   </p>
   <div class="toc-body" id="toc-body"></div>
 </div>
@@ -672,7 +672,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -680,7 +680,7 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -839,7 +839,7 @@
   
 
   <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
   </noscript>
 <!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
 </html>
