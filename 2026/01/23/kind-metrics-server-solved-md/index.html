@@ -1,0 +1,733 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
+  <link rel="icon" href="/img/tree.png">
+  
+    <link rel="canonical" href="https://kznleaf.top/2026/01/23/kind-metrics-server-solved-md/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="kznLeaf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="kubectl提供了一个性能分析工具，可以查看当前所有节点的资源占用情况： 1kubectl top pods  但是使用这个命令的前提是安装了metrics-server插件，否则报错：error: Metrics API not available。 minikube的安装该插件的方式见 https:&#x2F;&#x2F;kubernetes.io&#x2F;docs&#x2F;tutorials&#x2F;hello-minikube&#x2F;的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kind+metrics-server性能分析插件在中国大陆环境的安装方法">
+<meta property="og:url" content="https://kznleaf.top/2026/01/23/kind-metrics-server-solved-md/index.html">
+<meta property="og:site_name" content="絆叶の片隅">
+<meta property="og:description" content="kubectl提供了一个性能分析工具，可以查看当前所有节点的资源占用情况： 1kubectl top pods  但是使用这个命令的前提是安装了metrics-server插件，否则报错：error: Metrics API not available。 minikube的安装该插件的方式见 https:&#x2F;&#x2F;kubernetes.io&#x2F;docs&#x2F;tutorials&#x2F;hello-minikube&#x2F;的">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-01-23T07:45:55.000Z">
+<meta property="article:modified_time" content="2026-01-23T08:00:09.731Z">
+<meta property="article:author" content="kznLeaf">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="FUCKGFW">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>kind+metrics-server性能分析插件在中国大陆环境的安装方法 - 絆叶の片隅</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/macBorder.css">
+<link rel="stylesheet" href="/css/sign.css">
+<link rel="stylesheet" href="/css/backgroundize.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"Rs1qykYBxQwdjhZkWVB3fq7t-MdYXbMMI","app_key":"i1fqxvrusqbCUHDrnC4iGszb","server_url":"https://rs1qykyb.api.lncldglobal.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+
+  <div id="Loadanimation" style="z-index:999999;">
+    <div id="Loadanimation-center">
+       <div id="Loadanimation-center-absolute">
+           <div class="xccx_object" id="xccx_four"></div>
+           <div class="xccx_object" id="xccx_three"></div>
+           <div class="xccx_object" id="xccx_two"></div>
+           <div class="xccx_object" id="xccx_one"></div>
+       </div>
+    </div>
+    </div>
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>banyee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Links</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">kind+metrics-server性能分析插件在中国大陆环境的安装方法</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-01-23 15:45" pubdate>
+          January 23, 2026 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          656 words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          6 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> views
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">kind+metrics-server性能分析插件在中国大陆环境的安装方法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>kubectl提供了一个性能分析工具，可以查看当前所有节点的资源占用情况：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">kubectl top pods<br></code></pre></td></tr></table></figure>
+
+<p>但是使用这个命令的前提是安装了<code>metrics-server</code>插件，否则报错：<code>error: Metrics API not available</code>。</p>
+<p><code>minikube</code>的安装该插件的方式见 <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/tutorials/hello-minikube/">https://kubernetes.io/docs/tutorials/hello-minikube/</a>的Enable addons章节，这里说一下在畸形网络环境中为<code>kind</code>安装。</p>
+<h2 id="集群状态"><a href="#集群状态" class="headerlink" title="集群状态"></a>集群状态</h2><p>共三个节点，其中一个控制平面，另外两个作冗余备份：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ kubectl get nodes<br>NAME                 STATUS   ROLES           AGE   VERSION<br>test-control-plane   Ready    control-plane   19h   v1.34.0<br>test-worker          Ready    &lt;none&gt;          19h   v1.34.0<br>test-worker2         Ready    &lt;none&gt;          19h   v1.34.0<br></code></pre></td></tr></table></figure>
+
+<p>这些节点运行在本地Linux机器中，使用docker daemon构建。</p>
+<h2 id="kind安装性能分析插件的方法"><a href="#kind安装性能分析插件的方法" class="headerlink" title="kind安装性能分析插件的方法"></a>kind安装性能分析插件的方法</h2><p>先手动拉取<code>metrics-server</code>镜像，否则后续会出现<code>ImagePullBackOff</code>或者<code>ErrImagePull</code>错误：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 手动从阿里云拉取镜像</span><br>docker pull registry.aliyuncs.com/google_containers/metrics-server:v0.8.0<br><span class="hljs-comment"># 打tag</span><br>docker tag registry.aliyuncs.com/google_containers/metrics-server:v0.8.0 registry.k8s.io/metrics-server/metrics-server:v0.8.0<br></code></pre></td></tr></table></figure>
+
+<p>至于tag该取什么名字，自己去看 <a target="_blank" rel="noopener" href="https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.8.0/components.yaml">https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.8.0/components.yaml</a> 中需要拉取什么image就行</p>
+<p>下一步是把<code>metrics-server</code>加载到<strong>集群中的每个节点</strong>。正常来说用<code>kind load</code>命令就行，但是这个命令有<a target="_blank" rel="noopener" href="https://github.com/kubernetes-sigs/kind/issues/2402">bug</a>，至少我这边还没有被修复。替代命令如下，每个节点都要执行一遍：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 由于 kind load 命令有bug会导致加载失败，需要手动把image加载到集群中的所有节点</span><br>docker save registry.k8s.io/metrics-server/metrics-server:v0.8.0 | docker <span class="hljs-built_in">exec</span> -i test-control-plane ctr -n k8s.io images import -<br>docker save registry.k8s.io/metrics-server/metrics-server:v0.8.0 | docker <span class="hljs-built_in">exec</span> -i test-worker ctr -n k8s.io images import -<br>docker save registry.k8s.io/metrics-server/metrics-server:v0.8.0 | docker <span class="hljs-built_in">exec</span> -i test-worker2 ctr -n k8s.io images import -<br><span class="hljs-comment"># 验证镜像已经存在于所有节点</span><br>docker <span class="hljs-built_in">exec</span> test-control-plane crictl images | grep metrics<br>docker <span class="hljs-built_in">exec</span> test-worker crictl images | grep metrics  <br>docker <span class="hljs-built_in">exec</span> test-worker2 crictl images | grep metrics<br></code></pre></td></tr></table></figure>
+
+<p>然后参考<a target="_blank" rel="noopener" href="https://gist.github.com/sanketsudake/a089e691286bf2189bfedf295222bd43">这里</a>,创建文件<code>kustomization.yaml</code>，内容如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># kustomization.yaml</span><br><span class="hljs-comment"># kubectl apply -k .</span><br><span class="hljs-attr">resources:</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.8.0/components.yaml</span><br><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">kustomize.config.k8s.io/v1beta1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Kustomization</span><br><span class="hljs-attr">patches:</span><br><span class="hljs-bullet">-</span> <span class="hljs-attr">patch:</span> <span class="hljs-string">|-</span><br><span class="hljs-string">    - op: add</span><br><span class="hljs-string">      path: /spec/template/spec/containers/0/args/-</span><br><span class="hljs-string">      value: --kubelet-insecure-tls</span><br><span class="hljs-string"></span>  <span class="hljs-attr">target:</span><br>    <span class="hljs-attr">group:</span> <span class="hljs-string">apps</span><br>    <span class="hljs-attr">kind:</span> <span class="hljs-string">Deployment</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">metrics-server</span><br>    <span class="hljs-attr">namespace:</span> <span class="hljs-string">kube-system</span><br>    <span class="hljs-attr">version:</span> <span class="hljs-string">v1</span><br></code></pre></td></tr></table></figure>
+
+<p>最后执行下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">kubectl apply -k .<br></code></pre></td></tr></table></figure>
+
+<p>查看运行状态：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ kubectl get pods -n kube-system -l k8s-app=metrics-server -w<br>NAME                              READY   STATUS    RESTARTS   AGE<br>metrics-server-576c8c997c-rjcdk   1/1     Running   0          59s<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ kubectl get pod,svc -n kube-system<br>NAME                                             READY   STATUS    RESTARTS        AGE<br>pod/coredns-66bc5c9577-57ljf                     1/1     Running   1 (3h21m ago)   19h<br>pod/coredns-66bc5c9577-q9jjg                     1/1     Running   1 (3h21m ago)   19h<br>pod/etcd-test-control-plane                      1/1     Running   0               3h21m<br>pod/kindnet-f9m7n                                1/1     Running   1 (3h21m ago)   19h<br>pod/kindnet-g26mq                                1/1     Running   1 (3h21m ago)   19h<br>pod/kindnet-l6k5b                                1/1     Running   1 (3h21m ago)   19h<br>pod/kube-apiserver-test-control-plane            1/1     Running   0               3h21m<br>pod/kube-controller-manager-test-control-plane   1/1     Running   1 (3h21m ago)   19h<br>pod/kube-proxy-5k8lk                             1/1     Running   1 (3h21m ago)   19h<br>pod/kube-proxy-84xp5                             1/1     Running   1 (3h21m ago)   19h<br>pod/kube-proxy-lzt2g                             1/1     Running   1 (3h21m ago)   19h<br>pod/kube-scheduler-test-control-plane            1/1     Running   1 (3h21m ago)   19h<br>pod/metrics-server-576c8c997c-rjcdk              1/1     Running   0               2m50s<br><br>NAME                     TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                  AGE<br>service/kube-dns         ClusterIP   10.96.0.10      &lt;none&gt;        53/UDP,53/TCP,9153/TCP   19h<br>service/metrics-server   ClusterIP   10.96.226.136   &lt;none&gt;        443/TCP                  50m<br></code></pre></td></tr></table></figure>
+
+<p>看到<code>Running</code>说明成功了。</p>
+<p>最后终于可以使用性能分析工具了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ kubectl top pods<br>NAME                   CPU(cores)   MEMORY(bytes)<br>web-6df8b8dbcb-8t27b   0m           35Mi<br>web-6df8b8dbcb-n789m   1m           35Mi<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+        <a href="/tags/FUCKGFW/" class="print-no-link">#FUCKGFW</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>kind+metrics-server性能分析插件在中国大陆环境的安装方法</div>
+      <div>https://kznleaf.top/2026/01/23/kind-metrics-server-solved-md/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>kznLeaf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 23, 2026</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/01/23/%E7%BF%BB%E8%AF%91-%E9%AD%94%E5%A4%9COST/" title="中文翻译-「魔法使いの夜」OST BK">
+                        <span class="hidden-mobile">中文翻译-「魔法使いの夜」OST BK</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'kznLeaf/kznLeaf.github.io');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'Comment');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/vvd_js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+<script src="/js/sign.js"></script>
+<script src="/js/backgroundize.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>

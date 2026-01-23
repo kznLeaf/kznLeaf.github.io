@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>kind+metrics-server性能分析插件在中国大陆环境的安装方法</title>
+    <link href="/2026/01/23/kind-metrics-server-solved-md/"/>
+    <url>/2026/01/23/kind-metrics-server-solved-md/</url>
+    
+    <content type="html"><![CDATA[<p>kubectl提供了一个性能分析工具，可以查看当前所有节点的资源占用情况：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">kubectl top pods<br></code></pre></td></tr></table></figure><p>但是使用这个命令的前提是安装了<code>metrics-server</code>插件，否则报错：<code>error: Metrics API not available</code>。</p><p><code>minikube</code>的安装该插件的方式见 <a href="https://kubernetes.io/docs/tutorials/hello-minikube/">https://kubernetes.io/docs/tutorials/hello-minikube/</a>的Enable addons章节，这里说一下在畸形网络环境中为<code>kind</code>安装。</p><h2 id="集群状态"><a href="#集群状态" class="headerlink" title="集群状态"></a>集群状态</h2><p>共三个节点，其中一个控制平面，另外两个作冗余备份：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ kubectl get nodes<br>NAME                 STATUS   ROLES           AGE   VERSION<br>test-control-plane   Ready    control-plane   19h   v1.34.0<br>test-worker          Ready    &lt;none&gt;          19h   v1.34.0<br>test-worker2         Ready    &lt;none&gt;          19h   v1.34.0<br></code></pre></td></tr></table></figure><p>这些节点运行在本地Linux机器中，使用docker daemon构建。</p><h2 id="kind安装性能分析插件的方法"><a href="#kind安装性能分析插件的方法" class="headerlink" title="kind安装性能分析插件的方法"></a>kind安装性能分析插件的方法</h2><p>先手动拉取<code>metrics-server</code>镜像，否则后续会出现<code>ImagePullBackOff</code>或者<code>ErrImagePull</code>错误：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 手动从阿里云拉取镜像</span><br>docker pull registry.aliyuncs.com/google_containers/metrics-server:v0.8.0<br><span class="hljs-comment"># 打tag</span><br>docker tag registry.aliyuncs.com/google_containers/metrics-server:v0.8.0 registry.k8s.io/metrics-server/metrics-server:v0.8.0<br></code></pre></td></tr></table></figure><p>至于tag该取什么名字，自己去看 <a href="https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.8.0/components.yaml">https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.8.0/components.yaml</a> 中需要拉取什么image就行</p><p>下一步是把<code>metrics-server</code>加载到<strong>集群中的每个节点</strong>。正常来说用<code>kind load</code>命令就行，但是这个命令有<a href="https://github.com/kubernetes-sigs/kind/issues/2402">bug</a>，至少我这边还没有被修复。替代命令如下，每个节点都要执行一遍：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 由于 kind load 命令有bug会导致加载失败，需要手动把image加载到集群中的所有节点</span><br>docker save registry.k8s.io/metrics-server/metrics-server:v0.8.0 | docker <span class="hljs-built_in">exec</span> -i test-control-plane ctr -n k8s.io images import -<br>docker save registry.k8s.io/metrics-server/metrics-server:v0.8.0 | docker <span class="hljs-built_in">exec</span> -i test-worker ctr -n k8s.io images import -<br>docker save registry.k8s.io/metrics-server/metrics-server:v0.8.0 | docker <span class="hljs-built_in">exec</span> -i test-worker2 ctr -n k8s.io images import -<br><span class="hljs-comment"># 验证镜像已经存在于所有节点</span><br>docker <span class="hljs-built_in">exec</span> test-control-plane crictl images | grep metrics<br>docker <span class="hljs-built_in">exec</span> test-worker crictl images | grep metrics  <br>docker <span class="hljs-built_in">exec</span> test-worker2 crictl images | grep metrics<br></code></pre></td></tr></table></figure><p>然后参考<a href="https://gist.github.com/sanketsudake/a089e691286bf2189bfedf295222bd43">这里</a>,创建文件<code>kustomization.yaml</code>，内容如下：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># kustomization.yaml</span><br><span class="hljs-comment"># kubectl apply -k .</span><br><span class="hljs-attr">resources:</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.8.0/components.yaml</span><br><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">kustomize.config.k8s.io/v1beta1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Kustomization</span><br><span class="hljs-attr">patches:</span><br><span class="hljs-bullet">-</span> <span class="hljs-attr">patch:</span> <span class="hljs-string">|-</span><br><span class="hljs-string">    - op: add</span><br><span class="hljs-string">      path: /spec/template/spec/containers/0/args/-</span><br><span class="hljs-string">      value: --kubelet-insecure-tls</span><br><span class="hljs-string"></span>  <span class="hljs-attr">target:</span><br>    <span class="hljs-attr">group:</span> <span class="hljs-string">apps</span><br>    <span class="hljs-attr">kind:</span> <span class="hljs-string">Deployment</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">metrics-server</span><br>    <span class="hljs-attr">namespace:</span> <span class="hljs-string">kube-system</span><br>    <span class="hljs-attr">version:</span> <span class="hljs-string">v1</span><br></code></pre></td></tr></table></figure><p>最后执行下面的命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">kubectl apply -k .<br></code></pre></td></tr></table></figure><p>查看运行状态：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ kubectl get pods -n kube-system -l k8s-app=metrics-server -w<br>NAME                              READY   STATUS    RESTARTS   AGE<br>metrics-server-576c8c997c-rjcdk   1/1     Running   0          59s<br></code></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ kubectl get pod,svc -n kube-system<br>NAME                                             READY   STATUS    RESTARTS        AGE<br>pod/coredns-66bc5c9577-57ljf                     1/1     Running   1 (3h21m ago)   19h<br>pod/coredns-66bc5c9577-q9jjg                     1/1     Running   1 (3h21m ago)   19h<br>pod/etcd-test-control-plane                      1/1     Running   0               3h21m<br>pod/kindnet-f9m7n                                1/1     Running   1 (3h21m ago)   19h<br>pod/kindnet-g26mq                                1/1     Running   1 (3h21m ago)   19h<br>pod/kindnet-l6k5b                                1/1     Running   1 (3h21m ago)   19h<br>pod/kube-apiserver-test-control-plane            1/1     Running   0               3h21m<br>pod/kube-controller-manager-test-control-plane   1/1     Running   1 (3h21m ago)   19h<br>pod/kube-proxy-5k8lk                             1/1     Running   1 (3h21m ago)   19h<br>pod/kube-proxy-84xp5                             1/1     Running   1 (3h21m ago)   19h<br>pod/kube-proxy-lzt2g                             1/1     Running   1 (3h21m ago)   19h<br>pod/kube-scheduler-test-control-plane            1/1     Running   1 (3h21m ago)   19h<br>pod/metrics-server-576c8c997c-rjcdk              1/1     Running   0               2m50s<br><br>NAME                     TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                  AGE<br>service/kube-dns         ClusterIP   10.96.0.10      &lt;none&gt;        53/UDP,53/TCP,9153/TCP   19h<br>service/metrics-server   ClusterIP   10.96.226.136   &lt;none&gt;        443/TCP                  50m<br></code></pre></td></tr></table></figure><p>看到<code>Running</code>说明成功了。</p><p>最后终于可以使用性能分析工具了：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ kubectl top pods<br>NAME                   CPU(cores)   MEMORY(bytes)<br>web-6df8b8dbcb-8t27b   0m           35Mi<br>web-6df8b8dbcb-n789m   1m           35Mi<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Linux</tag>
+      
+      <tag>FUCKGFW</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>中文翻译-「魔法使いの夜」OST BK</title>
     <link href="/2026/01/23/%E7%BF%BB%E8%AF%91-%E9%AD%94%E5%A4%9COST/"/>
     <url>/2026/01/23/%E7%BF%BB%E8%AF%91-%E9%AD%94%E5%A4%9COST/</url>
@@ -59,6 +80,8 @@
     <tags>
       
       <tag>Linux</tag>
+      
+      <tag>FUCKGFW</tag>
       
     </tags>
     
@@ -146,9 +169,9 @@
     
     <tags>
       
-      <tag>Linux</tag>
-      
       <tag>折腾记录</tag>
+      
+      <tag>Linux</tag>
       
       <tag>操作系统</tag>
       
@@ -175,9 +198,9 @@
     
     <tags>
       
-      <tag>Linux</tag>
-      
       <tag>折腾记录</tag>
+      
+      <tag>Linux</tag>
       
       <tag>操作系统</tag>
       
@@ -459,9 +482,9 @@
     
     <tags>
       
-      <tag>Linux</tag>
-      
       <tag>折腾记录</tag>
+      
+      <tag>Linux</tag>
       
     </tags>
     
@@ -486,9 +509,9 @@
     
     <tags>
       
-      <tag>Linux</tag>
-      
       <tag>折腾记录</tag>
+      
+      <tag>Linux</tag>
       
     </tags>
     
@@ -638,9 +661,9 @@
     
     <tags>
       
-      <tag>Linux</tag>
-      
       <tag>折腾记录</tag>
+      
+      <tag>Linux</tag>
       
     </tags>
     
