@@ -1,0 +1,798 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/tree.png">
+  <link rel="icon" href="/img/tree.png">
+  
+    <link rel="canonical" href="https://kznleaf.top/2026/02/27/搜索引擎配置指南/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="kznLeaf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="“The only ‘AI’ I want in my browser is Actually Internet”">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Firefox+Startpage+uBlacklist打造极简、纯净、NO AIslop的高效搜索引擎">
+<meta property="og:url" content="https://kznleaf.top/2026/02/27/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="絆叶の片隅">
+<meta property="og:description" content="“The only ‘AI’ I want in my browser is Actually Internet”">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s41.ax1x.com/2026/02/26/pZxTHaQ.png">
+<meta property="og:image" content="https://s41.ax1x.com/2026/02/26/pZxT5Kf.png">
+<meta property="og:image" content="https://s41.ax1x.com/2026/02/27/pZz1gG8.png">
+<meta property="og:image" content="https://i.imgur.com/hMyaCLe.png">
+<meta property="og:image" content="https://i.imgur.com/YNHXfbq.png">
+<meta property="og:image" content="https://s41.ax1x.com/2026/02/27/pZz1hrj.png">
+<meta property="og:image" content="https://s41.ax1x.com/2026/02/27/pZz3FzD.png">
+<meta property="og:image" content="https://s41.ax1x.com/2026/02/27/pZz3EsH.png">
+<meta property="og:image" content="https://s41.ax1x.com/2026/02/27/pZz3x1S.png">
+<meta property="og:image" content="https://s41.ax1x.com/2026/02/27/pZz8BNt.png">
+<meta property="og:image" content="https://i.imgur.com/HNuozfL.png">
+<meta property="og:image" content="https://i.imgur.com/st7xPe6.png">
+<meta property="og:image" content="https://i.imgur.com/QTpiuYI.png">
+<meta property="og:image" content="https://i.imgur.com/T0cgAZP.png">
+<meta property="article:published_time" content="2026-02-27T05:07:57.000Z">
+<meta property="article:modified_time" content="2026-02-27T07:46:56.030Z">
+<meta property="article:author" content="kznLeaf">
+<meta property="article:tag" content="FUCKGFW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s41.ax1x.com/2026/02/26/pZxTHaQ.png">
+  
+  
+  
+  <title>Firefox+Startpage+uBlacklist打造极简、纯净、NO AIslop的高效搜索引擎 - 絆叶の片隅</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/css/macBorder.css">
+<link rel="stylesheet" href="/css/sign.css">
+<link rel="stylesheet" href="/css/backgroundize.css">
+<link rel="stylesheet" href="/css/arch-wiki-icon/arch.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"kznleaf.top","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":false,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"Rs1qykYBxQwdjhZkWVB3fq7t-MdYXbMMI","app_key":"i1fqxvrusqbCUHDrnC4iGszb","server_url":"https://rs1qykyb.api.lncldglobal.com","path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+
+  <div id="Loadanimation" style="z-index:999999;">
+    <div id="Loadanimation-center">
+       <div id="Loadanimation-center-absolute">
+           <div class="xccx_object" id="xccx_four"></div>
+           <div class="xccx_object" id="xccx_three"></div>
+           <div class="xccx_object" id="xccx_two"></div>
+           <div class="xccx_object" id="xccx_one"></div>
+       </div>
+    </div>
+    </div>
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>banyee&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Links</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Firefox+Startpage+uBlacklist打造极简、纯净、NO AIslop的高效搜索引擎</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-02-27 13:07" pubdate>
+          February 27, 2026 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.5k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> views
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Firefox+Startpage+uBlacklist打造极简、纯净、NO AIslop的高效搜索引擎</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><em><strong>“The only ‘AI’ I want in my browser is Actually Internet”</strong></em></p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今年2月2日，Mozilla 宣布将在 Firefox 的下一个版本中提供一个选项，<strong>允许用户完全禁用AI功能</strong>。</p>
+<p><img src="https://s41.ax1x.com/2026/02/26/pZxTHaQ.png" srcset="/img/loading.gif" lazyload></p>
+<p>Firefox 负责人 Ajit Varma 在<a target="_blank" rel="noopener" href="https://www.bleepingcomputer.com/news/software/mozilla-will-let-you-turn-off-all-firefox-ai-features/">这篇文章</a>中提到：</p>
+<blockquote>
+<p><strong>很多用户表示自己根本不想与 AI 扯上关系，也有一些用户希望希望使用真正有用的 AI 工具</strong>。倾听社区的声音，加上我们一直以来承诺为用户提供更多选择，促使我们开发了 AI 控制选项。</p>
+</blockquote>
+<p>于是，2月26日，Firefox浏览器正式推出屏蔽AI功能的选项。我在更新了Linux版本的Firefox之后的第一件事就是启用这个开关：</p>
+<p><img src="https://s41.ax1x.com/2026/02/26/pZxT5Kf.png" srcset="/img/loading.gif" lazyload></p>
+<p>至此终于补全了完美搜索引擎的最后一块拼图。</p>
+<p>其实这篇博客我上个月就打算写了，但是感觉还是自己深度使用一个月之后再写会比较合理，再加上Firefox也更新了新版本，于是一起写了出来。</p>
+<h2 id="Why-NOT-Google"><a href="#Why-NOT-Google" class="headerlink" title="Why NOT Google"></a>Why NOT Google</h2><p>首先应当说明，如果将 Google 和百毒、夸克、cn.bing.com等一众搜索引擎横向对比的话，它仍然算得上是最优秀的搜索引擎。之所以抛弃 Google,是因为和过去的它自己纵向对比，Google在 AI 兴起之后做了非常多恶化用户体验的烂活，最具代表性的就是AI概览：</p>
+<p><img src="https://s41.ax1x.com/2026/02/27/pZz1gG8.png" srcset="/img/loading.gif" lazyload alt="最幽默的是AI概览会总结怎么关闭AI概览"></p>
+<p>看起来AI概览能够从搜索结果中提取关键信息提高用户效率，但是就我个人体验来说，我几乎从来不会看AI概览一眼，原因也很简单：<strong>我明明只要向下滑动一下页面就能看到由人类用户给出的可信程度和详细程度都远胜于AI的回答，为什么还要去听信机器生成的有概率出现幻觉的答案？</strong> AI概览不仅不会给我带来的任何帮助，还会在每次搜索的时候都在搜索结果中占据相当<strong>碍眼</strong>的空间。</p>
+<p>有人在 Google Assistant Help 上问过怎么关闭：</p>
+<p><img src="https://i.imgur.com/hMyaCLe.png" srcset="/img/loading.gif" lazyload alt="笑点解析：This question is locked and replying has been disabled"></p>
+<p>有用户发表同样的观点“</p>
+<p><img src="https://i.imgur.com/YNHXfbq.png" srcset="/img/loading.gif" lazyload alt="I hate AI"></p>
+<p>在一年以前 Reddit 有用户发帖询问怎么彻底禁用 Google 搜索结果中的AI overview，这个帖子截至目前已经有超过3k点赞，1.7k条回复<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://www.reddit.com/r/techsupport/comments/1h9jpqs/is_there_a_real_way_to_shut_off_the_google_ai/">[1]</span></a></sup></p>
+<p><img src="https://s41.ax1x.com/2026/02/27/pZz1hrj.png" srcset="/img/loading.gif" lazyload></p>
+<p>回复中主要给出了四种方法：</p>
+<ol>
+<li>在搜索关键字里加入脏话，比如fucking</li>
+</ol>
+<p><img src="https://s41.ax1x.com/2026/02/27/pZz3FzD.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="2">
+<li>每次搜索的时候都手动加上<code>-ai</code>，但是这样的话包含AI关键词的网页也会被过滤掉</li>
+</ol>
+<p><img src="https://s41.ax1x.com/2026/02/27/pZz3EsH.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="3">
+<li>配置搜索参数，让搜索结果自动定向到“网页”选项，间接绕过AI概览（同理也可以用ublock origin屏蔽该元素，但是都没有从根本上解决问题）</li>
+</ol>
+<blockquote>
+<p>How to turn off Google AI Overview in Chrome SOLVED<br>Open Chrome and put chrome:&#x2F;&#x2F;settings&#x2F;searchEngines in the search box.<br>A tab will open which brings you to Search Engine &gt; Manage Search Engines and Site Search.<br>Click on the Add button by the Site Search update. A box will open. Fill in the form with the following:<br>Name: AI Free Web<br>Shortcut: @web<br>URL: {google:baseURL}search?q&#x3D;%s&amp;udm&#x3D;14<br>You’ll now see AI Free Web in the list of search engines.<br>Click on the three stacked dots on the right side of AI Free Web on the list. Select Make Default.<br>From now on, google functions pretty much like it did back when it was good. Good luck out there. </p>
+</blockquote>
+<p><img src="https://s41.ax1x.com/2026/02/27/pZz3x1S.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="4">
+<li>最根本的解决方案，抛弃Google，选择一个没有 AI slop 的搜索引擎。</li>
+</ol>
+<h2 id="What-is-Startpage"><a href="#What-is-Startpage" class="headerlink" title="What is Startpage"></a>What is Startpage</h2><p>该贴的回复中有人提到了 Startpage，好评如潮：</p>
+<p><img src="https://s41.ax1x.com/2026/02/27/pZz8BNt.png" srcset="/img/loading.gif" lazyload></p>
+<p>维基百科对 Startpage 的描述是：</p>
+<blockquote>
+<p>Startpage为一荷兰公司Startpage B.V.所推出的搜索引擎服务，其前身为元搜索引擎Ixquick，Startpage当时Ixquick旗下之服务，两者于2016年改为合并并改为现名。Startpage以强调对使用者隐私的保护闻名。</p>
+<p>Startpage后台使用Google搜索API，所以具有跟Google相同的搜索品质。但是其传送到Google服务器的内容仅包含搜索关键字，Google不会获取到除此以外的头字段和cookie等资讯。</p>
+<p>Startpage 还包含匿名视图浏览功能，允许用户通过代理打开搜索结果 proxy 以提升匿名性。<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://en.wikipedia.org/wiki/Startpage">[2]</span></a></sup></p>
+</blockquote>
+<p>在 Firefox 起始页引入 Startpage 的方法：打开搜索设置，下滑，添加搜索引擎，网址栏填入<code>https://www.startpage.com/do/search?q=%s</code></p>
+<p><img src="https://i.imgur.com/HNuozfL.png" srcset="/img/loading.gif" lazyload alt="自定义搜索引擎"></p>
+<p>然后就可以在起始页使用了</p>
+<p><img src="https://i.imgur.com/st7xPe6.png" srcset="/img/loading.gif" lazyload alt="选择Startpage"></p>
+<p>搜索同样的条目，结果如下：</p>
+<p><img src="https://i.imgur.com/QTpiuYI.png" srcset="/img/loading.gif" lazyload alt="清爽多了"></p>
+<p>Startpage的搜索结果中偶尔会出现赞助商广告（毕竟维护服务器也要花钱），但是会和 Web results 作明确区分，并且出现的频率远低于 Google 的AI概览。</p>
+<h2 id="Why-uBlacklist-is-NECESSARY"><a href="#Why-uBlacklist-is-NECESSARY" class="headerlink" title="Why uBlacklist is NECESSARY"></a>Why uBlacklist is NECESSARY</h2><p>造成互联网垃圾内容泛滥的罪魁祸首绝不只有AI一个，远在 AI 兴起的几年前，简中互联网就已经是汇聚了低俗、嘴臭、情绪化发泄、侵权内容横行、地域化固步自封的巨型垃圾场。当然作为一个普通的用户我什么也改变不了，眼不见为净，直接将盛产垃圾内容的网站屏蔽掉得了。举几个例子：</p>
+<ul>
+<li>CSDN</li>
+<li>gitcode</li>
+<li>baidu</li>
+<li>…</li>
+</ul>
+<p>浏览器扩展 <a target="_blank" rel="noopener" href="https://ublacklist.github.io/docs">uBlacklist</a> 可以将需要屏蔽的网站域名加入黑名单中，从搜索引擎的结果中过滤掉这些网站。我使用的黑名单如下：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs elixir">*<span class="hljs-symbol">://*</span>.csdn.net/*<br>*<span class="hljs-symbol">://*</span>.csdn.com/*<br>*<span class="hljs-symbol">://*</span>.csdnimg.cn/*<br>*<span class="hljs-symbol">://*</span>.gitcode.com/*<br>*<span class="hljs-symbol">://*</span>.gitcode.net/*<br>*<span class="hljs-symbol">://*</span>.gitcode.host/*<br>*<span class="hljs-symbol">://*</span>.baidu.com/*<br>*<span class="hljs-symbol">://info</span>.support.huawei.com/*<br>*<span class="hljs-symbol">://cloud</span>.tencent.com/*<br>*<span class="hljs-symbol">://blog</span>.<span class="hljs-number">51</span>cto.com/*<br>*<span class="hljs-symbol">://juejin</span>.cn/*<br>*<span class="hljs-symbol">://doc</span>.quark.cn/*<br>*<span class="hljs-symbol">://www</span>.douyin.com/*<br>*<span class="hljs-symbol">://world</span>.taobao.com/*<br>*<span class="hljs-symbol">://docs</span>.pingcode.com/*<br>*<span class="hljs-symbol">://mmwljs</span>.com/*<br>*<span class="hljs-symbol">://www</span>.puhuajia.com/*<br>*<span class="hljs-symbol">://www</span>.xunyou.com/*<br>*<span class="hljs-symbol">://jingshait</span>.com/*<br>*<span class="hljs-symbol">://www</span>.sigure.tw/*<br>*<span class="hljs-symbol">://m</span>.baike.com/*<br>*<span class="hljs-symbol">://www</span>.huaweicloud.com/*<br></code></pre></td></tr></table></figure>
+
+<p>注意需要手动启用该扩展对搜索引擎的支持</p>
+<p><img src="https://i.imgur.com/T0cgAZP.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>引用一个 Reddit 用户的评论吧</p>
+<blockquote>
+<p><em>看着这样一个令人惊叹的信息来源在短短两年内彻底沦为毫无用处的廉价垃圾，真是令人无比沮丧。</em></p>
+<p><em>我不该这么说，但我有时会想，这会不会是某种心理战的一部分，比如……他们故意摧毁互联网，用各种花里胡哨的新功能讨好那群蠢货，让其他人彻底放弃使用，或者看看自己究竟能突破多少底线才会让消费者屈服最终放弃使用他们的服务。</em></p>
+<p><em>现在，我使用谷歌或社交媒体时，总会有一种以前从未有过的、令人作呕的糟糕感觉。毫无疑问，某些东西发生了变化，而且变得更糟了。也许这是在提醒我该多读点书了。</em></p>
+</blockquote>
+<p>以上。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.reddit.com/r/techsupport/comments/1h9jpqs/is_there_a_real_way_to_shut_off_the_google_ai/">https://www.reddit.com/r/techsupport/comments/1h9jpqs/is_there_a_real_way_to_shut_off_the_google_ai/</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Startpage">https://en.wikipedia.org/wiki/Startpage</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/FUCKGFW/" class="print-no-link">#FUCKGFW</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Firefox+Startpage+uBlacklist打造极简、纯净、NO AIslop的高效搜索引擎</div>
+      <div>https://kznleaf.top/2026/02/27/搜索引擎配置指南/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>kznLeaf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>February 27, 2026</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - Non-commercial">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/02/17/k8s%E5%AD%A6%E4%B9%A01/" title="kubernetes基础知识梳理">
+                        <span class="hidden-mobile">kubernetes基础知识梳理</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'kznLeaf/kznLeaf.github.io');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'Comment');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/vvd_js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+<script src="/js/sign.js"></script>
+<script src="/js/backgroundize.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
+</html>
