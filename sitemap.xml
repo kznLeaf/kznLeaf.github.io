@@ -11,15 +11,6 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.top/2026/02/27/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/</loc>
-    
-    <lastmod>2026-03-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://kznleaf.top/2026/01/07/Linux%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95/</loc>
     
     <lastmod>2026-03-30</lastmod>
@@ -819,14 +810,14 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.top/tags/%E7%A1%AC%E4%BB%B6/</loc>
+    <loc>https://kznleaf.top/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://kznleaf.top/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</loc>
+    <loc>https://kznleaf.top/tags/%E7%A1%AC%E4%BB%B6/</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -947,14 +938,14 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.top/categories/Hexo/</loc>
+    <loc>https://kznleaf.top/categories/Computer-Networking/</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://kznleaf.top/categories/Computer-Networking/</loc>
+    <loc>https://kznleaf.top/categories/Hexo/</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -982,14 +973,14 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.top/categories/EE/</loc>
+    <loc>https://kznleaf.top/categories/Algorithm/</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://kznleaf.top/categories/Algorithm/</loc>
+    <loc>https://kznleaf.top/categories/EE/</loc>
     <lastmod>2026-04-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
