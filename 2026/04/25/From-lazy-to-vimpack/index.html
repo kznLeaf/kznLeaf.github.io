@@ -32,7 +32,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.imgur.com/qf986g4.png">
 <meta property="article:published_time" content="2026-04-25T11:14:47.000Z">
-<meta property="article:modified_time" content="2026-04-25T11:27:35.132Z">
+<meta property="article:modified_time" content="2026-04-25T12:20:28.587Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="Neovim">
 <meta name="twitter:card" content="summary_large_image">
@@ -274,7 +274,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.6k words
+          5.5k words
         
       </span>
     
@@ -285,7 +285,7 @@
         
         
         
-          47 mins
+          46 mins
         
       </span>
     
@@ -408,12 +408,13 @@
 <h3 id="Troubleshoot"><a href="#Troubleshoot" class="headerlink" title="Troubleshoot"></a>Troubleshoot</h3><p>用<code>checkhealth vim.pack</code>查看<code>vim.pack</code>的状态，比如这里有两个插件未使用但是还没有从磁盘中移除：</p>
 <p><img src="https://i.imgur.com/81WKHSe.png" srcset="/img/loading.gif" lazyload></p>
 <hr>
-<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><h3 id="alpha-dashboard"><a href="#alpha-dashboard" class="headerlink" title="alpha dashboard"></a>alpha dashboard</h3><p>几乎与Lazy无异，只有一个问题：怎么统计已安装的插件数量，以及已经被加载的插件数量？</p>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><h3 id="alpha-dashboard"><a href="#alpha-dashboard" class="headerlink" title="alpha dashboard"></a>alpha dashboard</h3><p>几乎与Lazy无异，只有一个问题：怎么统计已安装的插件数量?</p>
 <p>然后去 r&#x2F;neovim上问了一下，很快得到了大佬回复，<a target="_blank" rel="noopener" href="https://www.reddit.com/r/neovim/comments/1sud55n/how_can_i_get_the_number_of_installed_plugins_in/">原帖地址</a></p>
 <p>解决方案就是利用<code>vi.pack.get()</code>获取所有插件的信息table，里面包含了<code>active</code>字段，也就是插件是否被加载。遍历这个表统计一下即可。</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-keyword">local</span> package_count = vim.iter(vim.pack.get())<br>    :fold(&#123; active = <span class="hljs-number">0</span>, inactive = <span class="hljs-number">0</span> &#125;, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(acc, p)</span></span><br>      <span class="hljs-keyword">if</span> p.active <span class="hljs-keyword">then</span><br>        acc.active = acc.active + <span class="hljs-number">1</span><br>      <span class="hljs-keyword">else</span><br>        acc.inactive = acc.inactive + <span class="hljs-number">1</span><br>      <span class="hljs-keyword">end</span><br>      <span class="hljs-keyword">return</span> acc<br>    <span class="hljs-keyword">end</span>)<br><br>vim.<span class="hljs-built_in">print</span>(package_count.active .. <span class="hljs-string">&#x27; active and &#x27;</span> .. package_count.inactive .. <span class="hljs-string">&#x27; inactive&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p>这样一来获取全部插件的数量只需要一行代码：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-keyword">local</span> total_plugins = #vim.pack.get(<span class="hljs-literal">nil</span>, &#123; info = <span class="hljs-literal">false</span> &#125;)<br></code></pre></td></tr></table></figure>
 
-<p>不过存在的问题是：虽然上面这个函数本身执行时间非常短，不到1ms即可完毕，但是<code>vim.pack.get()</code>似乎会阻塞到所有插件初始化完毕之后才返回。就我观察到的情况来说，本应第一个就加载的alpha.nvim完全出现的时间明显被延后了。</p>
+<p><code>info = false</code>选项是必需的，否则这里会去拉git远程仓库的信息.</p>
 <hr>
 <h3 id="File-Explorer"><a href="#File-Explorer" class="headerlink" title="File Explorer"></a>File Explorer</h3><p>这里有很多选择：</p>
 <p>文件树：</p>
