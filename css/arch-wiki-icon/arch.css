@@ -1,10 +1,10 @@
 @font-face {
-  font-family: "archfont"; 
-  src: url('arch.ttf?t=1771918631145') format('truetype');
+  font-family: "archfont";
+  src: url("arch.ttf?t=1771918631145") format("truetype");
 }
 
 .icon-arch-base {
-  font-family: "archfont"; /* 去掉 !important */
+  font-family: "archfont";
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
@@ -14,3 +14,4 @@
 .icon-arch-linux:before {
   content: "\e604";
 }
+
