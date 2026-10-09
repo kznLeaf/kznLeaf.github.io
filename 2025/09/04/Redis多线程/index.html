@@ -32,7 +32,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://s21.ax1x.com/2025/08/22/pVDDgxg.png">
 <meta property="article:published_time" content="2025-09-04T14:37:06.000Z">
-<meta property="article:modified_time" content="2025-09-09T14:55:39.468Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:32.006Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="中间件">
 <meta name="twitter:card" content="summary_large_image">
@@ -344,14 +344,14 @@
 <li>2023年提出表示层卸载和内存访问摊销技术，实现单节点处理超过100万RPS。</li>
 </ul>
 <h2 id="增强I-O处理"><a href="#增强I-O处理" class="headerlink" title="增强I&#x2F;O处理"></a>增强I&#x2F;O处理</h2><p>增强的 I&#x2F;O 多路复用可显著改善大规模吞吐量和延迟。先看看以前的IO多路复用是怎么做的：</p>
-<p><img src="https://s21.ax1x.com/2025/08/22/pVDDBVI.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVDDBVI.png" srcset="/img/loading.gif" lazyload></p>
 <p>每个客户端都与单线程的处理引擎建立一个连接通道，因此引擎要单独为每一个客户端的建立网络连接、解析发来的请求、运行解析出来的命令。这样的架构有两个问题：</p>
 <ol>
 <li><strong>处理引擎必须亲自处理网络连接，必须亲自解析命令，不能专注于运行命令</strong></li>
 <li><strong>多余的CPU核心没有得到利用</strong></li>
 </ol>
 <p>为了解决这几个问题，增强型的IO多路复用使用以下架构：</p>
-<p><img src="https://s21.ax1x.com/2025/08/22/pVDDgxg.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVDDgxg.png" srcset="/img/loading.gif" lazyload></p>
 <p>其余可用的 CPU 核心用来分担主线程的压力，<strong>把处理网络IO的工作转移到 IO 线程上</strong>，主线程负责给IO线程分配任务。使用多路复用时，每个增强型 I&#x2F;O 线程不会为每个客户端打开一个通道（如上图所示），而是<strong>多个客户端共用一个IO线程</strong>，由IO线程把收集到的命令通过单个通道发送给主线程处理。</p>
 <p>这样做带来了哪些好处？具体来说：</p>
 <ol>
@@ -364,10 +364,10 @@
 <li>多个CPU<strong>并行</strong>处理网络 IO 和解析命令的工作，充分利用到每一个CPU核心，大大提升执行效率</li>
 <li>主线程只需要专注于运行命令，提高了命令的执行效率</li>
 </ol>
-<p><img src="https://s21.ax1x.com/2025/08/22/pVDDTiV.png" srcset="/img/loading.gif" lazyload alt="表示层卸载"></p>
+<p><img src="/../img/pVDDTiV.png" srcset="/img/loading.gif" lazyload alt="表示层卸载"></p>
 <h2 id="内存访问摊销"><a href="#内存访问摊销" class="headerlink" title="内存访问摊销"></a>内存访问摊销</h2><p>内存访问摊销（Memory access amortization）是为了解决随机内存访问开销过大的问题，旨在降低内存访问成本，降低延迟。在7.1版本引入。</p>
 <p>Redis执行命令时经常需要通过字典去寻找key，对于需要查找多个key的情况，传统的做法是一个一个找，找完一个再重新访问内存寻找下一个，换句话说<strong>哈希表遍历将串行运行</strong>。而内存访问摊销采用的方式如下：</p>
-<p><img src="https://s21.ax1x.com/2025/08/22/pVDrv6g.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVDrv6g.png" srcset="/img/loading.gif" lazyload></p>
 <p>分析：</p>
 <ul>
 <li><strong>并行访问内存</strong>，通过 <strong>dictPrefetch</strong> 机制，将多个 IO 线程的读取请求合并到一起并行处理，并把结果放到主线程对应 CPU 核的 L1&#x2F;L2 私有缓存中，减少了 Redis 主线程针对每个命令都要进行内存调用的消耗，提高了性能。</li>

@@ -30,17 +30,17 @@
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="HTTPS学习记录。翻阅了 RFC 8446 和英文wiki，最后得到了还算满意的结论。 对称加密算法对称加密算法的工作流程： 123456             密钥（Key）                ↓原文（明文） —— 加密算法 ——→ 密文                           ↓         同一个密钥 —— 解密算法 ——→ 明文  对称加密算法是双向的，可以">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/05/pViphTA.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/05/pVip5FI.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/05/pViSXPx.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/05/pViSUUI.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/06/pViZa3d.png">
+<meta property="og:image" content="https://kznleaf.top/img/pViphTA.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVip5FI.png">
+<meta property="og:image" content="https://kznleaf.top/img/pViSXPx.png">
+<meta property="og:image" content="https://kznleaf.top/img/pViSUUI.png">
+<meta property="og:image" content="https://kznleaf.top/img/pViZa3d.png">
 <meta property="article:published_time" content="2025-06-06T14:48:20.000Z">
-<meta property="article:modified_time" content="2025-07-02T15:25:21.338Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:31.975Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="计网">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/06/05/pViphTA.png">
+<meta name="twitter:image" content="https://kznleaf.top/img/pViphTA.png">
   
   
   
@@ -415,9 +415,9 @@
 <p>2015年，RFC 7568 标准终于弃用 SSL 3.0。</p>
 <p>至于TLS这边，IETF 将 SSL 进行标准化，1999年公布 TLS 1.0 标准文件（RFC 2246）。随后又公布 TLS 1.1（RFC 4346，2006年）、TLS 1.2（RFC 5246，2008年）和 TLS 1.3（RFC 8446，2018年）。在浏览器、电子邮件、即时通信、VoIP、网络传真等应用程序中，广泛使用这个协议。</p>
 <p>TLS 1.3 虽然在2018年才发布，但是它没有像 IPv6 那样普及得那么慢。顺便一提，Google 专门做了一个统计 IPv6 普及率的网站<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://www.google.com/intl/en/ipv6/statistics.html">[3]</span></a></sup>：</p>
-<p><img src="https://s21.ax1x.com/2025/06/05/pViphTA.png" srcset="/img/loading.gif" lazyload alt="2025&#x2F;6&#x2F;5截图"></p>
+<p><img src="/../img/pViphTA.png" srcset="/img/loading.gif" lazyload alt="2025&#x2F;6&#x2F;5截图"></p>
 <p>截至2025年六月，全球平均普及率尚不足50%，而且</p>
-<p><img src="https://s21.ax1x.com/2025/06/05/pVip5FI.png" srcset="/img/loading.gif" lazyload alt="?"></p>
+<p><img src="/../img/pVip5FI.png" srcset="/img/loading.gif" lazyload alt="?"></p>
 <p><del>4.94%???刚接入互联网吗（好像也对）</del></p>
 <p>TLS这边，截至2023 年 9 月，在接受调查的 135,583 个网站中，64.8% 的网站已经支持 TLS v1.3<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://www.linkedin.com/pulse/evolution-web-security-unpacking-tls-12-13-greg-de-chasteauneuf?utm_source=chatgpt.com">[4]</span></a></sup>。</p>
 <h2 id="TLS握手流程"><a href="#TLS握手流程" class="headerlink" title="TLS握手流程"></a>TLS握手流程</h2><p>搞清楚数字签名之后就可以看看 TLS 握手流程了。</p>
@@ -466,14 +466,14 @@
 <p>前向保密也是从 TLS 1.3 开始强制实施的特性，而此前仅仅是“可选”。</p>
 <p>关于 ECDHE 的更多信息，参考：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman">https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman</a></p>
 <h3 id="如何查看当前网站的TLS协议版本"><a href="#如何查看当前网站的TLS协议版本" class="headerlink" title="如何查看当前网站的TLS协议版本"></a>如何查看当前网站的TLS协议版本</h3><p>如果使用 Edge 浏览器，参见<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/microsoft-edge/devtools-guide-chromium/security/">Edge官方文档</a>，使用F12就可以查看：</p>
-<p><img src="https://s21.ax1x.com/2025/06/05/pViSXPx.png" srcset="/img/loading.gif" lazyload alt="Edge"></p>
+<p><img src="/../img/pViSXPx.png" srcset="/img/loading.gif" lazyload alt="Edge"></p>
 <p>可见这个网站遵循TLS 1.3 协议。当然数字证书也可以在这里直接查看。</p>
 <h3 id="wiki的表述"><a href="#wiki的表述" class="headerlink" title="wiki的表述"></a>wiki的表述</h3><p>wiki 传输层安全协议的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%82%B3%E8%BC%B8%E5%B1%A4%E5%AE%89%E5%85%A8%E6%80%A7%E5%8D%94%E5%AE%9A#%E8%BF%87%E7%A8%8B">中文页面</a>仍采用传统的TLS阶段的描述，而且没有标明TLS的版本号：</p>
-<p><img src="https://s21.ax1x.com/2025/06/05/pViSUUI.png" srcset="/img/loading.gif" lazyload alt="TLS基本阶段"></p>
+<p><img src="/../img/pViSUUI.png" srcset="/img/loading.gif" lazyload alt="TLS基本阶段"></p>
 <p>感觉这样多少有点不严谨，因为 TLS 1.3 的握手过程被压缩为<strong>一次往返</strong>：在一次往返中，客户端和服务端就互相交换自己的公钥、支持的加密算法等，然后利用自己的私钥和对方的公钥计算出共享密钥，算法保证了计算出来的密钥一定相同。</p>
 <p>而在 TLS 1.3 之前都是<strong>两次往返</strong>：第一次客户端发起请求，服务器响应并发送身份信息和密钥参数；第二次双方才确认共享密钥，完成握手，也就是上面这张图中描述的过程。</p>
 <p>同一个页面，英文wiki提供的内容要详细得多，比如经典 TLS 握手过程和 TLS 1.3 的握手过程是各自分开写的，强调了它与老版本的差别：</p>
-<p><img src="https://s21.ax1x.com/2025/06/06/pViZa3d.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pViZa3d.png" srcset="/img/loading.gif" lazyload></p>
 <p>所以查资料的时候也多看看英文资料吧</p>
 <h3 id="RFC-8446的表述"><a href="#RFC-8446的表述" class="headerlink" title="RFC 8446的表述"></a>RFC 8446的表述</h3><h4 id="三种基本密钥交换模式"><a href="#三种基本密钥交换模式" class="headerlink" title="三种基本密钥交换模式"></a>三种基本密钥交换模式</h4><p>TLS 支持三种密钥交换模式，原文：</p>
 <div class="note note-success">

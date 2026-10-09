@@ -30,17 +30,17 @@
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="数据库常识数据库的关系模型什么是关系数据库？  关系数据库是一种用于存储相互关联的数据点并提供数据点访问的数据库。它采用关系模型，直接、直观地在表中展示数据。 在关系数据库中，表中的每一行都代表一条记录，每条记录都具有一个唯一的 ID（又被称为键），而表中的列则用于存储数据的属性——每条记录的每一个属性通常都有一个值。籍此，用户可以轻松在数据点之间建立关联。 数据库的关系模型（Relational">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/03/pEbWCOe.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/04/pEbjEAP.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/17/pEvKwWt.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/11/pEXCWg1.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/11/pEXCIHO.png">
+<meta property="og:image" content="https://kznleaf.top/img/pEbWCOe.png">
+<meta property="og:image" content="https://kznleaf.top/img/pEbjEAP.png">
+<meta property="og:image" content="https://kznleaf.top/img/pEvKwWt.png">
+<meta property="og:image" content="https://kznleaf.top/img/pEXCWg1.png">
+<meta property="og:image" content="https://kznleaf.top/img/pEXCIHO.png">
 <meta property="article:published_time" content="2025-05-06T02:32:23.000Z">
-<meta property="article:modified_time" content="2025-07-02T15:29:49.177Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:31.993Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/05/03/pEbWCOe.png">
+<meta name="twitter:image" content="https://kznleaf.top/img/pEbWCOe.png">
   
   
   
@@ -474,7 +474,7 @@
 <td><code>COMMIT</code>, <code>ROLLBACK</code></td>
 </tr>
 </tbody></table>
-<p><img src="https://s21.ax1x.com/2025/05/03/pEbWCOe.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pEbWCOe.png" srcset="/img/loading.gif" lazyload></p>
 <p>SQL 的关键字不区分大小写，但是对于表名和列名，不同数据库的规定不同，所以最好关键词一律大写。表名和列名一律小写。</p>
 <h1 id="关系模型构成"><a href="#关系模型构成" class="headerlink" title="关系模型构成"></a>关系模型构成</h1><p>用于唯一区分不同记录的字段就是主键。不能使用业务相关的字段作为主键。</p>
 <p>将数据与另一张表联系起来的字段称为外键。</p>
@@ -737,12 +737,12 @@
 </tbody></table>
 <p>这里的外键是<code>class_id</code>，它包含了班级表的主键值</p>
 <p>连接是一种机制，用来在一条SELECT语句中关联表，因此称之为连接(JOIN)。采用连接的查询称之为<strong>SQL JOIN连接查询</strong>。<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://zhuanlan.zhihu.com/p/68136613">[2]</span></a></sup></p>
-<p><img src="https://s21.ax1x.com/2025/05/04/pEbjEAP.png" srcset="/img/loading.gif" lazyload alt="联结的分类"></p>
+<p><img src="/../img/pEbjEAP.png" srcset="/img/loading.gif" lazyload alt="联结的分类"></p>
 <h2 id="等值联结"><a href="#等值联结" class="headerlink" title="等值联结"></a>等值联结</h2><p>等值联结基于两个表之间的相等数据进行连接。应当确保所有的联结都有 WHERE 子句</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> classes.name, students.name <span class="hljs-keyword">from</span> classes, students <span class="hljs-keyword">where</span> classes.id <span class="hljs-operator">=</span> students.class_id;<br></code></pre></td></tr></table></figure>
 
 <p>执行结果如下：</p>
-<p><img src="https://s21.ax1x.com/2025/05/17/pEvKwWt.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pEvKwWt.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="INNER-JOIN-内连接"><a href="#INNER-JOIN-内连接" class="headerlink" title="INNER JOIN 内连接"></a>INNER JOIN 内连接</h2><p>对上述sql语句使用不同的语法，也可以实现相同的功能：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> classes.name, students.name <span class="hljs-keyword">from</span> classes <span class="hljs-keyword">join</span> students <span class="hljs-keyword">on</span> classes.id <span class="hljs-operator">=</span> students.class_id;<br></code></pre></td></tr></table></figure>
 
@@ -827,12 +827,12 @@
 <h2 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h2><p>匹配任意字符可以用小数点<code>.</code>，那匹配小数点呢？</p>
 <p>对于这种特殊字符，需要在前面加上<code>\\</code>转义(escaping)来匹配它本身，和Java中的处理方法相同。</p>
 <h2 id="字符类"><a href="#字符类" class="headerlink" title="字符类"></a>字符类</h2><p>有预先定义待的字符集可供使用：</p>
-<p><img src="https://s21.ax1x.com/2025/05/11/pEXCWg1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pEXCWg1.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="匹配多个实例"><a href="#匹配多个实例" class="headerlink" title="匹配多个实例"></a>匹配多个实例</h2><p>对匹配的次数加以指定。例如：</p>
 <ul>
 <li><code>&#39;[[:digit:]]&#123;4&#125;&#39;</code> 匹配连在一起的任意4位数字。</li>
 </ul>
-<p><img src="https://s21.ax1x.com/2025/05/11/pEXCIHO.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pEXCIHO.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="定位符"><a href="#定位符" class="headerlink" title="定位符"></a>定位符</h2><p>用于匹配特定位置的文本。</p>
 <ul>
 <li>^ 文本的开始</li>

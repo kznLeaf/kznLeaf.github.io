@@ -32,7 +32,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://s21.ax1x.com/2025/08/02/pVNybTO.png">
 <meta property="article:published_time" content="2025-08-02T11:44:27.000Z">
-<meta property="article:modified_time" content="2025-09-04T14:24:43.240Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:31.990Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="中间件">
@@ -370,7 +370,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> rabbitmq-plugins <span class="hljs-built_in">enable</span> rabbitmq_management<br></code></pre></td></tr></table></figure>
 
 <p>这个插件提供了 HTTP API，可以使用 Web 浏览器访问管理 UI 界面<code>http://localhost:15672/</code>，默认账号密码都是<code>guest</code>，登录成功看到以下界面</p>
-<p><img src="https://s21.ax1x.com/2025/08/02/pVNUSaR.png" srcset="/img/loading.gif" lazyload alt="RabbitMQ登录界面"></p>
+<p><img src="/../img/pVNUSaR.png" srcset="/img/loading.gif" lazyload alt="RabbitMQ登录界面"></p>
 <h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="配置端口转发"><a href="#配置端口转发" class="headerlink" title="配置端口转发"></a>配置端口转发</h3><p>如果虚拟机网络用的是 NAT 模式，虚拟机的 IP 地址是虚拟网卡分配的一个私有 IP，<strong>通常宿主机是无法直接访问虚拟机的服务</strong>，除非做了端口映射（port forwarding）。下面逐步说明：</p>
 <p>使用命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ip addr<br></code></pre></td></tr></table></figure>

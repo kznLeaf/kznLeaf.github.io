@@ -30,23 +30,23 @@
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="缓存缓存是数据交换的缓冲区，是存储临时数据的地方，读写性能较高。 目标：为下面这个控制器添加 Redis 缓存： 123456789&#x2F;**    * 根据id查询商铺信息    * @param id 商铺id    * @return 商铺详情数据    *&#x2F;@GetMapping(&quot;&#x2F;&#123;id&#125;&quot;)public Result queryShopById(@">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/25/pVeRVaT.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/25/pVe5SjH.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/25/pVe5uuj.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/25/pVe5Rrd.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/25/pVeokp8.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/25/pVeo31U.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/28/pVnPpCT.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/28/pVnFDNq.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/28/pVnFr40.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/28/pVnVC26.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVeRVaT.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVe5SjH.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVe5uuj.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVe5Rrd.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVeokp8.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVeo31U.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVnPpCT.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVnFDNq.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVnFr40.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVnVC26.png">
 <meta property="article:published_time" content="2025-06-29T15:13:11.000Z">
-<meta property="article:modified_time" content="2025-09-06T15:21:48.972Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:32.015Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="中间件">
 <meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/06/25/pVeRVaT.png">
+<meta name="twitter:image" content="https://kznleaf.top/img/pVeRVaT.png">
   
   
   
@@ -351,7 +351,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">    * 根据id查询商铺信息</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@param</span> id 商铺id</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@return</span> 商铺详情数据</span><br><span class="hljs-comment">    */</span><br><span class="hljs-meta">@GetMapping(&quot;/&#123;id&#125;&quot;)</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">queryShopById</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable(&quot;id&quot;)</span> Long id)</span> &#123;<br>    <span class="hljs-keyword">return</span> Result.ok(shopService.getById(id));<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>客户端发来的请求先发给 Redis，如果命中缓存则直接返回，如果没有命中才继续查询数据库，将查询到的数据写入Redis。</p>
-<p><img src="https://s21.ax1x.com/2025/06/25/pVeRVaT.png" srcset="/img/loading.gif" lazyload alt="缓存作用模型"></p>
+<p><img src="/../img/pVeRVaT.png" srcset="/img/loading.gif" lazyload alt="缓存作用模型"></p>
 <p>根据id查询商铺信息时：</p>
 <ol>
 <li>用户提交商铺id，</li>
@@ -403,8 +403,8 @@
 </ul>
 </li>
 </ol>
-<p><img src="https://s21.ax1x.com/2025/06/25/pVe5SjH.png" srcset="/img/loading.gif" lazyload alt="布隆过滤器"></p>
-<h3 id="基于缓存空对象防止缓存穿透"><a href="#基于缓存空对象防止缓存穿透" class="headerlink" title="基于缓存空对象防止缓存穿透"></a>基于缓存空对象防止缓存穿透</h3><p><img src="https://s21.ax1x.com/2025/06/25/pVe5uuj.png" srcset="/img/loading.gif" lazyload alt="流程图"></p>
+<p><img src="/../img/pVe5SjH.png" srcset="/img/loading.gif" lazyload alt="布隆过滤器"></p>
+<h3 id="基于缓存空对象防止缓存穿透"><a href="#基于缓存空对象防止缓存穿透" class="headerlink" title="基于缓存空对象防止缓存穿透"></a>基于缓存空对象防止缓存穿透</h3><p><img src="/../img/pVe5uuj.png" srcset="/img/loading.gif" lazyload alt="流程图"></p>
 <p>两处改动：</p>
 <ol>
 <li>如果数据库查询的结果为空，则将空值写入Redis；</li>
@@ -413,7 +413,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 根据店铺id从predis查询</span><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">queryById</span><span class="hljs-params">(Long id)</span> &#123;<br>    <span class="hljs-type">String</span> <span class="hljs-variable">key</span> <span class="hljs-operator">=</span> CACHE_SHOP_KEY + id;<br>    <span class="hljs-comment">// 1. 从 Redis 查询商铺缓存，key是店铺的 id</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">shopJson</span> <span class="hljs-operator">=</span> stringRedisTemplate.opsForValue().get(key);<br><br>    <span class="hljs-comment">// 2. 判断是否存在</span><br><br>    <span class="hljs-comment">// 3. 存在，返回</span><br>    <span class="hljs-keyword">if</span> (StringUtils.hasLength(shopJson)) &#123;<br>        <span class="hljs-type">Shop</span> <span class="hljs-variable">shop</span> <span class="hljs-operator">=</span> JSONUtil.toBean(shopJson, Shop.class);<br>        <span class="hljs-keyword">return</span> Result.ok(shop);<br>    &#125;<br><br>    <span class="hljs-comment">// 如果获取到的值是手动设置的空字符串：</span><br>    <span class="hljs-keyword">if</span> (shopJson != <span class="hljs-literal">null</span> &amp;&amp; shopJson.isEmpty()) &#123;<br>        <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;是空值&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 4. 不存在，根据 id 查询数据库</span><br>    <span class="hljs-type">Shop</span> <span class="hljs-variable">shop</span> <span class="hljs-operator">=</span> getById(id);<br>    <span class="hljs-keyword">if</span> (shop == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-comment">// 5. 不存在，将空值写入 Redis</span><br>        stringRedisTemplate.opsForValue().set(key, <span class="hljs-string">&quot;&quot;</span>, CACHE_NULL_TTL, TimeUnit.MINUTES);<br><br>        <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;店铺不存在！&quot;</span>);<br>    &#125;<br>    <span class="hljs-comment">// 6. 存在，把数据写入 Redis 然后返回</span><br>    stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(shop), CACHE_SHOP_TTL, TimeUnit.MINUTES);<br>    <span class="hljs-keyword">return</span> Result.ok(shop);<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h2><p><strong>含义</strong>：再同一时段大量的缓存key同时失效，或者Redis服务器宕机，导致大量的请求到达数据库，带来巨大压力。</p>
-<p><img src="https://s21.ax1x.com/2025/06/25/pVe5Rrd.png" srcset="/img/loading.gif" lazyload alt="缓存雪崩"></p>
+<p><img src="/../img/pVe5Rrd.png" srcset="/img/loading.gif" lazyload alt="缓存雪崩"></p>
 <ol>
 <li>给不同的 Key 的 TTL 增加随机值</li>
 <li>利用 Redis 集群提高服务的可用性</li>
@@ -464,9 +464,9 @@
 <li>否则异步更新，并返回旧值，具体来说就是创建一个新的线程，由它专门负责查询数据库、更新缓存。</li>
 </ul>
 <p>两种解决方案的示意如下</p>
-<p><img src="https://s21.ax1x.com/2025/06/25/pVeokp8.png" srcset="/img/loading.gif" lazyload alt="2"><br><img src="https://s21.ax1x.com/2025/06/25/pVeo31U.png" srcset="/img/loading.gif" lazyload alt="对比"></p>
+<p><img src="/../img/pVeokp8.png" srcset="/img/loading.gif" lazyload alt="2"><br><img src="/../img/pVeo31U.png" srcset="/img/loading.gif" lazyload alt="对比"></p>
 <h2 id="基于互斥锁方式解决缓存击穿问题"><a href="#基于互斥锁方式解决缓存击穿问题" class="headerlink" title="基于互斥锁方式解决缓存击穿问题"></a>基于互斥锁方式解决缓存击穿问题</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>需求：修改根据 id 查询商铺业务，基于互斥锁的方式解决缓存击穿问题</p>
-<p><img src="https://s21.ax1x.com/2025/06/28/pVnPpCT.png" srcset="/img/loading.gif" lazyload alt="互斥锁"></p>
+<p><img src="/../img/pVnPpCT.png" srcset="/img/loading.gif" lazyload alt="互斥锁"></p>
 <p>互斥锁用的是 Redis 中的<code>SETNX</code>:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br>SETNX key value<br>summary: Set the value of a key, only <span class="hljs-keyword">if</span> the key does not exist<br>since: 1.0.0<br>group: string<br><br></code></pre></td></tr></table></figure>
 
@@ -499,8 +499,8 @@
 </ul>
 <p>这就是二重检查的意义，这是分布式锁场景下的重要优化。</p>
 <h3 id="JMeter测试"><a href="#JMeter测试" class="headerlink" title="JMeter测试"></a>JMeter测试</h3><p>测试参数：</p>
-<p><img src="https://s21.ax1x.com/2025/06/28/pVnFDNq.png" srcset="/img/loading.gif" lazyload alt="测试参数"></p>
-<p><img src="https://s21.ax1x.com/2025/06/28/pVnFr40.png" srcset="/img/loading.gif" lazyload alt="测试结果汇总"></p>
+<p><img src="/../img/pVnFDNq.png" srcset="/img/loading.gif" lazyload alt="测试参数"></p>
+<p><img src="/../img/pVnFr40.png" srcset="/img/loading.gif" lazyload alt="测试结果汇总"></p>
 <p>误码率为0，吞吐量 208.6&#x2F;sec，符合预期。</p>
 <p>回到 IDEA 的控制台，可以看到全程只做了一次查询：</p>
 <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-meta">: ==&gt;  Preparing:</span> SELECT id,name,type_id,images,area,address,x,y,avg_price,sold,comments,score,open_hours,create_time,update_time FROM tb_shop WHERE id=?<br><span class="hljs-meta">: ==&gt; Parameters:</span> 1(Long)<br><span class="hljs-meta">: &lt;==      Total:</span> 1<br></code></pre></td></tr></table></figure>
@@ -510,7 +510,7 @@
 <p>不同点是，这次不为 Redis 里的 key 设置 TTL，而是手动清除过期的key，具体而言每个key存储的都是一个带有<code>Data</code>和<code>ExpireTime</code>字段的对象，从Redis获取到key之后在 Java 代码中比较<code>ExpireTime</code>和当前时间，判断是否过期。</p>
 <p><strong>热点key是人为提前添加好的</strong>，如果从 Redis 中没有查到 key，只能说明这个商品不属于我们关注的热点 key，直接返回null。正常情况下都会命中的。</p>
 <p>在上一种方法里，如果一个线程获取不到锁，就一直阻塞式地等待直到拿到锁；在基于逻辑过期的思路中，如果某个线程发现自己获取不到互斥锁，那就不等了，直接返回过期数据。成功获取锁、并且通过双重检查的人会开启一个新线程去查询数据和更新缓存，自己继续返回旧数据，也不会等待，避免像上一种方法一样卡在这里。</p>
-<p><img src="https://s21.ax1x.com/2025/06/28/pVnVC26.png" srcset="/img/loading.gif" lazyload alt="流程图"></p>
+<p><img src="/../img/pVnVC26.png" srcset="/img/loading.gif" lazyload alt="流程图"></p>
 <h3 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h3><p>为了实现<strong>无侵入</strong>地引入 Redis 数据格式（过期时间 + 携带的数据），需要单独定义一个类：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RedisData</span> &#123;<br>    <span class="hljs-keyword">private</span> LocalDateTime expireTime;<br>    <span class="hljs-keyword">private</span> Object data;<br>&#125;<br></code></pre></td></tr></table></figure>
 

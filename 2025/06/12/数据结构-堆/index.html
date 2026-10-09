@@ -32,10 +32,10 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://jokinkuang.github.io/w3c/images/algorithm/tree/complete-binary-tree.jpg">
 <meta property="og:image" content="https://www.hello-algo.com/chapter_heap/heap.assets/min_heap_and_max_heap.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/25/pVSKEHU.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/25/pVSKTVU.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVSKEHU.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVSKTVU.png">
 <meta property="article:published_time" content="2025-06-12T12:59:10.000Z">
-<meta property="article:modified_time" content="2025-07-02T15:17:57.965Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:31.959Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="数据结构与算法">
 <meta property="article:tag" content="源码剖析">
@@ -413,9 +413,9 @@
 </ul>
 <p>而指针型二叉树结构虽然清晰，但是内存开销大、难以高效地进行堆调整（比如上浮、下沉操作）。</p>
 <p>至于怎么使用数组存储二叉树，可以看看下面这张图：</p>
-<p><img src="https://s21.ax1x.com/2025/05/25/pVSKEHU.png" srcset="/img/loading.gif" lazyload alt="用数组存储堆"></p>
+<p><img src="/../img/pVSKEHU.png" srcset="/img/loading.gif" lazyload alt="用数组存储堆"></p>
 <p>实现方法有两种：从索引 0 开始存储数据，和从索引 1 开始存储数据。上图演示的是前者。用数组存储的方式遵循如下规律：</p>
-<p><img src="https://s21.ax1x.com/2025/05/25/pVSKTVU.png" srcset="/img/loading.gif" lazyload alt="数组-堆特征"></p>
+<p><img src="/../img/pVSKTVU.png" srcset="/img/loading.gif" lazyload alt="数组-堆特征"></p>
 <p>这样以来，只要知道了一个节点的索引，就可以很轻松地定位其父节点和子节点。</p>
 <h1 id="手写小顶堆"><a href="#手写小顶堆" class="headerlink" title="手写小顶堆"></a>手写小顶堆</h1><p>下面根据 <a target="_blank" rel="noopener" href="https://www.hello-algo.com/chapter_heap/heap/#2">Hello算法</a> 和jdk源码手写一个固定容量的整数小顶堆。</p>
 <h2 id="堆的存储与表示"><a href="#堆的存储与表示" class="headerlink" title="堆的存储与表示"></a>堆的存储与表示</h2><p>堆的初始化（源码中优先队列的初始默认容量也是11），这里创建一个固定容量的数组。</p>

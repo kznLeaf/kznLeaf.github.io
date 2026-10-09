@@ -30,15 +30,15 @@
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="共享问题 多个线程访问共享资源，进行读写操作时发生指令的交错就会发生问题。 一段代码块内如果存在对共享资源的读写操作，称这段代码块为临界区。 多个代码在临界区内运行，由于代码的执行序列不同而导致结果无法预测，称之发生了竞态条件。  如何避免临界区的互斥条件的发生？两种方法：  阻塞式的解决方法：synchronized Lock 非阻塞式的：原子变量  synchronizedsynchroniz">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/31/pV9uJ1A.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/31/pV9Koa8.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/07/12/pVlUib8.png">
+<meta property="og:image" content="https://kznleaf.top/img/pV9uJ1A.png">
+<meta property="og:image" content="https://kznleaf.top/img/pV9Koa8.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVlUib8.png">
 <meta property="article:published_time" content="2025-07-17T13:18:16.000Z">
-<meta property="article:modified_time" content="2025-07-17T13:20:13.346Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:31.949Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="并发">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/05/31/pV9uJ1A.png">
+<meta name="twitter:image" content="https://kznleaf.top/img/pV9uJ1A.png">
   
   
   
@@ -373,14 +373,14 @@
 <p>常见的线程安全类如<code>String</code>、包装类都属于不可变类。以<code>String</code>为例，<code>String.substring()</code>方法返回的是一个新的<code>String</code>对象，根本没有改动原对象的值。</p>
 <p><code>String</code>类是被<code>final</code>修饰的，如果<code>String</code>不是<code>final</code>，任何人都可以写一个子类改变 <code>String</code>的行为，从而破坏它的不可变性。这样一来，原本安全可预期的<code>String</code>行为就会崩溃。</p>
 <h2 id="复习：Java对象内存布局"><a href="#复习：Java对象内存布局" class="headerlink" title="复习：Java对象内存布局"></a>复习：Java对象内存布局</h2><p>Java对象保存在堆中时，由以下三部分组成：</p>
-<p><img src="https://s21.ax1x.com/2025/05/31/pV9uJ1A.png" srcset="/img/loading.gif" lazyload alt="对象的内存布局"></p>
+<p><img src="/../img/pV9uJ1A.png" srcset="/img/loading.gif" lazyload alt="对象的内存布局"></p>
 <h3 id="对象头（Object-Header）"><a href="#对象头（Object-Header）" class="headerlink" title="对象头（Object Header）"></a>对象头（Object Header）</h3><ol>
 <li><strong>Mark Word</strong>，在64位虚拟机中占据64个比特，用于存储对象自身的运行时数据，包括堆对象布局、类型、GC 状态、同步状态和身份哈希码的基本信息</li>
 <li><strong>Klass Pointer</strong>，类型指针，指向它的类型元数据，用于确定该对象是哪个类的实例。</li>
 <li><strong>对于数组对象，还有一块用于存储数组长度的区域</strong>。因为以后的JVM 需要进行边界检查、GC 需要知道对象占多大空间等等，数组长度的值是要被多次使用的，所以数组对象自身必须也保存一个长度。</li>
 </ol>
 <p>64位JVM的Mark Word结构：</p>
-<p><img src="https://s21.ax1x.com/2025/05/31/pV9Koa8.png" srcset="/img/loading.gif" lazyload alt="Mark Word"></p>
+<p><img src="/../img/pV9Koa8.png" srcset="/img/loading.gif" lazyload alt="Mark Word"></p>
 <h3 id="实例数据（Instance-Data）"><a href="#实例数据（Instance-Data）" class="headerlink" title="实例数据（Instance Data）"></a>实例数据（Instance Data）</h3><p>实例数据是对象真正存储的有效信息，包括：</p>
 <ul>
 <li>从父类继承的各种类型的字段</li>
@@ -400,7 +400,7 @@
 <li>入口队列<code>EntryList</code>：其他尝试进入 Monitor、但发现已经有线程持有锁而被阻塞的线程。</li>
 </ul>
 <p>每个 Java 对象都可以关联一个 Monitor 对象，使用<code>synchronized</code>给对象加上互斥锁之后，如果获取锁成功，2bit 锁标志位会被置为<code>10</code>，MarkWord 的前62位都会被替换为指向互斥锁的指针，这个线程成为<code>Owner</code>。如果获取锁失败，这个线程就进入了 Monitor 的阻塞队列<code>EntryList</code>，处于<code>BLOCKED</code>阻塞状态。</p>
-<p><img src="https://s21.ax1x.com/2025/07/12/pVlUib8.png" srcset="/img/loading.gif" lazyload alt="synchronized机制"></p>
+<p><img src="/../img/pVlUib8.png" srcset="/img/loading.gif" lazyload alt="synchronized机制"></p>
 <p>解锁流程：按照 Monitor 的地址找到 Monitor 对象，设置 Owner 为 null，唤醒队列中的 BLOCKED 线程。</p>
 <h2 id="synchronized关键字在字节码层面的原理"><a href="#synchronized关键字在字节码层面的原理" class="headerlink" title="synchronized关键字在字节码层面的原理"></a>synchronized关键字在字节码层面的原理</h2><p>对于<strong>同步代码块</strong>，编译器会生成<code>monitorenter</code>和<code>monitorexit</code>指令：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyTest</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-keyword">synchronized</span> (MyTest.class) &#123;<br><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>

@@ -32,7 +32,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://s21.ax1x.com/2025/08/30/pVcGtgJ.png">
 <meta property="article:published_time" content="2025-08-28T14:01:35.000Z">
-<meta property="article:modified_time" content="2025-09-24T15:45:57.202Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:31.991Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="操作系统">
@@ -341,11 +341,11 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> /proc/sys/vm/swappiness<br></code></pre></td></tr></table></figure>
 
 <p><code>sudo nano /etc/sysctl.conf</code>可永久修改此参数。默认值是60. 很多人认为这个参数给物理内存设定了一个阈值，当使用的内存超过(100-60)%时，就会开始内存交换，把内存中最远未使用的数据写入 swap 分区。然而这样的说法其实是有很大问题的。</p>
-<p><img src="https://s21.ax1x.com/2025/08/28/pV60hm4.png" srcset="/img/loading.gif" lazyload alt="[阿里云也干了](https:&#x2F;&#x2F;www.alibabacloud.com&#x2F;help&#x2F;zh&#x2F;ecs&#x2F;support&#x2F;how-do-i-configure-the-swap-partition-of-a-linux-instance)"></p>
+<p><img src="/../img/pV60hm4.png" srcset="/img/loading.gif" lazyload alt="[阿里云也干了](https:&#x2F;&#x2F;www.alibabacloud.com&#x2F;help&#x2F;zh&#x2F;ecs&#x2F;support&#x2F;how-do-i-configure-the-swap-partition-of-a-linux-instance)"></p>
 <h2 id="问题发现"><a href="#问题发现" class="headerlink" title="问题发现"></a>问题发现</h2><p>今天在 Debian 虚拟机上测试 ElasticSearch，因为 es 本身内存占用较大，而我只给虚拟机分了 6G 内存，所以总内存占用一直维持在 90% 左右。后来使用<code>btop</code>命令发现 swap 分区已经满了：</p>
-<p><img src="https://s21.ax1x.com/2025/08/28/pV6wKVs.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pV6wKVs.png" srcset="/img/loading.gif" lazyload></p>
 <p>然后去 google 了一下，排名靠前的搜索结果都说 <code>swappiness</code> 默认设定当内存占用超过 60% 的时候就会开始把文件写入 swap 分区。但是又过了一段时间（期间只执行过几条 es 查询命令），<code>btop</code>显示：</p>
-<p><img src="https://s21.ax1x.com/2025/08/28/pV6wMan.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pV6wMan.png" srcset="/img/loading.gif" lazyload></p>
 <p>总内存占用几乎保持不变，但是 swap 分区被清空了？按理来说不应该是内存占用降下去之后才把swap的数据写回内存吗。这说明这个说法多少是有点问题的。</p>
 <h2 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h2><p>在Google上搜索”Linux如何使用swap分区”，然后找到了<a target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/Swap">ArchWiki的条目</a>，里面提到：</p>
 <blockquote>

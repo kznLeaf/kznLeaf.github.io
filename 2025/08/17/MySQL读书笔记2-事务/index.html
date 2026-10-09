@@ -30,19 +30,19 @@
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="目录 事务的特性 事务的分类 redo binlog log block 重做日志存储格式 log group 重做日志内容格式 LSN   undo undolog的格式 purge   group commit 事务的隔离级别 分布式事务 XA事务 两阶段提交   长事务  事务的特性ACID    特性 英文缩写 关键点 实现机制    原子性 A 全部成功或全部失败 undo log">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s21.ax1x.com/2025/08/11/pVdrlJe.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/08/11/pVd6kRg.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/08/11/pVd6ISg.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/08/11/pVdNdmD.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/08/12/pVdoKGn.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/08/12/pVwPUxK.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/08/12/pVwPIaj.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVdrlJe.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVd6kRg.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVd6ISg.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVdNdmD.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVdoKGn.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVwPUxK.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVwPIaj.png">
 <meta property="article:published_time" content="2025-08-17T10:55:43.000Z">
-<meta property="article:modified_time" content="2025-08-17T11:01:24.004Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:31.985Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/08/11/pVdrlJe.png">
+<meta name="twitter:image" content="https://kznleaf.top/img/pVdrlJe.png">
   
   
   
@@ -413,7 +413,7 @@
 <p>带有保存点的扁平事务允许部分回滚，这是通过设置保存点来实现的。用法：<code>SAVEPOINT 保留点的名称</code>，回滚<code>ROLLBACK TO 保留点的名字</code></p>
 <p>扁平事务的保存点在系统崩溃后会丢失，而<strong>链事务</strong>解决了这一问题。当一个事务提交（COMMIT）或回滚（ROLLBACK）后，数据库会<strong>立即自动开启一个新的事务</strong>，提交事务的操作和开启下一个事务的操作是一个原子操作，就好像在一个事务中进行的一样。而且，链事务只能回滚到最近的一个保存点。</p>
 <p><strong>嵌套事务</strong>：嵌套结构，顶层事务控制着下面的子事务，子事务既可以是扁平的也可以是嵌套的，形成一个树状结构，如图所示：</p>
-<p><img src="https://s21.ax1x.com/2025/08/11/pVdrlJe.png" srcset="/img/loading.gif" lazyload alt="嵌套事务的层次结构"></p>
+<p><img src="/../img/pVdrlJe.png" srcset="/img/loading.gif" lazyload alt="嵌套事务的层次结构"></p>
 <p>类似数据结构中的树，处于根节点的事务被称为顶层事务，其他事务被称为儿子事务；事务的前驱被称为父事务，下一层被称为儿子事务。</p>
 <p>任何子事务在顶层事务提交后才会真正被提交；树中的任意一个事务的回滚会引起它的所有的子事务一同回滚。</p>
 <p><strong>InnoDB并不原生支持嵌套事务</strong></p>
@@ -473,7 +473,7 @@
 </blockquote>
 <p>重做日志是以<strong>日志块</strong>（redo log block）为单位进行存储的，而一个日志块的大小是（512字节），原因就在上面。得益于此，日志块 512 字节的写入也都是原子的，而且不管是缓存中还是磁盘中，重做日志都是以块的方式存储的。所以重做日志不需要doublewrite机制维护页的完整性，因为磁盘本身已经保证了。</p>
 <p><strong>redo buffer的结构</strong>（磁盘上的结构跟这个差不多）</p>
-<p><img src="https://s21.ax1x.com/2025/08/11/pVd6kRg.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVd6kRg.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>块头部：12字节</li>
 <li>数据块：492字节</li>
@@ -488,7 +488,7 @@
 </ol>
 <p><strong>尾部</strong>字段和头部的第一个字段的值相同，可用于<strong>完整性校验</strong>，因为写入 redo 日志时是先写头部、数据块，再写尾部，如果尾部还没写完，就能判断这个块不完整。</p>
 <h3 id="log-group"><a href="#log-group" class="headerlink" title="log group"></a>log group</h3><p><strong>重做日志组</strong>，是由一组 redo 日志文件构成的集合。磁盘中的的 redo log 并不是一个文件，而是<strong>一组大小相等的日志文件</strong>，也就是日志组。日志组和日志文件之间的关系：</p>
-<p><img src="https://s21.ax1x.com/2025/08/11/pVd6ISg.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVd6ISg.png" srcset="/img/loading.gif" lazyload></p>
 <p>日志组中的第一个日志文件还保存了2KB的元数据，用于恢复存储引擎。其余日志文件保留2KB的区域，但是不写入数据。这2KB区域的结构如下：</p>
 <table>
 <thead>
@@ -520,7 +520,7 @@
 </tr>
 </tbody></table>
 <p>其中检查点信息用于存储最近一次检查点的 LSN 位置，即已经持久化到磁盘的 redo 日志的位置。</p>
-<p><img src="https://s21.ax1x.com/2025/08/11/pVdNdmD.png" srcset="/img/loading.gif" lazyload alt="逻辑结构"></p>
+<p><img src="/../img/pVdNdmD.png" srcset="/img/loading.gif" lazyload alt="逻辑结构"></p>
 <h3 id="重做日志内容格式"><a href="#重做日志内容格式" class="headerlink" title="重做日志内容格式"></a>重做日志内容格式</h3><p><strong>InnoDB基于页进行管理，所以重做日志的格式也是基于页的</strong>。下面讨论重做日志的log block里存储的内容是按照什么格式进行的。</p>
 <ul>
 <li>通用头部<ul>
@@ -571,7 +571,7 @@
 
 <h3 id="purge"><a href="#purge" class="headerlink" title="purge"></a>purge</h3><p>清理思路：清理之前的delete和update，使其最终完成。适用于已经不被任何事务引用的操作。</p>
 <p>先从History List找到第一个需要被清理的日志，然后从该日志所在的页继续找别的需要清理的日志，找不到就回到链表往下找。</p>
-<p><img src="https://s21.ax1x.com/2025/08/12/pVdoKGn.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVdoKGn.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="group-commit"><a href="#group-commit" class="headerlink" title="group commit"></a>group commit</h2><ul>
 <li>对于只读事务，不涉及磁盘文件的更改，所以提交时不需要fsync</li>
 <li>对于非只读事务，必须在事务提交时立即执行fsync，保证 redo 日志都已经写入磁盘。</li>
@@ -586,7 +586,7 @@
 <p>同时提交的事务越多，group commit的效果越明显，数据库性能的提升就越大。</p>
 <hr>
 <p>InnoDB 1.2 之前，开启 binlog 会让事务提交流程串行执行，<code>binlog fsync</code> 和 <code>redo log fsync</code> 不能并行或者合并执行，从而让 group commit 失效。MySQL 5.6 引入 binlog group commit 才解决了这个问题：</p>
-<p><img src="https://s21.ax1x.com/2025/08/12/pVwPUxK.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVwPUxK.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="事务的隔离级别"><a href="#事务的隔离级别" class="headerlink" title="事务的隔离级别"></a>事务的隔离级别</h2><p>有四种事务隔离的级别标准，但是很少有数据厂商遵循这些标准，比如Oracle不支持RR隔离级别。</p>
 <ul>
 <li>RU：READ UNCOMMITED</li>
@@ -617,7 +617,7 @@
 <li>如果所有的参与者都返回准备就绪，事务管理器就发送commit请求，有任何一个失败则发送终止或回滚请求。</li>
 </ol>
 <p><strong>内部XA：<strong>用于保证</strong>主从复制的一致性</strong></p>
-<p><img src="https://s21.ax1x.com/2025/08/12/pVwPIaj.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVwPIaj.png" srcset="/img/loading.gif" lazyload></p>
 <ol>
 <li>主库把事务的修改写入 redo log buffer，调用<code>fsync</code>，然后标记为<code>prepare</code>状态，<strong>先不提交事务</strong>。</li>
 <li>MySQL服务层将事务的SQL语句写入binlog cache，然后<code>fsync</code>持久化到binlog文件。</li>

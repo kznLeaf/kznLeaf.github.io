@@ -30,16 +30,16 @@
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="雪花算法&amp;全局ID生成器雪花算法（Snowflake） 是一种由 Twitter 提出的分布式唯一 ID 生成算法，用来在高并发、分布式系统中快速生成全局唯一、趋势递增的 64 位整数 ID。 雪花算法的结构：long类型，64位 10 | 41位时间戳 | 10位机器信息 | 12位序列号   序列号：同一毫秒内的自增序列号，比如同一毫秒内的第12个请求的序列号就是12，最多4096个序">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/28/pVnnElt.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/29/pVn0iN9.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/06/29/pVnByid.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVnnElt.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVn0iN9.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVnByid.png">
 <meta property="article:published_time" content="2025-06-30T15:49:11.000Z">
-<meta property="article:modified_time" content="2025-09-06T15:21:29.159Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:32.002Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="中间件">
 <meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/06/28/pVnnElt.png">
+<meta name="twitter:image" content="https://kznleaf.top/img/pVnnElt.png">
   
   
   
@@ -353,7 +353,7 @@
 <li>替代UUID</li>
 </ul>
 <p>本项目用到的算法和雪花算法类似，如下：</p>
-<p><img src="https://s21.ax1x.com/2025/06/28/pVnnElt.png" srcset="/img/loading.gif" lazyload alt="全局ID生成器"></p>
+<p><img src="/../img/pVnnElt.png" srcset="/img/loading.gif" lazyload alt="全局ID生成器"></p>
 <p>完成的工具类：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RedisIdWorker</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">long</span> <span class="hljs-variable">BEGIN_TIMESTAMP</span> <span class="hljs-operator">=</span> <span class="hljs-number">1640995200L</span>;<br>    <span class="hljs-keyword">private</span> StringRedisTemplate stringRedisTemplate;<br><br>    <span class="hljs-comment">// 形参用于区分不同的业务</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">long</span> <span class="hljs-title function_">nextId</span><span class="hljs-params">(String keyPrefix)</span> &#123;<br>        <span class="hljs-type">LocalDateTime</span> <span class="hljs-variable">now</span> <span class="hljs-operator">=</span> LocalDateTime.now();<br>        <span class="hljs-type">long</span> <span class="hljs-variable">nowSecond</span> <span class="hljs-operator">=</span> now.toEpochSecond(ZoneOffset.UTC);<br>        <span class="hljs-type">long</span> <span class="hljs-variable">timestamp</span> <span class="hljs-operator">=</span> nowSecond - BEGIN_TIMESTAMP;<br><br>        <span class="hljs-comment">// 生成序列号</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">date</span> <span class="hljs-operator">=</span> now.format(DateTimeFormatter.ofPattern(<span class="hljs-string">&quot;yyyy:MM:dd&quot;</span>));<br>        <span class="hljs-comment">// 每次调用都会让 icr:keyPrefix:date 这个键的值加一，然后利用获取到的数字作为唯一 ID 的一部分</span><br>        <span class="hljs-type">long</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> stringRedisTemplate.opsForValue().increment(<span class="hljs-string">&quot;icr:&quot;</span> + keyPrefix + <span class="hljs-string">&quot;:&quot;</span> + date);<br><br>        <span class="hljs-comment">// 移位 + 拼接</span><br>        <span class="hljs-keyword">return</span> timestamp &lt;&lt; <span class="hljs-number">32</span> | count;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -371,7 +371,7 @@
 <li>秒杀是否开始或者结束</li>
 <li>剩余库存是否充足</li>
 </ul>
-<p><img src="https://s21.ax1x.com/2025/06/29/pVn0iN9.png" srcset="/img/loading.gif" lazyload alt="流程图"></p>
+<p><img src="/../img/pVn0iN9.png" srcset="/img/loading.gif" lazyload alt="流程图"></p>
 <p><strong>几个技巧</strong>：</p>
 <ol>
 <li>扣减库存：</li>
@@ -387,7 +387,7 @@
 
 <p>因为这里涉及两个对数据库的直接改动操作（修改库存、增加订单），所以加上一个事务注解。</p>
 <h3 id="解决高并发问题"><a href="#解决高并发问题" class="headerlink" title="解决高并发问题"></a>解决高并发问题</h3><p>以上代码存在<strong>超卖</strong>现象，原理如下：</p>
-<p><img src="https://s21.ax1x.com/2025/06/29/pVnByid.png" srcset="/img/loading.gif" lazyload alt="超卖"></p>
+<p><img src="/../img/pVnByid.png" srcset="/img/loading.gif" lazyload alt="超卖"></p>
 <p>某一时刻只剩下了一张券，此时并发的三个线程1、2、3同时查询库存，都发现仍有剩余，于是三个线程都去做减库存的操作，导致超卖。这属于并发安全问题。</p>
 <p>解决方案：<strong>加锁</strong>。</p>
 <p>锁分为两种：</p>

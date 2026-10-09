@@ -30,14 +30,14 @@
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="锁的类型InnoDB引擎有两种行级锁：  共享锁 S：允许事务读一行数据 排他锁 X: 允许事务删除或者更新一行数据。  除此之外还有意向锁，意向锁是为了告诉表在更细的粒度上加锁  意向共享锁：事务想要获得某几行的共享锁 意向排他锁：事务想要获得某一行的排他锁  读操作一致性非锁定读：  如果读取的行正在执行删除或者更新操作，这时不会去等待锁的释放，而是读取锁的一个快照数据。  一致性锁定读： 某">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s21.ax1x.com/2025/08/10/pVdmK1A.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/08/10/pVdmwXq.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVdmK1A.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVdmwXq.png">
 <meta property="article:published_time" content="2025-08-12T11:19:26.000Z">
-<meta property="article:modified_time" content="2025-08-17T10:57:33.532Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:31.988Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/08/10/pVdmK1A.png">
+<meta name="twitter:image" content="https://kznleaf.top/img/pVdmK1A.png">
   
   
   
@@ -516,9 +516,9 @@
 <li>事务等待链表</li>
 </ul>
 <p>如下图所示:</p>
-<p><img src="https://s21.ax1x.com/2025/08/10/pVdmK1A.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVdmK1A.png" srcset="/img/loading.gif" lazyload></p>
 <p>规定:<code>t1 -&gt; t2</code>表示事务 t1 在等待 t2 持有的某些锁,比如上图中 t1 在等待 t2 对 row1 加的X锁. 根据这一规则画出来的图如下:</p>
-<p><img src="https://s21.ax1x.com/2025/08/10/pVdmwXq.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVdmwXq.png" srcset="/img/loading.gif" lazyload></p>
 <p>容易发现 t1 和 t2 存在死锁.</p>
 <blockquote>
 <p>每当有事务请求锁并发生等待时, 都会判断是否有死锁, 如果有就回滚 undo 量最小的事务.</p>

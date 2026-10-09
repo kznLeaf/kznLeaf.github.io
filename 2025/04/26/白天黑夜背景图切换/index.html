@@ -30,16 +30,16 @@
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="2025&#x2F;5&#x2F;24 补充： 关于这项功能的实现，这篇博客提供了更好的实现思路，如果你想实现该功能的话推荐优先参考这个。 本文提供的是一种比较简陋的实现方式，因为没有配置预加载功能所以第一次切换背景时会看到明显的闪屏。 1. 获取当前模式要解决的第一件事是获取当前页面采用的模式。 按F12打开控制台，很容易发现 1234&lt;a class&#x3D;&quot;nav-link&amp;quo">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s21.ax1x.com/2025/04/26/pETiPpT.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/04/26/pETibU1.png">
+<meta property="og:image" content="https://kznleaf.top/img/pETiPpT.png">
+<meta property="og:image" content="https://kznleaf.top/img/pETibU1.png">
 <meta property="article:published_time" content="2025-04-26T07:01:17.000Z">
-<meta property="article:modified_time" content="2025-07-02T15:27:52.733Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:31.985Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="折腾记录">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="Fluid">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/04/26/pETiPpT.png">
+<meta name="twitter:image" content="https://kznleaf.top/img/pETiPpT.png">
   
   
   
@@ -356,13 +356,13 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;#color-toggle-btn&#x27;</span>).<span class="hljs-title function_">addEventListener</span>(<br>    <span class="hljs-string">&quot;click&quot;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-keyword">const</span> dataValue = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;color-toggle-icon&#x27;</span>).<span class="hljs-title function_">getAttribute</span>(<span class="hljs-string">&#x27;data&#x27;</span>); <span class="hljs-comment">// 获取data属性</span><br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;data属性值是：&#x27;</span>, dataValue);<br>    &#125;<br>)<br></code></pre></td></tr></table></figure>
 
 <p>打开控制台看看效果：</p>
-<p><img src="https://s21.ax1x.com/2025/04/26/pETiPpT.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pETiPpT.png" srcset="/img/loading.gif" lazyload></p>
 <p>发现获取的data值和当前页面的实际模式刚好相反，这个问题不大，比较烦人的是每一次点击按钮控制台都会打印出两个完全相同的值。通过检查按钮的属性，发现这个click事件被<strong>重复绑定</strong>两次。</p>
 <p>解决方法：定义一个全局变量作为标记，初始值为<code>undefined</code>，绑定一次之后赋值为<code>true</code>，因此以后不会重复绑定。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 监听主题切换按钮点击事件</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getCurrentMode</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;color-toggle-icon&#x27;</span>).<span class="hljs-title function_">getAttribute</span>(<span class="hljs-string">&#x27;data&#x27;</span>);<br>&#125;<br><br><span class="hljs-comment">// 检查是否已初始化</span><br><span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">window</span>.<span class="hljs-property">_colorToggleInitialized</span>) &#123;<br>    <span class="hljs-keyword">function</span> <span class="hljs-title function_">handleColorToggle</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">getCurrentMode</span>());<br>    &#125;<br><br>    <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;#color-toggle-btn&#x27;</span>).<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;click&quot;</span>, handleColorToggle);<br>    <span class="hljs-variable language_">window</span>.<span class="hljs-property">_colorToggleInitialized</span> = <span class="hljs-literal">true</span>; <span class="hljs-comment">// 标记为已初始化</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>修改后的效果：</p>
-<p><img src="https://s21.ax1x.com/2025/04/26/pETibU1.png" srcset="/img/loading.gif" lazyload alt="backgroundize.js只被绑定一次"></p>
+<p><img src="/../img/pETibU1.png" srcset="/img/loading.gif" lazyload alt="backgroundize.js只被绑定一次"></p>
 <p>可以看出非用户自定义的文件也有被重复绑定的情况，原因暂时不太清楚。</p>
 <h1 id="2-替换背景图"><a href="#2-替换背景图" class="headerlink" title="2. 替换背景图"></a>2. 替换背景图</h1><p>文章页的背景图：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;web_bg&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;background-image: url(<span class="hljs-symbol">&amp;quot;</span>/img/girl.webp<span class="hljs-symbol">&amp;quot;</span>);position: fixed;width: 100%;height: 100%;z-index: -1;background-size: cover;&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>

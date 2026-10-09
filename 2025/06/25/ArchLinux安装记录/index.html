@@ -32,7 +32,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://s21.ax1x.com/2025/06/25/pVeqly8.png">
 <meta property="article:published_time" content="2025-06-25T15:13:24.000Z">
-<meta property="article:modified_time" content="2025-07-02T15:10:30.617Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:31.983Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="折腾记录">
@@ -337,14 +337,14 @@
             
               <div class="markdown-body">
                 
-                <p><img src="https://s21.ax1x.com/2025/06/25/pVeqEee.jpg" srcset="/img/loading.gif" lazyload alt="Arch Linux"></p>
+                <p><img src="/../img/pVeqEee.jpg" srcset="/img/loading.gif" lazyload alt="Arch Linux"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近给手上的两个笔记本都装上了 Arch Linux 虚拟机，来来回回重装了大概四五次，这里把比较重要的地方记录一下。主要参考：<a target="_blank" rel="noopener" href="https://arch.icekylin.online/guide/">archlinux简明指南</a>、<a target="_blank" rel="noopener" href="https://archlinuxstudio.github.io/ArchLinuxTutorial/#/">Arch Linux 安装使用教程 - ArchTutorial - Arch Linux Studio</a></p>
 <h2 id="屏幕分辨率"><a href="#屏幕分辨率" class="headerlink" title="屏幕分辨率"></a>屏幕分辨率</h2><p>第一次我是在外界24寸2k显示屏的游戏本上安装的 Arch Linux，在装好 KDE 桌面环境和虚拟机增强功能之后，虚拟机的界面分辨率跟宿主机差不多，算是清晰。但是在另一个14寸 2880x1880 分辨率的轻薄本上安装之后，界面看起来有点糊，像这样：</p>
-<p><img src="https://s21.ax1x.com/2025/06/25/pVe2GCQ.jpg" srcset="/img/loading.gif" lazyload alt="糊"></p>
+<p><img src="/../img/pVe2GCQ.jpg" srcset="/img/loading.gif" lazyload alt="糊"></p>
 <p>应该属于正常现象，玩虚拟机的话还是推荐用大屏</p>
 <h2 id="无法连接校园网"><a href="#无法连接校园网" class="headerlink" title="无法连接校园网"></a>无法连接校园网</h2><p>桥接方式中虚拟机是一个独立的机器，相当于一个真实机器，而此机器在校园网中并未注册，在校园网中是<strong>需要验证</strong>的，导致无法联网。</p>
 <p>使用 NAT 方式可以联网，因为 NAT 模式下虚拟机通过宿主机来联网。</p>
-<p><img src="https://s21.ax1x.com/2025/06/24/pVeecCt.png" srcset="/img/loading.gif" lazyload alt="NAT模式和桥接模式"></p>
+<p><img src="/../img/pVeecCt.png" srcset="/img/loading.gif" lazyload alt="NAT模式和桥接模式"></p>
 <h2 id="Linux磁盘分区"><a href="#Linux磁盘分区" class="headerlink" title="Linux磁盘分区"></a>Linux磁盘分区</h2><p>前置知识：Linux是通过目录树的方式来管理文件的，形如</p>
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs stata">/<br>├── bin<br>├── <span class="hljs-keyword">boot</span><br>├── etc<br>├── home<br>│   ├── user1<br>│   └── user2<br>├── <span class="hljs-keyword">var</span><br>└── usr<br>    └── <span class="hljs-keyword">local</span><br></code></pre></td></tr></table></figure>
 
@@ -386,7 +386,7 @@
 <li><code>/dev/sda3</code>：文件系统分区。其余全部</li>
 </ul>
 <p><code>[write]</code>后，退出，使用<code>fdisk -l</code>再次检查分区情况。</p>
-<p><img src="https://s21.ax1x.com/2025/06/24/pVemSa9.png" srcset="/img/loading.gif" lazyload alt="分区"></p>
+<p><img src="/../img/pVemSa9.png" srcset="/img/loading.gif" lazyload alt="分区"></p>
 <p><strong>注意</strong>：这一步不要忘记配置 EFI 分区！在简明指南中，直到【安装详解】一文才描述了怎么配置 EFI 分区，实际上 EFI 分区在这里就创建好了，应该放到前边就讲才对。</p>
 <h2 id="格式化分区"><a href="#格式化分区" class="headerlink" title="格式化分区"></a>格式化分区</h2><p>划定分区后就是格式化分区，分三步：</p>
 <ul>
@@ -413,7 +413,7 @@
 <h3 id="将grub安装到EFI分区"><a href="#将grub安装到EFI分区" class="headerlink" title="将grub安装到EFI分区"></a>将grub安装到EFI分区</h3><p>之前我已经把RFI分区挂载到了<code>/boot/efi</code>目录下，所以这里也把grub安装到这个目录：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ARCH<br></code></pre></td></tr></table></figure>
 
-<h2 id="安装完毕"><a href="#安装完毕" class="headerlink" title="安装完毕"></a>安装完毕</h2><p><img src="https://s21.ax1x.com/2025/06/24/pVeA3WT.png" srcset="/img/loading.gif" lazyload alt="123"></p>
+<h2 id="安装完毕"><a href="#安装完毕" class="headerlink" title="安装完毕"></a>安装完毕</h2><p><img src="/../img/pVeA3WT.png" srcset="/img/loading.gif" lazyload alt="123"></p>
 <p>装完桌面环境以后最好先把虚拟机增强功能加上，这样以后可以直接从宿主机复制命令了，省下不少时间。</p>
 <p>安装输入法的话先执行以下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> pacman -S fcitx5-im <span class="hljs-comment">#基础包组</span><br><span class="hljs-built_in">sudo</span> pacman -S fcitx5-chinese-addons <span class="hljs-comment">#官方中文输入引擎</span><br><span class="hljs-built_in">sudo</span> pacman -S fcitx5-anthy <span class="hljs-comment">#日文输入引擎</span><br>yay -S fcitx5-pinyin-moegirl <span class="hljs-comment">#萌娘百科词库 由于中国大陆政府对github封锁，你可能在此卡住。如卡住，可根据后文设置好代理后再安装</span><br><span class="hljs-built_in">sudo</span> pacman -S fcitx5-pinyin-zhwiki <span class="hljs-comment">#中文维基百科词库</span><br><span class="hljs-built_in">sudo</span> pacman -S fcitx5-material-color <span class="hljs-comment">#主题</span><br></code></pre></td></tr></table></figure>

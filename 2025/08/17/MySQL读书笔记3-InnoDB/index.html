@@ -30,16 +30,16 @@
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="目录 不同存储引擎的比较 连接MySQL InnoDB存储引擎架构 后台线程 内存 缓冲池 如何管理内存区域 重做日志缓冲     Checkpoint 旧版本Master Thread Loop background loop   新版本主线程的变化 InnoDB关键特性 插入缓冲 doublewrite 自适应哈希索引 异步IO 刷新邻居页    不同存储引擎的比较 MyISAM: 不支持事务">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s21.ax1x.com/2025/08/13/pVwN15d.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/08/13/pVwdUr6.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/08/13/pVw0KNF.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/08/14/pVwgttP.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVwN15d.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVwdUr6.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVw0KNF.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVwgttP.png">
 <meta property="article:published_time" content="2025-08-17T10:56:02.000Z">
-<meta property="article:modified_time" content="2025-08-17T11:04:26.125Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:31.982Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/08/13/pVwN15d.png">
+<meta name="twitter:image" content="https://kznleaf.top/img/pVwN15d.png">
   
   
   
@@ -372,7 +372,7 @@
 <li>MyISAM: 不支持事务、表锁，支持全文索引，缓冲池只缓冲索引文件而不会缓冲数据文件</li>
 </ul>
 <p>面试题可能会让比较InnoDB和MyISAM</p>
-<p><img src="https://s21.ax1x.com/2025/08/13/pVwN15d.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVwN15d.png" srcset="/img/loading.gif" lazyload></p>
 <p>MyISAM相比于InnoDB的主要缺陷：</p>
 <ul>
 <li><strong>不支持事务</strong>（最大的区别）</li>
@@ -391,7 +391,7 @@
 <li><strong>信号量</strong>（Semaphore）：用于控制多个进程对共享资源的访问。信号量是一个整数，通过对其进行加 1 和减 1 操作来实现对资源的占用和释放。可以用于实现进程的同步和互斥。</li>
 <li><strong>套接字</strong>（Socket）：可用于不同主机上的进程间通信，也可以用于同一主机上的进程间通信。支持多种通信协议，如 TCP、UDP 等。</li>
 </ul>
-<h2 id="InnoDB存储引擎架构"><a href="#InnoDB存储引擎架构" class="headerlink" title="InnoDB存储引擎架构"></a>InnoDB存储引擎架构</h2><p><img src="https://s21.ax1x.com/2025/08/13/pVwdUr6.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="InnoDB存储引擎架构"><a href="#InnoDB存储引擎架构" class="headerlink" title="InnoDB存储引擎架构"></a>InnoDB存储引擎架构</h2><p><img src="/../img/pVwdUr6.png" srcset="/img/loading.gif" lazyload></p>
 <p>后台线程负责刷新内存池中的数据（LRU），此外把已经修改的数据文件刷新到磁盘文件。</p>
 <h3 id="后台线程"><a href="#后台线程" class="headerlink" title="后台线程"></a>后台线程</h3><p>InnoDB存储引擎是多线程的模型：</p>
 <ul>
@@ -405,7 +405,7 @@
 <li>修改操作，先修改缓冲池中的页，然后再以一定的频率刷新到磁盘。<strong>数据页通过 Checkpoint 机制刷新到磁盘</strong>。</li>
 </ul>
 <p>缓冲池缓存的数据页有各种类型，插入缓冲、自适应哈希索引等是不受LRU算法管理的。内存结构如下：</p>
-<p><img src="https://s21.ax1x.com/2025/08/13/pVw0KNF.png" srcset="/img/loading.gif" lazyload alt="InnoDB引擎内存结构"></p>
+<p><img src="/../img/pVw0KNF.png" srcset="/img/loading.gif" lazyload alt="InnoDB引擎内存结构"></p>
 <p>缓冲池也可以有多个，是可以配置的。</p>
 <h4 id="如何管理内存区域"><a href="#如何管理内存区域" class="headerlink" title="如何管理内存区域"></a>如何管理内存区域</h4><p>涉及LRU list; Free list; Flush list.</p>
 <p><strong>中点插入策略</strong></p>
@@ -478,7 +478,7 @@
 <li>可以根据需要修改 full perge 每次回收的脏页数量。</li>
 <li>最后把刷新脏页的操作单独分了到了一个线程 Page Cleaner。</li>
 </ul>
-<h2 id="InnoDB关键特性"><a href="#InnoDB关键特性" class="headerlink" title="InnoDB关键特性"></a>InnoDB关键特性</h2><p><img src="https://s21.ax1x.com/2025/08/14/pVwgttP.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="InnoDB关键特性"><a href="#InnoDB关键特性" class="headerlink" title="InnoDB关键特性"></a>InnoDB关键特性</h2><p><img src="/../img/pVwgttP.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="插入缓冲"><a href="#插入缓冲" class="headerlink" title="插入缓冲"></a>插入缓冲</h3><p><code>Insert Buffer</code></p>
 <p>插入缓冲不是缓存(cache)，而是表空间的一部分，主要用于处理非唯一索引的插入和更新操作。</p>
 <ul>

@@ -32,7 +32,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://s41.ax1x.com/2026/02/17/pZOrx3t.png">
 <meta property="article:published_time" content="2026-02-17T13:42:36.000Z">
-<meta property="article:modified_time" content="2026-02-20T13:06:34.912Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:07.305Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="kubernetes">
 <meta name="twitter:card" content="summary_large_image">
@@ -368,12 +368,12 @@
 <li><strong>Pod</strong>：是一个或者多个紧密耦合的应用容器的组合，他们共享存储、IP地址、每个容器的运行信息。<strong>只有容器紧耦合并且需要共享磁盘等资源时，才应将其编排在一个 Pod 中。</strong></li>
 </ul>
 <p>Pod示意图如下：</p>
-<p><img src="https://s41.ax1x.com/2026/02/14/pZqzRtH.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pZqzRtH.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li><strong>节点</strong>：Pod所处的工作机器，可以是虚拟机，也可以是物理机。Node由控制平面管理。一个节点至少要有kubelet和容器运行时。</li>
 </ul>
 <p>节点的示意图如下：</p>
-<p><img src="https://s41.ax1x.com/2026/02/14/pZqzzj0.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pZqzzj0.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>最后，API Server是控制平面的前端，暴露了HTTP API。它的主要实现是<a target="_blank" rel="noopener" href="https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/">kube-apiserver</a>。kube-apiserver支持水平扩展，即可以同时运行多个实例。</li>
 </ul>
@@ -413,7 +413,7 @@
 必须以字母数字结尾
 </code></pre>
 <p>k8s会为Service对象分配一个虚拟IP,称为集群IP，供虚拟IP机制使用。虚拟IP机制见：<a target="_blank" rel="noopener" href="https://kubernetes.io/zh-cn/docs/reference/networking/virtual-ips/">https://kubernetes.io/zh-cn/docs/reference/networking/virtual-ips/</a></p>
-<p><img src="https://s41.ax1x.com/2026/02/14/pZqxFqU.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pZqxFqU.png" srcset="/img/loading.gif" lazyload></p>
 <p><code>kube-proxy</code>捕获流向Service地址的流量，并且把这些流量重定向到某个Pod。</p>
 <p>流量能正确地从Service对应到具体的Pod,靠的是EndpointSlice。<code>EndpointSlice </code>维护了从<code>Service</code>到其匹配的Pod地址的映射关系：</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">Service</span> (web) → EndpointSlice → 后端 Pod 列表<br>                     ↓<br>              <span class="hljs-number">10.244.0.5:3000</span><br>              <span class="hljs-number">10.244.0.6:3000</span><br></code></pre></td></tr></table></figure>

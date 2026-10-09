@@ -30,17 +30,17 @@
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="《深入理解Java虚拟机》读书笔记(2)">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/31/pV9uJ1A.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/31/pV9Koa8.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/31/pV9MHw6.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/31/pV9MbTK.png">
+<meta property="og:image" content="https://kznleaf.top/img/pV9uJ1A.png">
+<meta property="og:image" content="https://kznleaf.top/img/pV9Koa8.png">
+<meta property="og:image" content="https://kznleaf.top/img/pV9MHw6.png">
+<meta property="og:image" content="https://kznleaf.top/img/pV9MbTK.png">
 <meta property="article:published_time" content="2025-06-01T15:27:55.000Z">
-<meta property="article:modified_time" content="2025-07-02T15:27:01.996Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:31.945Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/05/31/pV9uJ1A.png">
+<meta name="twitter:image" content="https://kznleaf.top/img/pV9uJ1A.png">
   
   
   
@@ -365,14 +365,14 @@
 
 <p>内存分配完成后，虚拟机会把分配好的内存空间初始化为零值（所以Java中的字段不赋初值就可以使用），最后设置对象头。这样一个新的对象就创建好了，可以继续执行构造方法。</p>
 <h2 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h2><p>Java对象保存在堆中时，由以下三部分组成：</p>
-<p><img src="https://s21.ax1x.com/2025/05/31/pV9uJ1A.png" srcset="/img/loading.gif" lazyload alt="对象的内存布局"></p>
+<p><img src="/../img/pV9uJ1A.png" srcset="/img/loading.gif" lazyload alt="对象的内存布局"></p>
 <h3 id="对象头（Object-Header）"><a href="#对象头（Object-Header）" class="headerlink" title="对象头（Object Header）"></a>对象头（Object Header）</h3><ol>
 <li><strong>Mark Word</strong>，在64位虚拟机中占据64个比特，用于存储对象自身的运行时数据，包括堆对象布局、类型、GC 状态、同步状态和身份哈希码的基本信息</li>
 <li><strong>Klass Pointer</strong>，类型指针，指向它的类型元数据，用于确定该对象是哪个类的实例。</li>
 <li><strong>对于数组对象，还有一块用于存储数组长度的区域</strong>。因为以后的JVM 需要进行边界检查、GC 需要知道对象占多大空间等等，数组长度的值是要被多次使用的，所以数组对象自身必须也保存一个长度。</li>
 </ol>
 <p>64位JVM的对象头结构：</p>
-<p><img src="https://s21.ax1x.com/2025/05/31/pV9Koa8.png" srcset="/img/loading.gif" lazyload alt="对象头"></p>
+<p><img src="/../img/pV9Koa8.png" srcset="/img/loading.gif" lazyload alt="对象头"></p>
 <h3 id="实例数据（Instance-Data）"><a href="#实例数据（Instance-Data）" class="headerlink" title="实例数据（Instance Data）"></a>实例数据（Instance Data）</h3><p>实例数据是对象真正存储的有效信息，包括：</p>
 <ul>
 <li>从父类继承的各种类型的字段</li>
@@ -389,13 +389,13 @@
 <ol>
 <li><strong>句柄</strong></li>
 </ol>
-<p><img src="https://s21.ax1x.com/2025/05/31/pV9MHw6.png" srcset="/img/loading.gif" lazyload alt="句柄"></p>
+<p><img src="/../img/pV9MHw6.png" srcset="/img/loading.gif" lazyload alt="句柄"></p>
 <p>Java堆中会划分出来一块区域用户存放句柄，句柄中包含了对象的实例和类型数据的地址信息。此时，<code>reference</code>中存放的是对象的句柄地址，访问过程是：<code>reference</code>-&gt;句柄-&gt;对象的实例数据和类型数据</p>
 <ol start="2">
 <li><strong>直接指针访问</strong></li>
 </ol>
 <p><code>reference</code>直接存储对象实例数据的地址，对象实例数据中保存了指向类型数据的指针。</p>
-<p><img src="https://s21.ax1x.com/2025/05/31/pV9MbTK.png" srcset="/img/loading.gif" lazyload alt="直接访问"></p>
+<p><img src="/../img/pV9MbTK.png" srcset="/img/loading.gif" lazyload alt="直接访问"></p>
 <p><code>reference</code>-&gt;对象实例数据-&gt;对象类型数据，这种方式的访问速度更快。这也是HotSpot主要采用的方式。</p>
 <p>最后看看 Oracle 是如何描述对象的定位的<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.7">[2]</span></a></sup></p>
 <div class="note note-success">

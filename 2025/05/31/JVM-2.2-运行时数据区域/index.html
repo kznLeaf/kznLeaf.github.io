@@ -30,17 +30,17 @@
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="《深入理解Java虚拟机》读书笔记(1)">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/28/pVp3Xe1.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/30/pVpxvHx.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/30/pVpz6Vx.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/05/30/pVpz8rn.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVp3Xe1.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVpxvHx.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVpz6Vx.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVpz8rn.png">
 <meta property="article:published_time" content="2025-05-31T15:02:45.000Z">
-<meta property="article:modified_time" content="2025-07-02T15:26:31.180Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:31.943Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/05/28/pVp3Xe1.png">
+<meta name="twitter:image" content="https://kznleaf.top/img/pVp3Xe1.png">
   
   
   
@@ -344,7 +344,7 @@
 <span id="more"></span>
 
 <h1 id="JVM运行时数据区域"><a href="#JVM运行时数据区域" class="headerlink" title="JVM运行时数据区域"></a>JVM运行时数据区域</h1><p><code>Run-Time Data Areas</code></p>
-<p><img src="https://s21.ax1x.com/2025/05/28/pVp3Xe1.png" srcset="/img/loading.gif" lazyload alt="Java虚拟机运行时数据区"></p>
+<p><img src="/../img/pVp3Xe1.png" srcset="/img/loading.gif" lazyload alt="Java虚拟机运行时数据区"></p>
 <h2 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h2><p>官方文档的表述<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.1">[1]</span></a></sup>：</p>
 <blockquote>
 <p>Java 虚拟机可以同时支持多个执行线程。每个 Java 虚拟机线程都有自己的 pc（程序计数器）寄存器。在任何时候，每个 Java 虚拟机线程都在执行单个方法的代码，即该线程的当前方法。如果该方法不是本地方法，则 pc 寄存器包含当前正在执行的 Java 虚拟机指令的地址。如果线程当前正在执行的是本地方法，则 Java 虚拟机的 pc 寄存器的值未定义。</p>
@@ -555,7 +555,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h2><p><img src="https://s21.ax1x.com/2025/05/30/pVpxvHx.png" srcset="/img/loading.gif" lazyload alt="方法区示意图"></p>
+<h2 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h2><p><img src="/../img/pVpxvHx.png" srcset="/img/loading.gif" lazyload alt="方法区示意图"></p>
 <h3 id="含义-2"><a href="#含义-2" class="headerlink" title="含义"></a>含义</h3><p><code>Method Area</code></p>
 <p>运行时数据区有两个多线程共享的区域，一个是Java堆，另一个就是方法区。</p>
 <p>Oracle <a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4">官方文档</a>是这样描述方法区的：</p>
@@ -576,7 +576,7 @@
 <p>运行时常量池是每个类或接口在运行时对 class 文件中<code>constant_pool</code>表（常量池表）的一种实现形式。字节码中的<code>constant_pool</code>表存放了编译期生成的各种字面量与符号引用，类加载以后这些信息被存放到方法区的运行时常量池中。一般来说，它除了保存Class文件中描述的<strong>符号引用</strong>外，还会把由符号引用翻译出来的<strong>直接引用</strong>也存储在运行时常量池中。</p>
 <p>简单来说，运行时JVM会把class文件中预置的 <em>常量池表</em> 加载为 <em>运行时常量池</em> 。相当于把预制菜煮熟的过程(?)</p>
 <p>除了这种预制的方式以外，运行时常量池中的常量也可以是<strong>动态</strong>生成的，例如 String 的<code>intern</code>方法。这是因为 Java 中的 String 类自己(privately)维护了一个字符串常量池，调用<code>intern</code>方法时，如果池中已包含一个由<code>equals(Object)</code>方法确定与此<code>String</code>对象相等的字符串，则返回池中的字符串。否则，将此<code>String</code>对象添加到池中，并返回对此<code>String</code>对象的引用。</p>
-<h2 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h2><p><img src="https://s21.ax1x.com/2025/05/30/pVpz6Vx.png" srcset="/img/loading.gif" lazyload alt="直接内存、堆外内存、本地内存的关系&lt;sup id&#x3D;&quot;fnref:3&quot; class&#x3D;&quot;footnote-ref&quot;&gt;&lt;a href&#x3D;&quot;#fn:3&quot; rel&#x3D;&quot;footnote&quot;&gt;&lt;span class&#x3D;&quot;hint--top hint--rounded&quot; aria-label&#x3D;&quot;https:&#x2F;&#x2F;juejin.cn&#x2F;post&#x2F;7195478842432028732&quot;&gt;[3]&lt;&#x2F;span&gt;&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;"></p>
+<h2 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h2><p><img src="/../img/pVpz6Vx.png" srcset="/img/loading.gif" lazyload alt="直接内存、堆外内存、本地内存的关系&lt;sup id&#x3D;&quot;fnref:3&quot; class&#x3D;&quot;footnote-ref&quot;&gt;&lt;a href&#x3D;&quot;#fn:3&quot; rel&#x3D;&quot;footnote&quot;&gt;&lt;span class&#x3D;&quot;hint--top hint--rounded&quot; aria-label&#x3D;&quot;https:&#x2F;&#x2F;juejin.cn&#x2F;post&#x2F;7195478842432028732&quot;&gt;[3]&lt;&#x2F;span&gt;&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;"></p>
 <div class="note note-secondary">
             <p>直接内存并不是虚拟机运行时数据区的一部分，也不是Java虚拟机规范中定义的内存区域，但是这部分内存也被频繁的使用，而且也可能导致OutOfMemoryError异常出现。</p>
           </div>
@@ -590,7 +590,7 @@
 <li>于是 Java 程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要进行垃圾回收；</li>
 <li>如果程序发现某个虚引用已经加入到引用队列，那么就可以在所引用的对象的内存被回收之前采取必要的行动（调用<code>Cleaner</code>的<code>clean</code>方法）。</li>
 </ul>
-<p><img src="https://s21.ax1x.com/2025/05/30/pVpz8rn.png" srcset="/img/loading.gif" lazyload alt="NIO"></p>
+<p><img src="/../img/pVpz8rn.png" srcset="/img/loading.gif" lazyload alt="NIO"></p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.1">https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.1</a>
 <a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.3">https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.3</a>
 <a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://juejin.cn/post/7195478842432028732">https://juejin.cn/post/7195478842432028732</a>

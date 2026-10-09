@@ -32,7 +32,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://s21.ax1x.com/2025/08/07/pVaMftU.jpg">
 <meta property="article:published_time" content="2025-08-07T15:17:20.000Z">
-<meta property="article:modified_time" content="2025-08-07T15:44:52.017Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:31.968Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary_large_image">
@@ -437,7 +437,7 @@
 <ul>
 <li>操作系统从磁盘读取代码和静态数据，加载到内存中该进程的地址空间中，如下图：</li>
 </ul>
-<p><img src="https://s21.ax1x.com/2025/07/22/pVGC8mV.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVGC8mV.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>采用<strong>惰性加载</strong>，只有程序执行期间用得上的的代码或数据片段，才会被加载</li>
 <li>加载到内存后，操作系统必须先为<strong>运行时栈</strong>分配内存，用于存放局部变量、函数参数和返回地址。</li>
@@ -453,7 +453,7 @@
 </ul>
 <p>就绪 -&gt; 运行 称之为被调度（scheduled）;<br>运行 -&gt; 就绪 称之为取消调度（descheduled）</p>
 <p>一个进程被阻塞时，CPU控制权可以交给其他线程，例如</p>
-<p><img src="https://s21.ax1x.com/2025/07/22/pVGPtDP.png" srcset="/img/loading.gif" lazyload alt="阻塞"></p>
+<p><img src="/../img/pVGPtDP.png" srcset="/img/loading.gif" lazyload alt="阻塞"></p>
 <p>从磁盘读取数据和等待网络数据包就是典型的IO阻塞过程。关于<code>Process1</code>完成后是否立即切换回去，这是一个决策的问题，这里只是举了一个例子。</p>
 <p><strong>上下文切换</strong> (context switch)：任务的执行上下文包括寄存器内容、程序计数器、堆栈指针，为了能之后恢复任务的执行状态，系统必须保存当前任务的执行上下文（寄存器内容、程序计数器、堆栈指针等），再加载另一个任务的上下文。进程和线程都有上下文切换，线程切换更快一些。</p>
 <h2 id="进程API"><a href="#进程API" class="headerlink" title="进程API"></a>进程API</h2><h3 id="fork"><a href="#fork" class="headerlink" title="fork"></a>fork</h3><p>fork，英文动词，意为派生。在父进程的基础上派生出来一个新的进程，新的进程的内从空间指向和父进程同一块物理内存，直到某一方试图修改物理内存的数据才会开始复制物理内存</p>
@@ -499,7 +499,7 @@
 </ul>
 <h2 id="受限直接执行（limited-direct-execution）"><a href="#受限直接执行（limited-direct-execution）" class="headerlink" title="受限直接执行（limited direct execution）"></a>受限直接执行（limited direct execution）</h2><p>受限直接执行的目的就是限制程序的权限，因为每个程序都会有需要调用内核权限的情况，比如硬盘IO操作，如果不加以限制，很可能会危害系统。</p>
 <h3 id="直接运行协议"><a href="#直接运行协议" class="headerlink" title="直接运行协议"></a>直接运行协议</h3><p>当操作系统希望启动程序时，会做以下步骤：</p>
-<p><img src="https://s21.ax1x.com/2025/07/23/pVGWVzR.png" srcset="/img/loading.gif" lazyload alt="简单，但是有问题"></p>
+<p><img src="/../img/pVGWVzR.png" srcset="/img/loading.gif" lazyload alt="简单，但是有问题"></p>
 <p>有两个仍待解决的问题：</p>
 <ol>
 <li>如何控制程序的权限</li>
@@ -514,7 +514,7 @@
 </ul>
 <p><strong>为什么叫“陷阱”指令</strong>？因为程序需要执行系统调用的时候掉都需要陷入内核中，由内核执行系统调用的工作，然后再浮出来。</p>
 <p>受限的直接运行协议的全过程如图：</p>
-<p><img src="https://s21.ax1x.com/2025/07/23/pVGWIfJ.png" srcset="/img/loading.gif" lazyload alt="LDE协议"></p>
+<p><img src="/../img/pVGWIfJ.png" srcset="/img/loading.gif" lazyload alt="LDE协议"></p>
 <h3 id="在进程之间切换"><a href="#在进程之间切换" class="headerlink" title="在进程之间切换"></a>在进程之间切换</h3><p>关键：进程是在CPU上运行的，控制权在进程手里，想要切换进程，操作系统必须重新拿到CPU的控制权。为了实现进程之间的切换，有两种方式：协作方式和非协作方式。</p>
 <h4 id="协作方式"><a href="#协作方式" class="headerlink" title="协作方式"></a>协作方式</h4><p>这是一种乐观的思路，它假定所有进程都会合理地<strong>主动让出CPU地控制权</strong>。</p>
 <p>唯一的例外是非法操作，如果发生非法操作，这时CPU的控制权也会转移给操作系统，执行非法活动的进程会被操作系统直接终止。</p>
@@ -550,12 +550,12 @@
 <h3 id="最短完成时间优先STCF"><a href="#最短完成时间优先STCF" class="headerlink" title="最短完成时间优先STCF"></a>最短完成时间优先STCF</h3><p>最短完成时间优先（Shortest Time-to-Completion First，<strong>STCF</strong>）或抢占式最短作业优先（Preemptive Shortest Job First ，PSJF）调度程序</p>
 <p>含义：每当新工作进入系统时，它就会确定剩余工作和新工作中，谁的剩余时间<strong>最少</strong>，然后调度该工作</p>
 <div class="note note-info">
-            <p><strong>响应时间</strong>定义为从任务到达系统到首次运行的时间，以STCF为例：</p><p><img src="https://s21.ax1x.com/2025/07/24/pVG7pUx.png" srcset="/img/loading.gif" lazyload></p><p>A和B的响应时间都是0，C的响应时间是10</p><p><strong>周转时间</strong>则指的是任务从到达，到彻底完成的时间。上面这个例子的总周转时间为120。STCF可以降低周转时间，但是牺牲了响应时间。</p>
+            <p><strong>响应时间</strong>定义为从任务到达系统到首次运行的时间，以STCF为例：</p><p><img src="/../img/pVG7pUx.png" srcset="/img/loading.gif" lazyload></p><p>A和B的响应时间都是0，C的响应时间是10</p><p><strong>周转时间</strong>则指的是任务从到达，到彻底完成的时间。上面这个例子的总周转时间为120。STCF可以降低周转时间，但是牺牲了响应时间。</p>
           </div>
 
 <p>STCF的响应时间不是很好，为了改善响应时间，提出了<strong>轮转</strong>（Round-Robin）调度。</p>
 <h3 id="轮转-RR"><a href="#轮转-RR" class="headerlink" title="轮转(RR)"></a>轮转(RR)</h3><p>基本含义：<strong>在一个时间片内运行一个任务后马上切换到下一个任务（而不用等待任务结束），这样交替进行</strong>。交替周期是时钟周期的整数倍。</p>
-<p><img src="https://s21.ax1x.com/2025/07/24/pVG7kxe.png" srcset="/img/loading.gif" lazyload alt="SJF和轮转的对比，时间片为1s"></p>
+<p><img src="/../img/pVG7kxe.png" srcset="/img/loading.gif" lazyload alt="SJF和轮转的对比，时间片为1s"></p>
 <p>时间片的选择：折中，因为</p>
 <ul>
 <li>时间片太短会导致频繁的上下文切换，成本上升</li>
@@ -569,7 +569,7 @@
 <li>IO完成时会触发<strong>中断</strong>，CPU可以将阻塞的进程转移到就绪状态。</li>
 </ul>
 <p>高效使用CPU的例子：A一共要执行4个IO操作，B是纯粹的CPU密集型任务：</p>
-<p><img src="https://s21.ax1x.com/2025/07/24/pVG7ssJ.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVG7ssJ.png" srcset="/img/loading.gif" lazyload></p>
 <p>交替执行可以最大化CPU的利用。</p>
 <h2 id="多级反馈队列MLFQ调度"><a href="#多级反馈队列MLFQ调度" class="headerlink" title="多级反馈队列MLFQ调度"></a>多级反馈队列MLFQ调度</h2><p>多级反馈队列（Multi-level Feedback Queue，MLFQ）</p>
 <p>我们的目标是，在不知道进程的运行时间的情况下，构建出一个良好的调度程序；调度程序在运行时可以学习进程的特征，从而做出更好的决策。<strong>用历史经验预测未来</strong>。</p>
@@ -599,7 +599,7 @@
 </blockquote>
 <p>这样一来，CPU计算密集型工作的优先级会逐次递减，直至最低优先级。如果此时来了一个交互型工作，因为初始优先级是最高的，所以优先执行交互型工作，并且很快就执行完毕。可见，<strong>MLFQ具有 SJF 的优点</strong>。</p>
 <p>混合IO工作也是同理，CPU占用时间较短所以一直维持在高优先级，一旦执行IO让出CPU就会把控制权交给低优先级的计算密集型工作，循环往复。</p>
-<p><img src="https://s21.ax1x.com/2025/07/24/pVGbu38.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVGbu38.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="“饥饿”问题——自动提升优先级"><a href="#“饥饿”问题——自动提升优先级" class="headerlink" title="“饥饿”问题——自动提升优先级"></a>“饥饿”问题——自动提升优先级</h3><p>交互型工作太多的情况下，会持续占用CPU，不给低优先级任务运行的机会，称之为<strong>饥饿</strong>；另一方面，如果某些进程使点小花招，比如在自己的时间片快用完之前主动调用IO操作，这样就能一直维持自己的高优先级，即使自己其实是长时间的任务。以上种种均表明，目前的 MLFQ 算法仍然是有缺陷的。</p>
 <p>首先，为了防止饥饿现象：</p>
 <blockquote>
@@ -641,18 +641,18 @@
 <li><strong>时间局部性</strong>：当一个数据被访问后，它很有可能在不久的将来再次被访问。</li>
 <li><strong>空间局部性</strong>：当程序访问地址 x 的数据后，很可能会紧接着访问 x 附近的数据。（比如：遍历数组）</li>
 </ul>
-<p><img src="https://s21.ax1x.com/2025/07/24/pVGXMin.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVGXMin.png" srcset="/img/loading.gif" lazyload></p>
 <p>在单CPU的架构下，如果缓存未命中，只需要把从内存读到的数据存入CPU缓存；但是在多CPU架构下，不同CPU的缓存共享一个内存区域，会发生<strong>缓存一致性问题</strong>（cache coherence）：一个CPU修改内存中的某个值后，另一个CPU并不知情，仍然从自己的缓存中读取旧值。硬件的解决方案是通过一条<strong>总线</strong>让缓存监控内存的访问，如果内存的值被修改，马上更新自己缓存的数据。</p>
 <p>在多个CPU并发访问共享的数据时，需要使用锁才能保证数据的一致性（无锁数据结构较少使用）</p>
 <p><strong>缓存亲和度</strong>（cache affinity）：P88，指的是不同CPU上如果缓存的情况不同，运行速度也不一样，已经有对应缓存的CPU运行速度会快得多。</p>
-<h2 id="单队列多处理器调度SQMS"><a href="#单队列多处理器调度SQMS" class="headerlink" title="单队列多处理器调度SQMS"></a>单队列多处理器调度SQMS</h2><p><img src="https://s21.ax1x.com/2025/07/24/pVGj3tA.png" srcset="/img/loading.gif" lazyload alt="SQMS示意图"></p>
+<h2 id="单队列多处理器调度SQMS"><a href="#单队列多处理器调度SQMS" class="headerlink" title="单队列多处理器调度SQMS"></a>单队列多处理器调度SQMS</h2><p><img src="/../img/pVGj3tA.png" srcset="/img/loading.gif" lazyload alt="SQMS示意图"></p>
 <p><code>Single Queue Multiprocessor Scheduling，SQMS</code></p>
 <p>将所有需要调度的工作放入一个单独的队列中，每次由一个CPU取出一个任务。</p>
 <ul>
 <li>优点：负载均衡较好，容易构建</li>
 <li>缺点：1. 加锁的开销较大，扩展性差，CPU核越多效率越低2. 不同的进程不断在不同的CPU上转移，缓存的亲和性较差</li>
 </ul>
-<h2 id="多队列多处理器调度"><a href="#多队列多处理器调度" class="headerlink" title="多队列多处理器调度"></a>多队列多处理器调度</h2><p><img src="https://s21.ax1x.com/2025/07/24/pVGj8fI.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="多队列多处理器调度"><a href="#多队列多处理器调度" class="headerlink" title="多队列多处理器调度"></a>多队列多处理器调度</h2><p><img src="/../img/pVGj8fI.png" srcset="/img/loading.gif" lazyload></p>
 <p>每个CPU都有一个任务队列，不同CPU的调度之间相互独立。除此之外，通过迁移技术，把工作分配给空闲的CPU；或者通过工作窃取，让工作量较少的CPU偷看其他CPU的工作情况，拿到工作。但是检查间隔如何选取又是一个问题。</p>
 <h2 id="GNU-Linux采用的策略"><a href="#GNU-Linux采用的策略" class="headerlink" title="GNU&#x2F;Linux采用的策略"></a>GNU&#x2F;Linux采用的策略</h2><ul>
 <li><strong>O(1)调度程序</strong>：多队列，基于优先级。类似于MLFQ</li>
@@ -705,7 +705,7 @@
 </tr>
 </tbody></table>
 <p>测试一下：</p>
-<p><img src="https://s21.ax1x.com/2025/07/24/pVJp9Ig.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVJp9Ig.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
 <li>单队列多处理器调度：负载均衡性较好，但是因为加锁，扩展性差，因为进程频繁在多个CPU切换，缓存亲和度差</li>
 <li>多队列多处理器调度：扩展性和缓存亲和度好，但是负载均衡性较差</li>

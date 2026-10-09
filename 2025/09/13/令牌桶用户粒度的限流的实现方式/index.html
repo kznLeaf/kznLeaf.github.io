@@ -30,16 +30,16 @@
 <meta property="og:site_name" content="絆叶の片隅">
 <meta property="og:description" content="复盘一下面试中遇到的场景题，给出从方案设计到压测的完整解决方案。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s21.ax1x.com/2025/09/13/pVWR10A.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/09/13/pVWhU1K.png">
-<meta property="og:image" content="https://s21.ax1x.com/2025/09/13/pVWhjuF.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVWR10A.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVWhU1K.png">
+<meta property="og:image" content="https://kznleaf.top/img/pVWhjuF.png">
 <meta property="article:published_time" content="2025-09-13T15:11:33.000Z">
-<meta property="article:modified_time" content="2025-09-18T14:19:23.658Z">
+<meta property="article:modified_time" content="2026-10-09T16:24:31.960Z">
 <meta property="article:author" content="kznLeaf">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="Fluid">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s21.ax1x.com/2025/09/13/pVWR10A.png">
+<meta name="twitter:image" content="https://kznleaf.top/img/pVWR10A.png">
   
   
   
@@ -360,7 +360,7 @@
 <li><code>last_refill_timestamp</code><strong>上次刷新时间</strong>：上一次为桶里添加令牌时的时间戳，非常重要，借助这个参数就可以实现自动补充令牌。</li>
 </ul>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="令牌桶？"><a href="#令牌桶？" class="headerlink" title="令牌桶？"></a>令牌桶？</h3><p>一般来说可以用下面这张图来描述令牌桶：</p>
-<p><img src="https://s21.ax1x.com/2025/09/13/pVWR10A.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVWR10A.png" srcset="/img/loading.gif" lazyload></p>
 <p>这张图确实很形象，令牌恒定流入令牌桶，而输入请求只有拿到令牌之后才能输出，否则丢弃，但是容易让人产生误解：令牌必须由第三方输入吗？如果是针对全系统所有请求的限流的话，那很简单，系统开一个后台线程只管输入就行了。但是如果精确到<strong>用户层面</strong>呢？有一种更好的解决方法，就是为每个用户都维护一个令牌桶，而这个令牌桶内的令牌数量的更新采用了类似滑动窗口的处理思路：每次用户请求到达时自行刷新令牌数，然后再判断够不够用，而<strong>不需要引入第三方来刷新令牌数量</strong>。</p>
 <h3 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h3><p>一方面，使用Redis的<strong>Hash</strong>结构维护用户的令牌桶的状态：</p>
 <ul>
@@ -434,9 +434,9 @@ graph TD
 <li>HTTP 为 GET 请求，发往 8080 端口；</li>
 </ul>
 <p>共发送一万次请求，结果如下，全程吞吐量稳定在20&#x2F;sec，错误率为50%，符合预期。</p>
-<p><img src="https://s21.ax1x.com/2025/09/13/pVWhU1K.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVWhU1K.png" srcset="/img/loading.gif" lazyload></p>
 <p>如果在运行期间查看hash的字段值，会看到：</p>
-<p><img src="https://s21.ax1x.com/2025/09/13/pVWhjuF.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../img/pVWhjuF.png" srcset="/img/loading.gif" lazyload></p>
 <p>令牌数一直处于被榨干的状态…</p>
 
                 
