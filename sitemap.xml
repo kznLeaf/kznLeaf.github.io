@@ -11,6 +11,24 @@
   </url>
   
   <url>
+    <loc>https://kznleaf.top/2026/02/17/k8s%E5%AD%A6%E4%B9%A01/</loc>
+    
+    <lastmod>2026-11-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://kznleaf.top/2026/04/25/From-lazy-to-vimpack/</loc>
+    
+    <lastmod>2026-11-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://kznleaf.top/2025/04/21/RADWIMPS/</loc>
     
     <lastmod>2026-10-24</lastmod>
@@ -461,15 +479,6 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.top/2026/04/25/From-lazy-to-vimpack/</loc>
-    
-    <lastmod>2026-05-27</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://kznleaf.top/2026/01/23/kind-metrics-server-solved-md/</loc>
     
     <lastmod>2026-03-30</lastmod>
@@ -784,14 +793,14 @@
   </url>
   
   <url>
-    <loc>https://kznleaf.top/tags/Neovim/</loc>
+    <loc>https://kznleaf.top/tags/%E8%AE%A1%E7%BD%91/</loc>
     <lastmod>2026-11-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://kznleaf.top/tags/%E8%AE%A1%E7%BD%91/</loc>
+    <loc>https://kznleaf.top/tags/Neovim/</loc>
     <lastmod>2026-11-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
