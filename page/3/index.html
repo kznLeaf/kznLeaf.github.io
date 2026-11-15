@@ -319,189 +319,6 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/07/18/JUC-%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_self">
-          JUC-线程池部分源码&amp;API总结
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/07/18/JUC-%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_self">
-        <div>
-          线程池简介Java中的线程池是运用场景最多的并发框架，几乎所有需要异步或者并发执行任务的程序都可以使用线程池。 Java线程池按照以下步骤处理任务：  优先使用核心线程 核心线程满了使用工作队列 工作队列满了使用非核心线程 都满了执行拒绝策略   线程池在系统中的应用：  Web服务器处理HTTP请求 数据库连接和IO操作，例如查询和插入数据库、文件读写操作、Netty实用线程池处理网络事件 异步
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-07-18 19:20" pubdate>
-              2025-07-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/JUC/" class="category-chain-item">JUC</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%B9%B6%E5%8F%91/">#并发</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/07/17/JUC-synchronized/" target="_self">
-          JUC-synchronized关键字
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/07/17/JUC-synchronized/" target="_self">
-        <div>
-          共享问题 多个线程访问共享资源，进行读写操作时发生指令的交错就会发生问题。 一段代码块内如果存在对共享资源的读写操作，称这段代码块为临界区。 多个代码在临界区内运行，由于代码的执行序列不同而导致结果无法预测，称之发生了竞态条件。  如何避免临界区的互斥条件的发生？两种方法：  阻塞式的解决方法：synchronized Lock 非阻塞式的：原子变量  synchronizedsynchroniz
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-07-17 21:18" pubdate>
-              2025-07-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/JUC/" class="category-chain-item">JUC</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%B9%B6%E5%8F%91/">#并发</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/07/15/JUC-%E5%B9%B6%E5%8F%91%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E5%9F%BA%E7%A1%80API/" target="_self">
-          JUC-并发的概念和基础API
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/07/15/JUC-%E5%B9%B6%E5%8F%91%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E5%9F%BA%E7%A1%80API/" target="_self">
-        <div>
-          线程简单使用目标：创建线程对象、运行线程 方式一：只用Thread 1234567891011121314151617@Slf4j(topic = &quot;c.ThreadTest&quot;)public class ThreadTest &#123;    public static void main(String[] args) &#123;        Thread thread
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-07-15 22:50" pubdate>
-              2025-07-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/JUC/" class="category-chain-item">JUC</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%B9%B6%E5%8F%91/">#并发</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2025/07/11/%E7%BB%93%E6%9D%9F/" target="_self">
           <img src="/../img/pV8pyQ0.jpg" srcset="/img/loading.gif" lazyload alt="堂堂退赛！">
@@ -870,11 +687,204 @@
     </article>
   </div>
 
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/06/08/%E6%9D%A1%E4%BB%B6%E5%88%86%E9%A1%B5/" target="_self">
+          Spring-使用PageHelper实现条件分页
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/06/08/%E6%9D%A1%E4%BB%B6%E5%88%86%E9%A1%B5/" target="_self">
+        <div>
+          需求基本信息请求路径：&#x2F;article 请求方式：GET 接口描述：该接口用于根据条件查询文章,带分页。 请求参数说明：    参数名称 说明 类型 是否必须 备注    pageNum 当前页码 number 是    pageSize 每页条数 number 是    categoryId 文章分类ID number 否    state 发布状态 string 否 已发布 | 草稿
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-06-08 22:52" pubdate>
+              2025-06-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Web-Development/" class="category-chain-item">Web Development</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring/">#Spring</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/06/07/ThreadLocal%E5%89%96%E6%9E%90/" target="_self">
+          ThreadLocal使用场景+源码简析
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/06/07/ThreadLocal%E5%89%96%E6%9E%90/" target="_self">
+        <div>
+          作用 线程并发：多线程并发的场景 传递数据：可以在同一个线程的不同组件中传递公共变量 线程隔离：每个线程的变量都是独立的不会互相影响  用法用来存储数据，而且线程安全。为每个线程单独创建一个存储空间。 创建对象 1ThreadLocal&lt;String&gt; tl = new ThreadLocal&lt;&gt;();  设置当前线程绑定的变量 123456public void set(
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-06-07 23:44" pubdate>
+              2025-06-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Web-Development/" class="category-chain-item">Web Development</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">#多线程</a>
+            
+              <a href="/tags/%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">#源码剖析</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2025/06/02/JVM-3-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/" target="_self">
+          <img src="/../img/pVkddYD.webp" srcset="/img/loading.gif" lazyload alt="JVM-3.2-垃圾回收算法">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/06/02/JVM-3-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/" target="_self">
+          JVM-3.2-垃圾回收算法
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2025/06/02/JVM-3-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95/" target="_self">
+        <div>
+          《深入理解Java虚拟机》读书笔记(3)
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-06-02 23:50" pubdate>
+              2025-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/JVM/" class="category-chain-item">JVM</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Java/">#Java</a>
+            
+              <a href="/tags/JVM/">#JVM</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/#board">8</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#board">7</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
