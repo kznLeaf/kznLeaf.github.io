@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kznleaf.top/about/index.html</loc>
+    
+    <lastmod>2026-11-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://kznleaf.top/2025/04/27/Maven%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</loc>
     
     <lastmod>2026-11-15</lastmod>
@@ -149,15 +158,6 @@
     <loc>https://kznleaf.top/2025/07/18/JUC-%E7%BA%BF%E7%A8%8B%E6%B1%A0/</loc>
     
     <lastmod>2026-11-15</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://kznleaf.top/about/index.html</loc>
-    
-    <lastmod>2026-11-13</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
